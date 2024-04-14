@@ -3,7 +3,10 @@ package com.bellogatecaliphate.quickreels
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -22,7 +25,9 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Greeting("Android")
+                    TemporaryScreen {
+
+                    }
                 }
             }
         }
@@ -30,17 +35,18 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
+fun TemporaryScreen(onPostClicked:() -> Unit) {
+    Column {
+        Button(onClick = { /*TODO*/ }) {
+            Text(text = "Home")
+        }
 
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    QuickReelsTheme {
-        Greeting("Android")
+        Button(onClick = { /*TODO*/ }) {
+            Text(text = "Post")
+        }
+
+        Button(onClick = { /*TODO*/ }) {
+            Text(text = "Chat")
+        }
     }
 }
