@@ -84,6 +84,10 @@ dependencies {
     // hilt
     implementation(libs.hilt)
     kapt(libs.hilt.compiler)
+    // navigation graph
+    implementation(libs.navigation.graph)
+    // bottom navigation compose
+    implementation(libs.bottom.navigation)
 }
 
 kapt {

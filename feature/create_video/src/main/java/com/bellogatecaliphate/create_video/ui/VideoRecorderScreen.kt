@@ -7,5 +7,5 @@ import androidx.compose.ui.tooling.preview.Preview
 @Preview
 @Composable
 fun VideoRecorderScreen() {
-    Text("Hello Jeff")
+    Text("Hello Jeff from video recorder")
 }

@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
@@ -12,7 +11,13 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.bellogatecaliphate.create_video.ui.VideoRecorderScreen
+import com.bellogatecaliphate.quickreels.model.Route
+import com.bellogatecaliphate.quickreels.model.Screen
 import com.bellogatecaliphate.quickreels.ui.theme.QuickReelsTheme
 
 class MainActivity : ComponentActivity() {
@@ -25,8 +30,16 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    TemporaryScreen {
-
+                    val navController = rememberNavController()
+                    NavHost(navController, startDestination = Screen.Temp.route, Modifier) {
+                        composable(Screen.Temp.route) {
+                            TemporaryScreen {
+                                navController.navigate(Screen.Post.route)
+                            }
+                        }
+                        composable(Screen.Post.route) {
+                            VideoRecorderScreen()
+                        }
                     }
                 }
             }
@@ -35,17 +48,17 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun TemporaryScreen(onPostClicked:() -> Unit) {
+fun TemporaryScreen(onPostClicked: () -> Unit) {
     Column {
-        Button(onClick = { /*TODO*/ }) {
+        Button(onClick = onPostClicked) {
             Text(text = "Home")
         }
 
-        Button(onClick = { /*TODO*/ }) {
+        Button(onClick = onPostClicked) {
             Text(text = "Post")
         }
 
-        Button(onClick = { /*TODO*/ }) {
+        Button(onClick = onPostClicked) {
             Text(text = "Chat")
         }
     }
