@@ -13,6 +13,7 @@ material = "1.10.0"
 hiltVersion = "2.44"
 nav_version = "2.7.4"
 bottom_nav_version = "1.5.3"
+hilt-navigation-version = "1.0.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -33,9 +34,10 @@ androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 hilt = { group = "com.google.dagger", name = "hilt-android", version.ref = "hiltVersion" }
 hilt-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hiltVersion" }
+hilt-navigation-compose = { group = "hilt-navigation-compose", name = "androidx.hilt", version = "hilt-navigation-compose" }
 navigation-graph = { group = "androidx.navigation", name = "navigation-compose", version.ref = "nav_version"}
 bottom-navigation = { group = "androidx.compose.material", name = "material", version.ref = "bottom_nav_version"}
-
+viewmodel-compose = {group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version = "2.7.0"}
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

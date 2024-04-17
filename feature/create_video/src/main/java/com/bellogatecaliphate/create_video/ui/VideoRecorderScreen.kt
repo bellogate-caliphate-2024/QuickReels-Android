@@ -1,11 +1,22 @@
 package com.bellogatecaliphate.create_video.ui
 
-import androidx.compose.material3.Text
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.bellogatecaliphate.create_video.model.UiState
 
 @Preview
 @Composable
-fun VideoRecorderScreen() {
-    Text("Hello Jeff from video recorder")
+fun VideoRecorderScreen(viewModel: VideoRecorderScreenViewModel = viewModel()) {
+
+}
+
+@Composable
+fun VideoRecorderScreen(uiState: UiState) {
+    Box(modifier = Modifier.fillMaxSize().background(color = Color.Black))
 }
