@@ -60,7 +60,7 @@ dependencies {
     // hilt
     implementation(libs.hilt)
     kapt(libs.hilt.compiler)
-    // hilt navigation
+    // hilt navigation compose
     implementation(libs.hilt.navigation.compose)
     // viewmodel compose
     implementation(libs.viewmodel.compose)

@@ -7,12 +7,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.bellogatecaliphate.create_video.model.UiState
 
 @Preview
 @Composable
-fun VideoRecorderScreen(viewModel: VideoRecorderScreenViewModel = viewModel()) {
+fun VideoRecorderScreen(viewModel: VideoRecorderScreenViewModel = hiltViewModel()) {
 
 }
 
