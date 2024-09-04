@@ -19,7 +19,9 @@ import com.bellogatecaliphate.create_video.ui.VideoRecorderScreen
 import com.bellogatecaliphate.quickreels.model.Route
 import com.bellogatecaliphate.quickreels.model.Screen
 import com.bellogatecaliphate.quickreels.ui.theme.QuickReelsTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,7 +61,7 @@ fun TemporaryScreen(onPostClicked: () -> Unit) {
         }
 
         Button(onClick = onPostClicked) {
-            Text(text = "Chat")
+            Text(text = "Account")
         }
     }
 }
