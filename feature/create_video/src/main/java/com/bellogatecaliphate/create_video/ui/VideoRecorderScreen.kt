@@ -11,17 +11,18 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.bellogatecaliphate.create_video.model.UiState
 
+@Composable
+fun VideoRecorderScreen(viewModel: VideoRecorderScreenViewModel = hiltViewModel()) {
+    VideoRecorderScreen(UiState.Default)
+}
 
 @Composable
 fun VideoRecorderScreen(uiState: UiState) {
-    Box(modifier = Modifier
-        .fillMaxSize()
-        .background(color = Color.Black))
+    Text(text = "Create a post")
 }
-
 
 @Preview
 @Composable
-fun VideoRecorderScreen(viewModel: VideoRecorderScreenViewModel = hiltViewModel()) {
-    Text(text = "Jeff emuveyan")
+fun Preview() {
+    VideoRecorderScreen()
 }
