@@ -13,6 +13,7 @@ material = "1.10.0"
 hiltVersion = "2.44"
 nav_version = "2.7.4"
 bottom_nav_version = "1.5.3"
+uiautomatorV18 = "2.2.0-alpha1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -37,6 +38,7 @@ hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-com
 navigation-graph = { group = "androidx.navigation", name = "navigation-compose", version.ref = "nav_version"}
 bottom-navigation = { group = "androidx.compose.material", name = "material", version.ref = "bottom_nav_version"}
 viewmodel-compose = {group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version = "2.7.0"}
+androidx-uiautomator-v18 = { group = "androidx.test.uiautomator", name = "uiautomator-v18", version.ref = "uiautomatorV18" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
