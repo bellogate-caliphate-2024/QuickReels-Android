@@ -26,38 +26,48 @@ import com.google.accompanist.permissions.rememberPermissionState
 fun CreatePostRoute(viewModel: CreatePostScreenViewModel = hiltViewModel()) {
     CreatePostScreen(viewModel.state.collectAsStateWithLifecycle().value, {
         viewModel.requestPermissionAndOpenGallery()
-    },{
+    }, {
         viewModel.resetToDefault()
     })
 }
 
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
-private fun CreatePostScreen(uiState: UiState, openGallery:() -> Unit, onPermissionRationaleDismissed:() -> Unit) {
+private fun CreatePostScreen(
+    uiState: UiState,
+    openGallery: () -> Unit,
+    onPermissionRationaleDismissed: () -> Unit
+) {
     val storagePermission = rememberPermissionState(getStorageManifestPermission())
-    when(uiState) {
+    when (uiState) {
         UiState.Default -> VideoRecorderScreenDefaultState(openGallery)
         UiState.RequestStoragePermissionAndOpenGallery -> VideoGalleryPicker(
             storagePermission, {
-            storagePermission.launchPermissionRequest()
-        }, onPermissionRationaleDismissed)
+                storagePermission.launchPermissionRequest()
+            }, onPermissionRationaleDismissed
+        )
+
         else -> VideoRecorderScreenDefaultState(openGallery)
     }
 }
 
 @Composable
-private fun VideoRecorderScreenDefaultState(openGallery:() -> Unit) {
-    Box(modifier = Modifier
-        .fillMaxSize()
-        .background(color = Color.Black)) {
-        Box(modifier = Modifier
-            .fillMaxWidth()
-            .background(color = Color.White)
-            .padding(10.dp)
-            .align(Alignment.BottomCenter)) {
-                TextButton(onClick = openGallery, modifier = Modifier.align(Alignment.BottomCenter)) {
-                    Text("Select Video", fontSize = 20.sp)
-                }
+private fun VideoRecorderScreenDefaultState(openGallery: () -> Unit) {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(color = Color.Black)
+    ) {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(color = Color.White)
+                .padding(10.dp)
+                .align(Alignment.BottomCenter)
+        ) {
+            TextButton(onClick = openGallery, modifier = Modifier.align(Alignment.BottomCenter)) {
+                Text("Select Video", fontSize = 20.sp)
+            }
         }
     }
 }
