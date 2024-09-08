@@ -1,5 +1,8 @@
 package com.bellogatecaliphate.create_video.ui
 
+import android.content.Intent
+import android.net.Uri
+import android.provider.Settings
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -8,9 +11,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 import androidx.compose.ui.unit.dp
@@ -18,6 +24,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.bellogatecaliphate.create_video.model.UiState
+import com.bellogatecaliphate.create_video.util.StoragePermissionRationalDialog
 import com.bellogatecaliphate.create_video.util.getStorageManifestPermission
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.PermissionState
@@ -66,10 +73,25 @@ private fun VideoRecorderScreenDefaultState(openGallery:() -> Unit) {
 @Composable
 private fun VideoGalleryPicker(storagePermission: PermissionState, requestPermission:() -> Unit) {
     val status = storagePermission.status
+    val openAlertDialog = remember { mutableStateOf(false) }
+    val context = LocalContext.current
+    val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+    val uri = Uri.fromParts("package", context.packageName, null)
+    intent.setData(uri)
+
     when {
         status.isGranted -> {
         }
         status.shouldShowRationale -> {
+            StoragePermissionRationalDialog(
+                onDismissRequest = {
+                    openAlertDialog.value = false
+                 },
+                onConfirmation = {
+                    openAlertDialog.value = false
+                    context.startActivity(intent)
+                }
+            )
         }
         !status.isGranted -> requestPermission()
     }

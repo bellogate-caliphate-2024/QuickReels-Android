@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">QuickReels</string>
+    <string name="home">Home</string>
+    <string name="post">Post</string>
+    <string name="close">Close</string>
+    <string name="go_to_settings">Go to settings</string>
+    <string name="storage_permission_rationale">This app needs permission to access photos and videos on your device.\n\nOpen Settings app and grant this permission.</string>
+</resources>
