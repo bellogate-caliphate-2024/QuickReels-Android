@@ -24,11 +24,12 @@ import com.google.accompanist.permissions.rememberPermissionState
 
 @Composable
 fun CreatePostRoute(viewModel: CreatePostScreenViewModel = hiltViewModel()) {
-    CreatePostScreen(viewModel.state.collectAsStateWithLifecycle().value, {
-        viewModel.requestPermissionAndOpenGallery()
-    }, {
-        viewModel.resetToDefault()
-    })
+    CreatePostScreen(
+        viewModel.state.collectAsStateWithLifecycle().value,
+        viewModel::requestPermissionAndOpenGallery,
+        viewModel::resetToDefault,
+        viewModel::resetToDefault
+    )
 }
 
 @OptIn(ExperimentalPermissionsApi::class)
@@ -36,16 +37,20 @@ fun CreatePostRoute(viewModel: CreatePostScreenViewModel = hiltViewModel()) {
 private fun CreatePostScreen(
     uiState: UiState,
     openGallery: () -> Unit,
+    onResetToDefaultUiState: () -> Unit,
     onPermissionRationaleDismissed: () -> Unit
 ) {
     val storagePermission = rememberPermissionState(getStorageManifestPermission())
     when (uiState) {
         UiState.Default -> VideoRecorderScreenDefaultState(openGallery)
-        UiState.RequestStoragePermissionAndOpenGallery -> VideoGalleryPicker(
-            storagePermission, {
-                storagePermission.launchPermissionRequest()
-            }, onPermissionRationaleDismissed
-        )
+        UiState.RequestStoragePermissionAndOpenGallery -> {
+            VideoGalleryPicker(
+                storagePermission,
+                storagePermission::launchPermissionRequest,
+                onPermissionRationaleDismissed
+            )
+            onResetToDefaultUiState()
+        }
 
         else -> VideoRecorderScreenDefaultState(openGallery)
     }
