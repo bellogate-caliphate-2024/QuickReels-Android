@@ -63,8 +63,8 @@ android {
 }
 
 dependencies {
-    implementation(project(":feature:create_video"))
 
+    implementation(project(":feature:create_post"))
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)

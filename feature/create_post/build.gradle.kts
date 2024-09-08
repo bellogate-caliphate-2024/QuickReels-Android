@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.bellogatecaliphate.create_video"
+    namespace = "com.bellogatecaliphate.create_post"
     compileSdk = 34
 
     defaultConfig {

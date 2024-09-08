@@ -1,4 +1,4 @@
-package com.bellogatecaliphate.create_video.util
+package com.bellogatecaliphate.create_post.util
 
 import android.Manifest
 import android.os.Build
@@ -8,7 +8,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import com.bellogatecaliphate.create_video.R
+import com.bellogatecaliphate.create_post.R
 
 fun getStorageManifestPermission(): String {
     val isAndroid13AndAbove = Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU

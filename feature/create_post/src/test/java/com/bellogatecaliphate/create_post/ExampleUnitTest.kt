@@ -1,4 +1,4 @@
-package com.bellogatecaliphate.create_video
+package com.bellogatecaliphate.create_post
 
 import org.junit.Test
 

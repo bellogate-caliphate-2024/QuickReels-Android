@@ -1,4 +1,4 @@
-package com.bellogatecaliphate.create_video.ui
+package com.bellogatecaliphate.create_post.ui
 
 import android.content.Intent
 import android.net.Uri
@@ -7,7 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
-import com.bellogatecaliphate.create_video.util.StoragePermissionRationalDialog
+import com.bellogatecaliphate.create_post.util.StoragePermissionRationalDialog
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.PermissionState
 import com.google.accompanist.permissions.isGranted

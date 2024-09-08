@@ -11,12 +11,10 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.bellogatecaliphate.create_video.ui.VideoRecorderScreen
-import com.bellogatecaliphate.quickreels.model.Route
+import com.bellogatecaliphate.create_post.ui.CreatePostRoute
 import com.bellogatecaliphate.quickreels.model.Screen
 import com.bellogatecaliphate.quickreels.ui.theme.QuickReelsTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -40,7 +38,7 @@ class MainActivity : ComponentActivity() {
                             }
                         }
                         composable(Screen.Post.route) {
-                            VideoRecorderScreen()
+                            CreatePostRoute()
                         }
                     }
                 }

@@ -1,4 +1,4 @@
-package com.bellogatecaliphate.create_video.model
+package com.bellogatecaliphate.create_post.model
 
 sealed class UiState {
 
