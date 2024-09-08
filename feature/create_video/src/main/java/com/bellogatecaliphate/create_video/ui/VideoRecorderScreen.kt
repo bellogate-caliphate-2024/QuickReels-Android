@@ -72,40 +72,6 @@ private fun VideoRecorderScreenDefaultState(openGallery:() -> Unit) {
     }
 }
 
-@OptIn(ExperimentalPermissionsApi::class)
-@Composable
-private fun VideoGalleryPicker(
-    storagePermission: PermissionState,
-    requestPermission:() -> Unit,
-    onPermissionRationaleDismissed:() -> Unit) {
-
-    val status = storagePermission.status
-    val openAlertDialog = remember { mutableStateOf(false) }
-    val context = LocalContext.current
-    val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
-    val uri = Uri.fromParts("package", context.packageName, null)
-    intent.setData(uri)
-
-    when {
-        status.isGranted -> {
-        }
-        status.shouldShowRationale -> {
-            StoragePermissionRationalDialog(
-                onDismissRequest = {
-                    openAlertDialog.value = false
-                    onPermissionRationaleDismissed()
-                 },
-                onConfirmation = {
-                    openAlertDialog.value = false
-                    context.startActivity(intent)
-                    onPermissionRationaleDismissed()
-                }
-            )
-        }
-        !status.isGranted -> requestPermission()
-    }
-}
-
 @PreviewScreenSizes
 @Preview(showBackground = true)
 @Composable
