@@ -34,20 +34,23 @@ import com.google.accompanist.permissions.shouldShowRationale
 
 @Composable
 fun VideoRecorderScreen(viewModel: VideoRecorderScreenViewModel = hiltViewModel()) {
-    VideoRecorderScreen(viewModel.state.collectAsStateWithLifecycle().value) {
+    VideoRecorderScreen(viewModel.state.collectAsStateWithLifecycle().value, {
         viewModel.requestPermissionAndOpenGallery()
-    }
+    },{
+        viewModel.resetToDefault()
+    })
 }
 
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
-private fun VideoRecorderScreen(uiState: UiState, openGallery:() -> Unit) {
+private fun VideoRecorderScreen(uiState: UiState, openGallery:() -> Unit, onPermissionRationaleDismissed:() -> Unit) {
     val storagePermission = rememberPermissionState(getStorageManifestPermission())
     when(uiState) {
         UiState.Default -> VideoRecorderScreenDefaultState(openGallery)
-        UiState.RequestStoragePermissionAndOpenGallery -> VideoGalleryPicker(storagePermission) {
+        UiState.RequestStoragePermissionAndOpenGallery -> VideoGalleryPicker(
+            storagePermission, {
             storagePermission.launchPermissionRequest()
-        }
+        }, onPermissionRationaleDismissed)
         else -> VideoRecorderScreenDefaultState(openGallery)
     }
 }
@@ -71,7 +74,11 @@ private fun VideoRecorderScreenDefaultState(openGallery:() -> Unit) {
 
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
-private fun VideoGalleryPicker(storagePermission: PermissionState, requestPermission:() -> Unit) {
+private fun VideoGalleryPicker(
+    storagePermission: PermissionState,
+    requestPermission:() -> Unit,
+    onPermissionRationaleDismissed:() -> Unit) {
+
     val status = storagePermission.status
     val openAlertDialog = remember { mutableStateOf(false) }
     val context = LocalContext.current
@@ -86,10 +93,12 @@ private fun VideoGalleryPicker(storagePermission: PermissionState, requestPermis
             StoragePermissionRationalDialog(
                 onDismissRequest = {
                     openAlertDialog.value = false
+                    onPermissionRationaleDismissed()
                  },
                 onConfirmation = {
                     openAlertDialog.value = false
                     context.startActivity(intent)
+                    onPermissionRationaleDismissed()
                 }
             )
         }

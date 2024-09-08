@@ -17,4 +17,8 @@ class VideoRecorderScreenViewModel @Inject constructor(): ViewModel() {
         _state.value = UiState.RequestStoragePermissionAndOpenGallery
     }
 
+    fun resetToDefault() {
+        _state.value = UiState.Default
+    }
+
 }
