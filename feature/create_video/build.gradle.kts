@@ -64,4 +64,6 @@ dependencies {
     implementation(libs.hilt.navigation.compose)
     // viewmodel compose
     implementation(libs.viewmodel.compose)
+    implementation(libs.androidx.ui.tooling.preview)
+    implementation(libs.permission)
 }
