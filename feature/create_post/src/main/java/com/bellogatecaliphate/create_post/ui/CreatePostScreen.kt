@@ -1,5 +1,9 @@
 package com.bellogatecaliphate.create_post.ui
 
+import android.app.Activity
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,6 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 import androidx.compose.ui.unit.dp
@@ -18,18 +23,29 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.bellogatecaliphate.create_post.model.UiState
+import com.bellogatecaliphate.create_post.util.getActivity
 import com.bellogatecaliphate.create_post.util.getStorageManifestPermission
+import com.bellogatecaliphate.create_post.util.video_trimer.utils.TrimVideo
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.rememberPermissionState
 
 @Composable
 fun CreatePostRoute(viewModel: CreatePostScreenViewModel = hiltViewModel()) {
+    val context = LocalContext.current.getActivity()
+    val videoTrimResultLauncher =
+        rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+            val data = result.data
+            if (result.resultCode == Activity.RESULT_OK && data != null && data.data != null) {
+            }
+        }
     CreatePostScreen(
         viewModel.state.collectAsStateWithLifecycle().value,
         viewModel::requestPermissionAndOpenGallery,
         viewModel::resetToDefault,
         viewModel::resetToDefault
-    )
+    ) { data ->
+        TrimVideo.activity(data).start(context, videoTrimResultLauncher)
+    }
 }
 
 @OptIn(ExperimentalPermissionsApi::class)
@@ -38,18 +54,20 @@ private fun CreatePostScreen(
     uiState: UiState,
     openGallery: () -> Unit,
     onResetToDefaultUiState: () -> Unit,
-    onPermissionRationaleDismissed: () -> Unit
+    onPermissionRationaleDismissed: () -> Unit,
+    onVideoFileSelected: (String) -> Unit
 ) {
     val storagePermission = rememberPermissionState(getStorageManifestPermission())
     when (uiState) {
         UiState.Default -> VideoRecorderScreenDefaultState(openGallery)
         UiState.RequestStoragePermissionAndOpenGallery -> {
-            VideoGalleryPicker(
+            VideoFilePicker(
                 storagePermission,
                 storagePermission::launchPermissionRequest,
-                onPermissionRationaleDismissed
+                onPermissionRationaleDismissed,
+                onVideoFileSelected
             )
-            onResetToDefaultUiState()
+            //onResetToDefaultUiState()
         }
 
         else -> VideoRecorderScreenDefaultState(openGallery)

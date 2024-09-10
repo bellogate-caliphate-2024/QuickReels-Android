@@ -66,4 +66,14 @@ dependencies {
     implementation(libs.viewmodel.compose)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.permission)
+    implementation(libs.gson)
+
+    implementation("com.google.android.exoplayer:exoplayer:2.17.1")
+    implementation("com.arthenica:ffmpeg-kit-min:6.0-1")
+    implementation(libs.glide)
+    annotationProcessor(libs.compiler)
+    implementation("com.akexorcist:localization:1.2.9")
+    implementation("com.google.code.gson:gson:2.9.0")
+    implementation("androidx.coordinatorlayout:coordinatorlayout:1.2.0")
+    implementation(libs.androidx.activity.ktx)
 }

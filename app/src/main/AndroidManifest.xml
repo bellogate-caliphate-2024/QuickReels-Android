@@ -27,6 +27,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name="com.bellogatecaliphate.create_post.util.video_trimer.ui.ActVideoTrimmer"
+            android:theme="@style/VideoTrimmerTheme"
+            android:exported="false"/>
     </application>
 
 </manifest>

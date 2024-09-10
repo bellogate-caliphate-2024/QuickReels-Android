@@ -1,10 +1,20 @@
 package com.bellogatecaliphate.create_post.ui
 
+import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.provider.Settings
+import android.util.Log
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.material3.Button
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
@@ -16,10 +26,12 @@ import com.google.accompanist.permissions.shouldShowRationale
 
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
-fun VideoGalleryPicker(
+fun VideoFilePicker(
     storagePermission: PermissionState,
-    requestPermission:() -> Unit,
-    onPermissionRationaleDismissed:() -> Unit) {
+    requestPermission: () -> Unit,
+    onPermissionRationaleDismissed: () -> Unit,
+    onVideoFileSelected: (String) -> Unit
+) {
 
     val status = storagePermission.status
     val openAlertDialog = remember { mutableStateOf(false) }
@@ -30,7 +42,9 @@ fun VideoGalleryPicker(
 
     when {
         status.isGranted -> {
+            VideoFileGallery(onVideoFileSelected)
         }
+
         status.shouldShowRationale -> {
             StoragePermissionRationalDialog(
                 onDismissRequest = {
@@ -44,10 +58,24 @@ fun VideoGalleryPicker(
                 }
             )
         }
+
         !status.isGranted -> requestPermission()
     }
 
     DisposableEffect(Unit) {
         onDispose { if (!status.isGranted) onPermissionRationaleDismissed() }
+    }
+}
+
+@Composable
+private fun VideoFileGallery(onVideoFileSelected: (uri: String) -> Unit) {
+    val selectVideoResultLauncher =
+        rememberLauncherForActivityResult(ActivityResultContracts.PickVisualMedia()) { result: Uri? ->
+            if (result != null) { onVideoFileSelected(result.toString()) }
+        }
+
+    LaunchedEffect(Unit) {
+        selectVideoResultLauncher
+            .launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.VideoOnly))
     }
 }
