@@ -21,4 +21,8 @@ class CreatePostScreenViewModel @Inject constructor(): ViewModel() {
         _state.value = UiState.Default
     }
 
+    fun showPreviewPost() {
+        _state.value = UiState.PreviewPost
+    }
+
 }

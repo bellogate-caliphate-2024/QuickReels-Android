@@ -28,6 +28,7 @@ import com.bellogatecaliphate.create_post.util.getStorageManifestPermission
 import com.bellogatecaliphate.create_post.util.video_trimer.utils.TrimVideo
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.rememberPermissionState
+import com.bellogatecaliphate.create_post.ui.preview_post.PreviewPost
 
 @Composable
 fun CreatePostRoute(viewModel: CreatePostScreenViewModel = hiltViewModel()) {
@@ -36,12 +37,12 @@ fun CreatePostRoute(viewModel: CreatePostScreenViewModel = hiltViewModel()) {
         rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
             val data = result.data
             if (result.resultCode == Activity.RESULT_OK && data != null && data.data != null) {
+                viewModel.showPreviewPost()
             }
         }
     CreatePostScreen(
         viewModel.state.collectAsStateWithLifecycle().value,
         viewModel::requestPermissionAndOpenGallery,
-        viewModel::resetToDefault,
         viewModel::resetToDefault
     ) { data ->
         TrimVideo.activity(data).start(context, videoTrimResultLauncher)
@@ -53,7 +54,6 @@ fun CreatePostRoute(viewModel: CreatePostScreenViewModel = hiltViewModel()) {
 private fun CreatePostScreen(
     uiState: UiState,
     openGallery: () -> Unit,
-    onResetToDefaultUiState: () -> Unit,
     onPermissionRationaleDismissed: () -> Unit,
     onVideoFileSelected: (String) -> Unit
 ) {
@@ -67,10 +67,8 @@ private fun CreatePostScreen(
                 onPermissionRationaleDismissed,
                 onVideoFileSelected
             )
-            //onResetToDefaultUiState()
         }
-
-        else -> VideoRecorderScreenDefaultState(openGallery)
+        UiState.PreviewPost -> PreviewPost()
     }
 }
 
