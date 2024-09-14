@@ -23,3 +23,4 @@ rootProject.name = "QuickReels"
 include(":app")
 include(":feature")
 include(":feature:create_post")
+include(":core")

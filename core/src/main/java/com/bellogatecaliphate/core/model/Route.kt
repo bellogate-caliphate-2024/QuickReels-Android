@@ -1,7 +1,7 @@
-package com.bellogatecaliphate.quickreels.model
+package com.bellogatecaliphate.core.model
 
 import androidx.annotation.DrawableRes
-import com.bellogatecaliphate.quickreels.R
+import com.bellogatecaliphate.core.R
 import kotlinx.serialization.Serializable
 
 @Serializable
