@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.jetbrainsKotlinAndroid)
     alias(libs.plugins.hilt)
+    alias(libs.plugins.serialization)
 }
 
 android {
@@ -76,4 +77,5 @@ dependencies {
     implementation("com.google.code.gson:gson:2.9.0")
     implementation("androidx.coordinatorlayout:coordinatorlayout:1.2.0")
     implementation(libs.androidx.activity.ktx)
+    implementation(libs.kotlinx.serialization.json)
 }

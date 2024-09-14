@@ -15,7 +15,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.bellogatecaliphate.create_post.ui.CreatePostRoute
-import com.bellogatecaliphate.quickreels.model.Screen
+import com.bellogatecaliphate.quickreels.model.Route
 import com.bellogatecaliphate.quickreels.ui.theme.QuickReelsTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -31,13 +31,13 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     val navController = rememberNavController()
-                    NavHost(navController, startDestination = Screen.Temp.route, Modifier) {
-                        composable(Screen.Temp.route) {
+                    NavHost(navController, startDestination = Route.Temporary, Modifier) {
+                        composable<Route.Temporary> {
                             TemporaryScreen {
-                                navController.navigate(Screen.Post.route)
+                                navController.navigate(Route.CreatePost)
                             }
                         }
-                        composable(Screen.Post.route) {
+                        composable<Route.CreatePost> {
                             CreatePostRoute()
                         }
                     }

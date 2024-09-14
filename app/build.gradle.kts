@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
     alias(libs.plugins.hilt)
+    alias(libs.plugins.serialization)
 }
 
 android {
@@ -89,6 +90,8 @@ dependencies {
     implementation(libs.navigation.graph)
     // bottom navigation compose
     implementation(libs.bottom.navigation)
+    // serialization
+    implementation(libs.kotlinx.serialization.json)
 }
 
 kapt {
