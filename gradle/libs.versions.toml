@@ -21,6 +21,7 @@ uitoolingpreview_version = "1.6.8"
 permission = "0.36.0"
 gson = "2.9.0"
 serialization = "1.7.10"
+exoplayer = "1.4.1"
 
 [libraries]
 androidx-activity-ktx = { module = "androidx.activity:activity-ktx", version.ref = "activityKtx" }
@@ -46,18 +47,22 @@ material = { group = "com.google.android.material", name = "material", version.r
 hilt = { group = "com.google.dagger", name = "hilt-android", version.ref = "hiltVersion" }
 hilt-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hiltVersion" }
 hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version = "1.2.0" }
-navigation-graph = { group = "androidx.navigation", name = "navigation-compose", version.ref = "nav_version"}
-bottom-navigation = { group = "androidx.compose.material", name = "material", version.ref = "bottom_nav_version"}
-viewmodel-compose = {group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version = "2.7.0"}
+navigation-graph = { group = "androidx.navigation", name = "navigation-compose", version.ref = "nav_version" }
+bottom-navigation = { group = "androidx.compose.material", name = "material", version.ref = "bottom_nav_version" }
+viewmodel-compose = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version = "2.7.0" }
 androidx-uiautomator-v18 = { group = "androidx.test.uiautomator", name = "uiautomator-v18", version.ref = "uiautomatorV18" }
 permission = { group = "com.google.accompanist", name = "accompanist-permissions", version.ref = "permission" }
-gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson"}
+gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
+
+exoplayer = { group = "androidx.media3", name = "media3-exoplayer", version.ref = "exoplayer" }
+exoplayer-ui = { group = "androidx.media3", name = "media3-ui", version.ref = "exoplayer" }
+exoplayer-common = { group = "androidx.media3", name = "media3-common", version.ref = "exoplayer" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 jetbrainsKotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 androidLibrary = { id = "com.android.library", version.ref = "agp" }
-hilt = { id = "com.google.dagger.hilt.android", version.ref = "hiltVersion"}
+hilt = { id = "com.google.dagger.hilt.android", version.ref = "hiltVersion" }
 serialization = { id = 'org.jetbrains.kotlin.plugin.serialization', version.ref = "serialization" }
 
 

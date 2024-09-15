@@ -21,43 +21,43 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContent {
-            QuickReelsTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    val navController = rememberNavController()
-                    NavHost(navController, startDestination = Route.Temporary, Modifier) {
-                        composable<Route.Temporary> {
-                            TemporaryScreen {
-                                navController.navigate(Route.CreatePostNavGraph)
-                            }
-                        }
-                        createPostNavGraph()
-                    }
-                }
-            }
-        }
-    }
+	override fun onCreate(savedInstanceState : Bundle?) {
+		super.onCreate(savedInstanceState)
+		setContent {
+			QuickReelsTheme {
+				// A surface container using the 'background' color from the theme
+				Surface(
+					modifier = Modifier.fillMaxSize() ,
+					color = MaterialTheme.colorScheme.background
+				) {
+					val navController = rememberNavController()
+					NavHost(navController , startDestination = Route.Temporary , Modifier) {
+						composable<Route.Temporary> {
+							TemporaryScreen {
+								navController.navigate(Route.CreatePostNavGraph)
+							}
+						}
+						createPostNavGraph(navController)
+					}
+				}
+			}
+		}
+	}
 }
 
 @Composable
-fun TemporaryScreen(onPostClicked: () -> Unit) {
-    Column {
-        Button(onClick = onPostClicked) {
-            Text(text = "Home")
-        }
-
-        Button(onClick = onPostClicked) {
-            Text(text = "Post")
-        }
-
-        Button(onClick = onPostClicked) {
-            Text(text = "Account")
-        }
-    }
+fun TemporaryScreen(onPostClicked : () -> Unit) {
+	Column {
+		Button(onClick = onPostClicked) {
+			Text(text = "Home")
+		}
+		
+		Button(onClick = onPostClicked) {
+			Text(text = "Post")
+		}
+		
+		Button(onClick = onPostClicked) {
+			Text(text = "Account")
+		}
+	}
 }

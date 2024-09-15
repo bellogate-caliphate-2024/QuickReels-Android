@@ -32,14 +32,14 @@ import com.google.accompanist.permissions.rememberPermissionState
 @Composable
 fun CreatePostScreen(
 	viewModel : CreatePostScreenViewModel = hiltViewModel() ,
-	onPostReadyForPreview : () -> Unit = {}
+	onPostReadyForPreview : (videoPath : String) -> Unit = {}
 ) {
 	val context = LocalContext.current.getActivity()
 	val videoTrimResultLauncher =
 			rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { result : ActivityResult ->
 				val data = result.data
-				if (result.resultCode == Activity.RESULT_OK && data != null && data.data != null) {
-					onPostReadyForPreview()
+				if (result.resultCode == Activity.RESULT_OK && data != null) {
+					onPostReadyForPreview(TrimVideo.getTrimmedVideoPath(data))
 				}
 			}
 	CreatePostScreen(
