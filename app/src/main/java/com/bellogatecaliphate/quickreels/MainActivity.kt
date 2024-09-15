@@ -35,7 +35,7 @@ class MainActivity : ComponentActivity() {
                     NavHost(navController, startDestination = Route.Temporary, Modifier) {
                         composable<Route.Temporary> {
                             TemporaryScreen {
-                                navController.navigate(Route.CreatePost)
+                                navController.navigate(Route.CreatePostNavGraph)
                             }
                         }
                         createPostNavGraph()
