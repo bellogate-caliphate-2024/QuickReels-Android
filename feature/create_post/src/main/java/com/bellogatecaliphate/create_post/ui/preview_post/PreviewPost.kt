@@ -44,13 +44,13 @@ private fun VideoPreview(modifier : Modifier , videoPath : String) {
 		}
 	}
 	
-	DisposableEffect(
-		AndroidView(
-			modifier = modifier ,
-			factory = {
-				PlayerView(context).apply { player = exoPlayer }
-			})
-	) {
+	AndroidView(
+		modifier = modifier ,
+		factory = {
+			PlayerView(context).apply { player = exoPlayer }
+		})
+	
+	DisposableEffect(Unit) {
 		onDispose { exoPlayer.release() }
 	}
 	
