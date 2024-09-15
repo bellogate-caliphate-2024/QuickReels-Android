@@ -28,16 +28,17 @@ import com.bellogatecaliphate.create_post.util.getStorageManifestPermission
 import com.bellogatecaliphate.create_post.util.video_trimer.utils.TrimVideo
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.rememberPermissionState
-import com.bellogatecaliphate.create_post.ui.preview_post.PreviewPost
 
 @Composable
-fun CreatePostScreen(viewModel: CreatePostScreenViewModel = hiltViewModel()) {
+fun CreatePostScreen(
+    viewModel: CreatePostScreenViewModel = hiltViewModel(), onPostReadyForPreview: () -> Unit = {}
+) {
     val context = LocalContext.current.getActivity()
     val videoTrimResultLauncher =
         rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
             val data = result.data
             if (result.resultCode == Activity.RESULT_OK && data != null && data.data != null) {
-                viewModel.showPreviewPost()
+                onPostReadyForPreview()
             }
         }
     CreatePostScreen(
@@ -68,7 +69,6 @@ private fun CreatePostScreen(
                 onVideoFileSelected
             )
         }
-        UiState.PreviewPost -> PreviewPost()
     }
 }
 
@@ -97,5 +97,5 @@ private fun VideoRecorderScreenDefaultState(openGallery: () -> Unit) {
 @Preview(showBackground = true)
 @Composable
 private fun Preview() {
-    CreatePostScreen()
+    CreatePostScreen {}
 }
