@@ -31,7 +31,7 @@ import com.google.accompanist.permissions.rememberPermissionState
 import com.bellogatecaliphate.create_post.ui.preview_post.PreviewPost
 
 @Composable
-fun CreatePostRoute(viewModel: CreatePostScreenViewModel = hiltViewModel()) {
+fun CreatePostScreen(viewModel: CreatePostScreenViewModel = hiltViewModel()) {
     val context = LocalContext.current.getActivity()
     val videoTrimResultLauncher =
         rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
@@ -97,5 +97,5 @@ private fun VideoRecorderScreenDefaultState(openGallery: () -> Unit) {
 @Preview(showBackground = true)
 @Composable
 private fun Preview() {
-    CreatePostRoute()
+    CreatePostScreen()
 }

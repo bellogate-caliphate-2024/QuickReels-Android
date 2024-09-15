@@ -14,7 +14,9 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navigation
 import com.bellogatecaliphate.core.model.Route
+import com.bellogatecaliphate.create_post.navigation.createPostNavGraph
 import com.bellogatecaliphate.quickreels.ui.theme.QuickReelsTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -36,6 +38,7 @@ class MainActivity : ComponentActivity() {
                                 navController.navigate(Route.CreatePost)
                             }
                         }
+                        createPostNavGraph()
                     }
                 }
             }

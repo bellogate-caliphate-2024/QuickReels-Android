@@ -43,6 +43,7 @@ android {
 
 dependencies {
 
+    implementation(project(":core"))
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -68,6 +69,8 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.permission)
     implementation(libs.gson)
+    // navigation graph
+    implementation(libs.navigation.graph)
 
     implementation("com.google.android.exoplayer:exoplayer:2.17.1")
     implementation("com.arthenica:ffmpeg-kit-min:6.0-1")
