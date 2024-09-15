@@ -16,6 +16,7 @@ material = "1.10.0"
 hiltVersion = "2.44"
 nav_version = "2.8.0"
 bottom_nav_version = "1.5.3"
+roomRuntime = "2.6.1"
 uiautomatorV18 = "2.2.0-alpha1"
 uitoolingpreview_version = "1.6.8"
 permission = "0.36.0"
@@ -26,6 +27,9 @@ exoplayer = "1.4.1"
 [libraries]
 androidx-activity-ktx = { module = "androidx.activity:activity-ktx", version.ref = "activityKtx" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomRuntime" }
+androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "roomRuntime" }
+androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomRuntime" }
 compiler = { module = "com.github.bumptech.glide:compiler", version.ref = "glide" }
 glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -57,6 +61,8 @@ gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
 exoplayer = { group = "androidx.media3", name = "media3-exoplayer", version.ref = "exoplayer" }
 exoplayer-ui = { group = "androidx.media3", name = "media3-ui", version.ref = "exoplayer" }
 exoplayer-common = { group = "androidx.media3", name = "media3-common", version.ref = "exoplayer" }
+
+
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
