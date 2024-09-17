@@ -1,6 +1,7 @@
 plugins {
 	alias(libs.plugins.androidLibrary)
 	alias(libs.plugins.jetbrainsKotlinAndroid)
+	alias(libs.plugins.hilt)
 	alias(libs.plugins.serialization)
 	id("kotlin-kapt")
 }
@@ -51,4 +52,7 @@ dependencies {
 	kapt(libs.room.compiler)
 	implementation(libs.room.ktx)
 	implementation(libs.room.testing)
+	// hilt
+	implementation(libs.hilt)
+	kapt(libs.hilt.compiler)
 }
