@@ -44,10 +44,4 @@ dependencies {
 	androidTestImplementation(libs.androidx.espresso.core)
 	// serialization
 	implementation(libs.kotlinx.serialization.json)
-	
-	// Room
-	implementation(libs.androidx.room.runtime)
-	annotationProcessor(libs.androidx.room.compiler)
-	kapt(libs.androidx.room.compiler)
-	implementation(libs.androidx.room.ktx)
 }

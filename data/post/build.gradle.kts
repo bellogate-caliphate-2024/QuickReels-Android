@@ -1,6 +1,8 @@
 plugins {
 	alias(libs.plugins.androidLibrary)
 	alias(libs.plugins.jetbrainsKotlinAndroid)
+	alias(libs.plugins.serialization)
+	id("kotlin-kapt")
 }
 
 android {
@@ -40,4 +42,13 @@ dependencies {
 	testImplementation(libs.junit)
 	androidTestImplementation(libs.androidx.junit)
 	androidTestImplementation(libs.androidx.espresso.core)
+	// work manager
+	implementation(libs.workmanger)
+	androidTestImplementation(libs.workmanger.test)
+	// Room
+	implementation(libs.room.runtime)
+	annotationProcessor(libs.room.compiler)
+	kapt(libs.room.compiler)
+	implementation(libs.room.ktx)
+	implementation(libs.room.testing)
 }
