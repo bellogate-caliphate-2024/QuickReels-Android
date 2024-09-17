@@ -1,4 +1,4 @@
-package com.bellogatecaliphate.data
+package com.bellogatecaliphate.post
 
 import org.junit.Test
 

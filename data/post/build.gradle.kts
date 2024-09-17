@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-	namespace = "com.bellogatecaliphate.data"
+	namespace = "com.bellogatecaliphate.post"
 	compileSdk = 34
 	
 	defaultConfig {

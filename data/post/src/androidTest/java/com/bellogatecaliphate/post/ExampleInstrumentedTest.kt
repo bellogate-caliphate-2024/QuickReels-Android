@@ -1,4 +1,4 @@
-package com.bellogatecaliphate.data
+package com.bellogatecaliphate.post
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -19,6 +19,6 @@ class ExampleInstrumentedTest {
 	fun useAppContext() {
 		// Context of the app under test.
 		val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-		assertEquals("com.bellogatecaliphate.data.test" , appContext.packageName)
+		assertEquals("com.bellogatecaliphate.post.test" , appContext.packageName)
 	}
 }
