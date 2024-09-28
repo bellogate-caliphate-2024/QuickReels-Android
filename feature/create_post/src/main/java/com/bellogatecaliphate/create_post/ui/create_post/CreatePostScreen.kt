@@ -1,4 +1,4 @@
-package com.bellogatecaliphate.create_post.ui
+package com.bellogatecaliphate.create_post.ui.create_post
 
 import android.app.Activity
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -31,33 +31,33 @@ import com.google.accompanist.permissions.rememberPermissionState
 
 @Composable
 fun CreatePostScreen(
-	viewModel : CreatePostScreenViewModel = hiltViewModel() ,
-	onPostReadyForPreview : (videoPath : String) -> Unit = {}
+	viewModel: CreatePostScreenViewModel = hiltViewModel(),
+	onPostReadyForPreview: (videoPath: String) -> Unit = {}
 ) {
 	val context = LocalContext.current.getActivity()
 	val videoTrimResultLauncher =
-			rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { result : ActivityResult ->
+			rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
 				val data = result.data
 				if (result.resultCode == Activity.RESULT_OK && data != null) {
 					onPostReadyForPreview(TrimVideo.getTrimmedVideoPath(data))
 				}
 			}
 	CreatePostScreen(
-		viewModel.state.collectAsStateWithLifecycle().value ,
-		viewModel::requestPermissionAndOpenGallery ,
+		viewModel.state.collectAsStateWithLifecycle().value,
+		viewModel::requestPermissionAndOpenGallery,
 		viewModel::resetToDefault
 	) { data ->
-		TrimVideo.activity(data).start(context , videoTrimResultLauncher)
+		TrimVideo.activity(data).start(context, videoTrimResultLauncher)
 	}
 }
 
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
 private fun CreatePostScreen(
-	uiState : UiState ,
-	openGallery : () -> Unit ,
-	onPermissionRationaleDismissed : () -> Unit ,
-	onVideoFileSelected : (String) -> Unit
+	uiState: UiState,
+	openGallery: () -> Unit,
+	onPermissionRationaleDismissed: () -> Unit,
+	onVideoFileSelected: (String) -> Unit
 ) {
 	val storagePermission = rememberPermissionState(getStorageManifestPermission())
 	when (uiState) {
@@ -67,9 +67,9 @@ private fun CreatePostScreen(
 		
 		UiState.RequestStoragePermissionAndOpenGallery -> {
 			VideoFilePicker(
-				storagePermission ,
-				storagePermission::launchPermissionRequest ,
-				onPermissionRationaleDismissed ,
+				storagePermission,
+				storagePermission::launchPermissionRequest,
+				onPermissionRationaleDismissed,
 				onVideoFileSelected
 			)
 		}
@@ -77,7 +77,7 @@ private fun CreatePostScreen(
 }
 
 @Composable
-private fun VideoRecorderScreenDefaultState(openGallery : () -> Unit) {
+private fun VideoRecorderScreenDefaultState(openGallery: () -> Unit) {
 	Box(
 		modifier = Modifier
 			.fillMaxSize()
@@ -90,8 +90,8 @@ private fun VideoRecorderScreenDefaultState(openGallery : () -> Unit) {
 				.padding(10.dp)
 				.align(Alignment.BottomCenter)
 		) {
-			TextButton(onClick = openGallery , modifier = Modifier.align(Alignment.BottomCenter)) {
-				Text("Select Video" , fontSize = 20.sp)
+			TextButton(onClick = openGallery, modifier = Modifier.align(Alignment.BottomCenter)) {
+				Text("Select Video", fontSize = 20.sp)
 			}
 		}
 	}

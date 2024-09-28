@@ -1,17 +1,14 @@
 plugins {
 	alias(libs.plugins.androidLibrary)
 	alias(libs.plugins.jetbrainsKotlinAndroid)
-	alias(libs.plugins.hilt)
-	alias(libs.plugins.serialization)
-	id("kotlin-kapt")
 }
 
 android {
-	namespace = "com.bellogatecaliphate.post"
+	namespace = "com.bellogatecaliphate.domain"
 	compileSdk = 34
 	
 	defaultConfig {
-		minSdk = 28
+		minSdk = 24
 		
 		testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 		consumerProguardFiles("consumer-rules.pro")
@@ -44,16 +41,4 @@ dependencies {
 	testImplementation(libs.junit)
 	androidTestImplementation(libs.androidx.junit)
 	androidTestImplementation(libs.androidx.espresso.core)
-	// work manager
-	implementation(libs.androidx.work.runtime.ktx)
-	implementation(libs.androidx.work.runtime.ktx.test)
-	// Room
-	implementation(libs.room.runtime)
-	annotationProcessor(libs.room.compiler)
-	kapt(libs.room.compiler)
-	implementation(libs.room.ktx)
-	implementation(libs.room.testing)
-	// hilt
-	implementation(libs.hilt)
-	kapt(libs.hilt.compiler)
 }

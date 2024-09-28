@@ -1,0 +1,5 @@
+<resources>notification_title
+    <string name="app_name">QuickReels</string>
+    <string name="notification_title">Uploading Post</string>
+    <string name="cancel_upload">Cancel</string>
+</resources>

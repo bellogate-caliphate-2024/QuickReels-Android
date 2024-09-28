@@ -23,7 +23,7 @@ permission = "0.36.0"
 gson = "2.9.0"
 serialization = "1.7.10"
 exoplayer = "1.4.1"
-work_manager_version = "2.9.1"
+workRuntimeKtx = "2.9.1"
 
 [libraries]
 androidx-activity-ktx = { module = "androidx.activity:activity-ktx", version.ref = "activityKtx" }
@@ -59,13 +59,12 @@ viewmodel-compose = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-
 androidx-uiautomator-v18 = { group = "androidx.test.uiautomator", name = "uiautomator-v18", version.ref = "uiautomatorV18" }
 permission = { group = "com.google.accompanist", name = "accompanist-permissions", version.ref = "permission" }
 gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
-
 exoplayer = { group = "androidx.media3", name = "media3-exoplayer", version.ref = "exoplayer" }
 exoplayer-ui = { group = "androidx.media3", name = "media3-ui", version.ref = "exoplayer" }
 exoplayer-common = { group = "androidx.media3", name = "media3-common", version.ref = "exoplayer" }
+androidx-work-runtime-ktx = { group = "androidx.work", name = "work-runtime-ktx", version.ref = "workRuntimeKtx" }
+androidx-work-runtime-ktx-test = { group = "androidx.work", name = "work-testing", version.ref = "workRuntimeKtx" }
 
-workmanger = { group = "androidx.work", name = "work-runtime-ktx", version = "work_manager_version" }
-workmanger-test = { group = "androidx.work", name = "work-testing", version = "work_manager_version" }
 
 
 [plugins]
