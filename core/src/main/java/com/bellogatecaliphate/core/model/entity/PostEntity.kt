@@ -6,12 +6,12 @@ data class PostEntity(
 	val userId: String,
 	val time: String,
 	val description: String,
-	val status: STATUS = STATUS.PENDING
+	val status: Status = Status.Pending
 ) {
-	enum class STATUS {
-		PENDING,
-		IN_PROGRESS,
-		SUCCESS,
-		FAILED
+	enum class Status {
+		Pending,
+		InProgress,
+		Success,
+		Failed
 	}
 }

@@ -1,6 +1,8 @@
 package com.bellogatecaliphate.create_post.ui.create_post
 
 import android.app.Activity
+import android.content.Intent
+import androidx.activity.compose.ManagedActivityResultLauncher
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -35,17 +37,10 @@ fun CreatePostScreen(
 	onPostReadyForPreview: (videoPath: String) -> Unit = {}
 ) {
 	val context = LocalContext.current.getActivity()
-	val videoTrimResultLauncher =
-			rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
-				val data = result.data
-				if (result.resultCode == Activity.RESULT_OK && data != null) {
-					onPostReadyForPreview(TrimVideo.getTrimmedVideoPath(data))
-				}
-			}
+	val videoTrimResultLauncher = activityLauncher(onPostReadyForPreview)
 	CreatePostScreen(
 		viewModel.state.collectAsStateWithLifecycle().value,
-		viewModel::requestPermissionAndOpenGallery,
-		viewModel::resetToDefault
+		viewModel::requestPermissionAndOpenGallery
 	) { data ->
 		TrimVideo.activity(data).start(context, videoTrimResultLauncher)
 	}
@@ -56,28 +51,21 @@ fun CreatePostScreen(
 private fun CreatePostScreen(
 	uiState: UiState,
 	openGallery: () -> Unit,
-	onPermissionRationaleDismissed: () -> Unit,
 	onVideoFileSelected: (String) -> Unit
 ) {
 	val storagePermission = rememberPermissionState(getStorageManifestPermission())
-	when (uiState) {
-		UiState.Default                                -> VideoRecorderScreenDefaultState(
-			openGallery
+	MainScreen(openGallery)
+	if (uiState.requestStoragePermissionAndOpenGallery) {
+		VideoFilePicker(
+			storagePermission,
+			storagePermission::launchPermissionRequest,
+			onVideoFileSelected
 		)
-		
-		UiState.RequestStoragePermissionAndOpenGallery -> {
-			VideoFilePicker(
-				storagePermission,
-				storagePermission::launchPermissionRequest,
-				onPermissionRationaleDismissed,
-				onVideoFileSelected
-			)
-		}
 	}
 }
 
 @Composable
-private fun VideoRecorderScreenDefaultState(openGallery: () -> Unit) {
+private fun MainScreen(openGallery: () -> Unit) {
 	Box(
 		modifier = Modifier
 			.fillMaxSize()
@@ -93,6 +81,16 @@ private fun VideoRecorderScreenDefaultState(openGallery: () -> Unit) {
 			TextButton(onClick = openGallery, modifier = Modifier.align(Alignment.BottomCenter)) {
 				Text("Select Video", fontSize = 20.sp)
 			}
+		}
+	}
+}
+
+@Composable
+private fun activityLauncher(onPostReadyForPreview: (videoPath: String) -> Unit): ManagedActivityResultLauncher<Intent, ActivityResult> {
+	return rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+		val data = result.data
+		if (result.resultCode == Activity.RESULT_OK && data != null) {
+			onPostReadyForPreview(TrimVideo.getTrimmedVideoPath(data))
 		}
 	}
 }

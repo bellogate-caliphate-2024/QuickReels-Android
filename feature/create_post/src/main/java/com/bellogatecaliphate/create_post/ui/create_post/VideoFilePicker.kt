@@ -7,7 +7,6 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -23,7 +22,6 @@ import com.google.accompanist.permissions.shouldShowRationale
 fun VideoFilePicker(
 	storagePermission: PermissionState,
 	requestPermission: () -> Unit,
-	onPermissionRationaleDismissed: () -> Unit,
 	onVideoFileSelected: (String) -> Unit
 ) {
 	
@@ -35,29 +33,18 @@ fun VideoFilePicker(
 	intent.setData(uri)
 	
 	when {
-		status.isGranted -> {
-			VideoFileGallery(onVideoFileSelected)
-		}
-		
+		status.isGranted -> VideoFileGallery(onVideoFileSelected)
 		status.shouldShowRationale -> {
 			StoragePermissionRationalDialog(
-				onDismissRequest = {
-					openAlertDialog.value = false
-					onPermissionRationaleDismissed()
-				},
+				onDismissRequest = { openAlertDialog.value = false },
 				onConfirmation = {
 					openAlertDialog.value = false
 					context.startActivity(intent)
-					onPermissionRationaleDismissed()
 				}
 			)
 		}
 		
 		! status.isGranted -> requestPermission()
-	}
-	
-	DisposableEffect(Unit) {
-		onDispose { if (! status.isGranted) onPermissionRationaleDismissed() }
 	}
 }
 
