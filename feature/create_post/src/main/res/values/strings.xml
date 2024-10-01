@@ -22,4 +22,5 @@
     <string name="open_file_location">Open file location?</string>
     <string name="videoCaptionTextIsNotProvided">Please type in a caption</string>
     <string name="upload_post_confirmation_message">Do you want to upload this post?</string>
+    <string name="uploading_in_progress">Uploading...</string>
 </resources>

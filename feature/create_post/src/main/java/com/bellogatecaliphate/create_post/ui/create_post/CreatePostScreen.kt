@@ -8,6 +8,7 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -24,7 +25,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.bellogatecaliphate.core.model.dto.Post
 import com.bellogatecaliphate.create_post.model.UiState
+import com.bellogatecaliphate.create_post.ui.create_post.upload_status.UploadStatusCard
 import com.bellogatecaliphate.create_post.util.getActivity
 import com.bellogatecaliphate.create_post.util.getStorageManifestPermission
 import com.bellogatecaliphate.create_post.util.video_trimer.utils.TrimVideo
@@ -34,16 +37,16 @@ import com.google.accompanist.permissions.rememberPermissionState
 @Composable
 fun CreatePostScreen(
 	viewModel: CreatePostScreenViewModel = hiltViewModel(),
-	onPostReadyForPreview: (videoPath: String) -> Unit = {}
+	onPostReadyForPreview: (videoPath: String) -> Unit = {},
+	onPostClicked: (Post) -> Unit = {},
 ) {
 	val context = LocalContext.current.getActivity()
 	val videoTrimResultLauncher = activityLauncher(onPostReadyForPreview)
 	CreatePostScreen(
 		viewModel.state.collectAsStateWithLifecycle().value,
-		viewModel::requestPermissionAndOpenGallery
-	) { data ->
-		TrimVideo.activity(data).start(context, videoTrimResultLauncher)
-	}
+		viewModel::requestPermissionAndOpenGallery,
+		onPostClicked,
+	) { data -> TrimVideo.activity(data).start(context, videoTrimResultLauncher) }
 }
 
 @OptIn(ExperimentalPermissionsApi::class)
@@ -51,10 +54,11 @@ fun CreatePostScreen(
 private fun CreatePostScreen(
 	uiState: UiState,
 	openGallery: () -> Unit,
-	onVideoFileSelected: (String) -> Unit
+	onPostClicked: (Post) -> Unit,
+	onVideoFileSelected: (String) -> Unit,
 ) {
 	val storagePermission = rememberPermissionState(getStorageManifestPermission())
-	MainScreen(openGallery)
+	MainScreen(uiState.uploadsInProgress, openGallery, onPostClicked)
 	if (uiState.requestStoragePermissionAndOpenGallery) {
 		VideoFilePicker(
 			storagePermission,
@@ -65,12 +69,34 @@ private fun CreatePostScreen(
 }
 
 @Composable
-private fun MainScreen(openGallery: () -> Unit) {
+private fun MainScreen(
+	uploadsInProgress: List<Post>,
+	openGallery: () -> Unit,
+	onPostClicked: (Post) -> Unit
+) {
 	Box(
 		modifier = Modifier
 			.fillMaxSize()
 			.background(color = Color.Black)
 	) {
+		Box(
+			modifier = Modifier
+				.fillMaxWidth()
+				.background(color = Color.White)
+				.padding(10.dp)
+				.align(Alignment.TopCenter)
+		) {
+			Column {
+				uploadsInProgress.forEach { post ->
+					UploadStatusCard(
+						post.caption,
+						post.time,
+						post.uploadProgressPercentage,
+						post.thumbnailBase64String
+					) { onPostClicked(post) }
+				}
+			}
+		}
 		Box(
 			modifier = Modifier
 				.fillMaxWidth()

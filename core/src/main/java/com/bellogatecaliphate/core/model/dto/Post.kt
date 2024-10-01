@@ -10,10 +10,20 @@ data class Post(
 	val videoFilePath: String,
 	val userId: String,
 	val time: String,
-	val description: String
+	val caption: String,
+	val uploadProgressPercentage: String,
+	val thumbnailBase64String: String?
 ) {
 	
 	fun toPostEntity(): PostEntity {
-		return PostEntity(id, videoFilePath, userId, time, description)
+		return PostEntity(
+			id,
+			videoFilePath,
+			userId,
+			time,
+			caption,
+			uploadProgressPercentage,
+			thumbnailBase64String
+		)
 	}
 }

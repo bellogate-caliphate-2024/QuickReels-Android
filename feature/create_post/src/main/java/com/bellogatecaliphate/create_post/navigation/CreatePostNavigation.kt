@@ -13,9 +13,14 @@ import com.bellogatecaliphate.create_post.ui.preview_post.PreviewPost
 fun NavGraphBuilder.createPostNavGraph(navController: NavHostController) {
 	navigation<Route.CreatePostNavGraph>(startDestination = Route.CreatePost::class) {
 		composable<Route.CreatePost> {
-			CreatePostScreen { videoPath ->
-				navController.navigate(Route.PreviewPost(videoPath))
-			}
+			CreatePostScreen(
+				onPostReadyForPreview = { videoPath ->
+					navController.navigate(Route.PreviewPost(videoPath))
+				},
+				onPostClicked = { post ->
+				
+				}
+			)
 		}
 		composable<Route.PreviewPost> { backStackEntry ->
 			val previewPost = backStackEntry.toRoute<Route.PreviewPost>()

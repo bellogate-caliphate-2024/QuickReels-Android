@@ -5,11 +5,12 @@ data class PostEntity(
 	val videoFilePath: String,
 	val userId: String,
 	val time: String,
-	val description: String,
-	val status: Status = Status.Pending
+	val caption: String,
+	val uploadProgressPercentage: String,
+	val thumbnailBase64String: String?,
+	val status: Status = Status.InProgress,
 ) {
 	enum class Status {
-		Pending,
 		InProgress,
 		Success,
 		Failed
