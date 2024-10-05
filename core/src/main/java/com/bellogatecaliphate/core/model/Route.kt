@@ -25,7 +25,11 @@ sealed class Route(@DrawableRes val icon: Int) {
 	data object CreatePost : Route(R.drawable.ic_launcher_foreground)
 	
 	@Serializable
-	data class PreviewPost(val videoPath: String) : Route(R.drawable.ic_launcher_foreground)
+	data class PreviewPost(
+		val videoPath: String,
+		val videoCaption: String?,
+		val editable: Boolean
+	) : Route(R.drawable.ic_launcher_foreground)
 	
 	@Serializable
 	data class ConfirmPost(val post: Post) : Route(R.drawable.ic_launcher_foreground)

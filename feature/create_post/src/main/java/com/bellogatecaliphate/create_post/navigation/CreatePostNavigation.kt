@@ -14,19 +14,25 @@ fun NavGraphBuilder.createPostNavGraph(navController: NavHostController) {
 	navigation<Route.CreatePostNavGraph>(startDestination = Route.CreatePost::class) {
 		composable<Route.CreatePost> {
 			CreatePostScreen(
-				onPostReadyForPreview = { videoPath ->
-					navController.navigate(Route.PreviewPost(videoPath))
+				onPostReadyForPreview = { videoPath, videoCaption, editable ->
+					navController.navigate(Route.PreviewPost(videoPath, videoCaption, editable))
 				},
 				onPostClicked = { post ->
-				
+					navController.navigate(
+						Route.PreviewPost(post.videoFilePath, post.caption, false)
+					)
 				}
 			)
 		}
 		composable<Route.PreviewPost> { backStackEntry ->
 			val previewPost = backStackEntry.toRoute<Route.PreviewPost>()
-			PreviewPost(previewPost.videoPath, { post ->
-				navController.navigate(Route.ConfirmPost(post))
-			})
+			PreviewPost(
+				previewPost.videoPath,
+				previewPost.videoCaption,
+				previewPost.editable,
+				{ post ->
+					navController.navigate(Route.ConfirmPost(post))
+				})
 		}
 		composable<Route.ConfirmPost> {
 			val post = it.toRoute<Route.ConfirmPost>().post

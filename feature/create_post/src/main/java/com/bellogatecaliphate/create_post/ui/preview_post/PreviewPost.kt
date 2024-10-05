@@ -33,11 +33,13 @@ import com.bellogatecaliphate.create_post.ui.preview_post.model.PreviewPostUiSta
 @Composable
 fun PreviewPost(
 	videoPath: String,
+	caption: String?,
+	isReadOnly: Boolean,
 	onShowConfirmationBottomSheet: (post: Post) -> Unit,
 	viewModel: PreviewPostViewModel = hiltViewModel(),
 ) {
 	val state = viewModel.state.collectAsStateWithLifecycle()
-	PreviewPost(videoPath, state.value, { videoCaption ->
+	PreviewPost(videoPath, caption, isReadOnly, state.value, { videoCaption ->
 		viewModel.validateVideoCaption(videoPath, videoCaption)
 	}, onShowConfirmationBottomSheet)
 }
@@ -45,24 +47,30 @@ fun PreviewPost(
 @Composable
 private fun PreviewPost(
 	videoPath: String,
+	caption: String?,
+	editable: Boolean,
 	uiState: PreviewPostUiState,
 	onSendButtonClicked: (videoCaption: String) -> Unit,
 	onShowConfirmationBottomSheet: (post: Post) -> Unit
 ) {
-	var videoCaption by rememberSaveable { mutableStateOf("") }
+	var text by rememberSaveable { mutableStateOf(caption ?: "") }
 	
 	Column(Modifier.fillMaxSize()) {
 		VideoPreview(Modifier.weight(1f), videoPath)
-		videoCaptionSection(videoCaption) { videoCaption = it }
-		SendButton { onSendButtonClicked(videoCaption) }
+		videoCaptionSection(editable, text) { text = it }
+		if (editable) {
+			SendButton { onSendButtonClicked(text) }
+		}
 	}
 	when {
 		uiState.videoCaptionTextIsNotProvided -> {
 			VideoCaptureNotProvidedPrompt()
 		}
 		
-		uiState.showConfirmationBottomSheet -> {
-			if (uiState.post != null) { onShowConfirmationBottomSheet(uiState.post) }
+		uiState.showConfirmationBottomSheet   -> {
+			if (uiState.post != null) {
+				onShowConfirmationBottomSheet(uiState.post)
+			}
 		}
 	}
 }
@@ -100,9 +108,14 @@ private fun VideoPreview(modifier: Modifier, videoPath: String) {
 }
 
 @Composable
-private fun videoCaptionSection(descriptionText: String, onValueChange: (String) -> Unit) {
+private fun videoCaptionSection(
+	isReadOnly: Boolean,
+	descriptionText: String?,
+	onValueChange: (String) -> Unit
+) {
 	OutlinedTextField(modifier = Modifier.fillMaxWidth(),
-		value = descriptionText,
+		value = descriptionText ?: "",
+		readOnly = isReadOnly,
 		onValueChange = onValueChange,
 		label = { Text("Add a caption...") })
 }
@@ -117,5 +130,5 @@ private fun SendButton(onClick: () -> Unit) {
 @Preview(showBackground = true)
 @Composable
 private fun PreviewPostPreview() {
-	PreviewPost("", { })
+	PreviewPost("", "", true, { })
 }
