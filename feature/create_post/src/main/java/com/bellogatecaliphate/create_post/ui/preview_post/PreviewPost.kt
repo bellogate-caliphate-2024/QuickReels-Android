@@ -57,7 +57,7 @@ private fun PreviewPost(
 	
 	Column(Modifier.fillMaxSize()) {
 		VideoPreview(Modifier.weight(1f), videoPath)
-		videoCaptionSection(editable, text) { text = it }
+		VideoCaptionSection(editable, text) { text = it }
 		if (editable) {
 			SendButton { onSendButtonClicked(text) }
 		}
@@ -108,7 +108,7 @@ private fun VideoPreview(modifier: Modifier, videoPath: String) {
 }
 
 @Composable
-private fun videoCaptionSection(
+private fun VideoCaptionSection(
 	isReadOnly: Boolean,
 	descriptionText: String?,
 	onValueChange: (String) -> Unit
