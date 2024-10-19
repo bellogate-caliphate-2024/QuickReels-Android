@@ -1,4 +1,4 @@
-package com.bellogatecaliphate.core.model.util
+package com.bellogatecaliphate.core.common.util
 
 import java.security.SecureRandom
 

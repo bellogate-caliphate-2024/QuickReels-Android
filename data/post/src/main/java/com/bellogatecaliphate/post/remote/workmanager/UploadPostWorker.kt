@@ -3,17 +3,18 @@ package com.bellogatecaliphate.post.remote.workmanager
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
-import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.work.CoroutineWorker
 import androidx.work.Data
 import androidx.work.ForegroundInfo
 import androidx.work.WorkManager
 import androidx.work.WorkerParameters
+import com.bellogatecaliphate.core.source.database.entity.PostEntity
 import com.bellogatecaliphate.post.R
 import com.bellogatecaliphate.post.local.IPostLocalDataSource
 import com.bellogatecaliphate.post.remote.IPostRemoteDataSource
-import com.bellogatecaliphate.post.remote.model.CreatePostRequest
+import com.bellogatecaliphate.post.util.createPostEntity
+import com.bellogatecaliphate.post.util.createPostRequest
 
 private const val DEFAULT_NOTIFICATION_ID = "00000000"
 
@@ -29,44 +30,31 @@ internal class UploadPostWorker(
 	}
 	
 	override suspend fun doWork(): Result {
-		val result = savePost(inputData)
-		return if (result) {
-			syncPost(inputData)
-		} else {
+		savePost(inputData)
+		return syncPost(inputData)
+	}
+	
+	private suspend fun savePost(inputData: Data) {
+		localDataSource.savePost(createPostEntity(inputData))
+	}
+	
+	private suspend fun syncPost(inputData: Data): Result {
+		val request = createPostRequest(inputData)
+		return try {
+			remoteDataSource.uploadPost(request)
+			updatePostStatus(request.id, PostEntity.Status.Success)
+			Result.success()
+		}
+		catch (e: Exception) {
+			updatePostStatus(request.id, PostEntity.Status.Failed)
 			Result.failure()
 		}
 	}
 	
-	private suspend fun savePost(inputData: Data): Boolean {
-		val post = createPostRequest(inputData)
-		if (post != null) {
-			localDataSource.savePost(post.toPostEntity())
-			return true
-		} else return false
-	}
-	
-	private suspend fun syncPost(inputData: Data): Result {
-		val post = createPostRequest(inputData) ?: return Result.failure()
-		val result = remoteDataSource.uploadPost(post)
-		return if (result == null) Result.success() else Result.failure()
-	}
-	
-	private fun createPostRequest(inputData: Data): CreatePostRequest? {
-		val videoId = inputData.getString("videoId")
-		val videoFilePath = inputData.getString("videoFilePath")
-		val userId = inputData.getString("userId")
-		val time = inputData.getString("time")
-		val description = inputData.getString("description")
-		
-		if (videoId != null &&
-		    videoFilePath != null &&
-		    userId != null &&
-		    time != null &&
-		    description != null
-		) {
-			return CreatePostRequest(videoId, videoFilePath, userId, time, description)
-		}
-		return null
+	private suspend fun updatePostStatus(postId: String, status: PostEntity.Status) {
+		val savedPost =
+				localDataSource.getPostById(postId)?.copy(status = status)
+		savedPost?.let { localDataSource.savePost(it) }
 	}
 	
 	private fun createForegroundInfo(notificationId: String): ForegroundInfo {
@@ -76,9 +64,7 @@ internal class UploadPostWorker(
 		val intent = WorkManager.getInstance(applicationContext).createCancelPendingIntent(id)
 		
 		// Create a Notification channel if necessary
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-			createNotificationChannel(applicationContext, notificationId)
-		}
+		createNotificationChannel(applicationContext, notificationId)
 		
 		val notification = NotificationCompat.Builder(applicationContext, notificationId)
 			.setContentTitle(title)
@@ -95,15 +81,13 @@ internal class UploadPostWorker(
 	}
 	
 	private fun createNotificationChannel(context: Context, notificationId: String) {
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-			val channelName = "My Channel Name"
-			val importance = NotificationManager.IMPORTANCE_DEFAULT
-			val channel = NotificationChannel(notificationId, channelName, importance)
-			channel.description = "This is my channel description"
-			
-			val notificationManager =
-					context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-			notificationManager.createNotificationChannel(channel)
-		}
+		val channelName = "My Channel Name"
+		val importance = NotificationManager.IMPORTANCE_DEFAULT
+		val channel = NotificationChannel(notificationId, channelName, importance)
+		channel.description = "This is my channel description"
+		
+		val notificationManager =
+				context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+		notificationManager.createNotificationChannel(channel)
 	}
 }

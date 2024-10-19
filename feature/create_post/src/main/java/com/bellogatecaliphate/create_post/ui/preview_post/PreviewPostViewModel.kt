@@ -4,8 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bellogatecaliphate.core.model.dto.Post
 import com.bellogatecaliphate.create_post.ui.preview_post.model.PreviewPostUiState
+import com.bellogatecaliphate.domain.post.GetVideoThumbnailUseCase
 import com.bellogatecaliphate.domain.user.GetUserInfoUseCase
-import com.bellogatecaliphate.domain.user.GetVideoThumbnailUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -39,7 +39,7 @@ class PreviewPostViewModel @Inject constructor(
 			userId = getUserInfoUseCase()?.id ?: "",
 			time = LocalDateTime.now().toString(),
 			caption = videoCaption,
-			uploadProgressPercentage = "",
+			uploadProgressPercentage = "0",
 			thumbnailBase64String = getVideoThumbnailUseCase(videoPath)
 		)
 	}

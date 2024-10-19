@@ -1,4 +1,4 @@
-package com.bellogatecaliphate.domain.user
+package com.bellogatecaliphate.domain.post
 
 import android.graphics.Bitmap
 import android.media.ThumbnailUtils

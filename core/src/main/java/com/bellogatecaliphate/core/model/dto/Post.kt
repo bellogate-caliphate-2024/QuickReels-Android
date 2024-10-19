@@ -1,7 +1,6 @@
 package com.bellogatecaliphate.core.model.dto
 
-import com.bellogatecaliphate.core.model.entity.PostEntity
-import com.bellogatecaliphate.core.model.util.generateRandomNumberWithFixedLength
+import com.bellogatecaliphate.core.common.util.generateRandomNumberWithFixedLength
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -13,17 +12,4 @@ data class Post(
 	val caption: String,
 	val uploadProgressPercentage: String,
 	val thumbnailBase64String: String?
-) {
-	
-	fun toPostEntity(): PostEntity {
-		return PostEntity(
-			id,
-			videoFilePath,
-			userId,
-			time,
-			caption,
-			uploadProgressPercentage,
-			thumbnailBase64String
-		)
-	}
-}
+)

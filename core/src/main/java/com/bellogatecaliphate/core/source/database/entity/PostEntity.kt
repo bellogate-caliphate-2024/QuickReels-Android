@@ -1,7 +1,11 @@
-package com.bellogatecaliphate.core.model.entity
+package com.bellogatecaliphate.core.source.database.entity
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity(tableName = "posts")
 data class PostEntity(
-	val id: String,
+	@PrimaryKey val id: String,
 	val videoFilePath: String,
 	val userId: String,
 	val time: String,

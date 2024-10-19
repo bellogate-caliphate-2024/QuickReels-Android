@@ -4,9 +4,10 @@ import androidx.work.OneTimeWorkRequest
 import androidx.work.OutOfQuotaPolicy
 import androidx.work.WorkManager
 import androidx.work.workDataOf
-import com.bellogatecaliphate.core.model.entity.PostEntity
+import com.bellogatecaliphate.core.source.database.entity.PostEntity
+import javax.inject.Inject
 
-internal class PostRepository(
+internal class PostRepository @Inject constructor(
 	private val workManager: WorkManager,
 	private val workRequestBuilder: OneTimeWorkRequest.Builder
 ) : IPostRepository {
@@ -16,7 +17,9 @@ internal class PostRepository(
 		videoFilePath: String,
 		userId: String,
 		time: String,
-		description: String
+		description: String,
+		uploadProgressPercentage: String,
+		thumbnailBase64String: String
 	) {
 		workRequestBuilder
 			.addTag(videoId)
@@ -26,7 +29,9 @@ internal class PostRepository(
 					"videoFilePath" to videoFilePath,
 					"userId" to userId,
 					"time" to time,
-					"description" to description
+					"description" to description,
+					"uploadProgressPercentage" to "",
+					"thumbnailBase64String" to "",
 				)
 			)
 		workRequestBuilder.setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)

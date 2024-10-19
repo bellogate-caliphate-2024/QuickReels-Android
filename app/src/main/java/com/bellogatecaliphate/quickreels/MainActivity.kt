@@ -21,17 +21,17 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-	override fun onCreate(savedInstanceState : Bundle?) {
+	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		setContent {
 			QuickReelsTheme {
 				// A surface container using the 'background' color from the theme
 				Surface(
-					modifier = Modifier.fillMaxSize() ,
+					modifier = Modifier.fillMaxSize(),
 					color = MaterialTheme.colorScheme.background
 				) {
 					val navController = rememberNavController()
-					NavHost(navController , startDestination = Route.Temporary , Modifier) {
+					NavHost(navController, startDestination = Route.Temporary, Modifier) {
 						composable<Route.Temporary> {
 							TemporaryScreen {
 								navController.navigate(Route.CreatePostNavGraph)
@@ -46,7 +46,7 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun TemporaryScreen(onPostClicked : () -> Unit) {
+fun TemporaryScreen(onPostClicked: () -> Unit) {
 	Column {
 		Button(onClick = onPostClicked) {
 			Text(text = "Home")

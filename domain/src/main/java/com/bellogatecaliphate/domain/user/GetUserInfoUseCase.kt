@@ -1,10 +1,12 @@
 package com.bellogatecaliphate.domain.user
 
 import com.bellogatecaliphate.core.model.dto.User
+import com.bellogatecaliphate.user.IUserRepository
+import javax.inject.Inject
 
-class GetUserInfoUseCase {
+class GetUserInfoUseCase @Inject constructor(private val userRepository: IUserRepository) {
 	
-	operator fun invoke(): User? {
-	
+	suspend operator fun invoke(): User? {
+		return userRepository.getUser()?.toUser()
 	}
 }

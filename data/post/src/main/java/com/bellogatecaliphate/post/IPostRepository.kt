@@ -1,15 +1,17 @@
 package com.bellogatecaliphate.post
 
-import com.bellogatecaliphate.core.model.entity.PostEntity
+import com.bellogatecaliphate.core.source.database.entity.PostEntity
 
-internal interface IPostRepository {
+interface IPostRepository {
 	
 	fun uploadPost(
 		videoId: String,
 		videoFilePath: String,
 		userId: String,
 		time: String,
-		description: String
+		description: String,
+		uploadProgressPercentage: String,
+		thumbnailBase64String: String
 	)
 	
 	suspend fun deletePost(postEntity: PostEntity)

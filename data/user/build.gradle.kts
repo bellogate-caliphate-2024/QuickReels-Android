@@ -7,11 +7,11 @@ plugins {
 }
 
 android {
-	namespace = "com.bellogatecaliphate.domain"
+	namespace = "com.bellogatecaliphate.user"
 	compileSdk = 34
 	
 	defaultConfig {
-		minSdk = 24
+		minSdk = 28
 		
 		testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 		consumerProguardFiles("consumer-rules.pro")
@@ -38,14 +38,18 @@ android {
 dependencies {
 	
 	implementation(project(":core"))
-	implementation(project(":data:post"))
-	implementation(project(":data:user"))
 	implementation(libs.androidx.core.ktx)
 	implementation(libs.androidx.appcompat)
 	implementation(libs.material)
 	testImplementation(libs.junit)
 	androidTestImplementation(libs.androidx.junit)
 	androidTestImplementation(libs.androidx.espresso.core)
+	// Room
+	implementation(libs.room.runtime)
+	annotationProcessor(libs.room.compiler)
+	kapt(libs.room.compiler)
+	implementation(libs.room.ktx)
+	implementation(libs.room.testing)
 	// hilt
 	implementation(libs.hilt)
 	kapt(libs.hilt.compiler)

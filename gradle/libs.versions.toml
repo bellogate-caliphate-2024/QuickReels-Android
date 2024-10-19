@@ -24,6 +24,9 @@ gson = "2.9.0"
 serialization = "1.7.10"
 exoplayer = "1.4.1"
 workRuntimeKtx = "2.9.1"
+retrofit = "4.12.0"
+retrofit_converter = "2.3.0"
+okhttp = "4.9.0"
 
 [libraries]
 androidx-activity-ktx = { module = "androidx.activity:activity-ktx", version.ref = "activityKtx" }
@@ -65,7 +68,11 @@ exoplayer-common = { group = "androidx.media3", name = "media3-common", version.
 androidx-work-runtime-ktx = { group = "androidx.work", name = "work-runtime-ktx", version.ref = "workRuntimeKtx" }
 androidx-work-runtime-ktx-test = { group = "androidx.work", name = "work-testing", version.ref = "workRuntimeKtx" }
 
-
+retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
+retrofit-converter-gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit" }
+okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttp" }
+okhttp-logging-interceptor = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttp" }
+okhttp-converter-scalars = { group = "com.squareup.retrofit2", name = "converter-scalars", version.ref = "retrofit_converter" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
