@@ -31,21 +31,21 @@ import com.bellogatecaliphate.create_post.R
 import com.bellogatecaliphate.create_post.ui.preview_post.model.PreviewPostUiState
 
 @Composable
-fun PreviewPost(
+fun PreviewPostScreen(
 	videoPath: String,
 	caption: String?,
 	isReadOnly: Boolean,
 	onShowConfirmationBottomSheet: (post: Post) -> Unit,
-	viewModel: PreviewPostViewModel = hiltViewModel(),
+	viewModel: PreviewPostScreenViewModel = hiltViewModel(),
 ) {
 	val state = viewModel.state.collectAsStateWithLifecycle()
-	PreviewPost(videoPath, caption, isReadOnly, state.value, { videoCaption ->
+	PreviewPostScreen(videoPath, caption, isReadOnly, state.value, { videoCaption ->
 		viewModel.validateVideoCaption(videoPath, videoCaption)
 	}, onShowConfirmationBottomSheet)
 }
 
 @Composable
-private fun PreviewPost(
+private fun PreviewPostScreen(
 	videoPath: String,
 	caption: String?,
 	editable: Boolean,
@@ -130,5 +130,5 @@ private fun SendButton(onClick: () -> Unit) {
 @Preview(showBackground = true)
 @Composable
 private fun PreviewPostPreview() {
-	PreviewPost("", "", true, { })
+	PreviewPostScreen("", "", true, { })
 }

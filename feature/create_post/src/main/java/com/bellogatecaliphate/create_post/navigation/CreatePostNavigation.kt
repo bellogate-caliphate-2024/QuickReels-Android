@@ -8,7 +8,7 @@ import androidx.navigation.toRoute
 import com.bellogatecaliphate.core.model.Route
 import com.bellogatecaliphate.create_post.ui.confirm_post.UploadPostConfirmationDialog
 import com.bellogatecaliphate.create_post.ui.create_post.CreatePostScreen
-import com.bellogatecaliphate.create_post.ui.preview_post.PreviewPost
+import com.bellogatecaliphate.create_post.ui.preview_post.PreviewPostScreen
 
 fun NavGraphBuilder.createPostNavGraph(navController: NavHostController) {
 	navigation<Route.CreatePostNavGraph>(startDestination = Route.CreatePost::class) {
@@ -26,7 +26,7 @@ fun NavGraphBuilder.createPostNavGraph(navController: NavHostController) {
 		}
 		composable<Route.PreviewPost> { backStackEntry ->
 			val previewPost = backStackEntry.toRoute<Route.PreviewPost>()
-			PreviewPost(
+			PreviewPostScreen(
 				previewPost.videoPath,
 				previewPost.videoCaption,
 				previewPost.editable,

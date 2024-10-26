@@ -15,7 +15,7 @@ import java.time.LocalDateTime
 import javax.inject.Inject
 
 @HiltViewModel
-class PreviewPostViewModel @Inject constructor(
+class PreviewPostScreenViewModel @Inject constructor(
 	private val getUserInfoUseCase: GetUserInfoUseCase,
 	private val getVideoThumbnailUseCase: GetVideoThumbnailUseCase
 ) : ViewModel() {

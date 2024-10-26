@@ -17,6 +17,7 @@ import androidx.navigation.compose.rememberNavController
 import com.bellogatecaliphate.core.model.Route
 import com.bellogatecaliphate.create_post.navigation.createPostNavGraph
 import com.bellogatecaliphate.quickreels.ui.theme.QuickReelsTheme
+import com.bellogatecaliphate.timeline.navigation.timelineNavGraph
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -33,11 +34,16 @@ class MainActivity : ComponentActivity() {
 					val navController = rememberNavController()
 					NavHost(navController, startDestination = Route.Temporary, Modifier) {
 						composable<Route.Temporary> {
-							TemporaryScreen {
-								navController.navigate(Route.CreatePostNavGraph)
+							TemporaryScreen { name ->
+								when (name) {
+									"Timeline"   -> navController.navigate(Route.CreatePostNavGraph)
+									"CreatePost" -> navController.navigate(Route.CreatePostNavGraph)
+								}
+								
 							}
 						}
 						createPostNavGraph(navController)
+						timelineNavGraph(navController)
 					}
 				}
 			}
@@ -46,17 +52,17 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun TemporaryScreen(onPostClicked: () -> Unit) {
+fun TemporaryScreen(onButtonClicked: (String) -> Unit) {
 	Column {
-		Button(onClick = onPostClicked) {
-			Text(text = "Home")
+		Button(onClick = { onButtonClicked("Timeline") }) {
+			Text(text = "Timeline")
 		}
 		
-		Button(onClick = onPostClicked) {
-			Text(text = "Post")
+		Button(onClick = { onButtonClicked("CreatePost") }) {
+			Text(text = "CreatePost")
 		}
 		
-		Button(onClick = onPostClicked) {
+		Button(onClick = { onButtonClicked("Account") }) {
 			Text(text = "Account")
 		}
 	}
