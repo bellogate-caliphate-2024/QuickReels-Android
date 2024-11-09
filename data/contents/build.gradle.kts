@@ -1,12 +1,13 @@
 plugins {
 	alias(libs.plugins.androidLibrary)
 	alias(libs.plugins.jetbrainsKotlinAndroid)
+	alias(libs.plugins.hilt)
 	alias(libs.plugins.serialization)
 	id("kotlin-kapt")
 }
 
 android {
-	namespace = "com.bellogatecaliphate.core"
+	namespace = "com.bellogatecaliphate.contents"
 	compileSdk = 34
 	
 	defaultConfig {
@@ -36,28 +37,19 @@ android {
 
 dependencies {
 	
+	implementation(project(":core"))
 	implementation(libs.androidx.core.ktx)
 	implementation(libs.androidx.appcompat)
 	implementation(libs.material)
 	testImplementation(libs.junit)
 	androidTestImplementation(libs.androidx.junit)
 	androidTestImplementation(libs.androidx.espresso.core)
-	// serialization
-	implementation(libs.kotlinx.serialization.json)
-	// Room
-	implementation(libs.room.runtime)
-	annotationProcessor(libs.room.compiler)
-	kapt(libs.room.compiler)
-	implementation(libs.room.ktx)
-	implementation(libs.room.testing)
-	// Retrofit
-	implementation(libs.retrofit)
-	implementation(libs.retrofit.converter.gson)
-	implementation(libs.okhttp)
-	implementation(libs.okhttp.logging.interceptor)
-	implementation(libs.okhttp.converter.scalars)
 	// paging
 	implementation(libs.androidx.paging.runtime)
 	testImplementation(libs.androidx.paging.common)
 	implementation(libs.androidx.paging.compose)
+	// hilt
+	implementation(libs.hilt)
+	kapt(libs.hilt.compiler)
+	
 }

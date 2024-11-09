@@ -1,6 +1,6 @@
 package com.bellogatecaliphate.user
 
-import com.bellogatecaliphate.core.source.database.entity.UserEntity
+import com.bellogatecaliphate.core.source.local.entity.UserEntity
 import com.bellogatecaliphate.user.local.IUserLocalDataSource
 import javax.inject.Inject
 

@@ -1,7 +1,7 @@
 package com.bellogatecaliphate.post.local
 
-import com.bellogatecaliphate.core.source.database.dao.PostDao
-import com.bellogatecaliphate.core.source.database.entity.PostEntity
+import com.bellogatecaliphate.core.source.local.dao.PostDao
+import com.bellogatecaliphate.core.source.local.entity.PostEntity
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow

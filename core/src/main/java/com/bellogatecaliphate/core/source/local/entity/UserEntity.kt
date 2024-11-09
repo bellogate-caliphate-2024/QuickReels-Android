@@ -1,4 +1,4 @@
-package com.bellogatecaliphate.core.source.database.entity
+package com.bellogatecaliphate.core.source.local.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

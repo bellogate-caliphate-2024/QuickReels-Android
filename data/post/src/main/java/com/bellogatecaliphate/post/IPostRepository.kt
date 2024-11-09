@@ -1,6 +1,6 @@
 package com.bellogatecaliphate.post
 
-import com.bellogatecaliphate.core.source.database.entity.PostEntity
+import com.bellogatecaliphate.core.source.local.entity.PostEntity
 
 interface IPostRepository {
 	

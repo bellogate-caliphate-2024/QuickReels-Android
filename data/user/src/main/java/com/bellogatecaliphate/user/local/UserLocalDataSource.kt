@@ -1,7 +1,7 @@
 package com.bellogatecaliphate.user.local
 
-import com.bellogatecaliphate.core.source.database.dao.UserDao
-import com.bellogatecaliphate.core.source.database.entity.UserEntity
+import com.bellogatecaliphate.core.source.local.dao.UserDao
+import com.bellogatecaliphate.core.source.local.entity.UserEntity
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

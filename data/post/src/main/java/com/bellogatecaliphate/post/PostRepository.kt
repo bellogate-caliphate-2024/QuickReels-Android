@@ -4,7 +4,7 @@ import androidx.work.OneTimeWorkRequest
 import androidx.work.OutOfQuotaPolicy
 import androidx.work.WorkManager
 import androidx.work.workDataOf
-import com.bellogatecaliphate.core.source.database.entity.PostEntity
+import com.bellogatecaliphate.core.source.local.entity.PostEntity
 import javax.inject.Inject
 
 internal class PostRepository @Inject constructor(

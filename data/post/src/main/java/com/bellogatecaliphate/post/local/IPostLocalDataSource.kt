@@ -1,6 +1,6 @@
 package com.bellogatecaliphate.post.local
 
-import com.bellogatecaliphate.core.source.database.entity.PostEntity
+import com.bellogatecaliphate.core.source.local.entity.PostEntity
 import kotlinx.coroutines.flow.Flow
 
 internal interface IPostLocalDataSource {

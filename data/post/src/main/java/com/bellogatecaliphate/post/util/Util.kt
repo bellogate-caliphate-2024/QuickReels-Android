@@ -1,8 +1,8 @@
 package com.bellogatecaliphate.post.util
 
 import androidx.work.Data
-import com.bellogatecaliphate.core.source.database.entity.PostEntity
-import com.bellogatecaliphate.core.source.database.entity.PostEntity.Status
+import com.bellogatecaliphate.core.source.local.entity.PostEntity
+import com.bellogatecaliphate.core.source.local.entity.PostEntity.Status
 import com.bellogatecaliphate.post.remote.model.CreatePostRequest
 
 internal fun createPostEntity(inputData: Data): PostEntity {

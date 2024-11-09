@@ -1,6 +1,6 @@
 package com.bellogatecaliphate.user.local
 
-import com.bellogatecaliphate.core.source.database.entity.UserEntity
+import com.bellogatecaliphate.core.source.local.entity.UserEntity
 
 interface IUserLocalDataSource {
 	

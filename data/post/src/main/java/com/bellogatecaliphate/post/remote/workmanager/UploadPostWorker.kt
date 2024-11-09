@@ -9,7 +9,7 @@ import androidx.work.Data
 import androidx.work.ForegroundInfo
 import androidx.work.WorkManager
 import androidx.work.WorkerParameters
-import com.bellogatecaliphate.core.source.database.entity.PostEntity
+import com.bellogatecaliphate.core.source.local.entity.PostEntity
 import com.bellogatecaliphate.post.R
 import com.bellogatecaliphate.post.local.IPostLocalDataSource
 import com.bellogatecaliphate.post.remote.IPostRemoteDataSource
