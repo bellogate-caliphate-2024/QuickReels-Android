@@ -32,7 +32,7 @@ import com.bellogatecaliphate.timeline.util.PLACEHOLDER_IMAGE_40DP
 
 @Composable
 @Preview(showBackground = true)
-internal fun Content(
+internal fun ContentUi(
 	@PreviewParameter(ContentPreviewParameter::class) content: Content,
 	modifier: Modifier = Modifier
 ) {
