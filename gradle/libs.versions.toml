@@ -1,7 +1,11 @@
 [versions]
 activityKtx = "1.2.0"
 agp = "8.3.1"
+coordinatorlayout = "1.2.0"
+exoplayerVersion = "2.19.1"
+ffmpegKitMin = "6.0-1"
 glide = "4.15.1"
+gsonVersion = "2.10.1"
 kotlin = "1.9.0"
 coreKtx = "1.12.0"
 junit = "4.13.2"
@@ -12,6 +16,7 @@ lifecycleRuntimeKtx = "2.7.0"
 activityCompose = "1.8.2"
 composeBom = "2023.08.00"
 appcompat = "1.6.1"
+localization = "1.2.9"
 material = "1.10.0"
 hiltVersion = "2.44"
 nav_version = "2.8.0"
@@ -32,10 +37,15 @@ pagingComposeAndroid = "3.3.4"
 
 [libraries]
 androidx-activity-ktx = { module = "androidx.activity:activity-ktx", version.ref = "activityKtx" }
+androidx-coordinatorlayout = { module = "androidx.coordinatorlayout:coordinatorlayout", version.ref = "coordinatorlayout" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-paging-common = { module = "androidx.paging:paging-common", version.ref = "pagingRuntime" }
 androidx-paging-compose = { module = "androidx.paging:paging-compose", version.ref = "pagingRuntime" }
 androidx-paging-runtime = { module = "androidx.paging:paging-runtime", version.ref = "pagingRuntime" }
+ffmpeg-kit-min = { module = "com.arthenica:ffmpeg-kit-min", version.ref = "ffmpegKitMin" }
+google-exoplayer = { module = "com.google.android.exoplayer:exoplayer", version.ref = "exoplayerVersion" }
+gson-v2101 = { module = "com.google.code.gson:gson", version.ref = "gsonVersion" }
+localization = { module = "com.akexorcist:localization", version.ref = "localization" }
 room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomRuntime" }
 room-ktx = { module = "androidx.room:room-ktx", version.ref = "roomRuntime" }
 room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomRuntime" }

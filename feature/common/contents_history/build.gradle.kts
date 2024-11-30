@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-	namespace = "com.bellogatecaliphate.create_post"
+	namespace = "com.bellogatecaliphate.contents_history"
 	compileSdk = 34
 	
 	defaultConfig {
@@ -25,12 +25,6 @@ android {
 				"proguard-rules.pro"
 			)
 		}
-	}
-	buildFeatures {
-		compose = true
-	}
-	composeOptions {
-		kotlinCompilerExtensionVersion = "1.5.1"
 	}
 	compileOptions {
 		sourceCompatibility = JavaVersion.VERSION_1_8

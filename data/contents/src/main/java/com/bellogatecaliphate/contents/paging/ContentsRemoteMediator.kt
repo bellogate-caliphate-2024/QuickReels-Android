@@ -13,6 +13,7 @@ import com.bellogatecaliphate.contents.remote.model.ContentResponse
 import com.bellogatecaliphate.core.source.local.entity.ContentEntity
 import com.bellogatecaliphate.core.source.local.entity.ContentsListPageInfoEntity
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.withContext
 import java.io.IOException
 
 private const val DEFAULT_PAGE = 1
@@ -55,20 +56,21 @@ class ContentsRemoteMediator(
 				}
 			}
 			
+			// NOTE, we don't need to wrap this network call in a withContext(ioDispatchers) because Retrofit already
+			// does that for us. See https://stackoverflow.com/a/63986072
 			val response = remoteSource.getContentsList(pageToLoad)
 			if (response == null) {
 				return MediatorResult.Error(Exception(""))
 			} else {
-				localDataSource.deleteAllContents()
-				localDataSource.deleteAllContentsListPageInfo()
-				
-				localDataSource.insert(
-					ContentsListPageInfoEntity(
-						response.currentPage,
-						response.nextPage
+				withContext(ioDispatcher) {
+					localDataSource.deleteAllContents()
+					localDataSource.deleteAllContentsListPageInfo()
+					
+					localDataSource.insert(
+						ContentsListPageInfoEntity(response.currentPage, response.nextPage)
 					)
-				)
-				localDataSource.insert(getContent(response.listOfContents))
+					localDataSource.insert(getContent(response.listOfContents))
+				}
 			}
 			
 			// Now, we need to decide if there are more data to load or if the library should end the pagination process.
@@ -92,7 +94,6 @@ class ContentsRemoteMediator(
 		return listOfContents.map { it.toEntity() }
 	}
 	
-	private suspend fun getRemoteKeyForLastContentItemOnTheList(state: PagingState<Int, ContentEntity>): ContentsListPageInfoEntity? {
-		return localDataSource.getContentsListPageInfo()
-	}
+	private suspend fun getRemoteKeyForLastContentItemOnTheList(state: PagingState<Int, ContentEntity>): ContentsListPageInfoEntity? =
+			withContext(ioDispatcher) { localDataSource.getContentsListPageInfo() }
 }

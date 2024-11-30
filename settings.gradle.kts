@@ -1,22 +1,22 @@
 pluginManagement {
-    repositories {
-        google {
-            content {
-                includeGroupByRegex("com\\.android.*")
-                includeGroupByRegex("com\\.google.*")
-                includeGroupByRegex("androidx.*")
-            }
-        }
-        mavenCentral()
-        gradlePluginPortal()
-    }
+	repositories {
+		google {
+			content {
+				includeGroupByRegex("com\\.android.*")
+				includeGroupByRegex("com\\.google.*")
+				includeGroupByRegex("androidx.*")
+			}
+		}
+		mavenCentral()
+		gradlePluginPortal()
+	}
 }
 dependencyResolutionManagement {
-    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
-    repositories {
-        google()
-        mavenCentral()
-    }
+	repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+	repositories {
+		google()
+		mavenCentral()
+	}
 }
 
 rootProject.name = "QuickReels"
@@ -33,4 +33,4 @@ include(":feature:timeline")
 include(":data:contents")
 include(":feature:account")
 include(":feature:common")
-include(":feature:common:content_history")
+include(":feature:common:contents_history")
