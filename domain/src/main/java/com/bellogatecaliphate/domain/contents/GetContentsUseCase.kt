@@ -26,6 +26,7 @@ class GetContentsUseCase @Inject constructor(val repository: IContentsRepository
 			thumbnailUrl ?: "",
 			caption ?: "",
 			date ?: "",
+			numberOfViews ?: "",
 			numberOfLikes ?: "",
 			numberOfComments ?: "",
 			userId ?: "",

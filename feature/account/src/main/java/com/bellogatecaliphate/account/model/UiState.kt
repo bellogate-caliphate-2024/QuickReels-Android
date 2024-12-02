@@ -1,3 +1,5 @@
 package com.bellogatecaliphate.account.model
 
-class UiState
+data class UiState(
+	val isLoading: Boolean = false
+)

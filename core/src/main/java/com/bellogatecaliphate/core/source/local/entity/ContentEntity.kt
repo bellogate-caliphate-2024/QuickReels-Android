@@ -11,6 +11,7 @@ data class ContentEntity(
 	val thumbnailUrl: String?,
 	val caption: String?,
 	val date: String?,
+	val numberOfViews: String?,
 	val numberOfLikes: String?,
 	val numberOfComments: String?,
 	val userId: String?,
