@@ -80,4 +80,6 @@ dependencies {
 	implementation(libs.exoplayer)
 	implementation(libs.exoplayer.ui)
 	implementation(libs.exoplayer.common)
+	// Paging:
+	implementation(libs.androidx.paging.compose.android)
 }
