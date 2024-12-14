@@ -1,4 +1,4 @@
-package com.bellogatecaliphate.core.common.ui
+package com.bellogatecaliphate.core.ui
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.LinearProgressIndicator

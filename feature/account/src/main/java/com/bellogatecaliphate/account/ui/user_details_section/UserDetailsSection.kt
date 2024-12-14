@@ -16,8 +16,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import com.bellogatecaliphate.account.R
-import com.bellogatecaliphate.core.common.util.PLACEHOLDER_8DP
-import com.bellogatecaliphate.core.common.util.PLACEHOLDER_IMAGE_40DP
+import com.bellogatecaliphate.core.util.PLACEHOLDER_8DP
+import com.bellogatecaliphate.core.util.PLACEHOLDER_IMAGE_40DP
 
 @Composable
 internal fun UserDetailsSection(userProfilePicture: String, userName: String, userEmail: String) {

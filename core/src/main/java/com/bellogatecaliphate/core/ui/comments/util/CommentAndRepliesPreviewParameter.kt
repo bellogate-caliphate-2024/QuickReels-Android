@@ -1,7 +1,7 @@
-package com.bellogatecaliphate.core.common.ui.comments.util
+package com.bellogatecaliphate.core.ui.comments.util
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
-import com.bellogatecaliphate.core.common.ui.comments.model.Comment
+import com.bellogatecaliphate.core.ui.comments.model.Comment
 
 internal class CommentAndRepliesPreviewParameter : PreviewParameterProvider<CommentAndReplies> {
 	override val values: Sequence<CommentAndReplies> = sequenceOf(

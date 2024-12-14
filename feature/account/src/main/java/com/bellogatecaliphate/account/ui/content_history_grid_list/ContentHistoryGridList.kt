@@ -23,9 +23,9 @@ import androidx.compose.ui.unit.dp
 import androidx.paging.compose.LazyPagingItems
 import com.bellogatecaliphate.account.R
 import com.bellogatecaliphate.account.util.ContentPreviewParameter
-import com.bellogatecaliphate.core.common.util.PLACEHOLDER_4DP
-import com.bellogatecaliphate.core.common.util.PLACEHOLDER_CONTENT_HISTORY_HEIGHT
-import com.bellogatecaliphate.core.common.util.PLACEHOLDER_CONTENT_HISTORY_WIDTH
+import com.bellogatecaliphate.core.util.PLACEHOLDER_4DP
+import com.bellogatecaliphate.core.util.PLACEHOLDER_CONTENT_HISTORY_HEIGHT
+import com.bellogatecaliphate.core.util.PLACEHOLDER_CONTENT_HISTORY_WIDTH
 import com.bellogatecaliphate.core.model.dto.Content
 
 @Composable

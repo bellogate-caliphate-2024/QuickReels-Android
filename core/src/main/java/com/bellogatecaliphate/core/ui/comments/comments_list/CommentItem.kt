@@ -1,4 +1,4 @@
-package com.bellogatecaliphate.core.common.ui.comments.comments_list
+package com.bellogatecaliphate.core.ui.comments.comments_list
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
@@ -23,12 +23,12 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.bellogatecaliphate.core.R
-import com.bellogatecaliphate.core.common.ui.comments.model.Comment
-import com.bellogatecaliphate.core.common.ui.comments.util.CommentAndReplies
-import com.bellogatecaliphate.core.common.ui.comments.util.CommentAndRepliesPreviewParameter
-import com.bellogatecaliphate.core.common.util.PLACEHOLDER_16DP
-import com.bellogatecaliphate.core.common.util.PLACEHOLDER_8DP
-import com.bellogatecaliphate.core.common.util.PLACEHOLDER_IMAGE_40DP
+import com.bellogatecaliphate.core.ui.comments.model.Comment
+import com.bellogatecaliphate.core.ui.comments.util.CommentAndReplies
+import com.bellogatecaliphate.core.ui.comments.util.CommentAndRepliesPreviewParameter
+import com.bellogatecaliphate.core.util.PLACEHOLDER_16DP
+import com.bellogatecaliphate.core.util.PLACEHOLDER_8DP
+import com.bellogatecaliphate.core.util.PLACEHOLDER_IMAGE_40DP
 
 @Composable
 internal fun CommentItem(

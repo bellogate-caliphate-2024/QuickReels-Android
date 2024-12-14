@@ -1,4 +1,4 @@
-package com.bellogatecaliphate.core.common.ui.comments.no_comment
+package com.bellogatecaliphate.core.ui.comments.no_comment
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.material3.Text

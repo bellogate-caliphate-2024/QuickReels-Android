@@ -27,8 +27,8 @@ import com.bellogatecaliphate.account.ui.content_history_grid_list.ContentHistor
 import com.bellogatecaliphate.account.ui.icons.Likes
 import com.bellogatecaliphate.account.ui.icons.Views
 import com.bellogatecaliphate.account.ui.user_details_section.UserDetailsSection
-import com.bellogatecaliphate.core.common.util.PLACEHOLDER_16DP
-import com.bellogatecaliphate.core.common.util.PLACEHOLDER_8DP
+import com.bellogatecaliphate.core.util.PLACEHOLDER_16DP
+import com.bellogatecaliphate.core.util.PLACEHOLDER_8DP
 import com.bellogatecaliphate.core.model.dto.Content
 import com.bellogatecaliphate.core.model.dto.User
 

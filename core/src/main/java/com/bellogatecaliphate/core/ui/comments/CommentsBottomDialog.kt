@@ -1,4 +1,4 @@
-package com.bellogatecaliphate.core.common.ui.comments
+package com.bellogatecaliphate.core.ui.comments
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -15,10 +15,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.bellogatecaliphate.core.common.ui.comments.comments_list.CommentsList
-import com.bellogatecaliphate.core.common.ui.comments.model.Comment
-import com.bellogatecaliphate.core.common.ui.comments.no_comment.NoComment
-import com.bellogatecaliphate.core.common.util.PLACEHOLDER_16DP
+import com.bellogatecaliphate.core.ui.comments.comments_list.CommentsList
+import com.bellogatecaliphate.core.ui.comments.model.Comment
+import com.bellogatecaliphate.core.ui.comments.no_comment.NoComment
+import com.bellogatecaliphate.core.util.PLACEHOLDER_16DP
 
 /**
  * @param visible is true if the CommentsBottomDialog should be visible.

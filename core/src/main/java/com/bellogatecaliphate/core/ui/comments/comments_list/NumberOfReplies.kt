@@ -1,4 +1,4 @@
-package com.bellogatecaliphate.core.common.ui.comments.comments_list
+package com.bellogatecaliphate.core.ui.comments.comments_list
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -11,8 +11,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.style.TextAlign
 import com.bellogatecaliphate.core.R
-import com.bellogatecaliphate.core.common.ui.comments.model.Comment
-import com.bellogatecaliphate.core.common.ui.comments.util.getNumberOdRepliesText
+import com.bellogatecaliphate.core.ui.comments.model.Comment
+import com.bellogatecaliphate.core.ui.comments.util.getNumberOdRepliesText
 
 private const val INITIAL_PAGE_NUMBER = 1
 

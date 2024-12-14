@@ -1,4 +1,4 @@
-package com.bellogatecaliphate.core.common.ui.comments.util
+package com.bellogatecaliphate.core.ui.comments.util
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource

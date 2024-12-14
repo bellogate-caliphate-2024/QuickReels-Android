@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import com.bellogatecaliphate.account.R
-import com.bellogatecaliphate.core.common.util.PLACEHOLDER_8DP
+import com.bellogatecaliphate.core.util.PLACEHOLDER_8DP
 
 @Composable
 internal fun Likes(numberOfLikes: String) {

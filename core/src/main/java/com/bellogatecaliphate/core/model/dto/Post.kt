@@ -1,6 +1,6 @@
 package com.bellogatecaliphate.core.model.dto
 
-import com.bellogatecaliphate.core.common.util.generateRandomNumberWithFixedLength
+import com.bellogatecaliphate.core.util.generateRandomNumberWithFixedLength
 import kotlinx.serialization.Serializable
 
 @Serializable

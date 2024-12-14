@@ -1,4 +1,4 @@
-package com.bellogatecaliphate.core.common.util
+package com.bellogatecaliphate.core.util
 
 import androidx.compose.ui.unit.dp
 import java.security.SecureRandom
