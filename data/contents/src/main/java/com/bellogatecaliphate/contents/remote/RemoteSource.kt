@@ -10,4 +10,12 @@ internal class RemoteSource : IRemoteSource {
 	): ContentsListResponse? {
 		TODO("Not yet implemented")
 	}
+	
+	override suspend fun getContentsHistoryList(
+		userEmail: String,
+		page: Int,
+		numberOfContentPerPage: Int
+	): ContentsListResponse? {
+		TODO("Not yet implemented")
+	}
 }
