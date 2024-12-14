@@ -1,4 +1,4 @@
-package com.bellogatecaliphate.core.ui.comments.model
+package com.bellogatecaliphate.core.model.dto
 
 data class Comment(
 	val commentId: String,

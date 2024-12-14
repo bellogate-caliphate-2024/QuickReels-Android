@@ -13,7 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
-import com.bellogatecaliphate.core.ui.comments.model.Comment
+import com.bellogatecaliphate.core.model.dto.Comment
 import com.bellogatecaliphate.core.ui.comments.util.CommentsListPreviewParameter
 import com.bellogatecaliphate.core.ui.comments.util.getCommentsListHeaderText
 import com.bellogatecaliphate.core.util.PLACEHOLDER_16DP

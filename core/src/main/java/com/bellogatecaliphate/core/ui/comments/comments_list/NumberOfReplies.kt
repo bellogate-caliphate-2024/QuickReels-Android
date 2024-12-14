@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.style.TextAlign
 import com.bellogatecaliphate.core.R
-import com.bellogatecaliphate.core.ui.comments.model.Comment
+import com.bellogatecaliphate.core.model.dto.Comment
 import com.bellogatecaliphate.core.ui.comments.util.getNumberOdRepliesText
 
 private const val INITIAL_PAGE_NUMBER = 1

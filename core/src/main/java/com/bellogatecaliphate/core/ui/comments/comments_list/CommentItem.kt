@@ -23,7 +23,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.bellogatecaliphate.core.R
-import com.bellogatecaliphate.core.ui.comments.model.Comment
+import com.bellogatecaliphate.core.model.dto.Comment
 import com.bellogatecaliphate.core.ui.comments.util.CommentAndReplies
 import com.bellogatecaliphate.core.ui.comments.util.CommentAndRepliesPreviewParameter
 import com.bellogatecaliphate.core.util.PLACEHOLDER_16DP
