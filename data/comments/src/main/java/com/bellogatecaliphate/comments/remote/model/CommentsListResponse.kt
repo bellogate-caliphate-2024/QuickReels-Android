@@ -1,4 +1,4 @@
-package com.bellogatecaliphate.core.ui.comments.model
+package com.bellogatecaliphate.comments.remote.model
 
 data class CommentsListResponse(
 	val contentId: String,
