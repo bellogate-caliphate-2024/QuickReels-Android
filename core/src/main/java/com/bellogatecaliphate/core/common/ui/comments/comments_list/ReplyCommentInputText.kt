@@ -17,8 +17,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import com.bellogatecaliphate.core.PLACEHOLDER_16DP
 import com.bellogatecaliphate.core.R
+import com.bellogatecaliphate.core.common.util.PLACEHOLDER_16DP
 
 @Composable
 internal fun ReplyCommentInputText(
