@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
-class GetContentsUseCase @Inject constructor(val repository: IContentsRepository) {
+class GetContentsUseCase @Inject constructor(private val repository: IContentsRepository) {
 	
 	operator fun invoke(): Flow<PagingData<Content>> {
 		return repository.getPaginatedContents(1).flow.map {

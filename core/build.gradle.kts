@@ -1,6 +1,7 @@
 plugins {
 	alias(libs.plugins.androidLibrary)
 	alias(libs.plugins.jetbrainsKotlinAndroid)
+	alias(libs.plugins.hilt)
 	alias(libs.plugins.serialization)
 	id("kotlin-kapt")
 }
@@ -67,4 +68,7 @@ dependencies {
 	implementation(libs.androidx.paging.runtime)
 	testImplementation(libs.androidx.paging.common)
 	implementation(libs.androidx.paging.compose)
+	// hilt
+	implementation(libs.hilt)
+	kapt(libs.hilt.compiler)
 }

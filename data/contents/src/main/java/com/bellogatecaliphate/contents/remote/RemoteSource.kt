@@ -1,14 +1,15 @@
 package com.bellogatecaliphate.contents.remote
 
 import com.bellogatecaliphate.contents.remote.model.ContentsListResponse
+import javax.inject.Inject
 
-internal class RemoteSource : IRemoteSource {
+class RemoteSource @Inject constructor() : IRemoteSource {
 	
 	override suspend fun getContentsList(
 		page: Int?,
 		numberOfContentPerPage: Int
 	): ContentsListResponse? {
-		TODO("Not yet implemented")
+		return null
 	}
 	
 	override suspend fun getContentsHistoryList(
@@ -16,6 +17,6 @@ internal class RemoteSource : IRemoteSource {
 		page: Int,
 		numberOfContentPerPage: Int
 	): ContentsListResponse? {
-		TODO("Not yet implemented")
+		return null
 	}
 }
