@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:name=".MainApplication"
@@ -28,9 +29,10 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="com.bellogatecaliphate.create_post.util.video_trimer.ui.ActVideoTrimmer"
-            android:theme="@style/VideoTrimmerTheme"
-            android:exported="false"/>
+        <activity
+            android:name="com.bellogatecaliphate.create_post.util.video_trimer.ui.ActVideoTrimmer"
+            android:exported="false"
+            android:theme="@style/VideoTrimmerTheme" />
     </application>
 
 </manifest>

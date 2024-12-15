@@ -6,9 +6,11 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import androidx.navigation.toRoute
 import com.bellogatecaliphate.core.model.Route
+import com.bellogatecaliphate.core.model.dto.Post
 import com.bellogatecaliphate.create_post.ui.confirm_post.UploadPostConfirmationDialog
 import com.bellogatecaliphate.create_post.ui.create_post.CreatePostScreen
 import com.bellogatecaliphate.create_post.ui.preview_post.PreviewPostScreen
+import com.google.gson.Gson
 
 fun NavGraphBuilder.createPostNavGraph(navController: NavHostController) {
 	navigation<Route.CreatePostNavGraph>(startDestination = Route.CreatePost::class) {
@@ -31,11 +33,13 @@ fun NavGraphBuilder.createPostNavGraph(navController: NavHostController) {
 				previewPost.videoCaption,
 				previewPost.editable,
 				{ post ->
-					navController.navigate(Route.ConfirmPost(post))
+					val postAsJsonString = Gson().toJson(post)
+					navController.navigate(Route.ConfirmPost(postAsJsonString))
 				})
 		}
 		composable<Route.ConfirmPost> {
-			val post = it.toRoute<Route.ConfirmPost>().post
+			val postAsJsonString = it.toRoute<Route.ConfirmPost>().postAsJsonString
+			val post = Gson().fromJson(postAsJsonString, Post::class.java)
 			UploadPostConfirmationDialog(post, {
 				navController.popBackStack(Route.CreatePost, false)
 			})

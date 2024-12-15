@@ -1,6 +1,5 @@
 package com.bellogatecaliphate.core.model
 
-import com.bellogatecaliphate.core.model.dto.Post
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -30,7 +29,7 @@ sealed class Route {
 	) : Route()
 	
 	@Serializable
-	data class ConfirmPost(val post: Post) : Route()
+	data class ConfirmPost(val postAsJsonString: String) : Route()
 	
 	// Timeline routes
 	@Serializable
