@@ -6,11 +6,11 @@ import com.bellogatecaliphate.core.source.local.entity.ContentsListPageInfoEntit
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ActivityComponent
+import dagger.hilt.components.SingletonComponent
 import javax.inject.Inject
 
 @Module
-@InstallIn(ActivityComponent::class)
+@InstallIn(SingletonComponent::class)
 abstract class ContentsListPageInfoDaoModule {
 	
 	class ContentsListPageInfoDaoImp @Inject constructor(private val appDatabase: AppDatabase) :

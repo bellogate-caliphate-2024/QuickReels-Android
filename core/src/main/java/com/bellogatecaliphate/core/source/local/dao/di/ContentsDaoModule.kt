@@ -7,11 +7,11 @@ import com.bellogatecaliphate.core.source.local.entity.ContentEntity
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ActivityComponent
+import dagger.hilt.components.SingletonComponent
 import javax.inject.Inject
 
 @Module
-@InstallIn(ActivityComponent::class)
+@InstallIn(SingletonComponent::class)
 abstract class ContentsDaoModule {
 	
 	class ContentsDaoImp @Inject constructor(private val appDatabase: AppDatabase) : ContentsDao {
