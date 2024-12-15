@@ -1,4 +1,4 @@
-package com.bellogatecaliphate.core.di
+package com.bellogatecaliphate.post.di
 
 import android.content.Context
 import androidx.work.WorkManager

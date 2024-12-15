@@ -1,4 +1,4 @@
-package com.bellogatecaliphate.contents.di
+package com.bellogatecaliphate.contents.remote.di
 
 import com.bellogatecaliphate.contents.remote.IRemoteSource
 import com.bellogatecaliphate.contents.remote.RemoteSource

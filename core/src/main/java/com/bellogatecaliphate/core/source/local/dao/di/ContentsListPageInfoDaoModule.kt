@@ -1,4 +1,4 @@
-package com.bellogatecaliphate.core.di
+package com.bellogatecaliphate.core.source.local.dao.di
 
 import com.bellogatecaliphate.core.source.local.AppDatabase
 import com.bellogatecaliphate.core.source.local.dao.ContentsListPageInfoDao

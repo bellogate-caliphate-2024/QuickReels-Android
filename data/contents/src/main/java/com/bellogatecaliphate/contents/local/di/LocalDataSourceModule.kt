@@ -1,4 +1,4 @@
-package com.bellogatecaliphate.contents.di
+package com.bellogatecaliphate.contents.local.di
 
 import com.bellogatecaliphate.contents.local.ILocalDataSource
 import com.bellogatecaliphate.contents.local.LocalDataSource

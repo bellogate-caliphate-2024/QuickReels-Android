@@ -1,4 +1,4 @@
-package com.bellogatecaliphate.core.di
+package com.bellogatecaliphate.core.source.local.dao.di
 
 import androidx.paging.PagingSource
 import com.bellogatecaliphate.core.source.local.AppDatabase
