@@ -4,11 +4,11 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import com.bellogatecaliphate.core.model.Route
+import com.bellogatecaliphate.core.model.routes.TimelineNavGraphRoute
 
 fun NavGraphBuilder.timelineNavGraph(navController: NavHostController) {
-	navigation<Route.TimelineRoute>(startDestination = Route.TimelineRoute.Timeline::class) {
-		composable<Route.TimelineRoute.Timeline> {
+	navigation<TimelineNavGraphRoute>(startDestination = TimelineNavGraphRoute.Timeline::class) {
+		composable<TimelineNavGraphRoute.Timeline> {
 		
 		}
 	}

@@ -14,7 +14,8 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.bellogatecaliphate.core.model.Route
+import com.bellogatecaliphate.core.model.routes.CreatePostNavGraphRoute
+import com.bellogatecaliphate.core.model.routes.Temporary
 import com.bellogatecaliphate.create_post.navigation.createPostNavGraph
 import com.bellogatecaliphate.quickreels.ui.theme.QuickReelsTheme
 import com.bellogatecaliphate.timeline.navigation.timelineNavGraph
@@ -32,13 +33,13 @@ class MainActivity : ComponentActivity() {
 					color = MaterialTheme.colorScheme.background
 				) {
 					val navController = rememberNavController()
-					NavHost(navController, startDestination = Route.Temporary, Modifier) {
-						composable<Route.Temporary> {
+					NavHost(navController, startDestination = Temporary, Modifier) {
+						composable<Temporary> {
 							TemporaryScreen { name ->
 								when (name) {
-									"Timeline"   -> navController.navigate(Route.CreatePostNavGraph)
-									"CreatePost" -> navController.navigate(Route.CreatePostNavGraph)
-									"Account"    -> navController.navigate(Route.CreatePostNavGraph)
+									"Timeline"   -> navController.navigate(CreatePostNavGraphRoute)
+									"CreatePost" -> navController.navigate(CreatePostNavGraphRoute)
+									"Account"    -> navController.navigate(CreatePostNavGraphRoute)
 								}
 								
 							}
