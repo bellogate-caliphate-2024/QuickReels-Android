@@ -54,6 +54,7 @@ dependencies {
 	implementation(libs.kotlinx.serialization.json)
 	// Room
 	implementation(libs.room.runtime)
+	implementation(libs.room.paging)
 	annotationProcessor(libs.room.compiler)
 	kapt(libs.room.compiler)
 	implementation(libs.room.ktx)

@@ -38,6 +38,7 @@ class MainActivity : ComponentActivity() {
 								when (name) {
 									"Timeline"   -> navController.navigate(Route.CreatePostNavGraph)
 									"CreatePost" -> navController.navigate(Route.CreatePostNavGraph)
+									"Account"    -> navController.navigate(Route.CreatePostNavGraph)
 								}
 								
 							}
