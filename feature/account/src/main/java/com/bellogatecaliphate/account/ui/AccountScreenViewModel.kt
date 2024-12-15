@@ -20,7 +20,7 @@ class AccountScreenViewModel @Inject constructor(
 ) : ViewModel() {
 	
 	private val _uiState = MutableStateFlow(UiState())
-	val uiState = _uiState.asStateFlow()
+	internal val uiState = _uiState.asStateFlow()
 	
 	init {
 		setUserEmail()

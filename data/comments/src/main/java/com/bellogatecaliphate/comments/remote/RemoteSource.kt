@@ -1,3 +1,5 @@
 package com.bellogatecaliphate.comments.remote
 
-class RemoteSource : IRemoteSource
+import javax.inject.Inject
+
+internal class RemoteSource @Inject constructor() : IRemoteSource

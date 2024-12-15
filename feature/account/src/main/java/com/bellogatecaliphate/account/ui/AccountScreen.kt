@@ -27,10 +27,10 @@ import com.bellogatecaliphate.account.ui.content_history_grid_list.ContentHistor
 import com.bellogatecaliphate.account.ui.icons.Likes
 import com.bellogatecaliphate.account.ui.icons.Views
 import com.bellogatecaliphate.account.ui.user_details_section.UserDetailsSection
-import com.bellogatecaliphate.core.util.PLACEHOLDER_16DP
-import com.bellogatecaliphate.core.util.PLACEHOLDER_8DP
 import com.bellogatecaliphate.core.model.dto.Content
 import com.bellogatecaliphate.core.model.dto.User
+import com.bellogatecaliphate.core.util.PLACEHOLDER_16DP
+import com.bellogatecaliphate.core.util.PLACEHOLDER_8DP
 
 @Composable
 fun AccountScreen(viewModel: AccountScreenViewModel = hiltViewModel()) {
@@ -39,7 +39,7 @@ fun AccountScreen(viewModel: AccountScreenViewModel = hiltViewModel()) {
 }
 
 @Composable
-fun AccountScreen(uiState: UiState, onSignUp: () -> Unit = {}, onLogin: () -> Unit = {}) {
+internal fun AccountScreen(uiState: UiState, onSignUp: () -> Unit = {}, onLogin: () -> Unit = {}) {
 	if (uiState.isUserLoggedIn()) {
 		uiState.user?.let {
 			LoggedInUserAccountScreen(

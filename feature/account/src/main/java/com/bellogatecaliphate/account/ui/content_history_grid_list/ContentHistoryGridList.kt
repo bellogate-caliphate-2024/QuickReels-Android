@@ -23,13 +23,13 @@ import androidx.compose.ui.unit.dp
 import androidx.paging.compose.LazyPagingItems
 import com.bellogatecaliphate.account.R
 import com.bellogatecaliphate.account.util.ContentPreviewParameter
+import com.bellogatecaliphate.core.model.dto.Content
 import com.bellogatecaliphate.core.util.PLACEHOLDER_4DP
 import com.bellogatecaliphate.core.util.PLACEHOLDER_CONTENT_HISTORY_HEIGHT
 import com.bellogatecaliphate.core.util.PLACEHOLDER_CONTENT_HISTORY_WIDTH
-import com.bellogatecaliphate.core.model.dto.Content
 
 @Composable
-fun ContentHistoryGridList(list: LazyPagingItems<Content>) {
+internal fun ContentHistoryGridList(list: LazyPagingItems<Content>) {
 	LazyVerticalGrid(columns = GridCells.Adaptive(minSize = 128.dp)) {
 		items(list.itemCount) { index ->
 			val content = list[index]

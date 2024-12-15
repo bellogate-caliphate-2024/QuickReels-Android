@@ -1,6 +1,6 @@
 package com.bellogatecaliphate.comments.remote.api
 
-interface CommentsApi {
+internal interface CommentsApi {
 	
 	suspend fun saveComment()
 	

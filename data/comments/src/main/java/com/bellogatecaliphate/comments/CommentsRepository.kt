@@ -4,7 +4,7 @@ import com.bellogatecaliphate.comments.remote.IRemoteSource
 import kotlinx.coroutines.CoroutineDispatcher
 import javax.inject.Inject
 
-class CommentsRepository @Inject constructor(
+internal class CommentsRepository @Inject constructor(
 	private val ioDispatcher: CoroutineDispatcher,
 	private val remoteSource: IRemoteSource
 ) : ICommentsRepository
