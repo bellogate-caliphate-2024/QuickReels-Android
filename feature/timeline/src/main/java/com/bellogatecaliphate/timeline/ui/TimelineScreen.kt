@@ -7,7 +7,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.bellogatecaliphate.core.ui.ProgressBar
 import com.bellogatecaliphate.timeline.model.UiState
-import com.bellogatecaliphate.timeline.ui.timeline.content.Contents
+import com.bellogatecaliphate.timeline.ui.content.Contents
 
 @Composable
 fun TimeLineScreen(viewModel: TimeLineScreenViewModel = hiltViewModel()) {

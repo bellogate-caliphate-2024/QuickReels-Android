@@ -19,7 +19,7 @@ class TimeLineScreenViewModel @Inject constructor(
 ) : ViewModel() {
 	
 	private val _uiState = MutableStateFlow(UiState())
-	val uiState = _uiState.asStateFlow()
+	internal val uiState = _uiState.asStateFlow()
 	
 	fun getContents(): Flow<PagingData<Content>> {
 		_uiState.update { it.copy(loading = true) }

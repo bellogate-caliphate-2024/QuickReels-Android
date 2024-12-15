@@ -13,7 +13,7 @@ import com.bellogatecaliphate.core.model.dto.Content
 import kotlinx.coroutines.launch
 
 @Composable
-fun Contents(list: LazyPagingItems<Content>?) {
+internal fun Contents(list: LazyPagingItems<Content>?) {
 	if (list == null) return
 	val listState = rememberLazyListState()
 	val coroutineScope = rememberCoroutineScope()

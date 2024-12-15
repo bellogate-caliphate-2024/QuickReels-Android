@@ -22,8 +22,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.bellogatecaliphate.core.model.dto.Content
 import com.bellogatecaliphate.timeline.R
-import com.bellogatecaliphate.timeline.ui.timeline.icons.CommentsIcon
-import com.bellogatecaliphate.timeline.ui.timeline.icons.LikeIcon
+import com.bellogatecaliphate.timeline.ui.icons.CommentsIcon
+import com.bellogatecaliphate.timeline.ui.icons.LikeIcon
 import com.bellogatecaliphate.timeline.util.ContentPreviewParameter
 import com.bellogatecaliphate.timeline.util.PLACEHOLDER_16DP
 import com.bellogatecaliphate.timeline.util.PLACEHOLDER_8DP
