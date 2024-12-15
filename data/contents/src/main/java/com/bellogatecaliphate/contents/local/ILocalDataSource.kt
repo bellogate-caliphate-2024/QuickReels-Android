@@ -4,7 +4,7 @@ import androidx.paging.PagingSource
 import com.bellogatecaliphate.core.source.local.entity.ContentEntity
 import com.bellogatecaliphate.core.source.local.entity.ContentsListPageInfoEntity
 
-interface ILocalDataSource {
+internal interface ILocalDataSource {
 	
 	suspend fun deleteAllContents()
 	

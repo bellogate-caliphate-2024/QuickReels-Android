@@ -19,7 +19,7 @@ import java.io.IOException
 private const val DEFAULT_PAGE = 1
 
 @OptIn(ExperimentalPagingApi::class)
-class ContentsRemoteMediator(
+internal class ContentsRemoteMediator(
 	private val ioDispatcher: CoroutineDispatcher,
 	private val remoteSource: IRemoteSource,
 	private val localDataSource: ILocalDataSource

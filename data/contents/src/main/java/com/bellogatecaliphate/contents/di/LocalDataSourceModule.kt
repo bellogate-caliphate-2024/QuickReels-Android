@@ -9,7 +9,7 @@ import dagger.hilt.android.components.ActivityComponent
 
 @Module
 @InstallIn(ActivityComponent::class)
-abstract class LocalDataSourceModule {
+internal abstract class LocalDataSourceModule {
 	
 	@Binds
 	abstract fun bindLocalDataSource(localDataSource: LocalDataSource): ILocalDataSource

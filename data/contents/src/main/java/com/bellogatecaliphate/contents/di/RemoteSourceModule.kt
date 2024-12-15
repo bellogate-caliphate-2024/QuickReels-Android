@@ -9,7 +9,7 @@ import dagger.hilt.android.components.ActivityComponent
 
 @Module
 @InstallIn(ActivityComponent::class)
-abstract class RemoteSourceModule {
+internal abstract class RemoteSourceModule {
 	
 	@Binds
 	abstract fun bindRemoteSource(remoteSource: RemoteSource): IRemoteSource

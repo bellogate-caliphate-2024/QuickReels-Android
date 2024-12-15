@@ -3,7 +3,7 @@ package com.bellogatecaliphate.contents.remote
 import com.bellogatecaliphate.contents.remote.model.ContentsListResponse
 import javax.inject.Inject
 
-class RemoteSource @Inject constructor() : IRemoteSource {
+internal class RemoteSource @Inject constructor() : IRemoteSource {
 	
 	override suspend fun getContentsList(
 		page: Int?,

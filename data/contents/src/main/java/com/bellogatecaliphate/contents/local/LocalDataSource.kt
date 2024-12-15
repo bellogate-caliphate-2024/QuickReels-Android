@@ -7,7 +7,7 @@ import com.bellogatecaliphate.core.source.local.entity.ContentEntity
 import com.bellogatecaliphate.core.source.local.entity.ContentsListPageInfoEntity
 import javax.inject.Inject
 
-class LocalDataSource @Inject constructor(
+internal class LocalDataSource @Inject constructor(
 	private val contentsDao: ContentsDao,
 	private val contentsListPageInfoDao: ContentsListPageInfoDao
 ) : ILocalDataSource {

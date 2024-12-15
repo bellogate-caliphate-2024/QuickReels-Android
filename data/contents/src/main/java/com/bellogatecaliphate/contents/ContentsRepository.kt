@@ -10,7 +10,7 @@ import com.bellogatecaliphate.contents.remote.IRemoteSource
 import kotlinx.coroutines.CoroutineDispatcher
 import javax.inject.Inject
 
-class ContentsRepository @Inject constructor(
+internal class ContentsRepository @Inject constructor(
 	private val ioDispatcher: CoroutineDispatcher,
 	private val remoteSource: IRemoteSource,
 	private val localDataSource: ILocalDataSource,

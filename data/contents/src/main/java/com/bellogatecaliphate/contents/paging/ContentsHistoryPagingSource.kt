@@ -4,13 +4,14 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.bellogatecaliphate.contents.remote.IRemoteSource
 import com.bellogatecaliphate.contents.remote.model.ContentResponse
+import com.bellogatecaliphate.user.IUserRepository
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
-import kotlin.coroutines.CoroutineContext
 
-class ContentsHistoryPagingSource @Inject constructor(
-	private val userEmail: String,
-	private val ioDispatchers: CoroutineContext,
+internal class ContentsHistoryPagingSource @Inject constructor(
+	private val userRepository: IUserRepository,
+	private val ioDispatchers: CoroutineDispatcher,
 	private val remoteSource: IRemoteSource
 ) : PagingSource<Int, ContentResponse>() {
 	
@@ -19,7 +20,10 @@ class ContentsHistoryPagingSource @Inject constructor(
 		return@withContext try {
 			// Start refresh at page 1 if undefined.
 			val nextPage = params.key ?: 1
-			val response = remoteSource.getContentsHistoryList(userEmail, nextPage)
+			val response = remoteSource.getContentsHistoryList(
+				userRepository.getUser()?.email ?: "",
+				nextPage
+			)
 			val list = response?.listOfContents ?: throw Exception()
 			LoadResult.Page(
 				data = list,

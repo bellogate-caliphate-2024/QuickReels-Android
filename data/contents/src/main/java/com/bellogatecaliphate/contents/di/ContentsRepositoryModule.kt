@@ -9,7 +9,7 @@ import dagger.hilt.android.components.ActivityComponent
 
 @Module
 @InstallIn(ActivityComponent::class)
-abstract class ContentsRepositoryModule {
+internal abstract class ContentsRepositoryModule {
 	
 	@Binds
 	abstract fun bindContentsRepository(impl: ContentsRepository): IContentsRepository
