@@ -1,4 +1,4 @@
-package com.bellogatecaliphate.user.di
+package com.bellogatecaliphate.user.local.di
 
 import com.bellogatecaliphate.user.UserRepository
 import com.bellogatecaliphate.user.local.IUserLocalDataSource
