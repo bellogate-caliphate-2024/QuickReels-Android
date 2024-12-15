@@ -18,7 +18,7 @@ data class ContentResponse(
 	
 	fun toEntity(): ContentEntity {
 		return ContentEntity(
-			id,
+			id ?: "",
 			videoUrl,
 			thumbnailUrl,
 			caption,

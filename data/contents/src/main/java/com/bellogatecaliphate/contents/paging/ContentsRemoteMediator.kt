@@ -67,7 +67,7 @@ internal class ContentsRemoteMediator(
 					localDataSource.deleteAllContentsListPageInfo()
 					
 					localDataSource.insert(
-						ContentsListPageInfoEntity(response.currentPage, response.nextPage)
+						ContentsListPageInfoEntity(response.currentPage ?: 0, response.nextPage)
 					)
 					localDataSource.insert(getContent(response.listOfContents))
 				}

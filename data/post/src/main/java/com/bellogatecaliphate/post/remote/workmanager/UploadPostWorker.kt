@@ -15,10 +15,11 @@ import com.bellogatecaliphate.post.local.IPostLocalDataSource
 import com.bellogatecaliphate.post.remote.IPostRemoteDataSource
 import com.bellogatecaliphate.post.util.createPostEntity
 import com.bellogatecaliphate.post.util.createPostRequest
+import javax.inject.Inject
 
 private const val DEFAULT_NOTIFICATION_ID = "00000000"
 
-internal class UploadPostWorker(
+internal class UploadPostWorker @Inject constructor(
 	private val localDataSource: IPostLocalDataSource,
 	private val remoteDataSource: IPostRemoteDataSource,
 	context: Context,

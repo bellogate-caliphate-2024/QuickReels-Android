@@ -1,7 +1,7 @@
 package com.bellogatecaliphate.user.local.di
 
-import com.bellogatecaliphate.user.UserRepository
 import com.bellogatecaliphate.user.local.IUserLocalDataSource
+import com.bellogatecaliphate.user.local.UserLocalDataSource
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -12,6 +12,6 @@ import dagger.hilt.android.components.ActivityComponent
 internal abstract class UserLocalDataSourceModule {
 	
 	@Binds
-	abstract fun bindUserLocalDataSource(userRepository: UserRepository): IUserLocalDataSource
+	abstract fun bindUserLocalDataSource(userLocalDataSource: UserLocalDataSource): IUserLocalDataSource
 	
 }

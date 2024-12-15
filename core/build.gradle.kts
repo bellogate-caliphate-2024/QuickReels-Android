@@ -4,6 +4,7 @@ plugins {
 	alias(libs.plugins.hilt)
 	alias(libs.plugins.serialization)
 	id("kotlin-kapt")
+	alias(libs.plugins.compose.compiler)
 }
 
 android {
@@ -26,6 +27,10 @@ android {
 			)
 		}
 	}
+	buildFeatures {
+		compose = true
+	}
+	
 	compileOptions {
 		sourceCompatibility = JavaVersion.VERSION_1_8
 		targetCompatibility = JavaVersion.VERSION_1_8

@@ -5,11 +5,13 @@ import android.media.ThumbnailUtils
 import android.provider.MediaStore
 import android.util.Base64
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.ByteArrayOutputStream
+import javax.inject.Inject
 
-class GetVideoThumbnailUseCase(private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO) {
+class GetVideoThumbnailUseCase @Inject constructor(
+	private val ioDispatcher: CoroutineDispatcher
+) {
 	
 	suspend operator fun invoke(videoPath: String): String? = withContext(ioDispatcher) {
 		val bitmap = ThumbnailUtils.createVideoThumbnail(
