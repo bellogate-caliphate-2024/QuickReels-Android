@@ -14,8 +14,10 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.bellogatecaliphate.core.model.routes.CreatePostNavGraphRoute
 import com.bellogatecaliphate.core.model.routes.Temporary
 import com.bellogatecaliphate.core.model.routes.TimelineNavGraphRoute
+import com.bellogatecaliphate.create_post.navigation.createPostNavGraph
 import com.bellogatecaliphate.quickreels.ui.theme.QuickReelsTheme
 import com.bellogatecaliphate.timeline.navigation.timelineNavGraph
 import dagger.hilt.android.AndroidEntryPoint
@@ -36,15 +38,15 @@ class MainActivity : ComponentActivity() {
 						composable<Temporary> {
 							TemporaryScreen { name ->
 								when (name) {
-									"Timeline" -> navController.navigate(TimelineNavGraphRoute)
-									//"CreatePost" -> navController.navigate(CreatePostNavGraphRoute)
-									//"Account"    -> navController.navigate(CreatePostNavGraphRoute)
+									"Timeline"   -> navController.navigate(TimelineNavGraphRoute)
+									"CreatePost" -> navController.navigate(CreatePostNavGraphRoute)
+									"Account"    -> navController.navigate(CreatePostNavGraphRoute)
 								}
 								
 							}
 						}
 						timelineNavGraph(navController)
-						//createPostNavGraph(navController)
+						createPostNavGraph(navController)
 					}
 				}
 			}
