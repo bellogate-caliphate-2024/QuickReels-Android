@@ -36,7 +36,8 @@ android {
 		}
 		
 		debug {
-			applicationIdSuffix = ".dev"
+			// buildTypes applicationIdSuffix is always appended after the productFlavor applicationIdSuffix
+			applicationIdSuffix = ".debug"
 			isMinifyEnabled = false
 			proguardFiles(
 				getDefaultProguardFile("proguard-android-optimize.txt"),
@@ -44,6 +45,19 @@ android {
 			)
 		}
 	}
+	
+	productFlavors {
+		create("production")
+		
+		create("staging") {
+			applicationIdSuffix = ".staging"
+		}
+		
+		create("local") {
+			applicationIdSuffix = ".local"
+		}
+	}
+	
 	compileOptions {
 		sourceCompatibility = JavaVersion.VERSION_1_8
 		targetCompatibility = JavaVersion.VERSION_1_8
