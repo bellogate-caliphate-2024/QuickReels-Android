@@ -8,7 +8,6 @@ import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import com.bellogatecaliphate.contents.local.ILocalDataSource
-import com.bellogatecaliphate.contents.remote.IRemoteSource
 import com.bellogatecaliphate.contents.remote.model.ContentResponse
 import com.bellogatecaliphate.core.source.local.entity.ContentEntity
 import com.bellogatecaliphate.core.source.local.entity.ContentsListPageInfoEntity

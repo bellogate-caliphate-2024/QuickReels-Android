@@ -6,7 +6,6 @@ import androidx.paging.PagingConfig
 import com.bellogatecaliphate.contents.local.ILocalDataSource
 import com.bellogatecaliphate.contents.paging.ContentsHistoryPagingSource
 import com.bellogatecaliphate.contents.paging.ContentsRemoteMediator
-import com.bellogatecaliphate.contents.remote.IRemoteSource
 import kotlinx.coroutines.CoroutineDispatcher
 import javax.inject.Inject
 
