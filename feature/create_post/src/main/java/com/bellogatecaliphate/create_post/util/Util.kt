@@ -1,0 +1,14 @@
+package com.bellogatecaliphate.create_post.util
+
+import android.content.Context
+import android.content.ContextWrapper
+import androidx.activity.ComponentActivity
+
+fun getPlaceHolderBase64String() =
+		"iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAACQkWg2AAADIElEQVR4nAAQA+/8Aslk81yg64TzMz8CorhsfUG/PNhBHvx3syvzBaKQzM7wPtJsbVoES/tux6HtvKsTGQQe9E5ZHtoqTHE7EvY5VcJFrcKh8QmEvbcN71QrpSA+9/HC6OuvwgELujnPgvGB2RMCvE88HG0MxXptLTZp8jndfhTfXtntBMDAD9odrpXbMgnu4gap+ZcwBpVlR8p2gksAA03DrcWI/vOwIZkjAC0CMsLBi4WnGfbM0836cBR6uz2YFyZC+qr28X9dBwE/ljk8zQIQlvFzIJTuYukZeTlawsKAqyPf+9Pw4vhOBO1eQDPGJp/2a/iA9oehZNcsgEf5pnUA2sxDWwJVM6iXbBPaBbTQ+odjjHDouEJwy+sjFFwyxCuXF985vm9d04HoFHz54mTXAazWPVXCQ7TPOlYLuUosKdXEg90foiEQswzr7sUHlokQUmVwNCQy6cVrUAUZOiwUXgDuC6lzjlZoM6tN69WkCVXAmm1dPG/AXh0kyxMMmMrT/Tc70/piB3pAcd5oena1pfYAtsdjbFTvnWCw0ToSSt+iCB0whdxh1vUJqmTscmu76D4WVBpp1V4pvUfEm7caqBW9AoUM1eS2/anCEjLQGoUsGvM0rgKpHk0hBTA9+mW0te82hbtm0PWKoJFzA9zdw8bH/gH9JfaVsUIlDL7eT6KVhCck8KgqQfBj6E7/GFeSy1sB65nxZdYWvQB9Y9c9tljO/+QCNZ1zAyan+54PzwvKbL7n+Ib3RqI1iwbBGy7CD9TpPVz32ki8/aJGpggmqBmW9Nt5AMrRnKWzbEiOzpcSBW44+ZjaVQu/7yR4lPoX+eVDrTP1HxWG3x1YkdI4hVqvpiV0+QF5ySzpMiL/Tvt77Wbdwe0EgL69uBcWVAe8u6SSXa9fFaAuC+XyWfESqd6G5ojJvW8EygLiNoO7gKcGI7gwEYJM8P5nuRGd6mSI/rwHI/I59tCiiXZuQc7X7IKoRhKfPu1EAFJhnNReFs6315ZYv+mY0w8HUql04lXE+xjSAiQX1sKkEeC5lo1xBHlUOYN33vnzGQEAAP///RqJ8yBPO+kAAAAASUVORK5CYII="
+
+fun Context.getActivity(): ComponentActivity? = when (this) {
+	is ComponentActivity -> this
+	is ContextWrapper    -> baseContext.getActivity()
+	else                 -> null
+}

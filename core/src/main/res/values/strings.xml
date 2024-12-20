@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">QuickReels</string>
+    <string name="home">Home</string>
+    <string name="post">Post</string>
+    <string name="chat">Chat</string>
+    <string name="account">Account</string>
+    <string name="replies">Replies</string>
+    <string name="reply">Reply</string>
+    <string name="comment">Comment</string>
+    <string name="comments">Comments</string>
+    <string name="no_comments">No comment</string>
+    <string name="send">Send</string>
+    <string name="load_more">Load more</string>
+    <string name="close">Close</string>
+</resources>
