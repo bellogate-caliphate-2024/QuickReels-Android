@@ -32,6 +32,19 @@ android {
 		buildConfig = true
 	}
 	
+	flavorDimensions += listOf("environment")
+	productFlavors {
+		create("production") {
+			dimension = "environment"
+			buildConfigField("String", "BASE_URL", "\"https://api.production.example.com\"")
+		}
+		
+		create("staging") {
+			dimension = "environment"
+			buildConfigField("String", "BASE_URL", "\"https://api.debug.example.com\"")
+		}
+	}
+	
 	compileOptions {
 		sourceCompatibility = JavaVersion.VERSION_1_8
 		targetCompatibility = JavaVersion.VERSION_1_8

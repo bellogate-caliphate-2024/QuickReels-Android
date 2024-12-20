@@ -50,13 +50,11 @@ android {
 	productFlavors {
 		create("production") {
 			dimension = "environment"
-			buildConfigField("String", "BASE_URL", "\"https://api.production.example.com\"")
 		}
 		
 		create("staging") {
 			applicationIdSuffix = ".staging"
 			dimension = "environment"
-			buildConfigField("String", "BASE_URL", "\"https://api.debug.example.com\"")
 		}
 	}
 	

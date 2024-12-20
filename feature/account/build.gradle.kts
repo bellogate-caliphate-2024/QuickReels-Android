@@ -31,6 +31,17 @@ android {
 		compose = true
 	}
 	
+	flavorDimensions += listOf("environment")
+	productFlavors {
+		create("production") {
+			dimension = "environment"
+		}
+		
+		create("staging") {
+			dimension = "environment"
+		}
+	}
+	
 	compileOptions {
 		sourceCompatibility = JavaVersion.VERSION_1_8
 		targetCompatibility = JavaVersion.VERSION_1_8
