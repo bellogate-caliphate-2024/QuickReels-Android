@@ -13,7 +13,7 @@ android {
 	
 	defaultConfig {
 		applicationId = "com.bellogatecaliphate.quickreels"
-		minSdk = 28
+		minSdk = 24
 		targetSdk = 34
 		versionCode = 1
 		versionName = "1.0"
@@ -46,15 +46,17 @@ android {
 		}
 	}
 	
-	flavorDimensions += listOf("app_mode")
+	flavorDimensions += listOf("environment")
 	productFlavors {
 		create("production") {
-			dimension = "app_mode"
+			dimension = "environment"
+			buildConfigField("String", "BASE_URL", "\"https://api.production.example.com\"")
 		}
 		
 		create("staging") {
 			applicationIdSuffix = ".staging"
-			dimension = "app_mode"
+			dimension = "environment"
+			buildConfigField("String", "BASE_URL", "\"https://api.debug.example.com\"")
 		}
 	}
 	
@@ -67,6 +69,7 @@ android {
 	}
 	buildFeatures {
 		compose = true
+		buildConfig = true
 	}
 	
 	packaging {
