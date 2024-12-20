@@ -2,6 +2,7 @@ package com.bellogatecaliphate.contents.paging
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
+import com.bellogatecaliphate.contents.remote.IRemoteSource
 import com.bellogatecaliphate.contents.remote.model.ContentResponse
 import com.bellogatecaliphate.user.IUserRepository
 import kotlinx.coroutines.CoroutineDispatcher

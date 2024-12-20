@@ -46,15 +46,15 @@ android {
 		}
 	}
 	
+	flavorDimensions += listOf("app_mode")
 	productFlavors {
-		create("production")
+		create("production") {
+			dimension = "app_mode"
+		}
 		
 		create("staging") {
 			applicationIdSuffix = ".staging"
-		}
-		
-		create("local") {
-			applicationIdSuffix = ".local"
+			dimension = "app_mode"
 		}
 	}
 	

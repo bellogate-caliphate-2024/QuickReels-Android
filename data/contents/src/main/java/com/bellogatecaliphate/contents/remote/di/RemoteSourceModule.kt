@@ -1,6 +1,7 @@
 package com.bellogatecaliphate.contents.remote.di
 
-import contents.remote.RemoteSource
+import com.bellogatecaliphate.contents.remote.IRemoteSource
+import com.bellogatecaliphate.contents.remote.RemoteSource
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
