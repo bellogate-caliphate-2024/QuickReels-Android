@@ -9,7 +9,7 @@ import java.util.concurrent.TimeUnit
 
 object RetrofitClient {
 	
-	fun getRetrofit(appContext: Context): Retrofit {
+	fun getRetrofit(appContext: Context, baseUrl: String): Retrofit {
 		
 		val httpClient = OkHttpClient.Builder()
 			.readTimeout(60, TimeUnit.SECONDS)
@@ -27,7 +27,7 @@ object RetrofitClient {
 		
 		val client = httpClient.build()
 		return Retrofit.Builder()
-			.baseUrl("https://api.beta.getbux.com/core/27/")
+			.baseUrl(baseUrl)
 			.addConverterFactory(ScalarsConverterFactory.create())
 			.addConverterFactory(GsonConverterFactory.create())
 			.client(client)

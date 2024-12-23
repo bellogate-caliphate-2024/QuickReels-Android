@@ -1,4 +1,4 @@
-package com.bellogatecaliphate.core.di
+package com.bellogatecaliphate.core.source.local.di
 
 import android.content.Context
 import androidx.room.Room
@@ -19,7 +19,7 @@ object AppDatabaseModule {
 	fun provideAppDatabase(@ApplicationContext applicationContext: Context): AppDatabase {
 		val db = Room.databaseBuilder(
 			applicationContext,
-			AppDatabase::class.java, "database-name"
+			AppDatabase::class.java, "quickreels_database"
 		).build()
 		return db
 	}
