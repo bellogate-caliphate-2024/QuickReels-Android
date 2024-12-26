@@ -1,15 +1,15 @@
 package com.bellogatecaliphate.user
 
 import com.bellogatecaliphate.core.source.local.entity.UserEntity
-import com.bellogatecaliphate.user.local.IUserLocalDataSource
-import com.bellogatecaliphate.user.remote.UserRemoteDataSource
+import com.bellogatecaliphate.user.local.ILocalDataSource
+import com.bellogatecaliphate.user.remote.RemoteDataSource
 import com.bellogatecaliphate.user.remote.model.UserResponse
 import com.bellogatecaliphate.user.remote.model.UsersResponse
 import javax.inject.Inject
 
 internal class UserRepository @Inject constructor(
-	private val userLocalDataSource: IUserLocalDataSource,
-	private val userRemoteDataSource: UserRemoteDataSource
+	private val userLocalDataSource: ILocalDataSource,
+	private val userRemoteDataSource: RemoteDataSource
 ) : IUserRepository {
 	
 	override suspend fun getUserFromLocal(): UserEntity? {

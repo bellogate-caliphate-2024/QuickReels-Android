@@ -6,10 +6,10 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-internal class UserLocalDataSource @Inject constructor(
+internal class LocalDataSource @Inject constructor(
 	private val userDao: UserDao,
 	private val ioDispatcher: CoroutineDispatcher
-) : IUserLocalDataSource {
+) : ILocalDataSource {
 	
 	override suspend fun getUser(): UserEntity? = withContext(ioDispatcher) {
 		userDao.getUser()

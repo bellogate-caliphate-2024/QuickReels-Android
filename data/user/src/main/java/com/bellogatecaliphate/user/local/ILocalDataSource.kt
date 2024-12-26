@@ -2,7 +2,7 @@ package com.bellogatecaliphate.user.local
 
 import com.bellogatecaliphate.core.source.local.entity.UserEntity
 
-interface IUserLocalDataSource {
+interface ILocalDataSource {
 	
 	suspend fun getUser(): UserEntity?
 }

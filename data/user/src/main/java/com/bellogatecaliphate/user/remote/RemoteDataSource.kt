@@ -7,10 +7,10 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-internal class UserRemoteDataSource @Inject constructor(
+internal class RemoteDataSource @Inject constructor(
 	private val ioDispatcher: CoroutineDispatcher,
 	private val api: UserApi
-) : IUserRemoteDataSource {
+) : IRemoteDataSource {
 	
 	override suspend fun getUsers(page: Int): UsersResponse? = withContext(ioDispatcher) {
 		api.getUsers(page)
