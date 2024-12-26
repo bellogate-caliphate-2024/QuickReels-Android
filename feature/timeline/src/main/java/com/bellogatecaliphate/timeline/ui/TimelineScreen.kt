@@ -22,7 +22,7 @@ fun TimeLineScreen(viewModel: TimeLineScreenViewModel = hiltViewModel()) {
 @Composable
 private fun TimeLineScreen(uiState: UiState) {
 	Column {
-		ProgressBar(uiState.loading)
+		ProgressBar(uiState.isLoading)
 		Contents(uiState.listOfContents)
 	}
 }
