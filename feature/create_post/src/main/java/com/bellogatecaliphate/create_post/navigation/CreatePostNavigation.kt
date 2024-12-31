@@ -6,10 +6,10 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import androidx.navigation.toRoute
 import com.bellogatecaliphate.core.model.dto.Post
-import com.bellogatecaliphate.core.model.routes.ConfirmPost
-import com.bellogatecaliphate.core.model.routes.CreatePost
-import com.bellogatecaliphate.core.model.routes.CreatePostNavGraphRoute
-import com.bellogatecaliphate.core.model.routes.PreviewPost
+import com.bellogatecaliphate.core.model.routes.create_post.ConfirmPost
+import com.bellogatecaliphate.core.model.routes.create_post.CreatePost
+import com.bellogatecaliphate.core.model.routes.create_post.CreatePostNavGraphRoute
+import com.bellogatecaliphate.core.model.routes.create_post.PreviewPost
 import com.bellogatecaliphate.create_post.ui.confirm_post.UploadPostConfirmationDialog
 import com.bellogatecaliphate.create_post.ui.create_post.CreatePostScreen
 import com.bellogatecaliphate.create_post.ui.preview_post.PreviewPostScreen

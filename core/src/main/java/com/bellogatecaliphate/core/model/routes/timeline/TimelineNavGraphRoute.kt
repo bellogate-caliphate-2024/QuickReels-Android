@@ -1,5 +1,6 @@
-package com.bellogatecaliphate.core.model.routes
+package com.bellogatecaliphate.core.model.routes.timeline
 
+import com.bellogatecaliphate.core.model.routes.Route
 import kotlinx.serialization.Serializable
 
 /**
@@ -8,18 +9,11 @@ import kotlinx.serialization.Serializable
 
 // Route for nested graph
 @Serializable
-data object CreatePostNavGraphRoute
+data object TimelineNavGraphRoute : Route()
 
 // Routes inside nested graph
 @Serializable
-data object CreatePost
+data object Timeline
 
 @Serializable
-data class PreviewPost(
-	val videoPath: String,
-	val videoCaption: String?,
-	val editable: Boolean
-)
-
-@Serializable
-data class ConfirmPost(val postAsJsonString: String)
+data object Comments
