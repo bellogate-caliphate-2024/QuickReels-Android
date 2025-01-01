@@ -82,6 +82,7 @@ dependencies {
 	implementation(project(":feature:account"))
 	implementation(project(":feature:create_post"))
 	implementation(project(":feature:timeline"))
+	implementation(project(":feature:chat"))
 	implementation(project(":core"))
 	implementation(libs.androidx.core.ktx)
 	implementation(libs.androidx.lifecycle.runtime.ktx)

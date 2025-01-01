@@ -1,3 +1,5 @@
 package com.bellogatecaliphate.domain.chat
 
-class SearchForChatUsersUseCase
+import javax.inject.Inject
+
+class SearchForChatUsersUseCase @Inject constructor()
