@@ -108,8 +108,6 @@ dependencies {
 	implementation(libs.bottom.navigation)
 	// serialization
 	implementation(libs.kotlinx.serialization.json)
-	// constraint
-	implementation(libs.androidx.constraintlayout.compose)
 }
 
 kapt {

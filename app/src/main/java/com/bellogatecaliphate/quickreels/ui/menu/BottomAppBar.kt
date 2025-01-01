@@ -61,7 +61,7 @@ internal fun BottomAppBar(
 	val sliderWidth = (screenWidth / 4).dp
 	var slideTo by remember { mutableIntStateOf(0) }
 	
-	Column(modifier.background(colorResource(id = R.color.white))) {
+	Column(modifier) {
 		Slider(sliderWidth, slideTo)
 		Spacer(modifier = Modifier.height(12.dp))
 		Row(
