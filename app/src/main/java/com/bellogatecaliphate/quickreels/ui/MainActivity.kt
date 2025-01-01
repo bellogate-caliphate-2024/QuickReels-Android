@@ -11,7 +11,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
@@ -22,9 +21,6 @@ import com.bellogatecaliphate.quickreels.ui.menu.BottomAppBar
 import com.bellogatecaliphate.quickreels.ui.theme.QuickReelsTheme
 import com.bellogatecaliphate.timeline.navigation.timelineNavGraph
 import dagger.hilt.android.AndroidEntryPoint
-
-private const val CONTENT_SECTION = "contentSection"
-private const val BOTTOM_NAVIGATION_BAR = "bottomNavigationBar"
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -49,17 +45,11 @@ private fun QuickReelsScreen() {
 	val navController = rememberNavController()
 	Scaffold(
 		bottomBar = {
-			BottomAppBar(Modifier.layoutId(BOTTOM_NAVIGATION_BAR)) { route: Route ->
-				navController.navigate(route)
-			}
+			BottomAppBar { route: Route -> navController.navigate(route) }
 		}
 	) { innerPadding ->
 		Box(modifier = Modifier.padding(innerPadding)) {
-			NavHost(
-				navController,
-				startDestination = TimelineNavGraphRoute::class,
-				Modifier.layoutId(CONTENT_SECTION)
-			) {
+			NavHost(navController, startDestination = TimelineNavGraphRoute::class) {
 				timelineNavGraph(navController)
 				createPostNavGraph(navController)
 			}
