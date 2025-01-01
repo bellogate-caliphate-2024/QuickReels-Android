@@ -4,8 +4,8 @@ import com.bellogatecaliphate.core.model.routes.Route
 import kotlinx.serialization.Serializable
 
 @Serializable
-data object ChatNavGraphRoute : Route()
-
-@Serializable
-data object SelectUser
+data object ChatNavGraphRoute : Route() {
+	@Serializable
+	data object SelectUser
+}
 
