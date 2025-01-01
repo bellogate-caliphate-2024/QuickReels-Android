@@ -79,6 +79,7 @@ android {
 
 dependencies {
 	
+	implementation(project(":feature:account"))
 	implementation(project(":feature:create_post"))
 	implementation(project(":feature:timeline"))
 	implementation(project(":core"))

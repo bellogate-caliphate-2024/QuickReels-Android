@@ -39,7 +39,7 @@ fun AccountScreen(viewModel: AccountScreenViewModel = hiltViewModel()) {
 }
 
 @Composable
-internal fun AccountScreen(uiState: UiState, onSignUp: () -> Unit = {}, onLogin: () -> Unit = {}) {
+private fun AccountScreen(uiState: UiState, onSignUp: () -> Unit = {}, onLogin: () -> Unit = {}) {
 	if (uiState.isUserLoggedIn()) {
 		uiState.user?.let {
 			LoggedInUserAccountScreen(
