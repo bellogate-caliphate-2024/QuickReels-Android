@@ -9,11 +9,11 @@ import kotlinx.serialization.Serializable
 
 // Route for nested graph
 @Serializable
-data object TimelineNavGraphRoute : Route()
-
-// Routes inside nested graph
-@Serializable
-data object Timeline
-
-@Serializable
-data object Comments
+data object TimelineNavGraphRoute : Route() {
+	// Routes inside nested graph
+	@Serializable
+	data object Timeline
+	
+	@Serializable
+	data object Comments
+}

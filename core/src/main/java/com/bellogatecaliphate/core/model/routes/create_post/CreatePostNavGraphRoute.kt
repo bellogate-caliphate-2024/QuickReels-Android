@@ -9,18 +9,18 @@ import kotlinx.serialization.Serializable
 
 // Route for nested graph
 @Serializable
-data object CreatePostNavGraphRoute : Route()
-
-// Routes inside nested graph
-@Serializable
-data object CreatePost
-
-@Serializable
-data class PreviewPost(
-	val videoPath: String,
-	val videoCaption: String?,
-	val editable: Boolean
-)
-
-@Serializable
-data class ConfirmPost(val postAsJsonString: String)
+data object CreatePostNavGraphRoute : Route() {
+	// Routes inside nested graph
+	@Serializable
+	data object CreatePost
+	
+	@Serializable
+	data class PreviewPost(
+		val videoPath: String,
+		val videoCaption: String?,
+		val editable: Boolean
+	)
+	
+	@Serializable
+	data class ConfirmPost(val postAsJsonString: String)
+}

@@ -6,22 +6,19 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import androidx.navigation.toRoute
 import com.bellogatecaliphate.core.model.dto.Post
-import com.bellogatecaliphate.core.model.routes.create_post.ConfirmPost
-import com.bellogatecaliphate.core.model.routes.create_post.CreatePost
 import com.bellogatecaliphate.core.model.routes.create_post.CreatePostNavGraphRoute
-import com.bellogatecaliphate.core.model.routes.create_post.PreviewPost
 import com.bellogatecaliphate.create_post.ui.confirm_post.UploadPostConfirmationDialog
 import com.bellogatecaliphate.create_post.ui.create_post.CreatePostScreen
 import com.bellogatecaliphate.create_post.ui.preview_post.PreviewPostScreen
 import com.google.gson.Gson
 
 fun NavGraphBuilder.createPostNavGraph(navController: NavHostController) {
-	navigation<CreatePostNavGraphRoute>(startDestination = CreatePost::class) {
-		composable<CreatePost> {
+	navigation<CreatePostNavGraphRoute>(startDestination = CreatePostNavGraphRoute.CreatePost::class) {
+		composable<CreatePostNavGraphRoute.CreatePost> {
 			CreatePostScreen(
 				onPostReadyForPreview = { videoPath, videoCaption, editable ->
 					navController.navigate(
-						PreviewPost(
+						CreatePostNavGraphRoute.PreviewPost(
 							videoPath,
 							videoCaption,
 							editable
@@ -30,27 +27,28 @@ fun NavGraphBuilder.createPostNavGraph(navController: NavHostController) {
 				},
 				onPostClicked = { post ->
 					navController.navigate(
-						PreviewPost(post.videoFilePath, post.caption, false)
+						CreatePostNavGraphRoute.PreviewPost(post.videoFilePath, post.caption, false)
 					)
 				}
 			)
 		}
-		composable<PreviewPost> { backStackEntry ->
-			val previewPost = backStackEntry.toRoute<PreviewPost>()
+		composable<CreatePostNavGraphRoute.PreviewPost> { backStackEntry ->
+			val previewPost = backStackEntry.toRoute<CreatePostNavGraphRoute.PreviewPost>()
 			PreviewPostScreen(
 				previewPost.videoPath,
 				previewPost.videoCaption,
 				previewPost.editable,
 				{ post ->
 					val postAsJsonString = Gson().toJson(post)
-					navController.navigate(ConfirmPost(postAsJsonString))
+					navController.navigate(CreatePostNavGraphRoute.ConfirmPost(postAsJsonString))
 				})
 		}
-		composable<ConfirmPost> {
-			val postAsJsonString = it.toRoute<ConfirmPost>().postAsJsonString
+		composable<CreatePostNavGraphRoute.ConfirmPost> {
+			val postAsJsonString =
+					it.toRoute<CreatePostNavGraphRoute.ConfirmPost>().postAsJsonString
 			val post = Gson().fromJson(postAsJsonString, Post::class.java)
 			UploadPostConfirmationDialog(post, {
-				navController.popBackStack(CreatePost, false)
+				navController.popBackStack(CreatePostNavGraphRoute.CreatePost, false)
 			})
 		}
 	}
