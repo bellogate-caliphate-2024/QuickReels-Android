@@ -47,8 +47,7 @@ fun NavGraphBuilder.createPostNavGraph(navController: NavHostController) {
 				})
 		}
 		composable<ConfirmPost> {
-			val postAsJsonString =
-					it.toRoute<ConfirmPost>().postAsJsonString
+			val postAsJsonString = it.toRoute<ConfirmPost>().postAsJsonString
 			val post = Gson().fromJson(postAsJsonString, Post::class.java)
 			UploadPostConfirmationDialog(post, {
 				navController.popBackStack(CreatePost, false)
