@@ -39,7 +39,7 @@ class SelectUserViewmodel @Inject constructor(
 	}
 	
 	fun cancelSearch() {
-		_uiState.update { it.copy(searchResult = emptyList()) }
+		_uiState.update { it.copy(searchResult = emptyList(), isLoading = true) }
 		getUsers()
 	}
 }
