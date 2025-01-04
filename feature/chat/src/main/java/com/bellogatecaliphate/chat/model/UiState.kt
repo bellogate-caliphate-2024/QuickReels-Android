@@ -9,5 +9,6 @@ internal data class UiState(
 	val isLoading: Boolean = false,
 	val networkError: Boolean = false,
 	val refresh: Boolean = false,
+	val searchResult: List<User> = emptyList(),
 	val listOfUsers: Flow<PagingData<User>> = emptyFlow()
 )

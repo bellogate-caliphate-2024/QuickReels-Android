@@ -19,6 +19,10 @@ internal class UserApiImpl @Inject constructor(private val retrofit: Retrofit) :
 	override suspend fun getUser(userEmail: String): UserResponse? {
 		return retrofit.create(UserApi::class.java).getUser(userEmail)
 	}
+	
+	override suspend fun searchForUserByName(userName: String): List<UserResponse> {
+		return retrofit.create(UserApi::class.java).searchForUserByName(userName)
+	}
 }
 
 @Module

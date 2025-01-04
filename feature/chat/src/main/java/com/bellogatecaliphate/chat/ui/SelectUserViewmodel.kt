@@ -28,11 +28,18 @@ class SelectUserViewmodel @Inject constructor(
 	
 	private fun getUsers() = viewModelScope.launch {
 		_uiState.update { it.copy(isLoading = true) }
-		val response = getChatUsersUseCase().cachedIn(viewModelScope)
-		_uiState.update { it.copy(listOfUsers = response, isLoading = false) }
+		val users = getChatUsersUseCase().cachedIn(viewModelScope)
+		_uiState.update { it.copy(listOfUsers = users, isLoading = false) }
 	}
 	
 	fun searchForUser(userName: String) = viewModelScope.launch {
 		_uiState.update { it.copy(isLoading = true) }
+		val searchResult = searchForChatUsersUseCase(userName)
+		_uiState.update { it.copy(searchResult = searchResult, isLoading = false) }
+	}
+	
+	fun cancelSearch() {
+		_uiState.update { it.copy(searchResult = emptyList()) }
+		getUsers()
 	}
 }
