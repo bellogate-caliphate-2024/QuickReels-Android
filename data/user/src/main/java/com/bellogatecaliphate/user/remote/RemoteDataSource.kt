@@ -20,4 +20,9 @@ internal class RemoteDataSource @Inject constructor(
 	override suspend fun getUser(userEmail: String): UserResponse? = withContext(ioDispatcher) {
 		api.getUser(userEmail)
 	}
+	
+	override suspend fun searchForUserByName(userName: String): List<UserResponse> =
+			withContext(ioDispatcher) {
+				api.searchForUserByName(userName)
+			}
 }
