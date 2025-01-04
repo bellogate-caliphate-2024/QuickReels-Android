@@ -14,7 +14,7 @@ android {
 	defaultConfig {
 		minSdk = 24
 		
-		testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+		testInstrumentationRunner = "com.bellogatecaliphate.chat.CustomTestRunner"
 		consumerProguardFiles("consumer-rules.pro")
 	}
 	
@@ -75,6 +75,10 @@ dependencies {
 	kapt(libs.hilt.compiler)
 	// hilt navigation compose
 	implementation(libs.hilt.navigation.compose)
+	// hilt test
+	kaptTest(libs.hilt.compiler)
+	androidTestImplementation(libs.hilt.android.testing)
+	kaptAndroidTest(libs.hilt.compiler)
 	// viewmodel compose
 	implementation(libs.viewmodel.compose)
 	implementation(libs.androidx.ui.tooling.preview)
