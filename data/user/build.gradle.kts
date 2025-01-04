@@ -71,4 +71,8 @@ dependencies {
 	implementation(libs.okhttp)
 	implementation(libs.okhttp.logging.interceptor)
 	implementation(libs.okhttp.converter.scalars)
+	// paging
+	implementation(libs.androidx.paging.runtime)
+	testImplementation(libs.androidx.paging.common)
+	implementation(libs.androidx.paging.compose)
 }

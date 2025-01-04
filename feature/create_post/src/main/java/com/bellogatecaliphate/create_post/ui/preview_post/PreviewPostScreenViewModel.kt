@@ -36,7 +36,7 @@ class PreviewPostScreenViewModel @Inject constructor(
 	private suspend fun createPost(videoPath: String, videoCaption: String): Post {
 		return Post(
 			videoFilePath = videoPath,
-			userId = getUserInfoUseCase()?.id ?: "",
+			userId = getUserInfoUseCase()?.email ?: "",
 			time = LocalDateTime.now().toString(),
 			caption = videoCaption,
 			uploadProgressPercentage = "0",

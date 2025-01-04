@@ -1,8 +1,8 @@
 package com.bellogatecaliphate.user
 
+import androidx.paging.Pager
 import com.bellogatecaliphate.core.source.local.entity.UserEntity
 import com.bellogatecaliphate.user.remote.model.UserResponse
-import com.bellogatecaliphate.user.remote.model.UsersResponse
 
 interface IUserRepository {
 	
@@ -10,5 +10,5 @@ interface IUserRepository {
 	
 	suspend fun getUserFromRemote(email: String): UserResponse?
 	
-	suspend fun getAllUsers(page: Int): UsersResponse?
+	fun getPaginatedUsersFromRemote(): Pager<Int, UserResponse>
 }

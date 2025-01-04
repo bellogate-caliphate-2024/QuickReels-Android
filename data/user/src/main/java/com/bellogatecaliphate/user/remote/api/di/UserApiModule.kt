@@ -12,14 +12,13 @@ import javax.inject.Inject
 
 internal class UserApiImpl @Inject constructor(private val retrofit: Retrofit) : UserApi {
 	
-	override suspend fun getUsers(page: Int): UsersResponse? {
-		return retrofit.create(UserApi::class.java).getUsers(page)
+	override suspend fun getUsers(page: Int, numberOfContentPerPage: Int): UsersResponse? {
+		return retrofit.create(UserApi::class.java).getUsers(page, numberOfContentPerPage)
 	}
 	
 	override suspend fun getUser(userEmail: String): UserResponse? {
 		return retrofit.create(UserApi::class.java).getUser(userEmail)
 	}
-	
 }
 
 @Module

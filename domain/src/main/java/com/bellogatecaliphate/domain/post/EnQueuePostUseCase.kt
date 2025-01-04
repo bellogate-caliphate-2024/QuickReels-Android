@@ -14,7 +14,7 @@ class EnQueuePostUseCase @Inject constructor(
 		postRepository.uploadPost(
 			post.id,
 			post.videoFilePath,
-			getUserInfoUseCase()?.id ?: "",
+			getUserInfoUseCase()?.email ?: "",
 			post.time,
 			post.caption,
 			post.uploadProgressPercentage,

@@ -25,7 +25,7 @@ internal class ContentsRepository @Inject constructor(
 		localDataSource.getPaginatedContents()
 	}
 	
-	override fun getPaginatedContentsHistory(userEmail: String) =
-			Pager(PagingConfig(pageSize = 20)) { contentsHistoryPagingSource }
+	override fun getPaginatedContentsHistory() =
+			Pager(PagingConfig(pageSize = 10)) { contentsHistoryPagingSource }
 	
 }

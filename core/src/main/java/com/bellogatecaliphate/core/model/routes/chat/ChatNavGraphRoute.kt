@@ -7,5 +7,8 @@ import kotlinx.serialization.Serializable
 data object ChatNavGraphRoute : Route() {
 	@Serializable
 	data object SelectUser
+	
+	@Serializable
+	data class Chat(val chatUserId: String)
 }
 

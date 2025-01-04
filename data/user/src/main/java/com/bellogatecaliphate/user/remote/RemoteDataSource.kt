@@ -12,9 +12,10 @@ internal class RemoteDataSource @Inject constructor(
 	private val api: UserApi
 ) : IRemoteDataSource {
 	
-	override suspend fun getUsers(page: Int): UsersResponse? = withContext(ioDispatcher) {
-		api.getUsers(page)
-	}
+	override suspend fun getUsers(page: Int, numberOfUsersPerPage: Int): UsersResponse? =
+			withContext(ioDispatcher) {
+				api.getUsers(page, numberOfUsersPerPage)
+			}
 	
 	override suspend fun getUser(userEmail: String): UserResponse? = withContext(ioDispatcher) {
 		api.getUser(userEmail)

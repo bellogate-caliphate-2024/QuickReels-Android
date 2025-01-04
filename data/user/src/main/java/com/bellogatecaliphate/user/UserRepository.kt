@@ -1,15 +1,18 @@
 package com.bellogatecaliphate.user
 
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
 import com.bellogatecaliphate.core.source.local.entity.UserEntity
 import com.bellogatecaliphate.user.local.ILocalDataSource
+import com.bellogatecaliphate.user.paging.UsersPagingSource
 import com.bellogatecaliphate.user.remote.RemoteDataSource
 import com.bellogatecaliphate.user.remote.model.UserResponse
-import com.bellogatecaliphate.user.remote.model.UsersResponse
 import javax.inject.Inject
 
 internal class UserRepository @Inject constructor(
 	private val userLocalDataSource: ILocalDataSource,
-	private val userRemoteDataSource: RemoteDataSource
+	private val userRemoteDataSource: RemoteDataSource,
+	private val userPagingSource: UsersPagingSource
 ) : IUserRepository {
 	
 	override suspend fun getUserFromLocal(): UserEntity? {
@@ -20,7 +23,6 @@ internal class UserRepository @Inject constructor(
 		return userRemoteDataSource.getUser(email)
 	}
 	
-	override suspend fun getAllUsers(page: Int): UsersResponse? {
-		return userRemoteDataSource.getUsers(page)
-	}
+	override fun getPaginatedUsersFromRemote(): Pager<Int, UserResponse> =
+			Pager(PagingConfig(pageSize = 10)) { userPagingSource }
 }

@@ -10,7 +10,7 @@ import com.bellogatecaliphate.core.model.routes.chat.ChatNavGraphRoute
 fun NavGraphBuilder.chatNavGraph(navController: NavHostController) {
 	navigation<ChatNavGraphRoute>(startDestination = ChatNavGraphRoute.SelectUser::class) {
 		composable<ChatNavGraphRoute.SelectUser> {
-			SelectUserScreen()
+			SelectUserScreen { navController.navigate(ChatNavGraphRoute.Chat(it.email)) }
 		}
 	}
 }

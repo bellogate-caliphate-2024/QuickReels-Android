@@ -6,8 +6,7 @@ import com.bellogatecaliphate.core.model.dto.User
 
 @Entity(tableName = "user")
 data class UserEntity(
-	@PrimaryKey val id: String,
-	val email: String,
+	@PrimaryKey val email: String,
 	val accountName: String,
 	val profilePictureUrl: String,
 	val numberOfLikes: String,
@@ -15,6 +14,6 @@ data class UserEntity(
 ) {
 	
 	fun toUser(): User {
-		return User(id, email, accountName, profilePictureUrl, numberOfLikes, numberOfViews)
+		return User(email, accountName, profilePictureUrl, numberOfLikes, numberOfViews)
 	}
 }
