@@ -12,9 +12,6 @@ import com.bellogatecaliphate.timeline.ui.content.Contents
 @Composable
 fun TimeLineScreen(viewModel: TimeLineScreenViewModel = hiltViewModel()) {
 	
-	val contents = viewModel.getContents().collectAsLazyPagingItems()
-	viewModel.setContents(contents)
-	
 	val uiState = viewModel.uiState.collectAsStateWithLifecycle()
 	TimeLineScreen(uiState.value)
 }
@@ -23,6 +20,6 @@ fun TimeLineScreen(viewModel: TimeLineScreenViewModel = hiltViewModel()) {
 private fun TimeLineScreen(uiState: UiState) {
 	Column {
 		ProgressBar(uiState.isLoading)
-		Contents(uiState.listOfContents)
+		Contents(uiState.listOfContents.collectAsLazyPagingItems())
 	}
 }

@@ -1,16 +1,15 @@
 package com.bellogatecaliphate.timeline.ui
 
 import androidx.lifecycle.ViewModel
-import androidx.paging.PagingData
-import androidx.paging.compose.LazyPagingItems
-import com.bellogatecaliphate.core.model.dto.Content
+import androidx.lifecycle.viewModelScope
+import androidx.paging.cachedIn
 import com.bellogatecaliphate.domain.contents.GetContentsUseCase
 import com.bellogatecaliphate.timeline.model.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -21,13 +20,13 @@ class TimeLineScreenViewModel @Inject constructor(
 	private val _uiState = MutableStateFlow(UiState())
 	internal val uiState = _uiState.asStateFlow()
 	
-	fun getContents(): Flow<PagingData<Content>> {
+	init {
+		getContents()
+	}
+	
+	private fun getContents() = viewModelScope.launch {
 		_uiState.update { it.copy(isLoading = true) }
-		return getContentsUseCase()
+		val response = getContentsUseCase().cachedIn(viewModelScope)
+		_uiState.update { it.copy(listOfContents = response, isLoading = false) }
 	}
-	
-	fun setContents(contents: LazyPagingItems<Content>) {
-		_uiState.update { it.copy(listOfContents = contents) }
-	}
-	
 }
