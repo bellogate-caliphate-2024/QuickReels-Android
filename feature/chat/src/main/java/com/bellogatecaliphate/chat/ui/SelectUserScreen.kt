@@ -12,6 +12,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -53,7 +54,8 @@ private fun SelectUserScreen(
 		OutlinedTextField(
 			modifier = Modifier
 				.fillMaxWidth()
-				.padding(PLACEHOLDER_8DP),
+				.padding(PLACEHOLDER_8DP)
+				.testTag("searchInputField"),
 			value = searchText,
 			onValueChange = { searchText = it },
 			placeholder = { Text(stringResource(id = R.string.search)) },

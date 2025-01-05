@@ -4,9 +4,14 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 
 @Composable
 fun ProgressBar(show: Boolean) {
 	if (show.not()) return
-	LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
+	LinearProgressIndicator(
+		modifier = Modifier
+			.fillMaxWidth()
+			.testTag("progressBar")
+	)
 }
