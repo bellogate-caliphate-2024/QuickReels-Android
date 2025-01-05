@@ -4,13 +4,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
 import androidx.paging.compose.LazyPagingItems
 import com.bellogatecaliphate.core.model.dto.Content
-import kotlinx.coroutines.launch
 
 @Composable
 internal fun Contents(list: LazyPagingItems<Content>?) {
@@ -18,7 +15,7 @@ internal fun Contents(list: LazyPagingItems<Content>?) {
 	val listState = rememberLazyListState()
 	val coroutineScope = rememberCoroutineScope()
 	
-	LaunchedEffect(listState) {
+	/*LaunchedEffect(listState) {
 		snapshotFlow { listState.isScrollInProgress }
 			.collect { isScrolling ->
 				if (! isScrolling) {
@@ -36,7 +33,7 @@ internal fun Contents(list: LazyPagingItems<Content>?) {
 					}
 				}
 			}
-	}
+	}*/
 	LazyColumn(state = listState, modifier = Modifier.fillMaxSize()) {
 		items(list.itemCount) { index ->
 			val content = list[index]
