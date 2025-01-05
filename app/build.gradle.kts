@@ -18,7 +18,7 @@ android {
 		versionCode = 1
 		versionName = "1.0"
 		
-		testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+		testInstrumentationRunner = "com.bellogatecaliphate.quickreels.CustomTestRunner"
 		vectorDrawables {
 			useSupportLibrary = true
 		}
@@ -104,6 +104,10 @@ dependencies {
 	// hilt
 	implementation(libs.hilt)
 	kapt(libs.hilt.compiler)
+	// hilt test
+	kaptTest(libs.hilt.compiler)
+	androidTestImplementation(libs.hilt.android.testing)
+	kaptAndroidTest(libs.hilt.compiler)
 	// navigation graph
 	implementation(libs.navigation.graph)
 	// bottom navigation compose
