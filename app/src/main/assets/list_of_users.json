@@ -1,0 +1,147 @@
+{
+  "currentPage": 1,
+  "nextPage": 2,
+  "isLastPage": true,
+  "listOfUsers": [
+    {
+      "accountName": "Jeff-1",
+      "email": "jeff@gmail.com-1",
+      "profilePictureUrl": "",
+      "numberOfLikes": "",
+      "numberOfViews": ""
+    },
+    {
+      "accountName": "Jeff-2",
+      "email": "jeff@gmail.com-2",
+      "profilePictureUrl": "",
+      "numberOfLikes": "",
+      "numberOfViews": ""
+    },
+    {
+      "accountName": "Jeff-3",
+      "email": "jeff@gmail.com-3",
+      "profilePictureUrl": "",
+      "numberOfLikes": "",
+      "numberOfViews": ""
+    },
+    {
+      "accountName": "Jeff-4",
+      "email": "jeff@gmail.com-4",
+      "profilePictureUrl": "",
+      "numberOfLikes": "",
+      "numberOfViews": ""
+    },
+    {
+      "accountName": "Jeff-5",
+      "email": "jeff@gmail.com-5",
+      "profilePictureUrl": "",
+      "numberOfLikes": "",
+      "numberOfViews": ""
+    },
+    {
+      "accountName": "Jeff-6",
+      "email": "jeff@gmail.com-6",
+      "profilePictureUrl": "",
+      "numberOfLikes": "",
+      "numberOfViews": ""
+    },
+    {
+      "accountName": "Jeff-7",
+      "email": "jeff@gmail.com-7",
+      "profilePictureUrl": "",
+      "numberOfLikes": "",
+      "numberOfViews": ""
+    },
+    {
+      "accountName": "Jeff-8",
+      "email": "jeff@gmail.com-8",
+      "profilePictureUrl": "",
+      "numberOfLikes": "",
+      "numberOfViews": ""
+    },
+    {
+      "accountName": "Jeff-9",
+      "email": "jeff@gmail.com-9",
+      "profilePictureUrl": "",
+      "numberOfLikes": "",
+      "numberOfViews": ""
+    },
+    {
+      "accountName": "Jeff-10",
+      "email": "jeff@gmail.com-10",
+      "profilePictureUrl": "",
+      "numberOfLikes": "",
+      "numberOfViews": ""
+    },
+    {
+      "accountName": "Jeff-11",
+      "email": "jeff@gmail.com-11",
+      "profilePictureUrl": "",
+      "numberOfLikes": "",
+      "numberOfViews": ""
+    },
+    {
+      "accountName": "Jeff-12",
+      "email": "jeff@gmail.com-12",
+      "profilePictureUrl": "",
+      "numberOfLikes": "",
+      "numberOfViews": ""
+    },
+    {
+      "accountName": "Jeff-13",
+      "email": "jeff@gmail.com-13",
+      "profilePictureUrl": "",
+      "numberOfLikes": "",
+      "numberOfViews": ""
+    },
+    {
+      "accountName": "Jeff-14",
+      "email": "jeff@gmail.com-14",
+      "profilePictureUrl": "",
+      "numberOfLikes": "",
+      "numberOfViews": ""
+    },
+    {
+      "accountName": "Jeff-15",
+      "email": "jeff@gmail.com-15",
+      "profilePictureUrl": "",
+      "numberOfLikes": "",
+      "numberOfViews": ""
+    },
+    {
+      "accountName": "Jeff-16",
+      "email": "jeff@gmail.com-16",
+      "profilePictureUrl": "",
+      "numberOfLikes": "",
+      "numberOfViews": ""
+    },
+    {
+      "accountName": "Jeff-17",
+      "email": "jeff@gmail.com-17",
+      "profilePictureUrl": "",
+      "numberOfLikes": "",
+      "numberOfViews": ""
+    },
+    {
+      "accountName": "Jeff-18",
+      "email": "jeff@gmail.com-18",
+      "profilePictureUrl": "",
+      "numberOfLikes": "",
+      "numberOfViews": ""
+    },
+    {
+      "accountName": "Jeff-19",
+      "email": "jeff@gmail.com-19",
+      "profilePictureUrl": "",
+      "numberOfLikes": "",
+      "numberOfViews": ""
+    },
+    {
+      "accountName": "Jeff-20",
+      "email": "jeff@gmail.com-20",
+      "profilePictureUrl": "",
+      "numberOfLikes": "",
+      "numberOfViews": ""
+    }
+  ]
+}

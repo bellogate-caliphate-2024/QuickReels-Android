@@ -1,6 +1,5 @@
 package com.bellogatecaliphate.core.source.remote
 
-import android.content.Context
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -9,7 +8,7 @@ import java.util.concurrent.TimeUnit
 
 object RetrofitClient {
 	
-	fun getRetrofit(appContext: Context, baseUrl: String): Retrofit {
+	fun getRetrofit(baseUrl: String): Retrofit {
 		
 		val httpClient = OkHttpClient.Builder()
 			.readTimeout(60, TimeUnit.SECONDS)

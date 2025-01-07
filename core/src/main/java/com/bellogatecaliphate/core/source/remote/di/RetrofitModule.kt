@@ -15,6 +15,6 @@ object RetrofitModule {
 	
 	@Provides
 	fun provideRetrofit(@ApplicationContext context: Context): Retrofit {
-		return RetrofitClient.getRetrofit(context, baseUrl = "https://api.beta.getbux.com/core/27/")
+		return RetrofitClient.getRetrofit(baseUrl = "https://api.beta.getbux.com/core/27/")
 	}
 }

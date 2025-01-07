@@ -5,8 +5,11 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.paging.compose.LazyPagingItems
 import com.bellogatecaliphate.core.model.dto.User
+
+const val TAG_PAGINATED_LIST_OF_USERS = "paginatedListOfUsers"
 
 @Composable
 internal fun UsersList(
@@ -23,7 +26,12 @@ internal fun UsersList(
 			}
 		}
 	} else {
-		LazyColumn(state = rememberLazyListState(), modifier = Modifier.fillMaxSize()) {
+		LazyColumn(
+			state = rememberLazyListState(),
+			modifier = Modifier
+				.fillMaxSize()
+				.testTag(TAG_PAGINATED_LIST_OF_USERS)
+		) {
 			if (users != null) {
 				items(users.itemCount) { index ->
 					val user = users[index]

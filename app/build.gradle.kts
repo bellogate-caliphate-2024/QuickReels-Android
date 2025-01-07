@@ -100,7 +100,12 @@ dependencies {
 	androidTestImplementation(libs.androidx.ui.test.junit4)
 	debugImplementation(libs.androidx.ui.tooling)
 	debugImplementation(libs.androidx.ui.test.manifest)
-	
+	// Retrofit
+	implementation(libs.retrofit)
+	implementation(libs.retrofit.converter.gson)
+	implementation(libs.okhttp)
+	implementation(libs.okhttp.logging.interceptor)
+	implementation(libs.okhttp.converter.scalars)
 	// hilt
 	implementation(libs.hilt)
 	kapt(libs.hilt.compiler)
@@ -114,6 +119,8 @@ dependencies {
 	implementation(libs.bottom.navigation)
 	// serialization
 	implementation(libs.kotlinx.serialization.json)
+	// mockWebServer
+	androidTestImplementation("com.squareup.okhttp3:mockwebserver:4.12.0")
 }
 
 kapt {
