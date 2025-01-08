@@ -14,7 +14,7 @@ android {
 	defaultConfig {
 		minSdk = 24
 		
-		testInstrumentationRunner = "com.bellogatecaliphate.chat.CustomTestRunner"
+		testInstrumentationRunner = "com.bellogatecaliphate.chat.runner.CustomTestRunner"
 		consumerProguardFiles("consumer-rules.pro")
 	}
 	
@@ -96,4 +96,12 @@ dependencies {
 	implementation(libs.kotlinx.serialization.json)
 	// Paging:
 	implementation(libs.androidx.paging.compose.android)
+	// Retrofit
+	androidTestImplementation(libs.retrofit)
+	androidTestImplementation(libs.retrofit.converter.gson)
+	androidTestImplementation(libs.okhttp)
+	androidTestImplementation(libs.okhttp.logging.interceptor)
+	androidTestImplementation(libs.okhttp.converter.scalars)
+	// mockWebServer
+	androidTestImplementation(libs.mockwebserver)
 }

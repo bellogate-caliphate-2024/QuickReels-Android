@@ -1,4 +1,4 @@
-package com.bellogatecaliphate.chat
+package com.bellogatecaliphate.chat.runner
 
 import android.app.Application
 import android.content.Context

@@ -120,7 +120,7 @@ dependencies {
 	// serialization
 	implementation(libs.kotlinx.serialization.json)
 	// mockWebServer
-	androidTestImplementation("com.squareup.okhttp3:mockwebserver:4.12.0")
+	androidTestImplementation(libs.mockwebserver)
 }
 
 kapt {
