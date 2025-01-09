@@ -21,7 +21,7 @@ class GetContentsUseCase @Inject constructor(private val repository: IContentsRe
 	
 	private fun ContentEntity.toContent(): Content {
 		return Content(
-			id ?: "",
+			id,
 			videoUrl ?: "",
 			thumbnailUrl ?: "",
 			caption ?: "",
@@ -31,7 +31,8 @@ class GetContentsUseCase @Inject constructor(private val repository: IContentsRe
 			numberOfComments ?: "",
 			userId ?: "",
 			userName ?: "",
-			userProfilePicture ?: ""
+			userProfilePicture ?: "",
+			isLiked ?: false
 		)
 	}
 }

@@ -2,6 +2,7 @@ package com.bellogatecaliphate.contents.remote.api.di
 
 import com.bellogatecaliphate.contents.remote.api.ContentsApi
 import com.bellogatecaliphate.contents.remote.model.ContentsListResponse
+import com.bellogatecaliphate.contents.remote.model.LikeContentResponse
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -19,6 +20,13 @@ internal class ContentsApiImpl @Inject constructor(private val retrofit: Retrofi
 			.getContentsList(page, numberOfContentPerPage)
 	}
 	
+	override suspend fun likeContent(
+		userEmail: String,
+		contentId: String,
+		isLiked: Boolean
+	): LikeContentResponse? {
+		return retrofit.create(ContentsApi::class.java).likeContent(userEmail, contentId, isLiked)
+	}
 }
 
 @Module

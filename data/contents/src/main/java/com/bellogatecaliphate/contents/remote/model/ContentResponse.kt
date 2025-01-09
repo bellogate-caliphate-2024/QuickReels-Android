@@ -13,7 +13,8 @@ data class ContentResponse(
 	val numberOfComments: String?,
 	val userId: String?,
 	val userName: String?,
-	val userProfilePicture: String?
+	val userProfilePicture: String?,
+	val isLiked: Boolean?
 ) {
 	
 	fun toEntity(): ContentEntity {
@@ -28,7 +29,8 @@ data class ContentResponse(
 			numberOfComments,
 			userId,
 			userName,
-			userProfilePicture
+			userProfilePicture,
+			isLiked
 		)
 	}
 }

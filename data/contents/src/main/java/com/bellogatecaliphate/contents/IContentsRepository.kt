@@ -7,4 +7,5 @@ import com.bellogatecaliphate.core.source.local.entity.ContentEntity
 interface IContentsRepository {
 	fun getPaginatedContents(page: Int): Pager<Int, ContentEntity>
 	fun getPaginatedContentsHistory(): Pager<Int, ContentResponse>
+	suspend fun likeContent(userEmail: String, contentId: String, isLiked: Boolean): Boolean
 }

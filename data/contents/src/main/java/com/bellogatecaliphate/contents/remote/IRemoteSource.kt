@@ -11,4 +11,6 @@ internal interface IRemoteSource {
 		page: Int,
 		numberOfContentPerPage: Int = 10
 	): ContentsListResponse?
+	
+	suspend fun likeContent(userEmail: String, contentId: String, isLiked: Boolean): Boolean
 }

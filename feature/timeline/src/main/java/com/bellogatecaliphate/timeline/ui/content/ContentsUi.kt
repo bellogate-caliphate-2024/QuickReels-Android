@@ -10,7 +10,11 @@ import androidx.paging.compose.LazyPagingItems
 import com.bellogatecaliphate.core.model.dto.Content
 
 @Composable
-internal fun Contents(list: LazyPagingItems<Content>?) {
+internal fun Contents(
+	list: LazyPagingItems<Content>?,
+	onLikeButtonPressed: (contentId: String, isLiked: Boolean) -> Unit,
+	onCommentButtonPressed: () -> Unit
+) {
 	if (list == null) return
 	val listState = rememberLazyListState()
 	val coroutineScope = rememberCoroutineScope()
@@ -37,7 +41,14 @@ internal fun Contents(list: LazyPagingItems<Content>?) {
 	LazyColumn(state = listState, modifier = Modifier.fillMaxSize()) {
 		items(list.itemCount) { index ->
 			val content = list[index]
-			content?.let { ContentUi(it, Modifier.fillParentMaxSize()) }
+			content?.let {
+				ContentUi(
+					it,
+					Modifier.fillParentMaxSize(),
+					onLikeButtonPressed,
+					onCommentButtonPressed
+				)
+			}
 		}
 	}
 }

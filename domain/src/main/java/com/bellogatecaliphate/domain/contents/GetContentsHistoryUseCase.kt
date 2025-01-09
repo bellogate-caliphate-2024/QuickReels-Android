@@ -22,7 +22,8 @@ class GetContentsHistoryUseCase @Inject constructor(private val repository: ICon
 						it.numberOfComments ?: "",
 						it.userId ?: "",
 						it.userName ?: "",
-						it.userProfilePicture ?: ""
+						it.userProfilePicture ?: "",
+						it.isLiked ?: false
 					)
 				}
 			}

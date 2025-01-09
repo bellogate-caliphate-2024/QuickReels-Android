@@ -11,15 +11,28 @@ import com.bellogatecaliphate.timeline.ui.content.Contents
 
 @Composable
 fun TimeLineScreen(viewModel: TimeLineScreenViewModel = hiltViewModel()) {
-	
 	val uiState = viewModel.uiState.collectAsStateWithLifecycle()
-	TimeLineScreen(uiState.value)
+	TimeLineScreen(
+		uiState.value, { contentId, isLiked ->
+			viewModel.likeContent(contentId, isLiked)
+		}, {
+			viewModel.getComments()
+		}
+	)
 }
 
 @Composable
-private fun TimeLineScreen(uiState: UiState) {
+private fun TimeLineScreen(
+	uiState: UiState,
+	onLikeButtonPressed: (contentId: String, isLiked: Boolean) -> Unit,
+	onCommentButtonPressed: () -> Unit
+) {
 	Column {
 		ProgressBar(uiState.isLoading)
-		Contents(uiState.listOfContents.collectAsLazyPagingItems())
+		Contents(
+			uiState.listOfContents.collectAsLazyPagingItems(),
+			onLikeButtonPressed,
+			onCommentButtonPressed
+		)
 	}
 }

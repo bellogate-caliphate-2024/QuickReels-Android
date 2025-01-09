@@ -28,4 +28,11 @@ internal class ContentsRepository @Inject constructor(
 	override fun getPaginatedContentsHistory() =
 			Pager(PagingConfig(pageSize = 10)) { contentsHistoryPagingSource }
 	
+	override suspend fun likeContent(
+		userEmail: String,
+		contentId: String,
+		isLiked: Boolean
+	): Boolean {
+		return remoteSource.likeContent(userEmail, contentId, isLiked)
+	}
 }
