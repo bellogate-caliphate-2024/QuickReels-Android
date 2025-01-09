@@ -16,8 +16,8 @@ import com.bellogatecaliphate.timeline.util.ContentPreviewParameter
 internal fun ContentUi(
 	@PreviewParameter(ContentPreviewParameter::class) content: Content,
 	modifier: Modifier = Modifier,
-	onLikeButtonPressed: (contentId: String, isLiked: Boolean) -> Unit = {_, _ -> },
-	onCommentButtonPressed: () -> Unit = {}
+	onLikeButtonPressed: (contentId: String, isLiked: Boolean) -> Unit = { _, _ -> },
+	onCommentButtonPressed: (contentId: String) -> Unit = {}
 ) {
 	Column(modifier) {
 		UserDetailsSection(content.userProfilePicture, content.userName, content.date)

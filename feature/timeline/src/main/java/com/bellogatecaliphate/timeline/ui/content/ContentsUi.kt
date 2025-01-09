@@ -13,7 +13,7 @@ import com.bellogatecaliphate.core.model.dto.Content
 internal fun Contents(
 	list: LazyPagingItems<Content>?,
 	onLikeButtonPressed: (contentId: String, isLiked: Boolean) -> Unit,
-	onCommentButtonPressed: () -> Unit
+	onCommentButtonPressed: (contentId: String) -> Unit
 ) {
 	if (list == null) return
 	val listState = rememberLazyListState()

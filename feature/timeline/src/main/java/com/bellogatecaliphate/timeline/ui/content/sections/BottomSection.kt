@@ -27,13 +27,13 @@ internal fun BottomSection(
 	numberOfComments: String,
 	isLiked: Boolean,
 	onLikeButtonPressed: (contentId: String, isLiked: Boolean) -> Unit,
-	onCommentButtonPressed: () -> Unit
+	onCommentButtonPressed: (contentId: String) -> Unit
 ) {
 	Column(Modifier.padding(PLACEHOLDER_8DP)) {
 		Row {
 			LikeIcon(contentId, isLiked, numberOfLikes, onLikeButtonPressed)
 			Spacer(modifier = Modifier.width(PLACEHOLDER_16DP))
-			CommentsIcon(numberOfComments, onCommentButtonPressed)
+			CommentsIcon(contentId, numberOfComments, onCommentButtonPressed)
 			Spacer(modifier = Modifier.width(PLACEHOLDER_8DP))
 			Image(
 				modifier = Modifier.size(PLACEHOLDER_ICON_SIZE),

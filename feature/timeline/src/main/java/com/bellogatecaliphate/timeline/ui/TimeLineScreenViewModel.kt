@@ -36,7 +36,7 @@ class TimeLineScreenViewModel @Inject constructor(
 		likeContentUseCase(contentId, isLiked)
 	}
 	
-	fun getComments() {
+	fun getComments(contentId: String) {
 	
 	}
 }

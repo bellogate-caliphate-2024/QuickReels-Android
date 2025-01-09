@@ -15,8 +15,8 @@ fun TimeLineScreen(viewModel: TimeLineScreenViewModel = hiltViewModel()) {
 	TimeLineScreen(
 		uiState.value, { contentId, isLiked ->
 			viewModel.likeContent(contentId, isLiked)
-		}, {
-			viewModel.getComments()
+		}, { contentId ->
+			viewModel.getComments(contentId)
 		}
 	)
 }
@@ -25,7 +25,7 @@ fun TimeLineScreen(viewModel: TimeLineScreenViewModel = hiltViewModel()) {
 private fun TimeLineScreen(
 	uiState: UiState,
 	onLikeButtonPressed: (contentId: String, isLiked: Boolean) -> Unit,
-	onCommentButtonPressed: () -> Unit
+	onCommentButtonPressed: (contentId: String) -> Unit
 ) {
 	Column {
 		ProgressBar(uiState.isLoading)

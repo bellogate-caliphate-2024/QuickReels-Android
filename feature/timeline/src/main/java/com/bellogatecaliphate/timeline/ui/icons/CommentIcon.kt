@@ -16,8 +16,15 @@ import com.bellogatecaliphate.timeline.util.PLACEHOLDER_8DP
 import com.bellogatecaliphate.timeline.util.PLACEHOLDER_ICON_SIZE
 
 @Composable
-internal fun CommentsIcon(numberOfComments: String?, onCLick: () -> Unit) {
-	Column(Modifier.clickable { onCLick() }, horizontalAlignment = Alignment.CenterHorizontally) {
+internal fun CommentsIcon(
+	contentId: String,
+	numberOfComments: String?,
+	onCLick: (contentId: String) -> Unit
+) {
+	Column(
+		Modifier.clickable { onCLick(contentId) },
+		horizontalAlignment = Alignment.CenterHorizontally
+	) {
 		Image(
 			modifier = Modifier.size(PLACEHOLDER_ICON_SIZE),
 			painter = painterResource(id = R.drawable.icon_chat),
