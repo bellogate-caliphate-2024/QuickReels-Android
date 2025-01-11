@@ -5,6 +5,7 @@ import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -27,6 +28,7 @@ import androidx.media3.common.MediaItem
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.ui.PlayerView
 import com.bellogatecaliphate.core.model.dto.Post
+import com.bellogatecaliphate.core.util.PLACEHOLDER_16DP
 import com.bellogatecaliphate.create_post.R
 import com.bellogatecaliphate.create_post.ui.preview_post.model.PreviewPostUiState
 
@@ -113,7 +115,9 @@ private fun VideoCaptionSection(
 	descriptionText: String?,
 	onValueChange: (String) -> Unit
 ) {
-	OutlinedTextField(modifier = Modifier.fillMaxWidth(),
+	OutlinedTextField(modifier = Modifier
+		.fillMaxWidth()
+		.padding(PLACEHOLDER_16DP),
 		value = descriptionText ?: "",
 		readOnly = isReadOnly,
 		onValueChange = onValueChange,
