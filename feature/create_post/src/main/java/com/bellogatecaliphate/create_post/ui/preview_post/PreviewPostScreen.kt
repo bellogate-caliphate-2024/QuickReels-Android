@@ -115,9 +115,10 @@ private fun VideoCaptionSection(
 	descriptionText: String?,
 	onValueChange: (String) -> Unit
 ) {
-	OutlinedTextField(modifier = Modifier
-		.fillMaxWidth()
-		.padding(PLACEHOLDER_16DP),
+	OutlinedTextField(
+		modifier = Modifier
+			.fillMaxWidth()
+			.padding(PLACEHOLDER_16DP),
 		value = descriptionText ?: "",
 		readOnly = isReadOnly,
 		onValueChange = onValueChange,
