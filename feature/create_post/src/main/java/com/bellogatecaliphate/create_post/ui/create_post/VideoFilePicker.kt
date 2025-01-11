@@ -22,7 +22,7 @@ import com.google.accompanist.permissions.shouldShowRationale
 fun VideoFilePicker(
 	storagePermission: PermissionState,
 	requestPermission: () -> Unit,
-	onVideoFileSelected: (String) -> Unit
+	onGalleryDismissed: (uri: String?) -> Unit
 ) {
 	
 	val status = storagePermission.status
@@ -33,7 +33,7 @@ fun VideoFilePicker(
 	intent.setData(uri)
 	
 	when {
-		status.isGranted -> VideoFileGallery(onVideoFileSelected)
+		status.isGranted -> VideoFileGallery(onGalleryDismissed)
 		status.shouldShowRationale -> {
 			StoragePermissionRationalDialog(
 				onDismissRequest = { openAlertDialog.value = false },
@@ -48,13 +48,18 @@ fun VideoFilePicker(
 	}
 }
 
+/**
+ * @param onGalleryDismissed: is called anytime the gallery is closed regardless of whether the user
+ * selected a video or not. However, if the user did select a video, the uri will not be null.
+ * **/
 @Composable
-private fun VideoFileGallery(onVideoFileSelected: (uri: String) -> Unit) {
+private fun VideoFileGallery(
+	onGalleryDismissed: (uri: String?) -> Unit
+) {
+	
 	val selectVideoResultLauncher =
 			rememberLauncherForActivityResult(ActivityResultContracts.PickVisualMedia()) { result: Uri? ->
-				if (result != null) {
-					onVideoFileSelected(result.toString())
-				}
+				onGalleryDismissed(result?.toString())
 			}
 	
 	LaunchedEffect(Unit) {

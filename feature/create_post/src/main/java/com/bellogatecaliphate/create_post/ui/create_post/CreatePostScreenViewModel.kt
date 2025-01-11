@@ -17,4 +17,8 @@ class CreatePostScreenViewModel @Inject constructor() : ViewModel() {
 	fun requestPermissionAndOpenGallery() {
 		_state.update { it.copy(requestStoragePermissionAndOpenGallery = true) }
 	}
+	
+	fun resetGalleryState() {
+		_state.update { it.copy(requestStoragePermissionAndOpenGallery = false) }
+	}
 }

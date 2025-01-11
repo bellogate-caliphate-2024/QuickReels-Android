@@ -46,7 +46,10 @@ fun CreatePostScreen(
 		viewModel.state.collectAsStateWithLifecycle().value,
 		viewModel::requestPermissionAndOpenGallery,
 		onPostClicked,
-	) { data -> TrimVideo.activity(data).start(context, videoTrimResultLauncher) }
+	) { data ->
+		viewModel.resetGalleryState()
+		TrimVideo.activity(data)?.start(context, videoTrimResultLauncher)
+	}
 }
 
 @OptIn(ExperimentalPermissionsApi::class)
@@ -55,7 +58,7 @@ private fun CreatePostScreen(
 	uiState: UiState,
 	openGallery: () -> Unit,
 	onPostClicked: (Post) -> Unit,
-	onVideoFileSelected: (String) -> Unit,
+	onVideoFileSelected: (uri: String?) -> Unit,
 ) {
 	val storagePermission = rememberPermissionState(getStorageManifestPermission())
 	MainScreen(uiState.uploadsInProgress, openGallery, onPostClicked)
