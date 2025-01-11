@@ -3,6 +3,9 @@ package com.bellogatecaliphate.timeline.ui
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
+import com.bellogatecaliphate.domain.comments.GetCommentRepliesUseCase
+import com.bellogatecaliphate.domain.comments.GetCommentsUseCase
+import com.bellogatecaliphate.domain.comments.SaveReplyToACommentUseCase
 import com.bellogatecaliphate.domain.contents.GetContentsUseCase
 import com.bellogatecaliphate.domain.contents.like.LikeContentUseCase
 import com.bellogatecaliphate.timeline.model.UiState
@@ -17,6 +20,9 @@ import javax.inject.Inject
 class TimeLineScreenViewModel @Inject constructor(
 	val getContentsUseCase: GetContentsUseCase,
 	val likeContentUseCase: LikeContentUseCase,
+	val getCommentsUseCase: GetCommentsUseCase,
+	val getCommentRepliesUseCase: GetCommentRepliesUseCase,
+	val saveReplyToACommentUseCase: SaveReplyToACommentUseCase
 ) : ViewModel() {
 	
 	private val _uiState = MutableStateFlow(UiState())
@@ -37,6 +43,27 @@ class TimeLineScreenViewModel @Inject constructor(
 	}
 	
 	fun getComments(contentId: String) {
+		_uiState.update { it.copy(openCommentsBottomSheet = true, isLoadingComments = true) }
+		val response = getCommentsUseCase(contentId).cachedIn(viewModelScope)
+		_uiState.update { it.copy(listOfComments = response, isLoadingComments = false) }
+	}
 	
+	fun getRepliesToComment(commentId: String, pageNumber: Int) = viewModelScope.launch {
+		_uiState.update { it.copy(isLoadingReplies = true) }
+		val isLastPage = getCommentRepliesUseCase(commentId, pageNumber).first
+		val listOfReplies = getCommentRepliesUseCase(commentId, pageNumber).second ?: emptyList()
+		_uiState.update {
+			it.copy(
+				listOfCommentReplies = listOfReplies,
+				isLoadingReplies = false,
+				repliesPageNumber = pageNumber,
+				canLoadMoreReplies = isLastPage
+			)
+		}
+	}
+	
+	fun saveReply(originalCommentId: String, reply: String) = viewModelScope.launch {
+		val saved = saveReplyToACommentUseCase(originalCommentId, reply)
+		// do something with saved
 	}
 }

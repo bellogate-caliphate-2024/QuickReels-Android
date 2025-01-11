@@ -1,3 +1,17 @@
 package com.bellogatecaliphate.comments.remote
 
-internal interface IRemoteSource
+import com.bellogatecaliphate.comments.remote.model.CommentsListResponse
+import com.bellogatecaliphate.comments.remote.model.SaveReplyToCommentResponse
+
+internal interface IRemoteSource {
+	
+	suspend fun getComments(
+		contentId: String,
+		page: Int,
+		numberOfCommentsPerPage: Int
+	): CommentsListResponse?
+	
+	suspend fun getCommentReplies(commentId: String, page: Int): CommentsListResponse?
+	
+	suspend fun saveReply(originalCommentId: String, reply: String): SaveReplyToCommentResponse?
+}

@@ -26,7 +26,7 @@ internal fun NumberOfReplies(
 	comment: Comment,
 	isLoadingReplies: Boolean,
 	numberOfRepliesLoaded: Int,
-	onLoadReplies: (pageNumber: Int) -> Unit = {}
+	onLoadReplies: (originalCommentId: String, pageNumber: Int) -> Unit = { _, _ -> }
 ) {
 	if (comment.hasReplies()) {
 		Box(Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
@@ -36,7 +36,9 @@ internal fun NumberOfReplies(
 			} else {
 				Text(
 					text = getNumberOdRepliesText(comment.numberOfReplies),
-					Modifier.fillMaxWidth().clickable { onLoadReplies(INITIAL_PAGE_NUMBER) },
+					Modifier
+						.fillMaxWidth()
+						.clickable { onLoadReplies(comment.commentId, INITIAL_PAGE_NUMBER) },
 					textAlign = TextAlign.Center,
 					color = colorResource(id = R.color.purple_500)
 				)

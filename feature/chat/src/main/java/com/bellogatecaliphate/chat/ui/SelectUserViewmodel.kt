@@ -4,8 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
 import com.bellogatecaliphate.chat.model.UiState
-import com.bellogatecaliphate.domain.chat.GetChatUsersUseCase
-import com.bellogatecaliphate.domain.chat.SearchForChatUsersUseCase
+import com.bellogatecaliphate.domain.user.GetUsersUseCase
+import com.bellogatecaliphate.domain.user.SearchForUsersUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -15,8 +15,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SelectUserViewmodel @Inject constructor(
-	private val getChatUsersUseCase: GetChatUsersUseCase,
-	private val searchForChatUsersUseCase: SearchForChatUsersUseCase
+	private val getUsersUseCase: GetUsersUseCase,
+	private val searchForUsersUseCase: SearchForUsersUseCase
 ) : ViewModel() {
 	
 	private val _uiState = MutableStateFlow(UiState())
@@ -28,13 +28,13 @@ class SelectUserViewmodel @Inject constructor(
 	
 	private fun getUsers() = viewModelScope.launch {
 		_uiState.update { it.copy(isLoading = true) }
-		val users = getChatUsersUseCase().cachedIn(viewModelScope)
+		val users = getUsersUseCase().cachedIn(viewModelScope)
 		_uiState.update { it.copy(listOfUsers = users, isLoading = false) }
 	}
 	
 	fun searchForUser(userName: String) = viewModelScope.launch {
 		_uiState.update { it.copy(isLoading = true) }
-		val searchResult = searchForChatUsersUseCase(userName)
+		val searchResult = searchForUsersUseCase(userName)
 		_uiState.update { it.copy(searchResult = searchResult, isLoading = false) }
 	}
 	

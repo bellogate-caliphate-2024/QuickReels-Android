@@ -53,6 +53,7 @@ dependencies {
 	implementation(project(":data:post"))
 	implementation(project(":data:user"))
 	implementation(project(":data:contents"))
+	implementation(project(":data:comments"))
 	implementation(libs.androidx.core.ktx)
 	implementation(libs.androidx.appcompat)
 	implementation(libs.androidx.paging.compose.android)

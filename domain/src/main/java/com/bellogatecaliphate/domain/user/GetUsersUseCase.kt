@@ -1,4 +1,4 @@
-package com.bellogatecaliphate.domain.chat
+package com.bellogatecaliphate.domain.user
 
 import androidx.paging.PagingData
 import androidx.paging.map
@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
-class GetChatUsersUseCase @Inject constructor(private val userRepository: IUserRepository) {
+class GetUsersUseCase @Inject constructor(private val userRepository: IUserRepository) {
 	
 	operator fun invoke(): Flow<PagingData<User>> =
 			userRepository.getPaginatedUsersFromRemote().flow.map { pagingData ->

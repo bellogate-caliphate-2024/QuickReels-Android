@@ -22,11 +22,12 @@ import com.bellogatecaliphate.core.util.PLACEHOLDER_8DP
 
 @Composable
 internal fun RepliesList(
+	commentId: String,
 	replies: List<Comment>,
 	repliesPageNumber: Int? = null,
 	isLoadingReplies: Boolean = false,
 	canLoadMoreReplies: Boolean = false,
-	onLoadMoreReplies: (pageToLoad: Int) -> Unit = {}
+	onLoadMoreReplies: (originalCommentId: String, pageToLoad: Int) -> Unit = {_, _ ->}
 ) {
 	
 	Column(
@@ -42,7 +43,7 @@ internal fun RepliesList(
 				Text(
 					modifier = Modifier.clickable {
 						if (repliesPageNumber != null) {
-							onLoadMoreReplies(repliesPageNumber + 1)
+							onLoadMoreReplies(commentId, repliesPageNumber + 1)
 						}
 					},
 					text = stringResource(id = R.string.load_more)
@@ -57,5 +58,5 @@ internal fun RepliesList(
 private fun PreviewRepliesList(
 	@PreviewParameter(CommentAndRepliesPreviewParameter::class) commentAndReplies: CommentAndReplies,
 ) {
-	RepliesList(commentAndReplies.replies)
+	RepliesList(commentAndReplies.comment.commentId, commentAndReplies.replies)
 }

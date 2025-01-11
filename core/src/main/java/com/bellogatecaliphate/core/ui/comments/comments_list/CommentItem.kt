@@ -38,7 +38,7 @@ internal fun CommentItem(
 	repliesPageNumber: Int? = null,
 	canLoadMoreReplies: Boolean = false,
 	onSaveReply: ((originalCommentId: String, reply: String) -> Unit)? = null,
-	onLoadReplies: (pageNumber: Int) -> Unit = {},
+	onLoadReplies: (originalCommentId: String, pageNumber: Int) -> Unit = {_, _ -> },
 ) {
 	var openReplyCommentInputField by remember { mutableStateOf(false) }
 	val totalListOfReplies =
@@ -83,6 +83,7 @@ internal fun CommentItem(
 		}
 		NumberOfReplies(comment, isLoadingReplies, totalListOfReplies.size, onLoadReplies)
 		RepliesList(
+			comment.commentId,
 			totalListOfReplies,
 			repliesPageNumber,
 			isLoadingReplies,
