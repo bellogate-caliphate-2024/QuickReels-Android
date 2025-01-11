@@ -7,13 +7,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.bellogatecaliphate.core.model.dto.Post
+import com.bellogatecaliphate.create_post.ui.preview_post.bottom_section.BottomSection
 import com.bellogatecaliphate.create_post.ui.preview_post.model.PreviewPostUiState
-import com.bellogatecaliphate.create_post.ui.preview_post.send_button.SendButton
 import com.bellogatecaliphate.create_post.ui.preview_post.util.VideoCaptionNotProvidedPrompt
 import com.bellogatecaliphate.create_post.ui.preview_post.video_caption_section.VideoCaptionSection
 import com.bellogatecaliphate.create_post.ui.preview_post.video_preview.VideoPreview
@@ -43,12 +44,10 @@ private fun PreviewPostScreen(
 ) {
 	var text by rememberSaveable { mutableStateOf(caption ?: "") }
 	
-	Column(Modifier.fillMaxSize()) {
+	Column(Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally) {
 		VideoPreview(Modifier.weight(1f), videoPath)
 		VideoCaptionSection(isReadOnly, text) { text = it }
-		if (isReadOnly.not()) {
-			SendButton { onSendButtonClicked(text) }
-		}
+		BottomSection(text, isReadOnly, uiState.isLoading, onSendButtonClicked)
 	}
 	when {
 		uiState.videoCaptionTextIsNotProvided -> {
