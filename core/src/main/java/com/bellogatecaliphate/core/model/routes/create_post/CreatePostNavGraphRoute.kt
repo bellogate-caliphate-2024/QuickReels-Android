@@ -18,7 +18,7 @@ data object CreatePostNavGraphRoute : Route() {
 	data class PreviewPost(
 		val videoPath: String,
 		val videoCaption: String?,
-		val editable: Boolean
+		val isReadOnly: Boolean
 	)
 	
 	@Serializable

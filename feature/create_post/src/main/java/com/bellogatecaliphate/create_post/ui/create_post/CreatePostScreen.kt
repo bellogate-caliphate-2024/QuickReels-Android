@@ -122,7 +122,7 @@ private fun activityLauncher(
 	return rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
 		val data = result.data
 		if (result.resultCode == Activity.RESULT_OK && data != null) {
-			onPostReadyForPreview(TrimVideo.getTrimmedVideoPath(data), null, true)
+			onPostReadyForPreview(TrimVideo.getTrimmedVideoPath(data), null, false)
 		}
 	}
 }

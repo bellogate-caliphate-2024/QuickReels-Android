@@ -16,12 +16,12 @@ fun NavGraphBuilder.createPostNavGraph(navController: NavHostController) {
 	navigation<CreatePostNavGraphRoute>(startDestination = CreatePostNavGraphRoute.CreatePost::class) {
 		composable<CreatePostNavGraphRoute.CreatePost> {
 			CreatePostScreen(
-				onPostReadyForPreview = { videoPath, videoCaption, editable ->
+				onPostReadyForPreview = { videoPath, videoCaption, isReadOnly ->
 					navController.navigate(
 						CreatePostNavGraphRoute.PreviewPost(
 							videoPath,
 							videoCaption,
-							editable
+							isReadOnly
 						)
 					)
 				},
@@ -37,7 +37,7 @@ fun NavGraphBuilder.createPostNavGraph(navController: NavHostController) {
 			PreviewPostScreen(
 				previewPost.videoPath,
 				previewPost.videoCaption,
-				previewPost.editable,
+				previewPost.isReadOnly,
 				{ post ->
 					val postAsJsonString = Gson().toJson(post)
 					navController.navigate(CreatePostNavGraphRoute.ConfirmPost(postAsJsonString))
