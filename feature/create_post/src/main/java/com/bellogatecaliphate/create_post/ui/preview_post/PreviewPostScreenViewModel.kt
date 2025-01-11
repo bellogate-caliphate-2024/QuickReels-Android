@@ -1,5 +1,6 @@
 package com.bellogatecaliphate.create_post.ui.preview_post
 
+import android.os.Build
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bellogatecaliphate.core.model.dto.Post
@@ -34,13 +35,17 @@ class PreviewPostScreenViewModel @Inject constructor(
 	}
 	
 	private suspend fun createPost(videoPath: String, videoCaption: String): Post {
-		return Post(
-			videoFilePath = videoPath,
-			userId = getUserInfoUseCase()?.email ?: "",
-			time = LocalDateTime.now().toString(),
-			caption = videoCaption,
-			uploadProgressPercentage = "0",
-			thumbnailBase64String = getVideoThumbnailUseCase(videoPath)
-		)
+		return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+			Post(
+				videoFilePath = videoPath,
+				userId = getUserInfoUseCase()?.email ?: "",
+				time = LocalDateTime.now().toString(),
+				caption = videoCaption,
+				uploadProgressPercentage = "0",
+				thumbnailBase64String = getVideoThumbnailUseCase(videoPath)
+			)
+		} else {
+			TODO("This version of Android is not supported for this app")
+		}
 	}
 }
