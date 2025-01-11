@@ -1,36 +1,22 @@
 package com.bellogatecaliphate.create_post.ui.preview_post
 
-import android.net.Uri
-import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.sp
-import androidx.compose.ui.viewinterop.AndroidView
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.media3.common.MediaItem
-import androidx.media3.exoplayer.ExoPlayer
-import androidx.media3.ui.PlayerView
 import com.bellogatecaliphate.core.model.dto.Post
-import com.bellogatecaliphate.core.util.PLACEHOLDER_16DP
-import com.bellogatecaliphate.create_post.R
 import com.bellogatecaliphate.create_post.ui.preview_post.model.PreviewPostUiState
+import com.bellogatecaliphate.create_post.ui.preview_post.send_button.SendButton
+import com.bellogatecaliphate.create_post.ui.preview_post.util.VideoCaptionNotProvidedPrompt
+import com.bellogatecaliphate.create_post.ui.preview_post.video_caption_section.VideoCaptionSection
+import com.bellogatecaliphate.create_post.ui.preview_post.video_preview.VideoPreview
 
 @Composable
 fun PreviewPostScreen(
@@ -66,7 +52,7 @@ private fun PreviewPostScreen(
 	}
 	when {
 		uiState.videoCaptionTextIsNotProvided -> {
-			VideoCaptureNotProvidedPrompt()
+			VideoCaptionNotProvidedPrompt()
 		}
 		
 		uiState.showConfirmationBottomSheet   -> {
@@ -74,61 +60,6 @@ private fun PreviewPostScreen(
 				onShowConfirmationBottomSheet(uiState.post)
 			}
 		}
-	}
-}
-
-@Composable
-private fun VideoCaptureNotProvidedPrompt() {
-	val context = LocalContext.current
-	LaunchedEffect(key1 = Unit) {
-		Toast.makeText(context, R.string.videoCaptionTextIsNotProvided, Toast.LENGTH_LONG)
-			.show()
-	}
-}
-
-@Composable
-private fun VideoPreview(modifier: Modifier, videoPath: String) {
-	val context = LocalContext.current
-	val uri = Uri.parse(videoPath)
-	val exoPlayer = remember {
-		ExoPlayer.Builder(context).build().apply {
-			setMediaItem(MediaItem.fromUri(uri))
-			prepare()
-			playWhenReady = true
-		}
-	}
-	
-	AndroidView(
-		modifier = modifier,
-		factory = {
-			PlayerView(context).apply { player = exoPlayer }
-		})
-	
-	DisposableEffect(Unit) {
-		onDispose { exoPlayer.release() }
-	}
-}
-
-@Composable
-private fun VideoCaptionSection(
-	isReadOnly: Boolean,
-	descriptionText: String?,
-	onValueChange: (String) -> Unit
-) {
-	OutlinedTextField(
-		modifier = Modifier
-			.fillMaxWidth()
-			.padding(PLACEHOLDER_16DP),
-		value = descriptionText ?: "",
-		readOnly = isReadOnly,
-		onValueChange = onValueChange,
-		label = { Text("Add a caption...") })
-}
-
-@Composable
-private fun SendButton(onClick: () -> Unit) {
-	TextButton(onClick = onClick, modifier = Modifier.fillMaxWidth()) {
-		Text("Send", fontSize = 20.sp)
 	}
 }
 
