@@ -20,10 +20,12 @@ import com.google.accompanist.permissions.shouldShowRationale
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun VideoFilePicker(
+	visible: Boolean,
 	storagePermission: PermissionState,
 	requestPermission: () -> Unit,
 	onGalleryDismissed: (uri: String?) -> Unit
 ) {
+	if (visible.not()) return
 	
 	val status = storagePermission.status
 	val openAlertDialog = remember { mutableStateOf(false) }
