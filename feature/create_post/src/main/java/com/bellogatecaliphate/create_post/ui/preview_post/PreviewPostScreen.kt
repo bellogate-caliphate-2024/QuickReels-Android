@@ -48,7 +48,7 @@ fun PreviewPostScreen(
 private fun PreviewPostScreen(
 	videoPath: String,
 	caption: String?,
-	editable: Boolean,
+	isReadOnly: Boolean,
 	uiState: PreviewPostUiState,
 	onSendButtonClicked: (videoCaption: String) -> Unit,
 	onShowConfirmationBottomSheet: (post: Post) -> Unit
@@ -57,8 +57,8 @@ private fun PreviewPostScreen(
 	
 	Column(Modifier.fillMaxSize()) {
 		VideoPreview(Modifier.weight(1f), videoPath)
-		VideoCaptionSection(editable, text) { text = it }
-		if (editable) {
+		VideoCaptionSection(isReadOnly, text) { text = it }
+		if (isReadOnly) {
 			SendButton { onSendButtonClicked(text) }
 		}
 	}
@@ -130,5 +130,5 @@ private fun SendButton(onClick: () -> Unit) {
 @Preview(showBackground = true)
 @Composable
 private fun PreviewPostPreview() {
-	PreviewPostScreen("", "", true, { })
+	PreviewPostScreen("", "", false, PreviewPostUiState(), { }, { })
 }
