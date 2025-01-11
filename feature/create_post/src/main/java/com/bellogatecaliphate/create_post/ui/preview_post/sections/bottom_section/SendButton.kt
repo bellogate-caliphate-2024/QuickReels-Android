@@ -1,4 +1,4 @@
-package com.bellogatecaliphate.create_post.ui.preview_post.bottom_section
+package com.bellogatecaliphate.create_post.ui.preview_post.sections.bottom_section
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Text

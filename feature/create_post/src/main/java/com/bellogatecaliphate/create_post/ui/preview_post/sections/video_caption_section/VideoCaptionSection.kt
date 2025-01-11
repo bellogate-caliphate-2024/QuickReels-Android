@@ -1,4 +1,4 @@
-package com.bellogatecaliphate.create_post.ui.preview_post.video_caption_section
+package com.bellogatecaliphate.create_post.ui.preview_post.sections.video_caption_section
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding

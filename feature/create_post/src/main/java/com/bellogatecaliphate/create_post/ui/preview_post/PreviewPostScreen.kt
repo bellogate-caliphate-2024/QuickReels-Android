@@ -14,11 +14,11 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.bellogatecaliphate.core.model.dto.Post
 import com.bellogatecaliphate.create_post.ui.confirm_post.UploadPostConfirmationDialog
-import com.bellogatecaliphate.create_post.ui.preview_post.bottom_section.BottomSection
 import com.bellogatecaliphate.create_post.ui.preview_post.model.PreviewPostUiState
+import com.bellogatecaliphate.create_post.ui.preview_post.sections.bottom_section.BottomSection
+import com.bellogatecaliphate.create_post.ui.preview_post.sections.video_caption_section.VideoCaptionSection
+import com.bellogatecaliphate.create_post.ui.preview_post.sections.video_preview_section.VideoPreview
 import com.bellogatecaliphate.create_post.ui.preview_post.util.VideoCaptionNotProvidedPrompt
-import com.bellogatecaliphate.create_post.ui.preview_post.video_caption_section.VideoCaptionSection
-import com.bellogatecaliphate.create_post.ui.preview_post.video_preview.VideoPreview
 
 @Composable
 fun PreviewPostScreen(

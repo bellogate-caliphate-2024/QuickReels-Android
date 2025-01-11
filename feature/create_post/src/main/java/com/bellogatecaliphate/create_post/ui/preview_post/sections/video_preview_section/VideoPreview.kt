@@ -1,4 +1,4 @@
-package com.bellogatecaliphate.create_post.ui.preview_post.video_preview
+package com.bellogatecaliphate.create_post.ui.preview_post.sections.video_preview_section
 
 import android.net.Uri
 import androidx.compose.foundation.layout.fillMaxWidth
