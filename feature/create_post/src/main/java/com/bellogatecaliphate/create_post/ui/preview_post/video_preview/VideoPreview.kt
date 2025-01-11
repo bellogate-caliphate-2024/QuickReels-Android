@@ -6,6 +6,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.media3.common.MediaItem
@@ -28,7 +30,11 @@ internal fun VideoPreview(modifier: Modifier, videoPath: String) {
 		modifier = modifier.fillMaxWidth(),
 		factory = {
 			PlayerView(context).apply { player = exoPlayer }
-		})
+		},
+		update = { view ->
+			view.setBackgroundColor(Color.Black.toArgb())
+		}
+	)
 	
 	DisposableEffect(Unit) {
 		onDispose { exoPlayer.release() }
