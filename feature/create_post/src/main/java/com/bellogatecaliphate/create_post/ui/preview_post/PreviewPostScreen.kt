@@ -13,6 +13,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.bellogatecaliphate.core.model.dto.Post
+import com.bellogatecaliphate.create_post.ui.confirm_post.UploadPostConfirmationDialog
 import com.bellogatecaliphate.create_post.ui.preview_post.bottom_section.BottomSection
 import com.bellogatecaliphate.create_post.ui.preview_post.model.PreviewPostUiState
 import com.bellogatecaliphate.create_post.ui.preview_post.util.VideoCaptionNotProvidedPrompt
@@ -24,13 +25,23 @@ fun PreviewPostScreen(
 	videoPath: String,
 	caption: String?,
 	isReadOnly: Boolean,
-	onShowConfirmationBottomSheet: (post: Post) -> Unit,
 	viewModel: PreviewPostScreenViewModel = hiltViewModel(),
+	dismiss: () -> Unit
 ) {
 	val state = viewModel.state.collectAsStateWithLifecycle()
-	PreviewPostScreen(videoPath, caption, isReadOnly, state.value, { videoCaption ->
-		viewModel.validateVideoCaption(videoPath, videoCaption)
-	}, onShowConfirmationBottomSheet)
+	PreviewPostScreen(
+		videoPath = videoPath,
+		caption = caption,
+		isReadOnly = isReadOnly,
+		uiState = state.value,
+		onSendButtonClicked = { videoCaption ->
+			viewModel.validateVideoCaption(videoPath, videoCaption)
+		},
+		onConfirmationButtonClicked = { post ->
+			viewModel.enQueuePostForUpload(post)
+			dismiss()
+		}
+	)
 }
 
 @Composable
@@ -40,7 +51,7 @@ private fun PreviewPostScreen(
 	isReadOnly: Boolean,
 	uiState: PreviewPostUiState,
 	onSendButtonClicked: (videoCaption: String) -> Unit,
-	onShowConfirmationBottomSheet: (post: Post) -> Unit
+	onConfirmationButtonClicked: (Post) -> Unit
 ) {
 	var text by rememberSaveable { mutableStateOf(caption ?: "") }
 	
@@ -55,9 +66,7 @@ private fun PreviewPostScreen(
 		}
 		
 		uiState.showConfirmationBottomSheet   -> {
-			if (uiState.post != null) {
-				onShowConfirmationBottomSheet(uiState.post)
-			}
+			UploadPostConfirmationDialog(uiState.post, onConfirmationButtonClicked)
 		}
 	}
 }
@@ -65,5 +74,5 @@ private fun PreviewPostScreen(
 @Preview(showBackground = true)
 @Composable
 private fun PreviewPostPreview() {
-	PreviewPostScreen("", "", false, PreviewPostUiState(), { }, { })
+	PreviewPostScreen("", "", false, PreviewPostUiState(), {}, {})
 }

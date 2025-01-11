@@ -5,12 +5,9 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import androidx.navigation.toRoute
-import com.bellogatecaliphate.core.model.dto.Post
 import com.bellogatecaliphate.core.model.routes.create_post.CreatePostNavGraphRoute
-import com.bellogatecaliphate.create_post.ui.confirm_post.UploadPostConfirmationDialog
 import com.bellogatecaliphate.create_post.ui.create_post.CreatePostScreen
 import com.bellogatecaliphate.create_post.ui.preview_post.PreviewPostScreen
-import com.google.gson.Gson
 
 fun NavGraphBuilder.createPostNavGraph(navController: NavHostController) {
 	navigation<CreatePostNavGraphRoute>(startDestination = CreatePostNavGraphRoute.CreatePost::class) {
@@ -38,18 +35,8 @@ fun NavGraphBuilder.createPostNavGraph(navController: NavHostController) {
 				previewPost.videoPath,
 				previewPost.videoCaption,
 				previewPost.isReadOnly,
-				{ post ->
-					val postAsJsonString = Gson().toJson(post)
-					navController.navigate(CreatePostNavGraphRoute.ConfirmPost(postAsJsonString))
-				})
-		}
-		composable<CreatePostNavGraphRoute.ConfirmPost> {
-			val postAsJsonString =
-					it.toRoute<CreatePostNavGraphRoute.ConfirmPost>().postAsJsonString
-			val post = Gson().fromJson(postAsJsonString, Post::class.java)
-			UploadPostConfirmationDialog(post, {
-				navController.popBackStack(CreatePostNavGraphRoute.CreatePost, false)
-			})
+				dismiss = { navController.popBackStack() }
+			)
 		}
 	}
 }

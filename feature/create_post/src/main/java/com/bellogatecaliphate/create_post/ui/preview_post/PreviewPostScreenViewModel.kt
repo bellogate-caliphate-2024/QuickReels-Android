@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bellogatecaliphate.core.model.dto.Post
 import com.bellogatecaliphate.create_post.ui.preview_post.model.PreviewPostUiState
+import com.bellogatecaliphate.domain.post.EnQueuePostUseCase
 import com.bellogatecaliphate.domain.post.GetVideoThumbnailUseCase
 import com.bellogatecaliphate.domain.user.GetUserInfoUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,7 +19,8 @@ import javax.inject.Inject
 @HiltViewModel
 class PreviewPostScreenViewModel @Inject constructor(
 	private val getUserInfoUseCase: GetUserInfoUseCase,
-	private val getVideoThumbnailUseCase: GetVideoThumbnailUseCase
+	private val getVideoThumbnailUseCase: GetVideoThumbnailUseCase,
+	private val enqueuePostUseCase: EnQueuePostUseCase
 ) : ViewModel() {
 	
 	private val _state = MutableStateFlow(PreviewPostUiState())
@@ -34,6 +36,10 @@ class PreviewPostScreenViewModel @Inject constructor(
 		} else {
 			_state.update { it.copy(videoCaptionTextIsNotProvided = true) }
 		}
+	}
+	
+	fun enQueuePostForUpload(post: Post) = viewModelScope.launch {
+		enqueuePostUseCase(post)
 	}
 	
 	private suspend fun createPost(videoPath: String, videoCaption: String): Post {

@@ -20,7 +20,4 @@ data object CreatePostNavGraphRoute : Route() {
 		val videoCaption: String?,
 		val isReadOnly: Boolean
 	)
-	
-	@Serializable
-	data class ConfirmPost(val postAsJsonString: String)
 }

@@ -18,7 +18,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.bellogatecaliphate.core.model.dto.Post
 import com.bellogatecaliphate.create_post.R
 import kotlinx.coroutines.launch
@@ -27,15 +26,11 @@ val PLACEHOLDER_SIZE_24 = 24.dp
 
 @Composable
 fun UploadPostConfirmationDialog(
-	post: Post,
-	onPostQueuedForUpload: () -> Unit,
-	viewModel: UploadPostConfirmationViewModel = hiltViewModel()
+	post: Post?,
+	onConfirmationButtonClicked: (Post) -> Unit
 ) {
-	
-	UploadPostConfirmationDialog {
-		viewModel.enQueuePostForUpload(post)
-		onPostQueuedForUpload()
-	}
+	if (post == null) return
+	UploadPostConfirmationDialog { onConfirmationButtonClicked(post) }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
