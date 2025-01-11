@@ -1,6 +1,7 @@
 package com.bellogatecaliphate.create_post.ui.preview_post.video_preview
 
 import android.net.Uri
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.remember
@@ -24,7 +25,7 @@ internal fun VideoPreview(modifier: Modifier, videoPath: String) {
 	}
 	
 	AndroidView(
-		modifier = modifier,
+		modifier = modifier.fillMaxWidth(),
 		factory = {
 			PlayerView(context).apply { player = exoPlayer }
 		})
