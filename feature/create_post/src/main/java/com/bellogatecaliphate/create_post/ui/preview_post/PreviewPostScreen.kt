@@ -58,7 +58,7 @@ private fun PreviewPostScreen(
 	Column(Modifier.fillMaxSize()) {
 		VideoPreview(Modifier.weight(1f), videoPath)
 		VideoCaptionSection(isReadOnly, text) { text = it }
-		if (isReadOnly) {
+		if (isReadOnly.not()) {
 			SendButton { onSendButtonClicked(text) }
 		}
 	}
