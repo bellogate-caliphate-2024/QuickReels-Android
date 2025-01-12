@@ -28,15 +28,19 @@ import kotlinx.coroutines.launch
 @Composable
 fun UploadPostConfirmationDialog(
 	post: Post?,
-	onConfirmationButtonClicked: (Post) -> Unit
+	onConfirmationButtonClicked: (Post) -> Unit,
+	onDismiss: () -> Unit
 ) {
 	if (post == null) return
-	UploadPostConfirmationDialog { onConfirmationButtonClicked(post) }
+	UploadPostConfirmationDialog(
+		onConfirmationGiven = { onConfirmationButtonClicked(post) },
+		onDismiss = onDismiss
+	)
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun UploadPostConfirmationDialog(onConfirmationGiven: () -> Unit) {
+private fun UploadPostConfirmationDialog(onConfirmationGiven: () -> Unit, onDismiss: () -> Unit) {
 	val sheetState = rememberModalBottomSheetState()
 	val scope = rememberCoroutineScope()
 	var showBottomSheet by remember { mutableStateOf(false) }
@@ -44,6 +48,7 @@ private fun UploadPostConfirmationDialog(onConfirmationGiven: () -> Unit) {
 	ModalBottomSheet(
 		onDismissRequest = {
 			showBottomSheet = false
+			onDismiss()
 		},
 		sheetState = sheetState
 	) {

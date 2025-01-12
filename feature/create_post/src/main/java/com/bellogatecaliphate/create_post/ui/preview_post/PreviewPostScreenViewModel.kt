@@ -42,6 +42,10 @@ class PreviewPostScreenViewModel @Inject constructor(
 		enqueuePostUseCase(post)
 	}
 	
+	fun onConfirmationDialogDismissed() {
+		_state.update { it.copy(showConfirmationBottomSheet = false) }
+	}
+	
 	private suspend fun createPost(videoPath: String, videoCaption: String): Post {
 		return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 			Post(

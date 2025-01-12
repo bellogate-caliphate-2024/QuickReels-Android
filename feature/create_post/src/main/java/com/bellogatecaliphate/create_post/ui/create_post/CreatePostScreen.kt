@@ -28,9 +28,9 @@ fun CreatePostScreen(
 		viewModel.state.collectAsStateWithLifecycle().value,
 		viewModel::requestPermissionAndOpenGallery,
 		onPostClicked,
-	) { data ->
+	) { uri ->
 		viewModel.resetGalleryState()
-		TrimVideo.activity(data)?.start(context, videoTrimResultLauncher)
+		TrimVideo.activity(uri)?.start(context, videoTrimResultLauncher)
 	}
 }
 

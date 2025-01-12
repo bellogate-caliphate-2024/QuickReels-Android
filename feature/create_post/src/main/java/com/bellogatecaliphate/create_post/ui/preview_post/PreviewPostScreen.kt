@@ -40,6 +40,9 @@ fun PreviewPostScreen(
 		onConfirmationButtonClicked = { post ->
 			viewModel.enQueuePostForUpload(post)
 			dismiss()
+		},
+		onConfirmationDialogDismissed = {
+			viewModel.onConfirmationDialogDismissed()
 		}
 	)
 }
@@ -51,7 +54,8 @@ private fun PreviewPostScreen(
 	isReadOnly: Boolean,
 	uiState: PreviewPostUiState,
 	onSendButtonClicked: (videoCaption: String) -> Unit,
-	onConfirmationButtonClicked: (Post) -> Unit
+	onConfirmationButtonClicked: (Post) -> Unit,
+	onConfirmationDialogDismissed: () -> Unit,
 ) {
 	var text by rememberSaveable { mutableStateOf(caption ?: "") }
 	
@@ -66,7 +70,11 @@ private fun PreviewPostScreen(
 		}
 		
 		uiState.showConfirmationBottomSheet   -> {
-			UploadPostConfirmationDialog(uiState.post, onConfirmationButtonClicked)
+			UploadPostConfirmationDialog(
+				uiState.post,
+				onConfirmationButtonClicked,
+				onConfirmationDialogDismissed
+			)
 		}
 	}
 }
@@ -74,5 +82,5 @@ private fun PreviewPostScreen(
 @Preview(showBackground = true)
 @Composable
 private fun PreviewPostPreview() {
-	PreviewPostScreen("", "", false, PreviewPostUiState(), {}, {})
+	PreviewPostScreen("", "", false, PreviewPostUiState(), {}, {}, {})
 }
