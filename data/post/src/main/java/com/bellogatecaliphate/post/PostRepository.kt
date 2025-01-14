@@ -1,5 +1,6 @@
 package com.bellogatecaliphate.post
 
+import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequest
 import androidx.work.OutOfQuotaPolicy
 import androidx.work.WorkManager
@@ -9,7 +10,7 @@ import javax.inject.Inject
 
 internal class PostRepository @Inject constructor(
 	private val workManager: WorkManager,
-	private val workRequestBuilder: OneTimeWorkRequest.Builder
+	private val oneTimeWorkRequestBuilder: OneTimeWorkRequest.Builder
 ) : IPostRepository {
 	
 	override fun uploadPost(
@@ -21,7 +22,7 @@ internal class PostRepository @Inject constructor(
 		uploadProgressPercentage: String,
 		thumbnailBase64String: String
 	) {
-		workRequestBuilder
+		oneTimeWorkRequestBuilder
 			.addTag(videoId)
 			.setInputData(
 				workDataOf(
@@ -34,8 +35,12 @@ internal class PostRepository @Inject constructor(
 					"thumbnailBase64String" to "",
 				)
 			)
-		workRequestBuilder.setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
-		workManager.enqueue(workRequestBuilder.build())
+		oneTimeWorkRequestBuilder.setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
+		workManager.enqueueUniqueWork(
+			"uploadVideoWorkFor-$videoId",
+			ExistingWorkPolicy.REPLACE,
+			oneTimeWorkRequestBuilder.build()
+		)
 	}
 	
 	override suspend fun deletePost(postEntity: PostEntity) {
