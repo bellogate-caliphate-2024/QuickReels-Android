@@ -70,4 +70,10 @@ dependencies {
 	kapt(libs.hilt.compiler)
 	kapt(libs.androidx.hilt.compiler)
 	implementation(libs.androidx.hilt.work)
+	// retrofit
+	implementation(libs.retrofit)
+	implementation(libs.retrofit.converter.gson)
+	implementation(libs.okhttp)
+	implementation(libs.okhttp.logging.interceptor)
+	implementation(libs.okhttp.converter.scalars)
 }

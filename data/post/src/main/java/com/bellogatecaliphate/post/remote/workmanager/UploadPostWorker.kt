@@ -1,20 +1,15 @@
 package com.bellogatecaliphate.post.remote.workmanager
 
-import android.app.NotificationChannel
-import android.app.NotificationManager
 import android.content.Context
-import android.os.Build
-import androidx.core.app.NotificationCompat
 import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
 import androidx.work.Data
 import androidx.work.ForegroundInfo
-import androidx.work.WorkManager
 import androidx.work.WorkerParameters
 import com.bellogatecaliphate.core.source.local.entity.PostEntity
-import com.bellogatecaliphate.post.R
 import com.bellogatecaliphate.post.local.IPostLocalDataSource
 import com.bellogatecaliphate.post.remote.IPostRemoteDataSource
+import com.bellogatecaliphate.post.remote.workmanager.notification.createForegroundInfo
 import com.bellogatecaliphate.post.util.createPostEntity
 import com.bellogatecaliphate.post.util.createPostRequest
 import dagger.assisted.Assisted
@@ -36,7 +31,11 @@ internal class UploadPostWorker @AssistedInject constructor(
 ) : CoroutineWorker(context, params) {
 	
 	override suspend fun getForegroundInfo(): ForegroundInfo {
-		return createForegroundInfo(inputData.getString("videoId") ?: DEFAULT_NOTIFICATION_ID)
+		return createForegroundInfo(
+			applicationContext,
+			inputData.getString("videoId") ?: DEFAULT_NOTIFICATION_ID,
+			id
+		)
 	}
 	
 	override suspend fun doWork(): Result {
@@ -50,6 +49,7 @@ internal class UploadPostWorker @AssistedInject constructor(
 	
 	private suspend fun syncPost(inputData: Data): Result {
 		val request = createPostRequest(inputData)
+		
 		return try {
 			remoteDataSource.uploadPost(request)
 			updatePostStatus(request.id, PostEntity.Status.Success)
@@ -67,41 +67,4 @@ internal class UploadPostWorker @AssistedInject constructor(
 		savedPost?.let { localDataSource.savePost(it) }
 	}
 	
-	private fun createForegroundInfo(notificationId: String): ForegroundInfo {
-		val title = applicationContext.getString(R.string.notification_title)
-		val cancel = applicationContext.getString(R.string.cancel_upload)
-		// This PendingIntent can be used to cancel the worker
-		val intent = WorkManager.getInstance(applicationContext).createCancelPendingIntent(id)
-		
-		// Create a Notification channel if necessary
-		createNotificationChannel(applicationContext, notificationId)
-		
-		val notification = NotificationCompat.Builder(applicationContext, notificationId)
-			.setContentTitle(title)
-			.setTicker(title)
-			.setContentText(applicationContext.getString(R.string.cancel_upload))
-			.setSmallIcon(R.drawable.upload_icon)
-			.setOngoing(true)
-			// Add the cancel action to the notification which can
-			// be used to cancel the worker
-			.addAction(R.drawable.cancel, cancel, intent)
-			.build()
-		
-		return ForegroundInfo(notificationId.toInt(), notification)
-	}
-	
-	private fun createNotificationChannel(context: Context, notificationId: String) {
-		val channelName = "My Channel Name"
-		val importance = NotificationManager.IMPORTANCE_DEFAULT
-		val channel = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-			NotificationChannel(notificationId, channelName, importance)
-		} else {
-			TODO("VERSION.SDK_INT < O")
-		}
-		channel.description = "This is my channel description"
-		
-		val notificationManager =
-				context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-		notificationManager.createNotificationChannel(channel)
-	}
 }
