@@ -6,14 +6,14 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Retrofit
 import javax.inject.Inject
 
 internal class CreatePostImpl @Inject constructor(private val retrofit: Retrofit) : CreatePostApi {
 	
 	override suspend fun uploadPost(
-		videoFile: MultipartBody.Part,
+		videoFile: RequestBody,
 		videoId: String,
 		userId: String,
 		time: String,

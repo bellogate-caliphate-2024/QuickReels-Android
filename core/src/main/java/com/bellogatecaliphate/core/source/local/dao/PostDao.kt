@@ -17,8 +17,8 @@ interface PostDao {
 	@Delete
 	suspend fun delete(postEntity: PostEntity)
 	
-	@Query("SELECT * FROM posts WHERE status = :status")
-	fun getPostsByStatus(status: PostEntity.Status): Flow<List<PostEntity>>
+	@Query("SELECT * FROM posts WHERE uploadStatus = :status")
+	fun getPostsByStatus(status: PostEntity.UploadStatus): Flow<List<PostEntity>>
 	
 	@Query("SELECT * FROM posts WHERE id = :id")
 	fun getPostById(id: String): PostEntity?

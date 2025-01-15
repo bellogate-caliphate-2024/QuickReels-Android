@@ -1,13 +1,11 @@
 package com.bellogatecaliphate.post.remote
 
 import com.bellogatecaliphate.post.remote.api.CreatePostApi
+import com.bellogatecaliphate.post.remote.api.progress_request_body.ProgressRequestBody
 import com.bellogatecaliphate.post.remote.model.CreatePostRequest
 import com.bellogatecaliphate.post.remote.model.CreatePostResponse
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.MultipartBody
-import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
 import javax.inject.Inject
 
@@ -16,13 +14,36 @@ internal class PostRemoteDataSource @Inject constructor(
 	private val api: CreatePostApi,
 ) : IPostRemoteDataSource {
 	
-	override suspend fun uploadPost(post: CreatePostRequest): CreatePostResponse? =
+	override suspend fun uploadPost(
+		post: CreatePostRequest,
+		onProgressUpdate: suspend (Int) -> Unit,
+		onError: suspend () -> Unit,
+		onFinish: suspend () -> Unit
+	): CreatePostResponse? =
 			withContext(ioDispatcher) {
 				val videoFile = File(post.videoFilePath)
-				val videoFilePart = createMultipartBodyPart(videoFile, videoFile.name)
+				val progressRequestBody = ProgressRequestBody(
+					file = videoFile,
+					contentType = "multipart/form-data",
+					listener = object : ProgressRequestBody.UploadCallbacks {
+						
+						override suspend fun onProgressUpdate(percentage: Int) {
+							// Update your UI with the progress percentage %
+							onProgressUpdate(percentage)
+						}
+						
+						override suspend fun onError() {
+							onError()
+						}
+						
+						override suspend fun onFinish() {
+							onFinish()
+						}
+					}
+				)
 				try {
 					val result = api.uploadPost(
-						videoFilePart,
+						progressRequestBody,
 						post.id,
 						post.userId,
 						post.time,
@@ -34,10 +55,5 @@ internal class PostRemoteDataSource @Inject constructor(
 					return@withContext null
 				}
 			}
-	
-	private fun createMultipartBodyPart(file: File, partName: String): MultipartBody.Part {
-		val requestFile = file.asRequestBody("multipart/form-data".toMediaTypeOrNull())
-		return MultipartBody.Part.createFormData(partName, file.name, requestFile)
-	}
 	
 }

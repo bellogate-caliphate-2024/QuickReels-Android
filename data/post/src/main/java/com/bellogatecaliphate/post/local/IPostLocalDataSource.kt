@@ -7,5 +7,5 @@ internal interface IPostLocalDataSource {
 	suspend fun savePost(postEntity: PostEntity)
 	suspend fun deletePost(postEntity: PostEntity)
 	suspend fun getPostById(postId: String): PostEntity?
-	fun getPostsByStatus(status: PostEntity.Status): Flow<List<PostEntity>>
+	fun getPostsByStatus(status: PostEntity.UploadStatus): Flow<List<PostEntity>>
 }

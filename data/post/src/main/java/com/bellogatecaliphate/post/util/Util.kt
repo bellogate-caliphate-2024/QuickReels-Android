@@ -2,7 +2,7 @@ package com.bellogatecaliphate.post.util
 
 import androidx.work.Data
 import com.bellogatecaliphate.core.source.local.entity.PostEntity
-import com.bellogatecaliphate.core.source.local.entity.PostEntity.Status
+import com.bellogatecaliphate.core.source.local.entity.PostEntity.UploadStatus
 import com.bellogatecaliphate.post.remote.model.CreatePostRequest
 
 internal fun createPostEntity(inputData: Data): PostEntity {
@@ -13,7 +13,7 @@ internal fun createPostEntity(inputData: Data): PostEntity {
 	val description = inputData.getString("description") ?: ""
 	val uploadProgressPercentage = inputData.getString("uploadProgressPercentage") ?: ""
 	val thumbnailBase64String = inputData.getString("thumbnailBase64String") ?: ""
-	val status: Status = Status.InProgress
+	val status: UploadStatus = UploadStatus.InProgress
 	return PostEntity(
 		videoId,
 		videoFilePath,

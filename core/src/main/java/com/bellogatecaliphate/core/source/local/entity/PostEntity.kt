@@ -12,11 +12,11 @@ data class PostEntity(
 	val caption: String,
 	val uploadProgressPercentage: String,
 	val thumbnailBase64String: String?,
-	val status: Status = Status.InProgress,
+	val uploadStatus: UploadStatus = UploadStatus.InProgress(0),
 ) {
-	enum class Status {
-		InProgress,
-		Success,
-		Failed
+	sealed class UploadStatus(val uploadProgressPercentage: Int) {
+		class InProgress(uploadProgressPercentage: Int) : UploadStatus(uploadProgressPercentage)
+		data object Success : UploadStatus(0)
+		data object Failed : UploadStatus(0)
 	}
 }

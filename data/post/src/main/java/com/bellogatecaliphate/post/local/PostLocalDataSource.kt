@@ -24,7 +24,7 @@ internal class PostLocalDataSource @Inject constructor(
 		return postDao.getPostById(postId)
 	}
 	
-	override fun getPostsByStatus(status: PostEntity.Status): Flow<List<PostEntity>> =
+	override fun getPostsByStatus(status: PostEntity.UploadStatus): Flow<List<PostEntity>> =
 			postDao.getPostsByStatus(status)
 	
 }

@@ -14,6 +14,7 @@ import com.bellogatecaliphate.post.util.createPostEntity
 import com.bellogatecaliphate.post.util.createPostRequest
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
+import kotlinx.coroutines.CompletableDeferred
 
 private const val DEFAULT_NOTIFICATION_ID = "00000000"
 
@@ -29,6 +30,8 @@ internal class UploadPostWorker @AssistedInject constructor(
 	private val localDataSource: IPostLocalDataSource,
 	private val remoteDataSource: IPostRemoteDataSource
 ) : CoroutineWorker(context, params) {
+	
+	private val deferred = CompletableDeferred<Result>()
 	
 	override suspend fun getForegroundInfo(): ForegroundInfo {
 		return createForegroundInfo(
@@ -49,21 +52,33 @@ internal class UploadPostWorker @AssistedInject constructor(
 	
 	private suspend fun syncPost(inputData: Data): Result {
 		val request = createPostRequest(inputData)
-		
-		return try {
-			remoteDataSource.uploadPost(request)
-			updatePostStatus(request.id, PostEntity.Status.Success)
-			Result.success()
+		try {
+			remoteDataSource.uploadPost(
+				request,
+				onProgressUpdate = { progressPercentage ->
+					updatePostStatus(
+						request.id, PostEntity.UploadStatus.InProgress(progressPercentage)
+					)
+				},
+				onError = {
+					updatePostStatus(request.id, PostEntity.UploadStatus.Failed)
+					deferred.complete(Result.failure())
+				},
+				onFinish = {
+					updatePostStatus(request.id, PostEntity.UploadStatus.Success)
+					deferred.complete(Result.success())
+				}
+			)
+			return deferred.await()
 		}
 		catch (e: Exception) {
-			updatePostStatus(request.id, PostEntity.Status.Failed)
-			Result.failure()
+			updatePostStatus(request.id, PostEntity.UploadStatus.Failed)
+			return Result.failure()
 		}
 	}
 	
-	private suspend fun updatePostStatus(postId: String, status: PostEntity.Status) {
-		val savedPost =
-				localDataSource.getPostById(postId)?.copy(status = status)
+	private suspend fun updatePostStatus(postId: String, uploadStatus: PostEntity.UploadStatus) {
+		val savedPost = localDataSource.getPostById(postId)?.copy(uploadStatus = uploadStatus)
 		savedPost?.let { localDataSource.savePost(it) }
 	}
 	

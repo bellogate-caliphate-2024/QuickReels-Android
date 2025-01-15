@@ -24,7 +24,7 @@ abstract class PostDaoModule {
 			appDatabase.postDao().delete(postEntity)
 		}
 		
-		override fun getPostsByStatus(status: PostEntity.Status): Flow<List<PostEntity>> {
+		override fun getPostsByStatus(status: PostEntity.UploadStatus): Flow<List<PostEntity>> {
 			return appDatabase.postDao().getPostsByStatus(status)
 		}
 		
