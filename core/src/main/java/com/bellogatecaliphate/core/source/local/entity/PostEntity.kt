@@ -14,7 +14,7 @@ data class PostEntity(
 	val thumbnailBase64String: String?,
 	val uploadStatus: UploadStatus = UploadStatus.InProgress(0),
 ) {
-	sealed class UploadStatus(val status: String, val uploadProgressPercentage: Int) {
+	open class UploadStatus(val status: String, val uploadProgressPercentage: Int) {
 		class InProgress(uploadProgressPercentage: Int) :
 				UploadStatus("InProgress", uploadProgressPercentage)
 		
