@@ -20,7 +20,7 @@ class GetVideoThumbnailUseCase @Inject constructor(
 		) ?: return@withContext null
 		
 		val byteArrayOutputStream = ByteArrayOutputStream()
-		bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream)
+		bitmap.compress(Bitmap.CompressFormat.PNG, 10, byteArrayOutputStream)
 		val byteArray = byteArrayOutputStream.toByteArray()
 		
 		Base64.encodeToString(byteArray, Base64.DEFAULT)

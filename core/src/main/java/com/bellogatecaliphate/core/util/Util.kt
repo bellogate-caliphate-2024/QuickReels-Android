@@ -1,6 +1,7 @@
 package com.bellogatecaliphate.core.util
 
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import java.security.SecureRandom
 
 val PLACEHOLDER_IMAGE_40DP = 40.dp
@@ -11,6 +12,9 @@ val PLACEHOLDER_24DP = 24.dp
 val PLACEHOLDER_ICON_SIZE = 32.dp
 val PLACEHOLDER_CONTENT_HISTORY_WIDTH = 100.dp
 val PLACEHOLDER_CONTENT_HISTORY_HEIGHT = 150.dp
+
+val PLACEHOLDER_TEXT_SIZE_20 = 20.sp
+val PLACEHOLDER_TEXT_SIZE_30 = 30.sp
 
 fun generateRandomNumberWithFixedLength(length: Int): String {
 	if (length <= 0) {

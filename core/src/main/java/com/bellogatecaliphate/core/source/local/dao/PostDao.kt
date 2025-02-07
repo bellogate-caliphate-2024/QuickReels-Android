@@ -20,6 +20,9 @@ interface PostDao {
 	@Query("SELECT * FROM posts WHERE uploadStatus = :status")
 	fun getPostsByStatus(status: PostEntity.UploadStatus): Flow<List<PostEntity>>
 	
+	@Query("SELECT * FROM posts WHERE uploadStatus != :status ORDER BY time ASC")
+	fun getAllPostsExcept(status: PostEntity.UploadStatus): Flow<List<PostEntity>>
+	
 	@Query("SELECT * FROM posts WHERE id = :id")
 	fun getPostById(id: String): PostEntity?
 }

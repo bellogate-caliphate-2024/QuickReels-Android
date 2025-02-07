@@ -23,4 +23,6 @@
     <string name="videoCaptionTextIsNotProvided">Please type in a caption</string>
     <string name="upload_post_confirmation_message">Do you want to upload this post?</string>
     <string name="uploading_in_progress">Uploading...</string>
+    <string name="select_video">Select Video</string>">
+    <string name="uploads">Uploads</string>">
 </resources>

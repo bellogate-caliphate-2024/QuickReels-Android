@@ -10,7 +10,6 @@ data class PostEntity(
 	val userId: String,
 	val time: String,
 	val caption: String,
-	val uploadProgressPercentage: String,
 	val thumbnailBase64String: String?,
 	val uploadStatus: UploadStatus = UploadStatus.InProgress(0),
 ) {

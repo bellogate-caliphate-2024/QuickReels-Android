@@ -10,7 +10,7 @@ import retrofit2.http.Query
 internal interface CreatePostApi {
 	
 	@Multipart
-	@POST("upload_video_file")
+	@POST("create_post")
 	suspend fun uploadPost(
 		@Part videoFile: RequestBody,
 		@Query("videoId") videoId: String,

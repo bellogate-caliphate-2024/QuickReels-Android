@@ -1,6 +1,7 @@
 package com.bellogatecaliphate.post
 
 import com.bellogatecaliphate.core.source.local.entity.PostEntity
+import kotlinx.coroutines.flow.Flow
 
 interface IPostRepository {
 	
@@ -10,9 +11,10 @@ interface IPostRepository {
 		userId: String,
 		time: String,
 		description: String,
-		uploadProgressPercentage: String,
 		thumbnailBase64String: String
 	)
+	
+	suspend fun getOngoingPostsUploadStatus(exclude: PostEntity.UploadStatus): Flow<List<PostEntity>>
 	
 	suspend fun deletePost(postEntity: PostEntity)
 	suspend fun getPost(): PostEntity?

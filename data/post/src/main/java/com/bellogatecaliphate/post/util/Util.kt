@@ -11,7 +11,6 @@ internal fun createPostEntity(inputData: Data): PostEntity {
 	val userId = inputData.getString("userId") ?: ""
 	val time = inputData.getString("time") ?: ""
 	val description = inputData.getString("description") ?: ""
-	val uploadProgressPercentage = inputData.getString("uploadProgressPercentage") ?: ""
 	val thumbnailBase64String = inputData.getString("thumbnailBase64String") ?: ""
 	val status: UploadStatus = UploadStatus.InProgress(0)
 	return PostEntity(
@@ -20,7 +19,6 @@ internal fun createPostEntity(inputData: Data): PostEntity {
 		userId,
 		time,
 		description,
-		uploadProgressPercentage,
 		thumbnailBase64String,
 		status
 	)

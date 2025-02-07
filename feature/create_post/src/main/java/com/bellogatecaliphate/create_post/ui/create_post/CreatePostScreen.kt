@@ -43,7 +43,7 @@ private fun CreatePostScreen(
 	onVideoFileSelected: (uri: String?) -> Unit,
 ) {
 	val storagePermission = rememberPermissionState(getStorageManifestPermission())
-	UploadStatusCardHolder(uiState.uploadsInProgress, openGallery, onPostClicked)
+	UploadStatusCardHolder(uiState.existingUploads, openGallery, onPostClicked)
 	VideoFilePicker(
 		uiState.requestStoragePermissionAndOpenGallery,
 		storagePermission,

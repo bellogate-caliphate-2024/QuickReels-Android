@@ -10,6 +10,9 @@ data class Post(
 	val userId: String,
 	val time: String,
 	val caption: String,
+	val thumbnailBase64String: String?,
 	val uploadProgressPercentage: String,
-	val thumbnailBase64String: String?
+	val isUploading: Boolean = false,
+	val isUploaded: Boolean = false,
+	val isUploadFailed: Boolean = false
 )
