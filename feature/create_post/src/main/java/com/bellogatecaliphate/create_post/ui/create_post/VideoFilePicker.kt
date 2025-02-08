@@ -28,19 +28,22 @@ fun VideoFilePicker(
 	
 	val storagePermission = rememberPermissionState(getStorageManifestPermission())
 	val status = storagePermission.status
-	val openAlertDialog = remember { mutableStateOf(false) }
+	val closeStoragePermissionRationalDialog = remember { mutableStateOf(false) }
 	val context = LocalContext.current
 	val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
 	val uri = Uri.fromParts("package", context.packageName, null)
 	intent.setData(uri)
 	
 	when {
-		status.isGranted -> VideoFileGallery(onGalleryDismissed)
-		status.shouldShowRationale -> {
+		status.isGranted -> VideoFileGallery(
+			onGalleryDismissed
+		)
+		
+		status.shouldShowRationale && closeStoragePermissionRationalDialog.value.not() -> {
 			StoragePermissionRationalDialog(
-				onDismissRequest = { openAlertDialog.value = false },
+				onDismissRequest = { closeStoragePermissionRationalDialog.value = true },
 				onConfirmation = {
-					openAlertDialog.value = false
+					closeStoragePermissionRationalDialog.value = true
 					context.startActivity(intent)
 				}
 			)
