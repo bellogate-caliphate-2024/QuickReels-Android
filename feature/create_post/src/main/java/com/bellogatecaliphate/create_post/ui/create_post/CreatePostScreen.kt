@@ -11,10 +11,7 @@ import com.bellogatecaliphate.create_post.model.UiState
 import com.bellogatecaliphate.create_post.ui.create_post.upload_status.UploadStatusCardHolder
 import com.bellogatecaliphate.create_post.ui.create_post.util.activityLauncher
 import com.bellogatecaliphate.create_post.util.getActivity
-import com.bellogatecaliphate.create_post.util.getStorageManifestPermission
 import com.bellogatecaliphate.create_post.util.video_trimer.utils.TrimVideo
-import com.google.accompanist.permissions.ExperimentalPermissionsApi
-import com.google.accompanist.permissions.rememberPermissionState
 
 @Composable
 fun CreatePostScreen(
@@ -34,7 +31,6 @@ fun CreatePostScreen(
 	}
 }
 
-@OptIn(ExperimentalPermissionsApi::class)
 @Composable
 private fun CreatePostScreen(
 	uiState: UiState,
@@ -42,14 +38,8 @@ private fun CreatePostScreen(
 	onPostClicked: (Post) -> Unit,
 	onVideoFileSelected: (uri: String?) -> Unit,
 ) {
-	val storagePermission = rememberPermissionState(getStorageManifestPermission())
 	UploadStatusCardHolder(uiState.existingUploads, openGallery, onPostClicked)
-	VideoFilePicker(
-		uiState.requestStoragePermissionAndOpenGallery,
-		storagePermission,
-		storagePermission::launchPermissionRequest,
-		onVideoFileSelected
-	)
+	VideoFilePicker(uiState.requestStoragePermissionAndOpenGallery, onVideoFileSelected)
 }
 
 @PreviewScreenSizes

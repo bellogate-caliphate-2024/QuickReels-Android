@@ -12,21 +12,21 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import com.bellogatecaliphate.create_post.util.StoragePermissionRationalDialog
+import com.bellogatecaliphate.create_post.util.getStorageManifestPermission
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
-import com.google.accompanist.permissions.PermissionState
 import com.google.accompanist.permissions.isGranted
+import com.google.accompanist.permissions.rememberPermissionState
 import com.google.accompanist.permissions.shouldShowRationale
 
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun VideoFilePicker(
 	visible: Boolean,
-	storagePermission: PermissionState,
-	requestPermission: () -> Unit,
 	onGalleryDismissed: (uri: String?) -> Unit
 ) {
 	if (visible.not()) return
 	
+	val storagePermission = rememberPermissionState(getStorageManifestPermission())
 	val status = storagePermission.status
 	val openAlertDialog = remember { mutableStateOf(false) }
 	val context = LocalContext.current
@@ -46,7 +46,11 @@ fun VideoFilePicker(
 			)
 		}
 		
-		! status.isGranted -> requestPermission()
+		! status.isGranted -> {
+			LaunchedEffect(Unit) {
+				storagePermission.launchPermissionRequest()
+			}
+		}
 	}
 }
 
