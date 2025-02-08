@@ -1,16 +1,25 @@
 package com.bellogatecaliphate.create_post.ui.create_post.upload_status
 
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.bellogatecaliphate.create_post.R
-import com.bellogatecaliphate.create_post.util.getPlaceHolderBase64String
+import java.io.File
 
 val PLACEHOLDER_THUMBNAIL = 40.dp
 
@@ -20,11 +29,11 @@ fun UploadStatusCard(
 	caption: String = "Caption",
 	date: String = "2024-04-12 : 00:00:00",
 	uploadProgressPercentage: String = "100",
-	thumbnailBase64String: String? = getPlaceHolderBase64String(),
+	thumbnailFilePath: String? = null,
 	onClicked: () -> Unit = {}
 ) {
 	Row(Modifier.clickable(onClick = onClicked)) {
-		ImagePreview(thumbnailBase64String)
+		ThumbnailPreview(thumbnailFilePath)
 		Details(caption, date, uploadProgressPercentage)
 	}
 }
@@ -43,22 +52,29 @@ private fun Details(
 }
 
 @Composable
-private fun ImagePreview(
-	thumbnailBase64String: String?
+private fun ThumbnailPreview(
+	thumbnailFilePath: String?
 ) {
-	/*if (thumbnailBase64String == null) {
+	if (thumbnailFilePath == null) {
 		Image(
 			painter = painterResource(id = R.drawable.broken_image),
 			contentDescription = "content description",
 			modifier = Modifier.size(PLACEHOLDER_THUMBNAIL)
 		)
 	} else {
-		val imageBytes = Base64.decode(thumbnailBase64String, Base64.DEFAULT)
-		val bitmap = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.size)
+		val bitmap = remember { mutableStateOf<Bitmap?>(null) }
+		LaunchedEffect(thumbnailFilePath) {
+			val file = File(thumbnailFilePath)
+			if (file.exists()) {
+				bitmap.value = BitmapFactory.decodeFile(file.absolutePath)
+			}
+		}
 		
-		Image(
-			bitmap = bitmap.asImageBitmap(), "content description",
-			modifier = Modifier.size(PLACEHOLDER_THUMBNAIL)
-		)
-	}*/
+		bitmap.value?.let { btm ->
+			Image(
+				bitmap = btm.asImageBitmap(), "content description",
+				modifier = Modifier.size(PLACEHOLDER_THUMBNAIL)
+			)
+		}
+	}
 }

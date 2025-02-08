@@ -21,7 +21,7 @@ class GetOngoingPostsUploadStatusUseCase @Inject constructor(
 						userId = it.userId,
 						time = it.time,
 						caption = it.caption,
-						thumbnailBase64String = it.thumbnailBase64String,
+						thumbnailFilePath = it.thumbnailBase64String,
 						uploadProgressPercentage = it.uploadStatus.uploadProgressPercentage.toString(),
 						isUploading = it.uploadStatus is PostEntity.UploadStatus.InProgress,
 						isUploaded = it.uploadStatus is PostEntity.UploadStatus.Success,

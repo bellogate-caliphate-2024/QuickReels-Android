@@ -48,7 +48,7 @@ internal fun UploadStatusCardHolder(
 						post.caption,
 						post.time,
 						post.uploadProgressPercentage,
-						post.thumbnailBase64String
+						post.thumbnailFilePath
 					) { onPostClicked(post) }
 				}
 			}

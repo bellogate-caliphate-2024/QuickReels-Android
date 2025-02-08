@@ -17,7 +17,7 @@ class EnQueuePostUseCase @Inject constructor(
 			getUserInfoUseCase()?.email ?: "",
 			post.time,
 			post.caption,
-			post.thumbnailBase64String ?: ""
+			post.thumbnailFilePath ?: ""
 		)
 	}
 }

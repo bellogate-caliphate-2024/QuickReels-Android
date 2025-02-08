@@ -7,6 +7,7 @@ import com.bellogatecaliphate.core.model.dto.Post
 import com.bellogatecaliphate.create_post.ui.preview_post.model.PreviewPostUiState
 import com.bellogatecaliphate.domain.post.EnQueuePostUseCase
 import com.bellogatecaliphate.domain.post.GetVideoThumbnailUseCase
+import com.bellogatecaliphate.domain.post.SaveVideoThumbnailFileUseCase
 import com.bellogatecaliphate.domain.user.GetUserInfoUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,6 +20,7 @@ import javax.inject.Inject
 @HiltViewModel
 class PreviewPostScreenViewModel @Inject constructor(
 	private val getUserInfoUseCase: GetUserInfoUseCase,
+	private val saveVideoThumbnailFileUseCase: SaveVideoThumbnailFileUseCase,
 	private val getVideoThumbnailUseCase: GetVideoThumbnailUseCase,
 	private val enqueuePostUseCase: EnQueuePostUseCase
 ) : ViewModel() {
@@ -54,7 +56,7 @@ class PreviewPostScreenViewModel @Inject constructor(
 				time = LocalDateTime.now().toString(),
 				caption = videoCaption,
 				uploadProgressPercentage = "0",
-				thumbnailBase64String = getVideoThumbnailUseCase(videoPath)
+				thumbnailFilePath = saveVideoThumbnailFileUseCase(getVideoThumbnailUseCase(videoPath))
 			)
 		} else {
 			TODO("This version of Android is not supported for this app")
