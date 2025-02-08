@@ -56,5 +56,5 @@ private fun CreatePostScreen(
 @Preview(showBackground = true)
 @Composable
 private fun Preview() {
-	CreatePostScreen {}
+	CreatePostScreen(UiState(), {}, {}, {})
 }
