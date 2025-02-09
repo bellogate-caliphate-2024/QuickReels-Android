@@ -31,10 +31,14 @@ fun CreatePostScreen(
 		viewModel.state.collectAsStateWithLifecycle().value,
 		viewModel::requestPermissionAndOpenGallery,
 		onPostClicked,
-	) { uri ->
-		viewModel.resetGalleryState()
-		TrimVideo.activity(uri)?.start(context, videoTrimResultLauncher)
-	}
+		onVideoFileSelected = { uri ->
+			viewModel.resetGalleryState()
+			TrimVideo.activity(uri)?.start(context, videoTrimResultLauncher)
+		},
+		onStoragePermissionDenied = {
+			viewModel.resetGalleryState()
+		}
+	)
 }
 
 @Composable
@@ -43,6 +47,7 @@ private fun CreatePostScreen(
 	openGallery: () -> Unit,
 	onPostClicked: (Post) -> Unit,
 	onVideoFileSelected: (uri: String?) -> Unit,
+	onStoragePermissionDenied: () -> Unit = {}
 ) {
 	Column(
 		verticalArrangement = Arrangement.Bottom,
@@ -57,12 +62,17 @@ private fun CreatePostScreen(
 		)
 		SelectVideoButton(openGallery)
 	}
-	VideoFilePicker(uiState.requestStoragePermissionAndOpenGallery, onVideoFileSelected)
+	
+	VideoFilePicker(
+		uiState.requestStoragePermissionAndOpenGallery,
+		onVideoFileSelected,
+		onStoragePermissionDenied
+	)
 }
 
 @PreviewScreenSizes
 @Preview(showBackground = true)
 @Composable
 private fun Preview() {
-	CreatePostScreen(UiState(), {}, {}, {})
+	CreatePostScreen(UiState(), {}, {}, {}, {})
 }

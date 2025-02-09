@@ -3,6 +3,7 @@ package com.bellogatecaliphate.create_post.ui.create_post
 import android.content.Intent
 import android.net.Uri
 import android.provider.Settings
+import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -22,7 +23,8 @@ import com.google.accompanist.permissions.shouldShowRationale
 @Composable
 fun VideoFilePicker(
 	visible: Boolean,
-	onGalleryDismissed: (uri: String?) -> Unit
+	onGalleryDismissed: (uri: String?) -> Unit,
+	onStoragePermissionDenied: () -> Unit = {}
 ) {
 	if (visible.not()) return
 	
@@ -40,8 +42,12 @@ fun VideoFilePicker(
 		)
 		
 		status.shouldShowRationale && closeStoragePermissionRationalDialog.value.not() -> {
+			Log.e("JEFF", "rationale shown!!!")
 			StoragePermissionRationalDialog(
-				onDismissRequest = { closeStoragePermissionRationalDialog.value = true },
+				onDismissRequest = {
+					onStoragePermissionDenied()
+					closeStoragePermissionRationalDialog.value = true
+				},
 				onConfirmation = {
 					closeStoragePermissionRationalDialog.value = true
 					context.startActivity(intent)
