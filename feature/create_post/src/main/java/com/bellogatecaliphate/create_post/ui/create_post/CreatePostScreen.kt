@@ -27,17 +27,16 @@ fun CreatePostScreen(
 ) {
 	val context = LocalContext.current.getActivity()
 	val videoTrimResultLauncher = activityLauncher(onPostReadyForPreview)
+	
 	CreatePostScreen(
-		viewModel.state.collectAsStateWithLifecycle().value,
-		viewModel::requestPermissionAndOpenGallery,
-		onPostClicked,
+		uiState = viewModel.state.collectAsStateWithLifecycle().value,
+		openGallery = viewModel::requestPermissionAndOpenGallery,
+		onPostClicked = onPostClicked,
 		onVideoFileSelected = { uri ->
 			viewModel.resetGalleryState()
 			TrimVideo.activity(uri)?.start(context, videoTrimResultLauncher)
 		},
-		onStoragePermissionDenied = {
-			viewModel.resetGalleryState()
-		}
+		onStoragePermissionDenied = { viewModel.resetGalleryState() }
 	)
 }
 
