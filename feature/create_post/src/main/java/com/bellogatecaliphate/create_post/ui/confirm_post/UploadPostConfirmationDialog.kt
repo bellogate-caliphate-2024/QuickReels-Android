@@ -18,7 +18,9 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import com.bellogatecaliphate.core.model.dto.Post
 import com.bellogatecaliphate.core.util.PLACEHOLDER_16DP
 import com.bellogatecaliphate.core.util.PLACEHOLDER_24DP
@@ -68,7 +70,11 @@ private fun UploadPostConfirmationDialog(onConfirmationGiven: () -> Unit, onDism
 				}
 				onConfirmationGiven()
 			}, modifier = Modifier.fillMaxWidth()) {
-				Text(stringResource(id = R.string.yes))
+				Text(
+					stringResource(id = R.string.yes),
+					color = Color.Black,
+					fontWeight = FontWeight.Bold
+				)
 			}
 		}
 	}
