@@ -8,8 +8,6 @@ import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import com.bellogatecaliphate.create_post.util.StoragePermissionRationalDialog
 import com.bellogatecaliphate.create_post.util.getStorageManifestPermission
@@ -29,7 +27,6 @@ fun VideoFilePicker(
 	
 	val storagePermission = rememberPermissionState(getStorageManifestPermission())
 	val status = storagePermission.status
-	val closeStoragePermissionRationalDialog = remember { mutableStateOf(false) }
 	val context = LocalContext.current
 	val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
 	val uri = Uri.fromParts("package", context.packageName, null)
@@ -40,15 +37,13 @@ fun VideoFilePicker(
 			onGalleryDismissed
 		)
 		
-		status.shouldShowRationale && closeStoragePermissionRationalDialog.value.not() -> {
+		status.shouldShowRationale -> {
 			StoragePermissionRationalDialog(
 				onDismissRequest = {
 					onStoragePermissionRationalDialogClosed()
-					closeStoragePermissionRationalDialog.value = true
 				},
 				onConfirmation = {
 					onStoragePermissionRationalDialogClosed()
-					closeStoragePermissionRationalDialog.value = true
 					context.startActivity(intent)
 				}
 			)
