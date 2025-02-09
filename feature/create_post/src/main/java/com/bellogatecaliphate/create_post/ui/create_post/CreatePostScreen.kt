@@ -1,6 +1,12 @@
 package com.bellogatecaliphate.create_post.ui.create_post
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewScreenSizes
@@ -38,7 +44,19 @@ private fun CreatePostScreen(
 	onPostClicked: (Post) -> Unit,
 	onVideoFileSelected: (uri: String?) -> Unit,
 ) {
-	UploadStatusCardHolder(uiState.existingUploads, openGallery, onPostClicked)
+	Column(
+		verticalArrangement = Arrangement.Bottom,
+		modifier = Modifier
+			.fillMaxSize()
+			.background(color = Color.Black)
+	) {
+		UploadStatusCardHolder(
+			Modifier.weight(1f),
+			uiState.existingUploads,
+			onPostClicked
+		)
+		SelectVideoButton(openGallery)
+	}
 	VideoFilePicker(uiState.requestStoragePermissionAndOpenGallery, onVideoFileSelected)
 }
 
