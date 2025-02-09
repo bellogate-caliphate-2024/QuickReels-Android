@@ -47,6 +47,7 @@ fun VideoFilePicker(
 					closeStoragePermissionRationalDialog.value = true
 				},
 				onConfirmation = {
+					onStoragePermissionDenied()
 					closeStoragePermissionRationalDialog.value = true
 					context.startActivity(intent)
 				}
