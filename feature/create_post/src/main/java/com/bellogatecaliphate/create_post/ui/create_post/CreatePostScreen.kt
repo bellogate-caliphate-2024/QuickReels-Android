@@ -36,7 +36,7 @@ fun CreatePostScreen(
 			viewModel.resetGalleryState()
 			TrimVideo.activity(uri)?.start(context, videoTrimResultLauncher)
 		},
-		onStoragePermissionDenied = { viewModel.resetGalleryState() }
+		onStoragePermissionRationalDialogClosed = { viewModel.resetGalleryState() }
 	)
 }
 
@@ -46,7 +46,7 @@ private fun CreatePostScreen(
 	openGallery: () -> Unit,
 	onPostClicked: (Post) -> Unit,
 	onVideoFileSelected: (uri: String?) -> Unit,
-	onStoragePermissionDenied: () -> Unit = {}
+	onStoragePermissionRationalDialogClosed: () -> Unit = {}
 ) {
 	Column(
 		verticalArrangement = Arrangement.Bottom,
@@ -65,7 +65,7 @@ private fun CreatePostScreen(
 	VideoFilePicker(
 		uiState.requestStoragePermissionAndOpenGallery,
 		onVideoFileSelected,
-		onStoragePermissionDenied
+		onStoragePermissionRationalDialogClosed
 	)
 }
 

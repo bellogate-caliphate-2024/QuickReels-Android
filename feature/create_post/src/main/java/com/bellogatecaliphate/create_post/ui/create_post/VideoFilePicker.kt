@@ -23,7 +23,7 @@ import com.google.accompanist.permissions.shouldShowRationale
 fun VideoFilePicker(
 	visible: Boolean,
 	onGalleryDismissed: (uri: String?) -> Unit,
-	onStoragePermissionDenied: () -> Unit = {}
+	onStoragePermissionRationalDialogClosed: () -> Unit = {}
 ) {
 	if (visible.not()) return
 	
@@ -43,11 +43,11 @@ fun VideoFilePicker(
 		status.shouldShowRationale && closeStoragePermissionRationalDialog.value.not() -> {
 			StoragePermissionRationalDialog(
 				onDismissRequest = {
-					onStoragePermissionDenied()
+					onStoragePermissionRationalDialogClosed()
 					closeStoragePermissionRationalDialog.value = true
 				},
 				onConfirmation = {
-					onStoragePermissionDenied()
+					onStoragePermissionRationalDialogClosed()
 					closeStoragePermissionRationalDialog.value = true
 					context.startActivity(intent)
 				}
