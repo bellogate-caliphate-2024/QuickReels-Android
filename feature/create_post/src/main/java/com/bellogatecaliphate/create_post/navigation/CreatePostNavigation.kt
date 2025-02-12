@@ -1,5 +1,8 @@
 package com.bellogatecaliphate.create_post.navigation
 
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
@@ -29,14 +32,22 @@ fun NavGraphBuilder.createPostNavGraph(navController: NavHostController) {
 				}
 			)
 		}
-		composable<CreatePostNavGraphRoute.PreviewPost> { backStackEntry ->
-			val previewPost = backStackEntry.toRoute<CreatePostNavGraphRoute.PreviewPost>()
-			PreviewPostScreen(
-				previewPost.videoPath,
-				previewPost.videoCaption,
-				previewPost.isReadOnly,
-				dismiss = { navController.popBackStack() }
-			)
-		}
+		composable<CreatePostNavGraphRoute.PreviewPost>(
+			popEnterTransition = {
+				fadeIn(animationSpec = tween(500))
+			},
+			popExitTransition = {
+				fadeOut(animationSpec = tween(500))
+			},
+			content = { backStackEntry ->
+				val previewPost = backStackEntry.toRoute<CreatePostNavGraphRoute.PreviewPost>()
+				PreviewPostScreen(
+					previewPost.videoPath,
+					previewPost.videoCaption,
+					previewPost.isReadOnly,
+					dismiss = { navController.popBackStack() }
+				)
+			}
+		)
 	}
 }

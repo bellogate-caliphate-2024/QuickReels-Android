@@ -37,6 +37,9 @@ internal fun VideoPreview(modifier: Modifier, videoPath: String) {
 	)
 	
 	DisposableEffect(Unit) {
-		onDispose { exoPlayer.release() }
+		onDispose {
+			exoPlayer.playWhenReady = false
+			exoPlayer.release()
+		}
 	}
 }
