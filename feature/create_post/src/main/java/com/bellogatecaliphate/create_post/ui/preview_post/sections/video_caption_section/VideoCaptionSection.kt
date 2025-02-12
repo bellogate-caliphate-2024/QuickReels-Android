@@ -6,6 +6,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import com.bellogatecaliphate.core.util.PLACEHOLDER_16DP
 
 @Composable
@@ -14,12 +15,22 @@ internal fun VideoCaptionSection(
 	descriptionText: String?,
 	onValueChange: (String) -> Unit
 ) {
-	OutlinedTextField(
-		modifier = Modifier
-			.fillMaxWidth()
-			.padding(PLACEHOLDER_16DP),
-		value = descriptionText ?: "",
-		readOnly = isReadOnly,
-		onValueChange = onValueChange,
-		label = { Text("Add a caption...") })
+	if (isReadOnly) {
+		Text(
+			modifier = Modifier
+				.fillMaxWidth()
+				.padding(PLACEHOLDER_16DP),
+			text = descriptionText ?: "",
+			softWrap = true,
+			color = Color.Gray
+		)
+	} else {
+		OutlinedTextField(
+			modifier = Modifier
+				.fillMaxWidth()
+				.padding(PLACEHOLDER_16DP),
+			value = descriptionText ?: "",
+			onValueChange = onValueChange,
+			label = { Text("Add a caption...") })
+	}
 }

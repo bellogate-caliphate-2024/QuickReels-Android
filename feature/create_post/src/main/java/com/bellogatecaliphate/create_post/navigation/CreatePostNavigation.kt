@@ -24,7 +24,7 @@ fun NavGraphBuilder.createPostNavGraph(navController: NavHostController) {
 				},
 				onPostClicked = { post ->
 					navController.navigate(
-						CreatePostNavGraphRoute.PreviewPost(post.videoFilePath, post.caption, false)
+						CreatePostNavGraphRoute.PreviewPost(post.videoFilePath, post.caption, true)
 					)
 				}
 			)
