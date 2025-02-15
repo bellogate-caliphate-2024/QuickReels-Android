@@ -21,7 +21,7 @@ internal fun ContentUi(
 ) {
 	Column(modifier) {
 		UserDetailsSection(content.userProfilePicture, content.userName, content.date)
-		VideoSection(Modifier.weight(1f), content.videoUrl)
+		VideoSection(Modifier.weight(1f), content.videoUrl, content.thumbnailUrl)
 		BottomSection(
 			content.id,
 			content.caption,

@@ -1,6 +1,7 @@
 [versions]
 activityKtx = "1.2.0"
-agp = "8.3.1"
+agp = "8.3.2"
+coilCompose = "3.1.0"
 constraintlayoutCompose = "1.1.0"
 coordinatorlayout = "1.2.0"
 exoplayerVersion = "2.19.1"
@@ -50,6 +51,8 @@ androidx-hilt-work = { module = "androidx.hilt:hilt-work", version.ref = "hiltWo
 androidx-paging-common = { module = "androidx.paging:paging-common", version.ref = "pagingRuntime" }
 androidx-paging-compose = { module = "androidx.paging:paging-compose", version.ref = "pagingRuntime" }
 androidx-paging-runtime = { module = "androidx.paging:paging-runtime", version.ref = "pagingRuntime" }
+coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coilCompose" }
+coil-network-okhttp = { module = "io.coil-kt.coil3:coil-network-okhttp", version.ref = "coilCompose" }
 ffmpeg-kit-min = { module = "com.arthenica:ffmpeg-kit-min", version.ref = "ffmpegKitMin" }
 google-exoplayer = { module = "com.google.android.exoplayer:exoplayer", version.ref = "exoplayerVersion" }
 gson-v2101 = { module = "com.google.code.gson:gson", version.ref = "gsonVersion" }

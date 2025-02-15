@@ -9,7 +9,7 @@ plugins {
 
 android {
 	namespace = "com.bellogatecaliphate.timeline"
-	compileSdk = 34
+	compileSdk = 35
 	
 	defaultConfig {
 		minSdk = 24
@@ -101,4 +101,7 @@ dependencies {
 	implementation(libs.exoplayer)
 	implementation(libs.exoplayer.ui)
 	implementation(libs.exoplayer.common)
+	// Coil
+	implementation(libs.coil.compose)
+	implementation(libs.coil.network.okhttp)
 }

@@ -9,7 +9,7 @@ plugins {
 
 android {
 	namespace = "com.bellogatecaliphate.account"
-	compileSdk = 34
+	compileSdk = 35
 	
 	defaultConfig {
 		minSdk = 24

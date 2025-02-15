@@ -9,7 +9,7 @@ plugins {
 
 android {
 	namespace = "com.bellogatecaliphate.quickreels"
-	compileSdk = 34
+	compileSdk = 35
 	
 	defaultConfig {
 		applicationId = "com.bellogatecaliphate.quickreels"
