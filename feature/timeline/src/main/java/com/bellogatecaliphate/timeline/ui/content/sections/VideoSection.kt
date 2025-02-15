@@ -10,11 +10,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
+import com.bellogatecaliphate.core.ui.ProgressBar
 import com.bellogatecaliphate.timeline.R
 
 @Composable
 internal fun VideoSection(modifier: Modifier, videoUrl: String, videoThumbnailUrl: String) {
 	Column(modifier.background(Color.Black)) {
+		ProgressBar(true)
 		AsyncImage(
 			model = videoThumbnailUrl,
 			contentDescription = null,
