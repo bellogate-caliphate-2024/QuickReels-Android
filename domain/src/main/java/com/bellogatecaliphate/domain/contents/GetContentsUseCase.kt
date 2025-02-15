@@ -3,8 +3,8 @@ package com.bellogatecaliphate.domain.contents
 import androidx.paging.PagingData
 import androidx.paging.map
 import com.bellogatecaliphate.contents.IContentsRepository
+import com.bellogatecaliphate.contents.remote.model.ContentResponse
 import com.bellogatecaliphate.core.model.dto.Content
-import com.bellogatecaliphate.core.source.local.entity.ContentEntity
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
@@ -13,15 +13,15 @@ class GetContentsUseCase @Inject constructor(private val repository: IContentsRe
 	
 	operator fun invoke(): Flow<PagingData<Content>> {
 		return repository.getPaginatedContents(1).flow.map {
-			it.map { contentEntity ->
-				contentEntity.toContent()
+			it.map { contentResponse ->
+				contentResponse.toContent()
 			}
 		}
 	}
 	
-	private fun ContentEntity.toContent(): Content {
+	private fun ContentResponse.toContent(): Content {
 		return Content(
-			id,
+			id ?: "",
 			videoUrl ?: "",
 			thumbnailUrl ?: "",
 			caption ?: "",
