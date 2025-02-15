@@ -32,7 +32,7 @@ internal fun VideoSection(modifier: Modifier, videoUrl: String, videoThumbnailUr
 	Column(modifier.background(Color.Black)) {
 		ProgressBar(isLoadingVideo)
 		Box {
-			VideoThumbnail(isLoadingVideo.not(), videoThumbnailUrl)
+			VideoThumbnail(isLoadingVideo, videoThumbnailUrl)
 			VideoStreamer(
 				modifier, videoUrl,
 				isLoading = { isLoadingVideo = true },
