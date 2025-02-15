@@ -15,17 +15,12 @@ internal class ContentsPagingSource @Inject constructor(
 		val nextPage = params.key ?: 1
 		val response = remoteSource.getContentsList(nextPage, 10)
 		val list = response?.listOfContents ?: throw Exception()
-		val isLastPage = response.isLastPage != null && response.isLastPage
 		LoadResult.Page(
 			data = list,
 			prevKey = null,
-			nextKey = if (isLastPage) {
-				// In Paging 3.x, you indicate the end of pagination by setting the nextKey
-				// (and prevKey for backward pagination) to null.
-				null
-			} else {
-				response.nextPage
-			}
+			nextKey = response.nextPage
+			// In Paging 3.x, you indicate the end of pagination by setting the nextKey
+			// (and prevKey for backward pagination) to null.
 		)
 	}
 	catch (e: Exception) {

@@ -25,10 +25,13 @@ internal class ContentsHistoryPagingSource @Inject constructor(
 				nextPage
 			)
 			val list = response?.listOfContents ?: throw Exception()
+			val isLastPage = response.isLastPage != null && response.isLastPage
 			LoadResult.Page(
 				data = list,
 				prevKey = null,
-				nextKey = response.nextPage ?: 1
+				nextKey = response.nextPage
+				// In Paging 3.x, you indicate the end of pagination by setting the nextKey
+				// (and prevKey for backward pagination) to null.
 			)
 		}
 		catch (e: Exception) {
