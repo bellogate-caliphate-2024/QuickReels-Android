@@ -1,6 +1,7 @@
 package com.bellogatecaliphate.timeline.ui.content.sections
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -30,12 +31,14 @@ internal fun VideoSection(modifier: Modifier, videoUrl: String, videoThumbnailUr
 	
 	Column(modifier.background(Color.Black)) {
 		ProgressBar(isLoadingVideo)
-		VideoThumbnail(isLoadingVideo.not(), videoThumbnailUrl)
-		VideoStreamer(
-			modifier, videoUrl,
-			isLoading = { isLoadingVideo = true },
-			isReadyToPlay = { isLoadingVideo = false }
-		)
+		Box {
+			VideoThumbnail(isLoadingVideo.not(), videoThumbnailUrl)
+			VideoStreamer(
+				modifier, videoUrl,
+				isLoading = { isLoadingVideo = true },
+				isReadyToPlay = { isLoadingVideo = false }
+			)
+		}
 	}
 }
 
