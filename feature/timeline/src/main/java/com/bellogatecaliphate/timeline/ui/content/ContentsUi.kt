@@ -8,6 +8,9 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -23,15 +26,15 @@ internal fun Contents(
 	if (list == null) return
 	val listState = rememberLazyListState()
 	// Track the previous index and scroll position
-	val previousIndex = remember { mutableStateOf(0) }
-	val previousOffset = remember { mutableStateOf(0) }
+	val previousIndex = remember { mutableIntStateOf(0) }
+	val previousOffset = remember { mutableIntStateOf(0) }
 	val canScroll = remember { mutableStateOf(true) }
 	
 	// Monitor scroll changes using LaunchedEffect
-	LaunchedEffect(listState.firstVisibleItemIndex, listState.firstVisibleItemScrollOffset) {
-		val currentIndex = listState.firstVisibleItemIndex
-		val currentOffset = listState.firstVisibleItemScrollOffset
-		
+	val currentIndex by remember { derivedStateOf { listState.firstVisibleItemIndex } }
+	val currentOffset by remember { derivedStateOf { listState.firstVisibleItemScrollOffset } }
+	
+	LaunchedEffect(currentIndex, currentOffset) {
 		// Detect scrolling down when index stays the same but the offset increases
 		if (currentIndex == previousIndex.value && currentOffset > previousOffset.value) {
 			// The user is scrolling down the list to the bottom:
