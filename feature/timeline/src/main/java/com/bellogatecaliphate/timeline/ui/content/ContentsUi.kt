@@ -35,12 +35,12 @@ internal fun Contents(
 	val currentOffset by remember { derivedStateOf { listState.firstVisibleItemScrollOffset } }
 	
 	LaunchedEffect(currentIndex, currentOffset) {
-		if (currentIndex == previousIndex.value && currentOffset > previousOffset.value) {
+		if (currentIndex == previousIndex.intValue && currentOffset > previousOffset.intValue) {
 			// The user is scrolling down the list to the bottom:
 			val nextItemIndex = listState.firstVisibleItemIndex + 1
 			listState.scrollToItem(nextItemIndex)
 			
-		} else if (currentIndex == previousIndex.value && currentOffset < previousOffset.intValue) {
+		} else if (currentIndex == previousIndex.intValue && currentOffset < previousOffset.intValue) {
 			// The user is scrolling up the list to the top:
 			val previousItemIndex = listState.firstVisibleItemIndex
 			if (previousItemIndex >= 0) {
@@ -50,8 +50,8 @@ internal fun Contents(
 		
 		// Update the previous scroll state for the next check
 		canScroll.value = false
-		previousIndex.value = currentIndex
-		previousOffset.value = currentOffset
+		previousIndex.intValue = currentIndex
+		previousOffset.intValue = currentOffset
 	}
 	
 	LazyColumn(
