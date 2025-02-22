@@ -2,7 +2,6 @@ package com.bellogatecaliphate.timeline.ui.content
 
 import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.scrollable
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -29,30 +28,28 @@ internal fun Contents(
 	val canScroll = remember { mutableStateOf(true) }
 	
 	// Monitor scroll changes using LaunchedEffect
-	Box {
-		LaunchedEffect(listState.firstVisibleItemIndex, listState.firstVisibleItemScrollOffset) {
-			val currentIndex = listState.firstVisibleItemIndex
-			val currentOffset = listState.firstVisibleItemScrollOffset
+	LaunchedEffect(listState.firstVisibleItemIndex, listState.firstVisibleItemScrollOffset) {
+		val currentIndex = listState.firstVisibleItemIndex
+		val currentOffset = listState.firstVisibleItemScrollOffset
+		
+		// Detect scrolling down when index stays the same but the offset increases
+		if (currentIndex == previousIndex.value && currentOffset > previousOffset.value) {
+			// The user is scrolling down the list to the bottom:
+			val nextItemIndex = listState.firstVisibleItemIndex + 1
+			listState.scrollToItem(nextItemIndex)
 			
-			// Detect scrolling down when index stays the same but the offset increases
-			if (currentIndex == previousIndex.value && currentOffset > previousOffset.value) {
-				// The user is scrolling down the list to the bottom:
-				val nextItemIndex = listState.firstVisibleItemIndex + 1
-				listState.scrollToItem(nextItemIndex)
-				
-			} else {
-				// The user is scrolling up the list to the top:
-				val previousItemIndex = listState.firstVisibleItemIndex - 1
-				//listState.animateScrollToItem(previousItemIndex)
-				// We don't want to do anything when the user scrolls up the list.
-				// We allow the user scroll through as many past items as they want.
-			}
-			
-			// Update the previous scroll state for the next check
-			canScroll.value = false
-			previousIndex.value = currentIndex
-			previousOffset.value = currentOffset
+		} else {
+			// The user is scrolling up the list to the top:
+			val previousItemIndex = listState.firstVisibleItemIndex - 1
+			//listState.animateScrollToItem(previousItemIndex)
+			// We don't want to do anything when the user scrolls up the list.
+			// We allow the user scroll through as many past items as they want.
 		}
+		
+		// Update the previous scroll state for the next check
+		canScroll.value = false
+		previousIndex.value = currentIndex
+		previousOffset.value = currentOffset
 	}
 	
 	LazyColumn(
