@@ -35,18 +35,17 @@ internal fun Contents(
 	val currentOffset by remember { derivedStateOf { listState.firstVisibleItemScrollOffset } }
 	
 	LaunchedEffect(currentIndex, currentOffset) {
-		// Detect scrolling down when index stays the same but the offset increases
 		if (currentIndex == previousIndex.value && currentOffset > previousOffset.value) {
 			// The user is scrolling down the list to the bottom:
 			val nextItemIndex = listState.firstVisibleItemIndex + 1
 			listState.scrollToItem(nextItemIndex)
 			
-		} else {
+		} else if (currentIndex == previousIndex.value && currentOffset < previousOffset.intValue) {
 			// The user is scrolling up the list to the top:
-			val previousItemIndex = listState.firstVisibleItemIndex - 1
-			//listState.animateScrollToItem(previousItemIndex)
-			// We don't want to do anything when the user scrolls up the list.
-			// We allow the user scroll through as many past items as they want.
+			val previousItemIndex = listState.firstVisibleItemIndex
+			if (previousItemIndex >= 0) {
+				listState.scrollToItem(previousItemIndex)
+			}
 		}
 		
 		// Update the previous scroll state for the next check
