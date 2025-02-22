@@ -11,6 +11,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
 import androidx.compose.ui.graphics.Color
@@ -31,7 +32,7 @@ internal fun VideoSection(modifier: Modifier, videoUrl: String, videoThumbnailUr
 	
 	Column(modifier.background(Color.Black)) {
 		ProgressBar(isLoadingVideo)
-		Box {
+		Box(Modifier.weight(1f), contentAlignment = Alignment.Center) {
 			VideoStreamer(
 				modifier, videoUrl,
 				isLoading = { isLoadingVideo = true },
