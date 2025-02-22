@@ -38,13 +38,13 @@ internal fun Contents(
 		if (currentIndex == previousIndex.intValue && currentOffset > previousOffset.intValue) {
 			// The user is scrolling down the list to the bottom:
 			val nextItemIndex = listState.firstVisibleItemIndex + 1
-			listState.scrollToItem(nextItemIndex)
+			listState.animateScrollToItem(nextItemIndex)
 			
 		} else if (currentIndex == previousIndex.intValue && currentOffset < previousOffset.intValue) {
 			// The user is scrolling up the list to the top:
 			val previousItemIndex = listState.firstVisibleItemIndex
 			if (previousItemIndex >= 0) {
-				listState.scrollToItem(previousItemIndex)
+				listState.animateScrollToItem(previousItemIndex)
 			}
 		}
 		
