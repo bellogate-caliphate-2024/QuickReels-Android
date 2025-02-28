@@ -6,9 +6,8 @@ import android.content.Context
 import android.os.Bundle
 import androidx.hilt.work.HiltWorkerFactory
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.OnLifecycleEvent
 import androidx.lifecycle.ProcessLifecycleOwner
 import androidx.work.Configuration
 import com.bellogatecaliphate.appopenad.AppOpenAdManager
@@ -22,7 +21,7 @@ import javax.inject.Inject
 @HiltAndroidApp
 class MainApplication : Application(), Configuration.Provider,
                         Application.ActivityLifecycleCallbacks,
-                        LifecycleObserver, LifecycleEventObserver {
+                        LifecycleObserver {
 	
 	private lateinit var appOpenAdManager: AppOpenAdManager
 	private var currentActivity: Activity? = null
@@ -42,13 +41,11 @@ class MainApplication : Application(), Configuration.Provider,
 		setUpAds(this)
 	}
 	
-	override fun onStateChanged(source: LifecycleOwner, event: Lifecycle.Event) {
-		when (event) {
-			Lifecycle.Event.ON_START -> {
-				showAd()
-			}
-			
-			else                     -> {}
+	@OnLifecycleEvent(Lifecycle.Event.ON_START)
+	fun onMoveToForeground() {
+		// Show the ad (if available) when the app moves to foreground.
+		currentActivity?.let {
+			appOpenAdManager.showAdIfAvailable(it) {}
 		}
 	}
 	
