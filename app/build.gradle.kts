@@ -123,6 +123,8 @@ dependencies {
 	implementation(libs.kotlinx.serialization.json)
 	// mockWebServer
 	androidTestImplementation(libs.mockwebserver)
+	// Google Ads sdk
+	implementation(libs.play.services.ads)
 }
 
 kapt {
