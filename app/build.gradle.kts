@@ -13,7 +13,7 @@ android {
 	
 	defaultConfig {
 		applicationId = "com.bellogatecaliphate.quickreels"
-		minSdk = 24
+		minSdk = 28
 		targetSdk = 34
 		versionCode = 1
 		versionName = "1.0"
@@ -83,6 +83,7 @@ dependencies {
 	implementation(project(":feature:create_post"))
 	implementation(project(":feature:timeline"))
 	implementation(project(":feature:chat"))
+	implementation(project(":feature:ads:appopenad"))
 	implementation(project(":core"))
 	implementation(libs.androidx.core.ktx)
 	implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -125,6 +126,8 @@ dependencies {
 	androidTestImplementation(libs.mockwebserver)
 	// Google Ads sdk
 	implementation(libs.play.services.ads)
+	// lifecycle process
+	implementation(libs.androidx.lifecycle.process)
 }
 
 kapt {
