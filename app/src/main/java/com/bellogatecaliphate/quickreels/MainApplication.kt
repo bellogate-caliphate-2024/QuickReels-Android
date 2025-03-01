@@ -42,11 +42,9 @@ class MainApplication : Application(), Configuration.Provider,
 	}
 	
 	@OnLifecycleEvent(Lifecycle.Event.ON_START)
-	fun onMoveToForeground() {
+	private fun onMoveToForeground() {
 		// Show the ad (if available) when the app moves to foreground.
-		currentActivity?.let {
-			appOpenAdManager.showAdIfAvailable(it) {}
-		}
+		showAd()
 	}
 	
 	private fun setUpAds(context: Context) {

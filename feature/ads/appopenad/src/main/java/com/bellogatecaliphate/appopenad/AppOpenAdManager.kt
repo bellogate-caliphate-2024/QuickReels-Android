@@ -7,6 +7,7 @@ import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.FullScreenContentCallback
 import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.appopen.AppOpenAd
+import java.util.Date
 
 private const val AD_UNIT_ID = "ca-app-pub-3940256099942544/9257395921"
 
@@ -15,6 +16,9 @@ class AppOpenAdManager {
 	private var appOpenAd: AppOpenAd? = null
 	private var isLoadingAd = false
 	private var isShowingAd = false
+	
+	// Keep track of the time an app open ad is loaded to ensure you don't show an expired ad.
+	private var loadTime: Long = 0
 	
 	fun showAdIfAvailable(activity: Activity, onShowAdComplete: () -> Unit) {
 		if (isShowingAd) {
@@ -74,6 +78,13 @@ class AppOpenAdManager {
 	}
 	
 	private fun isAdAvailable(): Boolean {
-		return appOpenAd != null
+		return appOpenAd != null && wasLoadTimeLessThanNHoursAgo(4)
+	}
+	
+	// Utility method to check if ad was loaded more than n hours ago.
+	private fun wasLoadTimeLessThanNHoursAgo(numHours: Long): Boolean {
+		val dateDifference: Long = Date().time - loadTime
+		val numMilliSecondsPerHour: Long = 3600000
+		return dateDifference < numMilliSecondsPerHour * numHours
 	}
 }
