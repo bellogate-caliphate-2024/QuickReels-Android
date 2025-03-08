@@ -1,11 +1,8 @@
 package com.bellogatecaliphate.timeline.ui
 
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.viewinterop.AndroidViewBinding
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.bellogatecaliphate.nativeads.QuickReelsNativeAd
-import com.bellogatecaliphate.nativeads.nativeadstemplates.databinding.QuickReelsNativeAdViewBinding
 import com.bellogatecaliphate.timeline.model.UiState
 
 @Composable
@@ -36,11 +33,11 @@ private fun TimeLineScreen(
 	onSaveReply: ((originalCommentId: String, reply: String) -> Unit)? = null,
 	onLoadReplies: (originalCommentId: String, pageNumber: Int) -> Unit = { _, _ -> }
 ) {
-	AndroidViewBinding(QuickReelsNativeAdViewBinding::inflate) {
+	/*AndroidViewBinding(QuickReelsNativeAdViewBinding::inflate) {
 		QuickReelsNativeAd(context = root.context) { ad ->
 			nativeAdTemplate.setNativeAd(ad)
 		}.x()
-	}
+	}*/
 	/*Column {
 		ProgressBar(uiState.isLoading)
 		Contents(
