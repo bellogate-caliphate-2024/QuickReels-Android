@@ -1,14 +1,12 @@
 package com.bellogatecaliphate.timeline.ui
 
-import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.viewinterop.AndroidViewBinding
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.paging.compose.collectAsLazyPagingItems
-import com.bellogatecaliphate.core.ui.ProgressBar
-import com.bellogatecaliphate.core.ui.comments.CommentsBottomDialog
+import com.bellogatecaliphate.nativeads.QuickReelsNativeAd
+import com.bellogatecaliphate.timeline.databinding.QuickReelsNativeAdViewBinding
 import com.bellogatecaliphate.timeline.model.UiState
-import com.bellogatecaliphate.timeline.ui.content.Contents
 
 @Composable
 fun TimeLineScreen(viewModel: TimeLineScreenViewModel = hiltViewModel()) {
@@ -38,7 +36,14 @@ private fun TimeLineScreen(
 	onSaveReply: ((originalCommentId: String, reply: String) -> Unit)? = null,
 	onLoadReplies: (originalCommentId: String, pageNumber: Int) -> Unit = { _, _ -> }
 ) {
-	Column {
+	AndroidViewBinding(QuickReelsNativeAdViewBinding::inflate) {
+		QuickReelsNativeAd(context = root.context) { ad ->
+			adTitle.text = ad.headline
+			adView.headlineView = adTitle
+			adView.setNativeAd(ad)
+		}.x()
+	}
+	/*Column {
 		ProgressBar(uiState.isLoading)
 		Contents(
 			uiState.listOfContents.collectAsLazyPagingItems(),
@@ -56,5 +61,5 @@ private fun TimeLineScreen(
 			onSaveReply = onSaveReply,
 			onLoadReplies = onLoadReplies
 		)
-	}
+	}*/
 }

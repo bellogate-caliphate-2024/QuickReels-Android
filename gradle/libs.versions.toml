@@ -42,6 +42,8 @@ retrofit = "2.9.0"
 retrofit_converter = "2.3.0"
 okhttp = "4.9.0"
 pagingComposeAndroid = "3.3.4"
+uiViewbinding = "1.7.8"
+playServicesAdsLite = "24.0.0"
 
 [libraries]
 androidx-activity-ktx = { module = "androidx.activity:activity-ktx", version.ref = "activityKtx" }
@@ -107,6 +109,8 @@ okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhtt
 okhttp-logging-interceptor = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttp" }
 okhttp-converter-scalars = { group = "com.squareup.retrofit2", name = "converter-scalars", version.ref = "retrofit_converter" }
 androidx-paging-compose-android = { group = "androidx.paging", name = "paging-compose-android", version.ref = "pagingComposeAndroid" }
+androidx-ui-viewbinding = { group = "androidx.compose.ui", name = "ui-viewbinding", version.ref = "uiViewbinding" }
+play-services-ads-lite = { group = "com.google.android.gms", name = "play-services-ads-lite", version.ref = "playServicesAdsLite" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
