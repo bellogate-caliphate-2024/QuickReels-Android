@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-	namespace = "com.bellogatecaliphate.nativeads"
+	namespace = "com.bellogatecaliphate.nativeads.nativeadstemplates"
 	compileSdk = 35
 	
 	defaultConfig {
@@ -36,8 +36,6 @@ android {
 }
 
 dependencies {
-	
-	api(project(":feature:ads:nativeads:nativeadstemplates"))
 	implementation(libs.androidx.core.ktx)
 	implementation(libs.androidx.appcompat)
 	implementation(libs.material)

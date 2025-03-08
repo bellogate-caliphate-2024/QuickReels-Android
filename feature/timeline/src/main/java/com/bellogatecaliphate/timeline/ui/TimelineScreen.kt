@@ -5,7 +5,7 @@ import androidx.compose.ui.viewinterop.AndroidViewBinding
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.bellogatecaliphate.nativeads.QuickReelsNativeAd
-import com.bellogatecaliphate.timeline.databinding.QuickReelsNativeAdViewBinding
+import com.bellogatecaliphate.nativeads.nativeadstemplates.databinding.QuickReelsNativeAdViewBinding
 import com.bellogatecaliphate.timeline.model.UiState
 
 @Composable
@@ -38,9 +38,7 @@ private fun TimeLineScreen(
 ) {
 	AndroidViewBinding(QuickReelsNativeAdViewBinding::inflate) {
 		QuickReelsNativeAd(context = root.context) { ad ->
-			adTitle.text = ad.headline
-			adView.headlineView = adTitle
-			adView.setNativeAd(ad)
+			nativeAdTemplate.setNativeAd(ad)
 		}.x()
 	}
 	/*Column {
