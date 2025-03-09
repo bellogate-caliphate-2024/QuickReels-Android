@@ -32,7 +32,8 @@ class GetContentsUseCase @Inject constructor(private val repository: IContentsRe
 			userId ?: "",
 			userName ?: "",
 			userProfilePicture ?: "",
-			isLiked ?: false
+			isLiked ?: false,
+			isAd ?: false
 		)
 	}
 }

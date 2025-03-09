@@ -8,6 +8,7 @@ import com.bellogatecaliphate.domain.comments.GetCommentsUseCase
 import com.bellogatecaliphate.domain.comments.SaveReplyToACommentUseCase
 import com.bellogatecaliphate.domain.contents.GetContentsUseCase
 import com.bellogatecaliphate.domain.contents.like.LikeContentUseCase
+import com.bellogatecaliphate.nativeads.QuickReelsNativeAdLoader
 import com.bellogatecaliphate.timeline.model.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -18,11 +19,12 @@ import javax.inject.Inject
 
 @HiltViewModel
 class TimeLineScreenViewModel @Inject constructor(
-	val getContentsUseCase: GetContentsUseCase,
-	val likeContentUseCase: LikeContentUseCase,
-	val getCommentsUseCase: GetCommentsUseCase,
-	val getCommentRepliesUseCase: GetCommentRepliesUseCase,
-	val saveReplyToACommentUseCase: SaveReplyToACommentUseCase
+	private val getContentsUseCase: GetContentsUseCase,
+	private val likeContentUseCase: LikeContentUseCase,
+	private val getCommentsUseCase: GetCommentsUseCase,
+	private val getCommentRepliesUseCase: GetCommentRepliesUseCase,
+	private val saveReplyToACommentUseCase: SaveReplyToACommentUseCase,
+	private val adLoader: QuickReelsNativeAdLoader
 ) : ViewModel() {
 	
 	private val _uiState = MutableStateFlow(UiState())
@@ -66,4 +68,6 @@ class TimeLineScreenViewModel @Inject constructor(
 		val saved = saveReplyToACommentUseCase(originalCommentId, reply)
 		// do something with saved
 	}
+	
+	fun getAdLoader() = adLoader
 }

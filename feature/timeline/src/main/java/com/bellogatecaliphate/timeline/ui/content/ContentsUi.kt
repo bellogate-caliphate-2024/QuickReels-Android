@@ -16,10 +16,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.paging.compose.LazyPagingItems
 import com.bellogatecaliphate.core.model.dto.Content
+import com.bellogatecaliphate.nativeads.QuickReelsNativeAd
+import com.bellogatecaliphate.nativeads.QuickReelsNativeAdLoader
 
 @Composable
 internal fun Contents(
 	list: LazyPagingItems<Content>?,
+	adLoader: QuickReelsNativeAdLoader,
 	onLikeButtonPressed: (contentId: String, isLiked: Boolean) -> Unit,
 	onCommentButtonPressed: (contentId: String) -> Unit
 ) {
@@ -64,10 +67,12 @@ internal fun Contents(
 			)
 	) {
 		items(list.itemCount) { index ->
-			val content = list[index]
-			content?.let {
+			val content = list[index] ?: return@items
+			if (content.isAd) {
+				QuickReelsNativeAd(Modifier.fillParentMaxSize(), adLoader)
+			} else {
 				ContentUi(
-					it,
+					content,
 					Modifier.fillParentMaxSize(),
 					onLikeButtonPressed,
 					onCommentButtonPressed

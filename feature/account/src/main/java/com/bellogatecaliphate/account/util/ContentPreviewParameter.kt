@@ -17,7 +17,8 @@ class ContentPreviewParameter : PreviewParameterProvider<Content> {
 			"",
 			"Jeff Emuveyan",
 			"",
-			true
+			true,
+			false
 		)
 	)
 }

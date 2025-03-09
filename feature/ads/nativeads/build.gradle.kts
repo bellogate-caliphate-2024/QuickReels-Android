@@ -1,6 +1,9 @@
 plugins {
+	kotlin("kapt")
 	alias(libs.plugins.androidLibrary)
 	alias(libs.plugins.jetbrainsKotlinAndroid)
+	alias(libs.plugins.hilt)
+	alias(libs.plugins.compose.compiler)
 }
 
 android {
@@ -24,6 +27,7 @@ android {
 		}
 	}
 	buildFeatures {
+		compose = true
 		viewBinding = true
 	}
 	compileOptions {
@@ -41,6 +45,9 @@ dependencies {
 	implementation(libs.androidx.core.ktx)
 	implementation(libs.androidx.appcompat)
 	implementation(libs.material)
+	implementation(libs.androidx.runtime.android)
+	implementation(libs.androidx.ui.android)
+	implementation(libs.androidx.ui.viewbinding)
 	testImplementation(libs.junit)
 	androidTestImplementation(libs.androidx.junit)
 	androidTestImplementation(libs.androidx.espresso.core)
@@ -49,4 +56,7 @@ dependencies {
 	implementation(libs.play.services.ads)
 	implementation(libs.androidx.constraintlayout)
 	implementation(libs.error.prone.annotations)
+	// hilt
+	implementation(libs.hilt)
+	kapt(libs.hilt.compiler)
 }

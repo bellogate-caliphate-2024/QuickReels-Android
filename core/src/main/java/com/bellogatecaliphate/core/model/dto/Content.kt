@@ -12,5 +12,6 @@ data class Content(
 	val userId: String,
 	val userName: String,
 	val userProfilePicture: String,
-	val isLiked: Boolean
+	val isLiked: Boolean,
+	val isAd: Boolean
 )
