@@ -24,21 +24,11 @@ android {
 				getDefaultProguardFile("proguard-android-optimize.txt"),
 				"proguard-rules.pro"
 			)
-			buildConfigField(
-				"String",
-				"AD_UNIT_TIMELINE_NATIVE_AD",
-				"\"ca-app-pub-xxxxxxxxxxxxxxxx/xxxxxxxxxx\""
-			)
 		}
 		debug {
 			proguardFiles(
 				getDefaultProguardFile("proguard-android-optimize.txt"),
 				"proguard-rules.pro"
-			)
-			buildConfigField(
-				"String",
-				"AD_UNIT_TIMELINE_NATIVE_AD",
-				"\"ca-app-pub-3940256099942544/2247696110\""
 			)
 		}
 	}
@@ -46,6 +36,27 @@ android {
 		buildConfig = true
 		compose = true
 		viewBinding = true
+	}
+	
+	flavorDimensions += listOf("environment")
+	productFlavors {
+		create("production") {
+			dimension = "environment"
+			buildConfigField(
+				"String",
+				"AD_UNIT_TIMELINE_NATIVE_AD",
+				"\"ca-app-pub-xxxxxxxxxxxxxxxx/xxxxxxxxxx\""
+			)
+		}
+		
+		create("staging") {
+			dimension = "environment"
+			buildConfigField(
+				"String",
+				"AD_UNIT_TIMELINE_NATIVE_AD",
+				"\"ca-app-pub-3940256099942544/2247696110\""
+			)
+		}
 	}
 	compileOptions {
 		sourceCompatibility = JavaVersion.VERSION_11
