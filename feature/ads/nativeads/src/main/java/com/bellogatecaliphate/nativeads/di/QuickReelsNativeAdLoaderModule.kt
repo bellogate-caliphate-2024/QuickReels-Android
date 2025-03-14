@@ -1,6 +1,7 @@
 package com.bellogatecaliphate.nativeads.di
 
 import android.content.Context
+import com.bellogatecaliphate.nativeads.BuildConfig
 import com.google.android.gms.ads.AdLoader
 import com.google.android.gms.ads.AdRequest
 import dagger.Module
@@ -15,7 +16,7 @@ object QuickReelsNativeAdLoaderModule {
 	
 	@Provides
 	fun provideAdLoaderBuilder(@ApplicationContext context: Context): AdLoader.Builder {
-		return AdLoader.Builder(context, "ca-app-pub-3940256099942544/2247696110")
+		return AdLoader.Builder(context, BuildConfig.AD_UNIT_TIMELINE_NATIVE_AD)
 	}
 	
 	@Provides

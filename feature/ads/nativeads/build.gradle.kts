@@ -24,9 +24,26 @@ android {
 				getDefaultProguardFile("proguard-android-optimize.txt"),
 				"proguard-rules.pro"
 			)
+			buildConfigField(
+				"String",
+				"AD_UNIT_TIMELINE_NATIVE_AD",
+				"\"ca-app-pub-xxxxxxxxxxxxxxxx/xxxxxxxxxx\""
+			)
+		}
+		debug {
+			proguardFiles(
+				getDefaultProguardFile("proguard-android-optimize.txt"),
+				"proguard-rules.pro"
+			)
+			buildConfigField(
+				"String",
+				"AD_UNIT_TIMELINE_NATIVE_AD",
+				"\"ca-app-pub-3940256099942544/2247696110\""
+			)
 		}
 	}
 	buildFeatures {
+		buildConfig = true
 		compose = true
 		viewBinding = true
 	}
