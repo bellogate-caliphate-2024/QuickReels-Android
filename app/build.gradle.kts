@@ -5,6 +5,8 @@ plugins {
 	alias(libs.plugins.hilt)
 	alias(libs.plugins.serialization)
 	alias(libs.plugins.compose.compiler)
+	id("com.google.gms.google-services")
+	id("com.google.firebase.crashlytics")
 }
 
 android {
@@ -128,6 +130,10 @@ dependencies {
 	implementation(libs.play.services.ads)
 	// lifecycle process
 	implementation(libs.androidx.lifecycle.process)
+	// firebase
+	implementation(platform(libs.firebase.bom))
+	implementation(libs.firebase.analytics)
+	implementation(libs.firebase.crashlytics)
 }
 
 kapt {

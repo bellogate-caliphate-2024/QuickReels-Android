@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "328507922173",
+    "project_id": "quickreels-f59e7",
+    "storage_bucket": "quickreels-f59e7.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:328507922173:android:7fc6adca7a8734f233d094",
+        "android_client_info": {
+          "package_name": "com.bellogatecaliphate.quickreels"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCPYDBYAtYULWBntpJi2R4MeH4kwZO-T_s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -10,6 +10,7 @@ error_prone_annotations = "2.23.0"
 error_prone_annotationsVersion = "2.16"
 exoplayerVersion = "2.19.1"
 ffmpegKitMin = "6.0-1"
+firebaseBom = "33.10.0"
 glide = "4.15.1"
 gsonVersion = "2.10.1"
 hiltAndroidTesting = "2.51.1"
@@ -50,6 +51,8 @@ uiViewbinding = "1.7.8"
 playServicesAdsLite = "24.0.0"
 runtimeAndroid = "1.7.8"
 uiAndroid = "1.7.8"
+google-services = "4.4.2"
+crashlytics = "3.0.3"
 
 [libraries]
 androidx-activity-ktx = { module = "androidx.activity:activity-ktx", version.ref = "activityKtx" }
@@ -68,6 +71,9 @@ coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coilCo
 coil-network-okhttp = { module = "io.coil-kt.coil3:coil-network-okhttp", version.ref = "coilCompose" }
 error_prone_annotations = { module = "com.google.errorprone:error_prone_annotations", version.ref = "error_prone_annotations" }
 ffmpeg-kit-min = { module = "com.arthenica:ffmpeg-kit-min", version.ref = "ffmpegKitMin" }
+firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
+firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
+firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics" }
 google-exoplayer = { module = "com.google.android.exoplayer:exoplayer", version.ref = "exoplayerVersion" }
 gson-v2101 = { module = "com.google.code.gson:gson", version.ref = "gsonVersion" }
 localization = { module = "com.akexorcist:localization", version.ref = "localization" }
@@ -130,5 +136,7 @@ androidLibrary = { id = "com.android.library", version.ref = "agp" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hiltVersion" }
 serialization = { id = 'org.jetbrains.kotlin.plugin.serialization', version.ref = "serialization" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+google-services = { id = "com.google.gms.google-services", version.ref = "google-services" }
+crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "crashlytics" }
 
 
