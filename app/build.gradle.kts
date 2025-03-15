@@ -38,8 +38,6 @@ android {
 		}
 		
 		debug {
-			// buildTypes applicationIdSuffix is always appended after the productFlavor applicationIdSuffix
-			applicationIdSuffix = ".debug"
 			isMinifyEnabled = false
 			proguardFiles(
 				getDefaultProguardFile("proguard-android-optimize.txt"),
