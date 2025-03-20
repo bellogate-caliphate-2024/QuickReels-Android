@@ -13,9 +13,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.paging.compose.LazyPagingItems
 import com.bellogatecaliphate.core.model.dto.Content
+import com.bellogatecaliphate.core.ui.ProgressBar
 import com.bellogatecaliphate.nativeads.QuickReelsNativeAd
 import com.bellogatecaliphate.nativeads.QuickReelsNativeAdLoader
 
@@ -69,7 +71,7 @@ internal fun Contents(
 		items(list.itemCount) { index ->
 			val content = list[index] ?: return@items
 			if (content.isAd) {
-				QuickReelsNativeAd(Modifier.fillParentMaxSize(), adLoader)
+				NativeAd(Modifier.fillParentMaxSize(), adLoader)
 			} else {
 				ContentUi(
 					content,
@@ -80,4 +82,11 @@ internal fun Contents(
 			}
 		}
 	}
+}
+
+@Composable
+private fun NativeAd(modifier: Modifier, adLoader: QuickReelsNativeAdLoader) {
+	var showLoading by remember { mutableStateOf(true) }
+	ProgressBar(showLoading)
+	QuickReelsNativeAd(modifier, adLoader) { showLoading = false }
 }

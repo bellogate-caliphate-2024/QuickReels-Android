@@ -11,21 +11,27 @@ import com.bellogatecaliphate.nativeads.nativeadstemplates.databinding.QuickReel
 import com.google.android.gms.ads.nativead.NativeAd
 
 @Composable
-fun QuickReelsNativeAd(modifier: Modifier, adLoader: QuickReelsNativeAdLoader) {
+fun QuickReelsNativeAd(
+	modifier: Modifier,
+	adLoader: QuickReelsNativeAdLoader,
+	onAdLoadFinished: () -> Unit
+) {
 	var isAdLoadedSuccessfully by remember { mutableStateOf(false) }
 	var cachedLoadedAd: NativeAd? by remember { mutableStateOf(null) }
 	
 	AndroidViewBinding(QuickReelsNativeAdViewBinding::inflate, modifier) {
 		if (isAdLoadedSuccessfully && cachedLoadedAd != null) {
 			nativeAdTemplate.setNativeAd(cachedLoadedAd)
+			onAdLoadFinished()
 		} else {
 			adLoader.loadAd(
 				{ nativeAd ->
 					isAdLoadedSuccessfully = true
 					cachedLoadedAd = nativeAd
+					onAdLoadFinished()
 					nativeAdTemplate.setNativeAd(nativeAd)
 				}, {
-					// do nothing on error
+					onAdLoadFinished()
 				}
 			)
 		}
