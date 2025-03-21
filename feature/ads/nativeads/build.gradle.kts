@@ -45,7 +45,7 @@ android {
 			buildConfigField(
 				"String",
 				"AD_UNIT_TIMELINE_NATIVE_AD",
-				"\"ca-app-pub-xxxxxxxxxxxxxxxx/xxxxxxxxxx\""
+				"\"ca-app-pub-7286744545990292/8782154368\""
 			)
 		}
 		
