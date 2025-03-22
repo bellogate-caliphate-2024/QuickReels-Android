@@ -1,10 +1,17 @@
 package com.bellogatecaliphate.timeline.ui
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.paging.compose.collectAsLazyPagingItems
+import com.bellogatecaliphate.bannerads.QuickReelsBannerAd
+import com.bellogatecaliphate.core.model.ads.Ads
 import com.bellogatecaliphate.core.ui.ProgressBar
 import com.bellogatecaliphate.core.ui.comments.CommentsBottomDialog
 import com.bellogatecaliphate.nativeads.QuickReelsNativeAdLoader
@@ -63,7 +70,17 @@ private fun TimeLineScreen(
 			canLoadMoreReplies = uiState.canLoadMoreReplies,
 			onCommentsBottomDialogClosed = onCommentsBottomDialogClosed,
 			onSaveReply = onSaveReply,
-			onLoadReplies = onLoadReplies
+			onLoadReplies = onLoadReplies,
+			footer = { BannerAd() }
 		)
+	}
+}
+
+@Composable
+private fun BannerAd() {
+	Column {
+		Spacer(modifier = Modifier.height(8.dp))
+		QuickReelsBannerAd(Modifier.fillMaxWidth(), Ads.BannerAds.CommentSectionBannerAd)
+		Spacer(modifier = Modifier.height(8.dp))
 	}
 }

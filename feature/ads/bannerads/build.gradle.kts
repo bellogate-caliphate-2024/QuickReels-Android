@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-	namespace = "com.bellogatecaliphate.nativeads"
+	namespace = "com.bellogatecaliphate.bannerads"
 	compileSdk = 35
 	
 	defaultConfig {
@@ -44,8 +44,8 @@ android {
 			dimension = "environment"
 			buildConfigField(
 				"String",
-				"AD_UNIT_TIMELINE_NATIVE_AD",
-				"\"ca-app-pub-7286744545990292/8782154368\""
+				"AD_UNIT_COMMENTS_BANNER_AD",
+				"\"ca-app-pub-7286744545990292/2982940880\""
 			)
 		}
 		
@@ -53,8 +53,8 @@ android {
 			dimension = "environment"
 			buildConfigField(
 				"String",
-				"AD_UNIT_TIMELINE_NATIVE_AD",
-				"\"ca-app-pub-3940256099942544/2247696110\""
+				"AD_UNIT_COMMENTS_BANNER_AD",
+				"\"ca-app-pub-3940256099942544/9214589741\""
 			)
 		}
 	}
@@ -68,8 +68,7 @@ android {
 }
 
 dependencies {
-	
-	implementation(project(":feature:ads:nativeads:nativeadstemplates"))
+	implementation(project(":core"))
 	implementation(libs.androidx.core.ktx)
 	implementation(libs.androidx.appcompat)
 	implementation(libs.material)

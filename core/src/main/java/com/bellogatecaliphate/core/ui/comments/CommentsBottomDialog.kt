@@ -1,5 +1,6 @@
 package com.bellogatecaliphate.core.ui.comments
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.rememberModalBottomSheetState
@@ -20,6 +21,7 @@ import com.bellogatecaliphate.core.ui.comments.dialog_content.Content
  * @param onCommentsBottomDialogClosed is called when the user closes the CommentsBottomDialog.
  * @param onSaveReply is called when the user writes a reply to a comment and presses the save button.
  * @param onLoadReplies is called when the user clicks on the button to load replies on a comment.
+ * @param footer this is the composable that should be displayed at the bottom of the comments.
  *
  * ***/
 @OptIn(ExperimentalMaterial3Api::class)
@@ -35,6 +37,7 @@ fun CommentsBottomDialog(
 	onCommentsBottomDialogClosed: () -> Unit = {},
 	onSaveReply: ((originalCommentId: String, reply: String) -> Unit)? = null,
 	onLoadReplies: (originalCommentId: String, pageNumber: Int) -> Unit = { _, _ -> },
+	footer: @Composable () -> Unit = {}
 ) {
 	if (visible.not()) return
 	val sheetState = rememberModalBottomSheetState()
@@ -46,16 +49,19 @@ fun CommentsBottomDialog(
 		},
 		sheetState = sheetState
 	) {
-		Content(
-			isLoadingInitialComments,
-			noCommentsFound,
-			listOfComments,
-			isLoadingReplies,
-			listOfReplies,
-			repliesPageNumber,
-			canLoadMoreReplies,
-			onSaveReply,
-			onLoadReplies
-		)
+		Column {
+			Content(
+				isLoadingInitialComments,
+				noCommentsFound,
+				listOfComments,
+				isLoadingReplies,
+				listOfReplies,
+				repliesPageNumber,
+				canLoadMoreReplies,
+				onSaveReply,
+				onLoadReplies
+			)
+			footer()
+		}
 	}
 }

@@ -57,6 +57,7 @@ dependencies {
 	implementation(project(":core"))
 	implementation(project(":domain"))
 	implementation(project(":feature:ads:nativeads"))
+	implementation(project(":feature:ads:bannerads"))
 	implementation(libs.androidx.core.ktx)
 	implementation(libs.androidx.lifecycle.runtime.ktx)
 	implementation(libs.androidx.activity.compose)
