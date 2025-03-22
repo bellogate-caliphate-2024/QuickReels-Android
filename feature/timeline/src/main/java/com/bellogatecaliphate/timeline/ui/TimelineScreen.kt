@@ -23,6 +23,9 @@ fun TimeLineScreen(viewModel: TimeLineScreenViewModel = hiltViewModel()) {
 		onCommentButtonPressed = { contentId ->
 			viewModel.getComments(contentId)
 		},
+		onCommentsBottomDialogClosed = {
+			viewModel.onCommentsBottomDialogClosed()
+		},
 		onSaveReply = { originalCommentId, reply ->
 			viewModel.saveReply(originalCommentId, reply)
 		},
@@ -38,6 +41,7 @@ private fun TimeLineScreen(
 	adLoader: QuickReelsNativeAdLoader,
 	onLikeButtonPressed: (contentId: String, isLiked: Boolean) -> Unit,
 	onCommentButtonPressed: (contentId: String) -> Unit,
+	onCommentsBottomDialogClosed: () -> Unit = {},
 	onSaveReply: ((originalCommentId: String, reply: String) -> Unit)? = null,
 	onLoadReplies: (originalCommentId: String, pageNumber: Int) -> Unit = { _, _ -> }
 ) {
@@ -57,6 +61,7 @@ private fun TimeLineScreen(
 			listOfReplies = uiState.listOfCommentReplies,
 			repliesPageNumber = uiState.repliesPageNumber,
 			canLoadMoreReplies = uiState.canLoadMoreReplies,
+			onCommentsBottomDialogClosed = onCommentsBottomDialogClosed,
 			onSaveReply = onSaveReply,
 			onLoadReplies = onLoadReplies
 		)

@@ -50,6 +50,10 @@ class TimeLineScreenViewModel @Inject constructor(
 		_uiState.update { it.copy(listOfComments = response, isLoadingComments = false) }
 	}
 	
+	fun onCommentsBottomDialogClosed() {
+		_uiState.update { it.copy(openCommentsBottomSheet = false) }
+	}
+	
 	fun getRepliesToComment(commentId: String, pageNumber: Int) = viewModelScope.launch {
 		_uiState.update { it.copy(isLoadingReplies = true) }
 		val isLastPage = getCommentRepliesUseCase(commentId, pageNumber).first
