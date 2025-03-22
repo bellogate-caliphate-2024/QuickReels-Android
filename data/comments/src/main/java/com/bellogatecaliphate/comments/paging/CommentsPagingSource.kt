@@ -21,7 +21,7 @@ internal class CommentsPagingSource @Inject constructor(
 				LoadResult.Page(
 					data = list,
 					prevKey = null,
-					nextKey = response.nextPage ?: 1
+					nextKey = response.nextPage
 				)
 			}
 			catch (e: Exception) {
