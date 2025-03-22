@@ -19,6 +19,9 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.media3.common.MediaItem
 import androidx.media3.common.Player
 import androidx.media3.exoplayer.ExoPlayer
@@ -106,10 +109,25 @@ private fun VideoStreamer(
 		}
 	)
 	
-	DisposableEffect(Unit) {
+	val lifecycleOwner = LocalLifecycleOwner.current
+	DisposableEffect(lifecycleOwner) {
+		
+		val observer = LifecycleEventObserver { _, event ->
+			if (event == Lifecycle.Event.ON_STOP) {
+				exoPlayer.playWhenReady = false
+				exoPlayer.pause()
+			}
+			if (event == Lifecycle.Event.ON_DESTROY) {
+				exoPlayer.playWhenReady = true
+				exoPlayer.release()
+			}
+		}
+		lifecycleOwner.lifecycle.addObserver(observer)
+		
 		onDispose {
 			exoPlayer.playWhenReady = false
-			exoPlayer.release()
+			exoPlayer.pause()
+			lifecycleOwner.lifecycle.removeObserver(observer)
 		}
 	}
 }
