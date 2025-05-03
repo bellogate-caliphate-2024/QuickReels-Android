@@ -13,8 +13,9 @@ internal data class UiState(
 	val openCommentsBottomSheet: Boolean = false,
 	val networkError: Boolean = false,
 	val refresh: Boolean = false,
-	val listOfContents: Flow<PagingData<Content>> = emptyFlow(),
-	val listOfComments: Flow<PagingData<Comment>> = emptyFlow(),
+	val totalNumberOfComments: Int = 0,
+	val listOfPaginatedContents: Flow<PagingData<Content>> = emptyFlow(),
+	val listOfPaginatedComments: Flow<PagingData<Comment>> = emptyFlow(),
 	val listOfCommentReplies: List<Comment> = emptyList(),
 	val repliesPageNumber: Int? = null,
 	val canLoadMoreReplies: Boolean = false

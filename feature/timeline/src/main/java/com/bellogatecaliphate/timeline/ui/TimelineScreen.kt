@@ -27,8 +27,8 @@ fun TimeLineScreen(viewModel: TimeLineScreenViewModel = hiltViewModel()) {
 		onLikeButtonPressed = { contentId, isLiked ->
 			viewModel.likeContent(contentId, isLiked)
 		},
-		onCommentButtonPressed = { contentId ->
-			viewModel.getComments(contentId)
+		onCommentButtonPressed = { contentId, totalNumberOfCommentsExpected ->
+			viewModel.getComments(contentId, totalNumberOfCommentsExpected)
 		},
 		onCommentsBottomDialogClosed = {
 			viewModel.onCommentsBottomDialogClosed()
@@ -47,7 +47,7 @@ private fun TimeLineScreen(
 	uiState: UiState,
 	adLoader: QuickReelsNativeAdLoader,
 	onLikeButtonPressed: (contentId: String, isLiked: Boolean) -> Unit,
-	onCommentButtonPressed: (contentId: String) -> Unit,
+	onCommentButtonPressed: (contentId: String, totalNumberOfCommentsExpected: Int) -> Unit,
 	onCommentsBottomDialogClosed: () -> Unit = {},
 	onSaveReply: ((originalCommentId: String, reply: String) -> Unit)? = null,
 	onLoadReplies: (originalCommentId: String, pageNumber: Int) -> Unit = { _, _ -> }
@@ -55,7 +55,7 @@ private fun TimeLineScreen(
 	Column {
 		ProgressBar(uiState.isLoading)
 		Contents(
-			uiState.listOfContents.collectAsLazyPagingItems(),
+			uiState.listOfPaginatedContents.collectAsLazyPagingItems(),
 			adLoader,
 			onLikeButtonPressed,
 			onCommentButtonPressed
@@ -63,7 +63,8 @@ private fun TimeLineScreen(
 		CommentsBottomDialog(
 			visible = uiState.openCommentsBottomSheet,
 			isLoadingInitialComments = uiState.isLoadingComments,
-			listOfComments = uiState.listOfComments.collectAsLazyPagingItems(),
+			totalNumberOfCommentsExpected = uiState.totalNumberOfComments,
+			listOfComments = uiState.listOfPaginatedComments.collectAsLazyPagingItems(),
 			isLoadingReplies = uiState.isLoadingReplies,
 			listOfReplies = uiState.listOfCommentReplies,
 			repliesPageNumber = uiState.repliesPageNumber,

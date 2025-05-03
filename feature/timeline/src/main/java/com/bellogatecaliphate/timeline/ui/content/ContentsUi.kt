@@ -26,7 +26,7 @@ internal fun Contents(
 	list: LazyPagingItems<Content>?,
 	adLoader: QuickReelsNativeAdLoader,
 	onLikeButtonPressed: (contentId: String, isLiked: Boolean) -> Unit,
-	onCommentButtonPressed: (contentId: String) -> Unit
+	onCommentButtonPressed: (contentId: String, totalNumberOfCommentsExpected: Int) -> Unit
 ) {
 	if (list == null) return
 	val listState = rememberLazyListState()

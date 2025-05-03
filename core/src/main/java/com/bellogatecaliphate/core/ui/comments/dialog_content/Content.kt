@@ -1,5 +1,6 @@
 package com.bellogatecaliphate.core.ui.comments.dialog_content
 
+import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -27,26 +28,25 @@ internal fun Content(
 	onLoadReplies: (originalCommentId: String, pageNumber: Int) -> Unit = { _, _ -> },
 ) {
 	Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-		when {
-			isLoadingInitialComments     -> {
-				CircularProgressIndicator()
-			}
-			
-			noCommentsFound              -> {
-				NoComment()
-			}
-			
-			listOfComments.itemCount > 0 -> {
-				CommentsList(
-					listOfComments,
-					isLoadingReplies,
-					listOfReplies,
-					repliesPageNumber,
-					canLoadMoreReplies,
-					onSaveReply,
-					onLoadReplies
-				)
-			}
+		Log.e("JEFF", "isLoadingInitialComments is $isLoadingInitialComments")
+		if (isLoadingInitialComments) {
+			CircularProgressIndicator()
+		}
+		
+		if (noCommentsFound) {
+			NoComment()
+		}
+		
+		if (listOfComments.itemCount > 0) {
+			CommentsList(
+				listOfComments,
+				isLoadingReplies,
+				listOfReplies,
+				repliesPageNumber,
+				canLoadMoreReplies,
+				onSaveReply,
+				onLoadReplies
+			)
 		}
 		Spacer(modifier = Modifier.height(PLACEHOLDER_16DP))
 	}

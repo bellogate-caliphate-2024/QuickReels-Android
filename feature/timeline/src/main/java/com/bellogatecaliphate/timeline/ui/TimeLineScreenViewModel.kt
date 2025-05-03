@@ -2,6 +2,7 @@ package com.bellogatecaliphate.timeline.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.LoadState
 import androidx.paging.cachedIn
 import com.bellogatecaliphate.domain.comments.GetCommentRepliesUseCase
 import com.bellogatecaliphate.domain.comments.GetCommentsUseCase
@@ -37,17 +38,49 @@ class TimeLineScreenViewModel @Inject constructor(
 	private fun getContents() = viewModelScope.launch {
 		_uiState.update { it.copy(isLoading = true) }
 		val response = getContentsUseCase().cachedIn(viewModelScope)
-		_uiState.update { it.copy(listOfContents = response, isLoading = false) }
+		_uiState.update { it.copy(listOfPaginatedContents = response, isLoading = false) }
 	}
 	
 	fun likeContent(contentId: String, isLiked: Boolean) = viewModelScope.launch {
 		likeContentUseCase(contentId, isLiked)
 	}
 	
-	fun getComments(contentId: String) {
+	fun getComments(contentId: String, totalNumberOfCommentsExpected: Int) = viewModelScope.launch {
 		_uiState.update { it.copy(openCommentsBottomSheet = true, isLoadingComments = true) }
-		val response = getCommentsUseCase(contentId).cachedIn(viewModelScope)
-		_uiState.update { it.copy(listOfComments = response, isLoadingComments = false) }
+		getCommentsUseCase(contentId).cachedIn(viewModelScope).collect { lazyPagingItems ->
+			lazyPagingItems.loadState.refresh.collect { loadState ->
+				when (loadState) {
+					is LoadState.Loading    -> {
+						// If still loading the first page, keep the loading state
+						_uiState.update { it.copy(isLoadingComments = true) }
+					}
+					
+					is LoadState.NotLoading -> {
+						// Once the first page is loaded, set loading state to false
+						_uiState.update {
+							it.copy(
+								totalNumberOfComments = totalNumberOfCommentsExpected,
+								listOfPaginatedComments = lazyPagingItems,
+								isLoadingComments = false
+							)
+						}
+					}
+					
+					is LoadState.Error      -> {
+						// Handle error loading the first page if necessary
+						_uiState.update { it.copy(isLoadingComments = false) }
+					}
+				}
+			}
+		}
+		
+		_uiState.update {
+			it.copy(
+				totalNumberOfComments = totalNumberOfCommentsExpected,
+				listOfPaginatedComments = response,
+				isLoadingComments = false
+			)
+		}
 	}
 	
 	fun onCommentsBottomDialogClosed() {

@@ -17,7 +17,7 @@ internal fun ContentUi(
 	@PreviewParameter(ContentPreviewParameter::class) content: Content,
 	modifier: Modifier = Modifier,
 	onLikeButtonPressed: (contentId: String, isLiked: Boolean) -> Unit = { _, _ -> },
-	onCommentButtonPressed: (contentId: String) -> Unit = {}
+	onCommentButtonPressed: (contentId: String, totalNumberOfCommentsExpected: Int) -> Unit = { _, _ -> }
 ) {
 	Column(modifier) {
 		UserDetailsSection(content.userProfilePicture, content.userName, content.date)

@@ -19,10 +19,10 @@ import com.bellogatecaliphate.timeline.util.PLACEHOLDER_ICON_SIZE
 internal fun CommentsIcon(
 	contentId: String,
 	numberOfComments: String?,
-	onCLick: (contentId: String) -> Unit
+	onCLick: (contentId: String, totalNumberOfCommentsExpected: Int) -> Unit
 ) {
 	Column(
-		Modifier.clickable { onCLick(contentId) },
+		Modifier.clickable { onCLick(contentId, numberOfComments?.toIntOrNull() ?: 0) },
 		horizontalAlignment = Alignment.CenterHorizontally
 	) {
 		Image(

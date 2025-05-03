@@ -13,6 +13,7 @@ import com.bellogatecaliphate.core.ui.comments.dialog_content.Content
  * @param visible is true if the CommentsBottomDialog should be visible.
  * @param isLoadingInitialComments is true when the app is loading comments for the very first time
  * after the user clicked on the button to open comments.
+ * @param totalNumberOfCommentsExpected is the total number of comments that the content has.
  * @param listOfComments is the paginated list of comments.
  * @param isLoadingReplies is true when the ap is loading the list of replies to a comment.
  * @param listOfReplies is a non paginated list of replies to a comment.
@@ -29,6 +30,7 @@ import com.bellogatecaliphate.core.ui.comments.dialog_content.Content
 fun CommentsBottomDialog(
 	visible: Boolean = false,
 	isLoadingInitialComments: Boolean = false,
+	totalNumberOfCommentsExpected: Int,
 	listOfComments: LazyPagingItems<Comment>,
 	isLoadingReplies: Boolean = false,
 	listOfReplies: List<Comment> = emptyList(),
@@ -41,7 +43,7 @@ fun CommentsBottomDialog(
 ) {
 	if (visible.not()) return
 	val sheetState = rememberModalBottomSheetState()
-	val noCommentsFound = listOfComments.itemCount == 0
+	val noCommentsFound = totalNumberOfCommentsExpected == 0
 	
 	ModalBottomSheet(
 		onDismissRequest = {

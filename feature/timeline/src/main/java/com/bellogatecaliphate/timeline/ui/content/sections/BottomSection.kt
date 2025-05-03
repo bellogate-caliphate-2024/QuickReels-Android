@@ -27,7 +27,7 @@ internal fun BottomSection(
 	numberOfComments: String,
 	isLiked: Boolean,
 	onLikeButtonPressed: (contentId: String, isLiked: Boolean) -> Unit,
-	onCommentButtonPressed: (contentId: String) -> Unit
+	onCommentButtonPressed: (contentId: String, totalNumberOfCommentsExpected: Int) -> Unit
 ) {
 	Column(Modifier.padding(PLACEHOLDER_8DP)) {
 		Row {
