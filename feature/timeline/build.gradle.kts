@@ -94,7 +94,7 @@ dependencies {
 	implementation(libs.navigation.graph)
 	
 	implementation("com.google.android.exoplayer:exoplayer:2.17.1")
-	implementation("com.arthenica:ffmpeg-kit-min:6.0-1")
+	implementation(libs.ffmpeg.kit.min)
 	implementation(libs.glide)
 	annotationProcessor(libs.compiler)
 	implementation("com.akexorcist:localization:1.2.9")
