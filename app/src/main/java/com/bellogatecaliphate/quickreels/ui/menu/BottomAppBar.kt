@@ -45,7 +45,6 @@ import kotlin.math.roundToInt
 private val menuItems = listOf(
 	Screen.Timeline,
 	Screen.CreatePost,
-	Screen.Chat,
 	Screen.Account
 )
 
