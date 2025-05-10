@@ -11,7 +11,6 @@ import com.bellogatecaliphate.core.ui.comments.dialog_content.Content
 
 /**
  * @param visible is true if the CommentsBottomDialog should be visible.
- * @param isLoadingInitialComments is true when the app is loading comments for the very first time
  * after the user clicked on the button to open comments.
  * @param totalNumberOfCommentsExpected is the total number of comments that the content has.
  * @param listOfComments is the paginated list of comments.
@@ -29,7 +28,6 @@ import com.bellogatecaliphate.core.ui.comments.dialog_content.Content
 @Composable
 fun CommentsBottomDialog(
 	visible: Boolean = false,
-	isLoadingInitialComments: Boolean = false,
 	totalNumberOfCommentsExpected: Int,
 	listOfComments: LazyPagingItems<Comment>,
 	isLoadingReplies: Boolean = false,
@@ -53,7 +51,6 @@ fun CommentsBottomDialog(
 	) {
 		Column {
 			Content(
-				isLoadingInitialComments,
 				noCommentsFound,
 				listOfComments,
 				isLoadingReplies,

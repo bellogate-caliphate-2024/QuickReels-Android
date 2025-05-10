@@ -62,7 +62,6 @@ private fun TimeLineScreen(
 		)
 		CommentsBottomDialog(
 			visible = uiState.openCommentsBottomSheet,
-			isLoadingInitialComments = uiState.isLoadingComments,
 			totalNumberOfCommentsExpected = uiState.totalNumberOfComments,
 			listOfComments = uiState.listOfPaginatedComments.collectAsLazyPagingItems(),
 			isLoadingReplies = uiState.isLoadingReplies,

@@ -45,8 +45,13 @@ class TimeLineScreenViewModel @Inject constructor(
 	}
 	
 	fun getComments(contentId: String, totalNumberOfCommentsExpected: Int) = viewModelScope.launch {
-		_uiState.update { it.copy(openCommentsBottomSheet = true, isLoadingComments = true) }
-		getCommentsUseCase(contentId).cachedIn(viewModelScope).collect { lazyPagingItems ->
+		_uiState.update { it.copy(openCommentsBottomSheet = true) }
+		val response = getCommentsUseCase(contentId).cachedIn(viewModelScope)
+		_uiState.update {
+			it.copy(
+				totalNumberOfComments = totalNumberOfCommentsExpected,
+				listOfPaginatedComments = response
+			)
 		}
 	}
 	

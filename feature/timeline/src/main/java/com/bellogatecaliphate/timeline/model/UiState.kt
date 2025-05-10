@@ -8,7 +8,6 @@ import kotlinx.coroutines.flow.emptyFlow
 
 internal data class UiState(
 	val isLoading: Boolean = false,
-	val isLoadingComments: Boolean = false,
 	val isLoadingReplies: Boolean = false,
 	val openCommentsBottomSheet: Boolean = false,
 	val networkError: Boolean = false,

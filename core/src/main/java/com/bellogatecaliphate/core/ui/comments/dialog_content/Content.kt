@@ -1,6 +1,5 @@
 package com.bellogatecaliphate.core.ui.comments.dialog_content
 
-import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -9,15 +8,15 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import com.bellogatecaliphate.core.model.dto.Comment
 import com.bellogatecaliphate.core.ui.comments.comments_list.CommentsList
 import com.bellogatecaliphate.core.ui.comments.no_comment.NoComment
-import com.bellogatecaliphate.core.util.PLACEHOLDER_16DP
+import com.bellogatecaliphate.core.util.PLACEHOLDER_8DP
 
 @Composable
 internal fun Content(
-	isLoadingInitialComments: Boolean,
 	noCommentsFound: Boolean,
 	listOfComments: LazyPagingItems<Comment>,
 	isLoadingReplies: Boolean = false,
@@ -28,8 +27,12 @@ internal fun Content(
 	onLoadReplies: (originalCommentId: String, pageNumber: Int) -> Unit = { _, _ -> },
 ) {
 	Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-		Log.e("JEFF", "isLoadingInitialComments is $isLoadingInitialComments")
-		if (isLoadingInitialComments) {
+		val isLoadingFirstSetOfComments =
+				listOfComments.loadState.source.refresh is LoadState.Loading
+		val isLoadingMoreComments =
+				listOfComments.loadState.source.append is LoadState.Loading
+		
+		if (isLoadingFirstSetOfComments) {
 			CircularProgressIndicator()
 		}
 		
@@ -48,6 +51,10 @@ internal fun Content(
 				onLoadReplies
 			)
 		}
-		Spacer(modifier = Modifier.height(PLACEHOLDER_16DP))
+		Spacer(modifier = Modifier.height(PLACEHOLDER_8DP))
+		if (isLoadingMoreComments) {
+			CircularProgressIndicator()
+		}
+		Spacer(modifier = Modifier.height(PLACEHOLDER_8DP))
 	}
 }
