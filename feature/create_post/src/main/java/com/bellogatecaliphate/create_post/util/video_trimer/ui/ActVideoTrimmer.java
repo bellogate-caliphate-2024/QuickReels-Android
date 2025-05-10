@@ -33,6 +33,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.akexorcist.localizationactivity.ui.LocalizationActivity;
+import com.arthenica.ffmpegkit.FFmpegKit;
 import com.bellogatecaliphate.create_post.R;
 import com.bellogatecaliphate.create_post.util.video_trimer.ui.seekbar.widgets.CrystalRangeSeekbar;
 import com.bellogatecaliphate.create_post.util.video_trimer.ui.seekbar.widgets.CrystalSeekbar;
@@ -46,10 +47,6 @@ import com.bellogatecaliphate.create_post.util.video_trimer.utils.TrimmerUtils;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
-import com.github.hiteshsondhi88.libffmpeg.ExecuteBinaryResponseHandler;
-import com.github.hiteshsondhi88.libffmpeg.FFmpeg;
-import com.github.hiteshsondhi88.libffmpeg.LoadBinaryResponseHandler;
-import com.github.hiteshsondhi88.libffmpeg.exceptions.FFmpegNotSupportedException;
 import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.ExoPlayer;
 import com.google.android.exoplayer2.MediaItem;
@@ -77,27 +74,58 @@ import java.util.concurrent.Executors;
 public class ActVideoTrimmer extends LocalizationActivity {
 
     private static final int PER_REQ_CODE = 115;
-    FFmpeg ffmpeg = null;
     private StyledPlayerView playerView;
     private ExoPlayer videoPlayer;
+
     private ImageView imagePlayPause;
+
     private ImageView[] imageViews;
+
     private long totalDuration;
+
     private Dialog dialog;
+
     private Uri filePath;
+
     private TextView txtStartDuration, txtEndDuration;
+
     private CrystalRangeSeekbar seekbar;
+
     private long lastMinValue = 0;
+
     private long lastMaxValue = 0;
+
     private MenuItem menuDone;
+
     private CrystalSeekbar seekbarController;
+
     private boolean isValidVideo = true, isVideoEnded;
+
     private Handler seekHandler;
+
     private Bundle bundle;
+
     private ProgressBar progressBar;
+
     private TrimVideoOptions trimVideoOptions;
+
     private long currentDuration, lastClickedTime;
-    private CompressOption compressOption;
+    private CompressOption compressOption;    Runnable updateSeekbar = new Runnable() {
+        @Override
+        public void run() {
+            try {
+                currentDuration = videoPlayer.getCurrentPosition() / 1000;
+                if (!videoPlayer.getPlayWhenReady())
+                    return;
+                if (currentDuration <= lastMaxValue)
+                    seekbarController.setMinStartValue((int) currentDuration).apply();
+                else
+                    videoPlayer.setPlayWhenReady(false);
+            } finally {
+                seekHandler.postDelayed(updateSeekbar, 1000);
+            }
+        }
+    };
     private String outputPath;
     private String local;
     private int trimType;
@@ -119,29 +147,12 @@ public class ActVideoTrimmer extends LocalizationActivity {
         setUpToolBar(getSupportActionBar(), trimVideoOptions.title);
         toolbar.setNavigationOnClickListener(v -> finish());
         progressView = new CustomProgressView(this);
-        ffmpeg = FFmpeg.getInstance(this);
-        loadFFMpegBinary();
     }
 
     @Override
     protected void attachBaseContext(@NotNull Context base) {
         super.attachBaseContext(LocaleHelper.onAttach(base, "en"));
-    }    Runnable updateSeekbar = new Runnable() {
-        @Override
-        public void run() {
-            try {
-                currentDuration = videoPlayer.getCurrentPosition() / 1000;
-                if (!videoPlayer.getPlayWhenReady())
-                    return;
-                if (currentDuration <= lastMaxValue)
-                    seekbarController.setMinStartValue((int) currentDuration).apply();
-                else
-                    videoPlayer.setPlayWhenReady(false);
-            } finally {
-                seekHandler.postDelayed(updateSeekbar, 1000);
-            }
-        }
-    };
+    }
 
     @Override
     protected void onPostCreate(@Nullable Bundle savedInstanceState) {
@@ -198,36 +209,6 @@ public class ActVideoTrimmer extends LocalizationActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    private void loadFFMpegBinary() {
-        try {
-            ffmpeg.loadBinary(new LoadBinaryResponseHandler() {
-                @Override
-                public void onFailure() {
-                    showUnsupportedExceptionDialog();
-                }
-            });
-        } catch (FFmpegNotSupportedException e) {
-            showUnsupportedExceptionDialog();
-        }
-    }
-
-    private void showUnsupportedExceptionDialog() {
-        new AlertDialog.Builder(this)
-                .setIcon(android.R.drawable.ic_dialog_alert)
-                .setTitle("FFmpeg is not supported on your device")
-                .setMessage("FFmpeg is not supported on your device")
-                .setCancelable(false)
-                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        finish();
-                    }
-                })
-                .create()
-                .show();
-
     }
 
     private void setDataInView() {
@@ -496,7 +477,7 @@ public class ActVideoTrimmer extends LocalizationActivity {
                 f.delete();
             }
             stopRepeatingTask();
-            ffmpeg.killRunningProcesses();
+            FFmpegKit.cancel();
         } catch (Exception e) {
             LogMessage.e(Log.getStackTraceString(e));
         }
@@ -623,11 +604,9 @@ public class ActVideoTrimmer extends LocalizationActivity {
 
     private void execFFmpegBinary(final String[] command, boolean retry) {
         try {
-            ffmpeg.execute(command, new ExecuteBinaryResponseHandler() {
-
-                @Override
-                public void onSuccess(String message) {
-                    super.onSuccess(message);
+            FFmpegKit.executeWithArgumentsAsync(command, session -> {
+                int result = session.getReturnCode().getValue();
+                if (result == 0) {
                     dialog.dismiss();
                     if (showFileLocationAlert) showLocationAlert();
                     else {
@@ -636,13 +615,22 @@ public class ActVideoTrimmer extends LocalizationActivity {
                         setResult(RESULT_OK, intent);
                         finish();
                     }
-                }
-
-                @Override
-                public void onFailure(String message) {
-                    super.onFailure(message);
-                    if (dialog.isShowing()) dialog.dismiss();
-                    runOnUiThread(() -> Toast.makeText(ActVideoTrimmer.this, "Failed to trim", Toast.LENGTH_SHORT).show());
+                } else if (result == 255) {
+                    LogMessage.v("Command cancelled");
+                    if (dialog.isShowing())
+                        dialog.dismiss();
+                } else {
+                    // Failed case:
+                    // line 489 command fails on some devices in
+                    // that case retrying with accurateCmt as alternative command
+                    if (retry && !isAccurateCut && compressOption == null) {
+                        File newFile = new File(outputPath);
+                        if (newFile.exists()) newFile.delete();
+                        execFFmpegBinary(getAccurateCmd(), false);
+                    } else {
+                        if (dialog.isShowing()) dialog.dismiss();
+                        runOnUiThread(() -> Toast.makeText(ActVideoTrimmer.this, "Failed to trim", Toast.LENGTH_SHORT).show());
+                    }
                 }
             });
         } catch (Exception e) {
@@ -697,7 +685,7 @@ public class ActVideoTrimmer extends LocalizationActivity {
             dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             txtCancel.setOnClickListener(v -> {
                 dialog.dismiss();
-                ffmpeg.killRunningProcesses();
+                FFmpegKit.cancel();
             });
             dialog.show();
         } catch (Exception e) {
@@ -769,7 +757,6 @@ public class ActVideoTrimmer extends LocalizationActivity {
     void stopRepeatingTask() {
         seekHandler.removeCallbacks(updateSeekbar);
     }
-
 
 
 

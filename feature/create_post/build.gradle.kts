@@ -52,7 +52,7 @@ android {
 }
 
 dependencies {
-	
+	implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.aar"))))
 	implementation(project(":core"))
 	implementation(project(":domain"))
 	implementation(libs.androidx.core.ktx)
@@ -84,7 +84,6 @@ dependencies {
 	implementation(libs.navigation.graph)
 	
 	implementation(libs.google.exoplayer)
-	implementation(libs.ffmpeg.kit.min)
 	implementation(libs.glide)
 	annotationProcessor(libs.compiler)
 	implementation(libs.localization)
