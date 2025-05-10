@@ -9,7 +9,7 @@ coordinatorlayout = "1.2.0"
 error_prone_annotations = "2.23.0"
 error_prone_annotationsVersion = "2.16"
 exoplayerVersion = "2.19.1"
-ffmpegKitMin = "6.0-2"
+ffmpegKitMin = "0.3.2"
 firebaseBom = "33.10.0"
 glide = "4.15.1"
 gsonVersion = "2.10.1"
@@ -70,7 +70,7 @@ androidx-paging-runtime = { module = "androidx.paging:paging-runtime", version.r
 coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coilCompose" }
 coil-network-okhttp = { module = "io.coil-kt.coil3:coil-network-okhttp", version.ref = "coilCompose" }
 error_prone_annotations = { module = "com.google.errorprone:error_prone_annotations", version.ref = "error_prone_annotations" }
-ffmpeg-kit-min = { module = "com.arthenica:ffmpeg-kit-min", version.ref = "ffmpegKitMin" }
+ffmpeg-kit-min = { module = "com.writingminds:FFmpegAndroid", version.ref = "ffmpegKitMin" }
 firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
 firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics" }
