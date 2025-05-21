@@ -13,12 +13,6 @@ pluginManagement {
 			dirs(rootDir.resolve("libs"))
 		}
 	}
-	plugins {
-		kotlin("jvm") version "2.0.20"
-	}
-}
-plugins {
-	id("org.gradle.toolchains.foojay-resolver-convention") version "0.8.0"
 }
 dependencyResolutionManagement {
 	repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
@@ -48,4 +42,3 @@ include(":feature:ads:appopenad")
 include(":feature:ads:nativeads")
 include(":feature:ads:nativeads:nativeadstemplates")
 include(":feature:ads:bannerads")
-include(":core:authentication")
