@@ -12,7 +12,28 @@
           "package_name": "com.bellogatecaliphate.quickreels"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "328507922173-777hehfb6imvb4fnee2ra3l2v79eq04l.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bellogatecaliphate.quickreels",
+            "certificate_hash": "5b12a808cccc1a986f4dd746589bc4e0574a3fdc"
+          }
+        },
+        {
+          "client_id": "328507922173-suqetrgoql3reqrn9mlg5leicre7qs1i.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bellogatecaliphate.quickreels",
+            "certificate_hash": "6f9f74802d7aa5f034caff310fec311e784ef6d1"
+          }
+        },
+        {
+          "client_id": "328507922173-7of15h701nvt1vetulq6gtspadoq606l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyCPYDBYAtYULWBntpJi2R4MeH4kwZO-T_s"
@@ -20,7 +41,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "328507922173-7of15h701nvt1vetulq6gtspadoq606l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     },
@@ -31,7 +57,28 @@
           "package_name": "com.bellogatecaliphate.quickreels.staging"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "328507922173-6uognd8f9olnacjsrvdklnlpr2so3k8e.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bellogatecaliphate.quickreels.staging",
+            "certificate_hash": "6f9f74802d7aa5f034caff310fec311e784ef6d1"
+          }
+        },
+        {
+          "client_id": "328507922173-m35vbis1egu4nuh57iim6jliibu24tb0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bellogatecaliphate.quickreels.staging",
+            "certificate_hash": "5b12a808cccc1a986f4dd746589bc4e0574a3fdc"
+          }
+        },
+        {
+          "client_id": "328507922173-7of15h701nvt1vetulq6gtspadoq606l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyCPYDBYAtYULWBntpJi2R4MeH4kwZO-T_s"
@@ -39,7 +86,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "328507922173-7of15h701nvt1vetulq6gtspadoq606l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }
