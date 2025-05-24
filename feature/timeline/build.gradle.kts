@@ -68,7 +68,6 @@ dependencies {
 	implementation(libs.androidx.material3)
 	implementation(libs.androidx.paging.compose.android)
 	implementation(libs.androidx.ui.viewbinding)
-	implementation(libs.play.services.ads.lite)
 	testImplementation(libs.junit)
 	androidTestImplementation(libs.androidx.junit)
 	androidTestImplementation(libs.androidx.espresso.core)

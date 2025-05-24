@@ -17,11 +17,11 @@ gsonVersion = "2.10.1"
 hiltAndroidTesting = "2.51.1"
 hiltCompiler = "1.2.0"
 hiltWork = "1.2.0"
-kotlin = "2.0.0"
 coreKtx = "1.12.0"
 junit = "4.13.2"
 junitVersion = "1.1.5"
 espressoCore = "3.5.1"
+kotlin = "2.1.0"
 kotlinxSerializationJson = "1.6.0"
 lifecycleProcess = "2.8.7"
 lifecycleRuntimeKtx = "2.7.0"
@@ -49,7 +49,6 @@ retrofit_converter = "2.3.0"
 okhttp = "4.9.0"
 pagingComposeAndroid = "3.3.4"
 uiViewbinding = "1.7.8"
-playServicesAdsLite = "24.0.0"
 runtimeAndroid = "1.7.8"
 uiAndroid = "1.7.8"
 google-services = "4.4.2"
@@ -129,7 +128,6 @@ okhttp-logging-interceptor = { group = "com.squareup.okhttp3", name = "logging-i
 okhttp-converter-scalars = { group = "com.squareup.retrofit2", name = "converter-scalars", version.ref = "retrofit_converter" }
 androidx-paging-compose-android = { group = "androidx.paging", name = "paging-compose-android", version.ref = "pagingComposeAndroid" }
 androidx-ui-viewbinding = { group = "androidx.compose.ui", name = "ui-viewbinding", version.ref = "uiViewbinding" }
-play-services-ads-lite = { group = "com.google.android.gms", name = "play-services-ads-lite", version.ref = "playServicesAdsLite" }
 androidx-runtime-android = { group = "androidx.compose.runtime", name = "runtime-android", version.ref = "runtimeAndroid" }
 androidx-ui-android = { group = "androidx.compose.ui", name = "ui-android", version.ref = "uiAndroid" }
 

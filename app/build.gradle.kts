@@ -10,6 +10,14 @@ plugins {
 }
 
 android {
+	signingConfigs {
+		create("releaseConfig") {
+			storeFile = file("/Users/user/Documents/quickreels_keystore")
+			storePassword = "quickreels2468"
+			keyAlias = "quickreels"
+			keyPassword = "quickreels2468"
+		}
+	}
 	namespace = "com.bellogatecaliphate.quickreels"
 	compileSdk = 35
 	
@@ -35,6 +43,7 @@ android {
 				getDefaultProguardFile("proguard-android-optimize.txt"),
 				"proguard-rules.pro"
 			)
+			signingConfig = signingConfigs.getByName("releaseConfig")
 		}
 		
 		debug {

@@ -55,6 +55,7 @@ dependencies {
 	implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.aar"))))
 	implementation(project(":core"))
 	implementation(project(":domain"))
+	implementation(project(":feature:create_post:ffmpeg"))
 	implementation(libs.androidx.core.ktx)
 	implementation(libs.androidx.lifecycle.runtime.ktx)
 	implementation(libs.androidx.activity.compose)
