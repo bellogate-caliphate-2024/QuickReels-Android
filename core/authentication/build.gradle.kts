@@ -42,7 +42,7 @@ dependencies {
 	androidTestImplementation(libs.androidx.espresso.core)
 	
 	// google authentication
-	//googleAuthDependencies()
+	googleAuthDependencies()
 }
 
 fun DependencyHandler.googleAuthDependencies() {
