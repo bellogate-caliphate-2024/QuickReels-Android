@@ -1,6 +1,5 @@
 package com.bellogatecaliphate.account.ui
 
-import android.content.Context
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -14,7 +13,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -26,7 +25,6 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.bellogatecaliphate.account.R
 import com.bellogatecaliphate.account.model.UiState
-import com.bellogatecaliphate.account.ui.authentication.FirebaseAuthentication
 import com.bellogatecaliphate.account.ui.content_history_grid_list.ContentHistoryGridList
 import com.bellogatecaliphate.account.ui.icons.Likes
 import com.bellogatecaliphate.account.ui.icons.Views
@@ -35,6 +33,7 @@ import com.bellogatecaliphate.core.model.dto.Content
 import com.bellogatecaliphate.core.model.dto.User
 import com.bellogatecaliphate.core.util.PLACEHOLDER_16DP
 import com.bellogatecaliphate.core.util.PLACEHOLDER_8DP
+import kotlinx.coroutines.launch
 
 @Composable
 internal fun AccountScreen(
@@ -43,9 +42,11 @@ internal fun AccountScreen(
 ) {
 	val state = viewModel.uiState.collectAsStateWithLifecycle().value
 	val context = LocalContext.current
-	FirebaseLoginScreen(state, context, serverClientId, viewModel.firebaseAuthentication)
+	val scope = rememberCoroutineScope()
 	AccountScreen(uiState = state, onLogin = {
-		viewModel.startLogin()
+		scope.launch {
+			viewModel.firebaseAuthentication.performLogin(context, serverClientId)
+		}
 	})
 }
 
@@ -108,21 +109,5 @@ private fun LoggedInUserAccountScreen(user: User, listOfContentHistory: LazyPagi
 			Views(user.numberOfViews)
 		}
 		ContentHistoryGridList(listOfContentHistory)
-	}
-}
-
-@Composable
-private fun FirebaseLoginScreen(
-	state: UiState,
-	context: Context,
-	serverClientId: String,
-	firebaseAuthentication: FirebaseAuthentication
-) {
-	LaunchedEffect(state.showLoginScreen) {
-		if (state.showLoginScreen) {
-			// We are passing in context instead on injecting using hilt it because firebase auth needs an activity
-			// related context to perform the login not application context
-			firebaseAuthentication.performLogin(context, serverClientId)
-		}
 	}
 }

@@ -8,7 +8,6 @@ import kotlinx.coroutines.flow.emptyFlow
 
 internal data class UiState(
 	val isLoading: Boolean = false,
-	val showLoginScreen: Boolean = false,
 	val isUserLoggedIn: Boolean = false,
 	val user: User? = null,
 	val listOfContentHistory: Flow<PagingData<Content>> = emptyFlow()
