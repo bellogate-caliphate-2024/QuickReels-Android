@@ -7,6 +7,7 @@ import androidx.credentials.CustomCredential
 import androidx.credentials.GetCredentialRequest
 import androidx.credentials.GetCredentialResponse
 import androidx.credentials.exceptions.ClearCredentialException
+import androidx.credentials.exceptions.GetCredentialCancellationException
 import com.google.android.libraries.identity.googleid.GetGoogleIdOption
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential.Companion.TYPE_GOOGLE_ID_TOKEN_CREDENTIAL
@@ -27,16 +28,19 @@ class FirebaseAuthentication @Inject constructor(
 	
 	// We are passing in context instead on injecting using hilt it because firebase auth needs an activity
 	// related context to perform the login not application context
-	suspend fun performLogin(context: Context, serverClientId: String): Boolean {
+	suspend fun performLogin(context: Context, serverClientId: String): Boolean = try {
 		val credential =
 				getCredentialResponse(context, getCredentialRequest(serverClientId)).credential
 		
-		return if (credential is CustomCredential && credential.type == TYPE_GOOGLE_ID_TOKEN_CREDENTIAL) {
+		if (credential is CustomCredential && credential.type == TYPE_GOOGLE_ID_TOKEN_CREDENTIAL) {
 			val googleIdTokenCredential = googleIdTokenCredential.createFrom(credential.data)
 			firebaseAuthWithGoogle(googleIdTokenCredential.idToken)
 		} else {
 			false
 		}
+	}
+	catch (e: GetCredentialCancellationException) {
+		false
 	}
 	
 	suspend fun logoutUser(context: Context): Boolean = withContext(ioDispatcher) {
