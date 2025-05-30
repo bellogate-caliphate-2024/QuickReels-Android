@@ -1,5 +1,6 @@
 package com.bellogatecaliphate.account.ui
 
+import android.content.Context
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -13,8 +14,10 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -23,6 +26,7 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.bellogatecaliphate.account.R
 import com.bellogatecaliphate.account.model.UiState
+import com.bellogatecaliphate.account.ui.authentication.FirebaseAuthentication
 import com.bellogatecaliphate.account.ui.content_history_grid_list.ContentHistoryGridList
 import com.bellogatecaliphate.account.ui.icons.Likes
 import com.bellogatecaliphate.account.ui.icons.Views
@@ -33,14 +37,21 @@ import com.bellogatecaliphate.core.util.PLACEHOLDER_16DP
 import com.bellogatecaliphate.core.util.PLACEHOLDER_8DP
 
 @Composable
-fun AccountScreen(viewModel: AccountScreenViewModel = hiltViewModel()) {
+internal fun AccountScreen(
+	serverClientId: String,
+	viewModel: AccountScreenViewModel = hiltViewModel(),
+) {
 	val state = viewModel.uiState.collectAsStateWithLifecycle().value
-	AccountScreen(state)
+	val context = LocalContext.current
+	FirebaseLoginScreen(state, context, serverClientId, viewModel.firebaseAuthentication)
+	AccountScreen(uiState = state, onLogin = {
+		viewModel.startLogin()
+	})
 }
 
 @Composable
-private fun AccountScreen(uiState: UiState, onSignUp: () -> Unit = {}, onLogin: () -> Unit = {}) {
-	if (uiState.isUserLoggedIn()) {
+private fun AccountScreen(uiState: UiState, onLogin: () -> Unit = {}) {
+	if (uiState.isUserLoggedIn) {
 		uiState.user?.let {
 			LoggedInUserAccountScreen(
 				user = it,
@@ -48,16 +59,14 @@ private fun AccountScreen(uiState: UiState, onSignUp: () -> Unit = {}, onLogin: 
 			)
 		}
 	} else {
-		AnonymousUserAccountScreen(onSignUp, onLogin)
+		AnonymousUserAccountScreen(onLogin)
 	}
 }
 
 @Composable
-private fun AnonymousUserAccountScreen(onSignUp: () -> Unit, onLogin: () -> Unit) {
+private fun AnonymousUserAccountScreen(onLogin: () -> Unit) {
 	Box(contentAlignment = Alignment.Center) {
 		Row {
-			Button(onClick = onSignUp) { Text(text = stringResource(id = R.string.signup)) }
-			Spacer(modifier = Modifier.width(PLACEHOLDER_8DP))
 			Button(onClick = onLogin) { Text(text = stringResource(id = R.string.login)) }
 		}
 	}
@@ -99,5 +108,21 @@ private fun LoggedInUserAccountScreen(user: User, listOfContentHistory: LazyPagi
 			Views(user.numberOfViews)
 		}
 		ContentHistoryGridList(listOfContentHistory)
+	}
+}
+
+@Composable
+private fun FirebaseLoginScreen(
+	state: UiState,
+	context: Context,
+	serverClientId: String,
+	firebaseAuthentication: FirebaseAuthentication
+) {
+	LaunchedEffect(state.showLoginScreen) {
+		if (state.showLoginScreen) {
+			// We are passing in context instead on injecting using hilt it because firebase auth needs an activity
+			// related context to perform the login not application context
+			firebaseAuthentication.performLogin(context, serverClientId)
+		}
 	}
 }

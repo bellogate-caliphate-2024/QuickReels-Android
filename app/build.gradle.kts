@@ -141,6 +141,17 @@ dependencies {
 	implementation(platform(libs.firebase.bom))
 	implementation(libs.firebase.analytics)
 	implementation(libs.firebase.crashlytics)
+	// firebase auth
+	googleAuthDependencies()
+}
+
+fun DependencyHandler.googleAuthDependencies() {
+	// firebase auth
+	implementation(libs.firebase.auth)
+	// Also add the dependencies for the Credential Manager libraries and specify their versions
+	implementation(libs.androidx.credentials)
+	implementation(libs.androidx.credentials.play.services.auth)
+	implementation(libs.googleid)
 }
 
 kapt {

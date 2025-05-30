@@ -29,4 +29,6 @@ internal class UserRepository @Inject constructor(
 	
 	override fun getPaginatedUsersFromRemote(): Pager<Int, UserResponse> =
 			Pager(PagingConfig(pageSize = 10)) { userPagingSource }
+	
+	override fun isUserLoggedIn(): Boolean = userRemoteDataSource.isUserLoggedIn()
 }

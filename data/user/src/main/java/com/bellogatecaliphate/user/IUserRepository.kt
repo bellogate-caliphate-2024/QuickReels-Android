@@ -13,4 +13,6 @@ interface IUserRepository {
 	suspend fun searchForUserByName(userName: String): List<UserResponse>
 	
 	fun getPaginatedUsersFromRemote(): Pager<Int, UserResponse>
+	
+	fun isUserLoggedIn(): Boolean
 }

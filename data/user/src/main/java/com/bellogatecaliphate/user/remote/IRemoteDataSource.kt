@@ -10,4 +10,6 @@ internal interface IRemoteDataSource {
 	suspend fun getUser(userEmail: String): UserResponse?
 	
 	suspend fun searchForUserByName(userName: String): List<UserResponse>
+	
+	fun isUserLoggedIn(): Boolean
 }

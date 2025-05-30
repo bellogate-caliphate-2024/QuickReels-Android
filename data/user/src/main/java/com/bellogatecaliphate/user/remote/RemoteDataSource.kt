@@ -1,6 +1,7 @@
 package com.bellogatecaliphate.user.remote
 
 import com.bellogatecaliphate.user.remote.api.UserApi
+import com.bellogatecaliphate.user.remote.firebase.FirebaseDataSource
 import com.bellogatecaliphate.user.remote.model.UserResponse
 import com.bellogatecaliphate.user.remote.model.UsersResponse
 import kotlinx.coroutines.CoroutineDispatcher
@@ -9,6 +10,7 @@ import javax.inject.Inject
 
 internal class RemoteDataSource @Inject constructor(
 	private val ioDispatcher: CoroutineDispatcher,
+	private val firebaseDataSource: FirebaseDataSource,
 	private val api: UserApi
 ) : IRemoteDataSource {
 	
@@ -25,4 +27,6 @@ internal class RemoteDataSource @Inject constructor(
 			withContext(ioDispatcher) {
 				api.searchForUserByName(userName)
 			}
+	
+	override fun isUserLoggedIn(): Boolean = firebaseDataSource.isUserLoggedIn()
 }

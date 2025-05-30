@@ -12,6 +12,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTagsAsResourceId
 import androidx.navigation.compose.NavHost
@@ -21,6 +22,7 @@ import com.bellogatecaliphate.chat.navigation.chatNavGraph
 import com.bellogatecaliphate.core.model.routes.Route
 import com.bellogatecaliphate.core.model.routes.timeline.TimelineNavGraphRoute
 import com.bellogatecaliphate.create_post.navigation.createPostNavGraph
+import com.bellogatecaliphate.quickreels.R
 import com.bellogatecaliphate.quickreels.ui.menu.BottomAppBar
 import com.bellogatecaliphate.quickreels.ui.theme.QuickReelsTheme
 import com.bellogatecaliphate.timeline.navigation.timelineNavGraph
@@ -53,6 +55,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 private fun QuickReelsScreen() {
 	val navController = rememberNavController()
+	val serverClientId = LocalContext.current.getString(R.string.default_web_client_id)
 	Scaffold(
 		bottomBar = {
 			BottomAppBar { route: Route -> navController.navigate(route) }
@@ -63,7 +66,7 @@ private fun QuickReelsScreen() {
 				timelineNavGraph(navController)
 				createPostNavGraph(navController)
 				chatNavGraph(navController)
-				accountNavGraph(navController)
+				accountNavGraph(navController, serverClientId)
 			}
 		}
 	}
