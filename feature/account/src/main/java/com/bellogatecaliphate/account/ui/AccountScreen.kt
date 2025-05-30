@@ -46,6 +46,7 @@ internal fun AccountScreen(
 	AccountScreen(uiState = state, onLogin = {
 		scope.launch {
 			viewModel.firebaseAuthentication.performLogin(context, serverClientId)
+			viewModel.checkUserLogin()
 		}
 	})
 }
