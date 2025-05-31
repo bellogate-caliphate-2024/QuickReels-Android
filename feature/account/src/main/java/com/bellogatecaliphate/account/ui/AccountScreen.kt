@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -32,7 +33,7 @@ import com.bellogatecaliphate.core.model.dto.Content
 import com.bellogatecaliphate.core.model.dto.User
 import com.bellogatecaliphate.core.util.PLACEHOLDER_16DP
 import com.bellogatecaliphate.core.util.PLACEHOLDER_8DP
-import com.spr.jetpack_loading.components.indicators.BallScaleMultipleIndicator
+import com.spr.jetpack_loading.components.indicators.BallScaleRippleIndicator
 
 @Composable
 internal fun AccountScreen(
@@ -65,12 +66,13 @@ private fun AccountScreen(uiState: UiState, onLogin: () -> Unit = {}) {
 
 @Composable
 private fun AnonymousUserAccountScreen(uiState: UiState, onLogin: () -> Unit) {
-	Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
+	Column(
+		Modifier.fillMaxSize(),
+		horizontalAlignment = Alignment.CenterHorizontally,
+		verticalArrangement = Arrangement.Center
+	) {
 		if (uiState.isLoading) {
-			BallScaleMultipleIndicator(
-				largestBallDiameter = 40f,
-				rippleCount = 4,
-				animationDuration = 1_000,
+			BallScaleRippleIndicator(
 				color = colorResource(id = R.color.light_purple),
 			)
 		} else {
