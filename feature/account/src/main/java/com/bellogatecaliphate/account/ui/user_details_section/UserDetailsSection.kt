@@ -1,6 +1,5 @@
 package com.bellogatecaliphate.account.ui.user_details_section
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -14,7 +13,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.painterResource
 import coil3.compose.AsyncImage
 import com.bellogatecaliphate.account.R
 import com.bellogatecaliphate.core.util.PLACEHOLDER_8DP
@@ -30,13 +28,6 @@ internal fun UserDetailsSection(userProfilePicture: String, userName: String, us
 		Row {
 			AsyncImage(
 				model = userProfilePicture,
-				contentDescription = null,
-				modifier = Modifier
-					.size(PLACEHOLDER_IMAGE_40DP)
-					.clip(CircleShape)
-			)
-			Image(
-				painter = painterResource(id = R.drawable.ic_launcher_background),
 				contentDescription = "content description",
 				modifier = Modifier
 					.size(PLACEHOLDER_IMAGE_40DP)

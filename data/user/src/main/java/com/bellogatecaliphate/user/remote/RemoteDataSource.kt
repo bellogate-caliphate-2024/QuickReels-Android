@@ -5,6 +5,7 @@ import com.bellogatecaliphate.user.remote.firebase.FirebaseDataSource
 import com.bellogatecaliphate.user.remote.model.UserResponse
 import com.bellogatecaliphate.user.remote.model.UsersResponse
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
@@ -21,8 +22,16 @@ internal class RemoteDataSource @Inject constructor(
 				api.getUsers(page, numberOfUsersPerPage)
 			}
 	
-	override suspend fun getUser(userEmail: String): UserResponse? = withContext(ioDispatcher) {
-		api.getUser(userEmail)
+	override suspend fun getUser(userEmail: String): UserResponse = withContext(ioDispatcher) {
+		//api.getUser(userEmail)
+		delay(5_000)
+		UserResponse(
+			email = userEmail,
+			accountName = "Jeff Emuveyan",
+			profilePictureUrl = "https://firebasestorage.googleapis.com/v0/b/memo-24031.appspot.com/o/p1.jpg?alt=media&token=630134db-35cb-41ea-9698-fa0cd25b80c0",
+			numberOfLikes = "100",
+			numberOfViews = "1000"
+		)
 	}
 	
 	override suspend fun searchForUserByName(userName: String): List<UserResponse> =
