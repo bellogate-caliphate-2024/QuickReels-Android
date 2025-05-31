@@ -57,7 +57,7 @@ internal fun BottomAppBar(
 ) {
 	
 	val screenWidth = LocalConfiguration.current.screenWidthDp
-	val sliderWidth = (screenWidth / 4).dp
+	val sliderWidth = (screenWidth / menuItems.size).dp
 	var slideTo by remember { mutableIntStateOf(0) }
 	
 	Column(modifier) {
