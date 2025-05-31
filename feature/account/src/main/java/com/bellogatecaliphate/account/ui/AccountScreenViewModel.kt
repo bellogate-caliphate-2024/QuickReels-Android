@@ -32,6 +32,7 @@ class AccountScreenViewModel @Inject constructor(
 	
 	fun checkUserLogin() = viewModelScope.launch {
 		val isUserLoggedIn = checkUserLoginUseCase()
+		_uiState.update { it.copy(isUserLoggedIn = true) }
 		if (isUserLoggedIn) {
 			setUpLoggedInUser()
 		}
