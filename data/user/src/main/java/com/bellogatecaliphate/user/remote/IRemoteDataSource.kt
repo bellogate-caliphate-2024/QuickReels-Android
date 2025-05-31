@@ -5,6 +5,8 @@ import com.bellogatecaliphate.user.remote.model.UsersResponse
 
 internal interface IRemoteDataSource {
 	
+	fun getUserEmail(): String
+	
 	suspend fun getUsers(page: Int, numberOfUsersPerPage: Int): UsersResponse?
 	
 	suspend fun getUser(userEmail: String): UserResponse?

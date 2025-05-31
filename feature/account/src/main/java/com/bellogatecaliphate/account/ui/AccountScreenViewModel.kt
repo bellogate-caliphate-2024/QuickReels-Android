@@ -32,7 +32,6 @@ class AccountScreenViewModel @Inject constructor(
 	
 	fun checkUserLogin() = viewModelScope.launch {
 		val isUserLoggedIn = checkUserLoginUseCase()
-		_uiState.update { it.copy(isUserLoggedIn = isUserLoggedIn) }
 		if (isUserLoggedIn) {
 			setUpLoggedInUser()
 		}
@@ -46,12 +45,18 @@ class AccountScreenViewModel @Inject constructor(
 	private fun getUserDetails() = viewModelScope.launch {
 		_uiState.update { it.copy(isLoading = true) }
 		val user = getUserInfoUseCase()
-		_uiState.update { it.copy(user = user, isLoading = false) }
+		_uiState.update {
+			it.copy(
+				user = user,
+				isLoading = false,
+				networkError = user == null,
+				isUserLoggedIn = user != null
+			)
+		}
 	}
 	
 	private fun getUserContentHistory() {
-		val listOfContentHistory =
-				getContentsHistoryUseCase().cachedIn(viewModelScope)
-		_uiState.update { it.copy(listOfContentHistory = listOfContentHistory, isLoading = false) }
+		val listOfContentHistory = getContentsHistoryUseCase().cachedIn(viewModelScope)
+		_uiState.update { it.copy(listOfContentHistory = listOfContentHistory) }
 	}
 }

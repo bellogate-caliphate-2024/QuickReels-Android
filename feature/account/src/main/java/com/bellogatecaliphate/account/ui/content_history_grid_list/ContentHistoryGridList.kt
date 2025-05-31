@@ -17,10 +17,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.paging.compose.LazyPagingItems
+import coil3.compose.AsyncImage
 import com.bellogatecaliphate.account.R
 import com.bellogatecaliphate.account.util.ContentPreviewParameter
 import com.bellogatecaliphate.core.model.dto.Content
@@ -30,6 +32,12 @@ import com.bellogatecaliphate.core.util.PLACEHOLDER_CONTENT_HISTORY_WIDTH
 
 @Composable
 internal fun ContentHistoryGridList(list: LazyPagingItems<Content>) {
+	if (list.itemSnapshotList.isEmpty()) {
+		Box(contentAlignment = Alignment.Center) {
+			Text(stringResource(R.string.user_has_no_content))
+		}
+		return
+	}
 	LazyVerticalGrid(columns = GridCells.Adaptive(minSize = 128.dp)) {
 		items(list.itemCount) { index ->
 			val content = list[index]
@@ -48,13 +56,13 @@ private fun Content(@PreviewParameter(ContentPreviewParameter::class) content: C
 			.aspectRatio(1f),
 		contentAlignment = Alignment.Center
 	) {
-		/*AsyncImage(
-				model = content.thumbnailUrl,
-				contentDescription = "content description",
-				modifier = Modifier
+		AsyncImage(
+			model = content.thumbnailUrl,
+			contentDescription = "content description",
+			modifier = Modifier
 				.fillMaxSize()
 				.clip(RoundedCornerShape(16.dp))
-			)*/
+		)
 		Image(
 			painter = painterResource(id = R.drawable.ic_launcher_background),
 			contentDescription = "content description",

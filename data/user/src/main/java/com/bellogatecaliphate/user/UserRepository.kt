@@ -2,7 +2,6 @@ package com.bellogatecaliphate.user
 
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
-import com.bellogatecaliphate.core.source.local.entity.UserEntity
 import com.bellogatecaliphate.user.local.ILocalDataSource
 import com.bellogatecaliphate.user.paging.UsersPagingSource
 import com.bellogatecaliphate.user.remote.IRemoteDataSource
@@ -15,9 +14,7 @@ internal class UserRepository @Inject constructor(
 	private val userPagingSource: UsersPagingSource
 ) : IUserRepository {
 	
-	override suspend fun getUserFromLocal(): UserEntity? {
-		return userLocalDataSource.getUser()
-	}
+	override fun getUserEmail(): String = userRemoteDataSource.getUserEmail()
 	
 	override suspend fun getUserFromRemote(email: String): UserResponse? {
 		return userRemoteDataSource.getUser(email)

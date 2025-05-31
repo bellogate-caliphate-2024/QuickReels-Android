@@ -101,6 +101,9 @@ dependencies {
 	implementation(platform(libs.firebase.bom))
 	// firebase auth
 	googleAuthDependencies()
+	// Coil
+	implementation(libs.coil.compose)
+	implementation(libs.coil.network.okhttp)
 }
 
 fun DependencyHandler.googleAuthDependencies() {

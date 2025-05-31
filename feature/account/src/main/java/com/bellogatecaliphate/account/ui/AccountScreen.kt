@@ -76,13 +76,6 @@ private fun AnonymousUserAccountScreen(onLogin: () -> Unit) {
 
 @Composable
 private fun LoggedInUserAccountScreen(user: User, listOfContentHistory: LazyPagingItems<Content>) {
-	if (listOfContentHistory.itemSnapshotList.isEmpty()) {
-		Box(contentAlignment = Alignment.Center) {
-			Text(stringResource(R.string.user_has_no_content))
-		}
-		return
-	}
-	
 	Column(horizontalAlignment = Alignment.CenterHorizontally) {
 		Spacer(
 			modifier = Modifier

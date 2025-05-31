@@ -15,21 +15,26 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import coil3.compose.AsyncImage
 import com.bellogatecaliphate.account.R
 import com.bellogatecaliphate.core.util.PLACEHOLDER_8DP
 import com.bellogatecaliphate.core.util.PLACEHOLDER_IMAGE_40DP
 
 @Composable
 internal fun UserDetailsSection(userProfilePicture: String, userName: String, userEmail: String) {
-	Column(Modifier.fillMaxWidth().padding(PLACEHOLDER_8DP)) {
+	Column(
+		Modifier
+			.fillMaxWidth()
+			.padding(PLACEHOLDER_8DP)
+	) {
 		Row {
-			/*AsyncImage(
-				model = "https://example.com/image.jpg",
+			AsyncImage(
+				model = userProfilePicture,
 				contentDescription = null,
 				modifier = Modifier
 					.size(PLACEHOLDER_IMAGE_40DP)
 					.clip(CircleShape)
-			)*/
+			)
 			Image(
 				painter = painterResource(id = R.drawable.ic_launcher_background),
 				contentDescription = "content description",
