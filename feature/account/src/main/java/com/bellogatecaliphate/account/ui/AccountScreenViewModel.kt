@@ -35,7 +35,6 @@ class AccountScreenViewModel @Inject constructor(
 				_uiState.update { it.copy(isLoading = true) }
 				onOpenGoogleAuthenticationLoginScreen()
 				checkUserLogin()
-				_uiState.update { it.copy(isLoading = false) }
 			}
 	
 	private fun checkUserLogin() = viewModelScope.launch {

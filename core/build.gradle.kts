@@ -93,4 +93,6 @@ dependencies {
 	kaptTest(libs.hilt.compiler)
 	androidTestImplementation(libs.hilt.android.testing)
 	kaptAndroidTest(libs.hilt.compiler)
+	// progress indicator
+	implementation(libs.jetpack.loading)
 }

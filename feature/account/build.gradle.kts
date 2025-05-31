@@ -104,8 +104,6 @@ dependencies {
 	// Coil
 	implementation(libs.coil.compose)
 	implementation(libs.coil.network.okhttp)
-	// progress indicator
-	implementation(libs.jetpack.loading)
 }
 
 fun DependencyHandler.googleAuthDependencies() {

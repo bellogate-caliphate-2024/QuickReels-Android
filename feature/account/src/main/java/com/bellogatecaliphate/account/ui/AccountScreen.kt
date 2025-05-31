@@ -30,10 +30,9 @@ import com.bellogatecaliphate.account.ui.icons.Likes
 import com.bellogatecaliphate.account.ui.icons.Views
 import com.bellogatecaliphate.account.ui.user_details_section.UserDetailsSection
 import com.bellogatecaliphate.core.model.dto.Content
-import com.bellogatecaliphate.core.model.dto.User
+import com.bellogatecaliphate.core.ui.QuickReelsProgressBar
 import com.bellogatecaliphate.core.util.PLACEHOLDER_16DP
 import com.bellogatecaliphate.core.util.PLACEHOLDER_8DP
-import com.spr.jetpack_loading.components.indicators.BallScaleRippleIndicator
 
 @Composable
 internal fun AccountScreen(
@@ -53,12 +52,10 @@ internal fun AccountScreen(
 @Composable
 private fun AccountScreen(uiState: UiState, onLogin: () -> Unit = {}) {
 	if (uiState.isUserLoggedIn) {
-		uiState.user?.let {
-			LoggedInUserAccountScreen(
-				user = it,
-				listOfContentHistory = uiState.listOfContentHistory.collectAsLazyPagingItems()
-			)
-		}
+		LoggedInUserAccountScreen(
+			uiState = uiState,
+			listOfContentHistory = uiState.listOfContentHistory.collectAsLazyPagingItems()
+		)
 	} else {
 		AnonymousUserAccountScreen(uiState, onLogin)
 	}
@@ -71,25 +68,25 @@ private fun AnonymousUserAccountScreen(uiState: UiState, onLogin: () -> Unit) {
 		horizontalAlignment = Alignment.CenterHorizontally,
 		verticalArrangement = Arrangement.Center
 	) {
-		if (uiState.isLoading) {
-			BallScaleRippleIndicator(
-				color = colorResource(id = R.color.light_purple),
-			)
-		} else {
-			Button(onClick = onLogin) { Text(text = stringResource(id = R.string.login)) }
-		}
+		QuickReelsProgressBar(uiState.isLoading)
+		Button(onClick = onLogin) { Text(text = stringResource(id = R.string.login)) }
 	}
 }
 
 @Composable
-private fun LoggedInUserAccountScreen(user: User, listOfContentHistory: LazyPagingItems<Content>) {
+private fun LoggedInUserAccountScreen(
+	uiState: UiState,
+	listOfContentHistory: LazyPagingItems<Content>
+) {
 	Column(horizontalAlignment = Alignment.CenterHorizontally) {
+		QuickReelsProgressBar(uiState.isLoading)
 		Spacer(
 			modifier = Modifier
 				.background(colorResource(id = R.color.light_ash))
 				.height(PLACEHOLDER_8DP)
 				.fillMaxWidth()
 		)
+		val user = uiState.user ?: return
 		UserDetailsSection(
 			userProfilePicture = user.profilePictureUrl,
 			userName = user.accountName,
