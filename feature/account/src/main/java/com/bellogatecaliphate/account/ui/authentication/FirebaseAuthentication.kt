@@ -8,6 +8,7 @@ import androidx.credentials.GetCredentialRequest
 import androidx.credentials.GetCredentialResponse
 import androidx.credentials.exceptions.ClearCredentialException
 import androidx.credentials.exceptions.GetCredentialCancellationException
+import androidx.credentials.exceptions.NoCredentialException
 import com.google.android.libraries.identity.googleid.GetGoogleIdOption
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential.Companion.TYPE_GOOGLE_ID_TOKEN_CREDENTIAL
@@ -27,7 +28,9 @@ class FirebaseAuthentication @Inject constructor(
 ) {
 	
 	// We are passing in context instead on injecting using hilt it because firebase auth needs an activity
-	// related context to perform the login not application context
+	// related context to perform the login not application context. We can't also use hilt's @ActivityContext
+	// too because hilt's @ActivityContext cannot be part of the dependency graph of a viewmodel class because a viewmodel scope
+	// outlive that of the @ActivityContext. Viewmodel can only depend on Singleton scoped dependencies not activity scoped.
 	suspend fun performLogin(context: Context, serverClientId: String): Boolean = try {
 		val credential =
 				getCredentialResponse(context, getCredentialRequest(serverClientId)).credential
@@ -40,6 +43,9 @@ class FirebaseAuthentication @Inject constructor(
 		}
 	}
 	catch (e: GetCredentialCancellationException) {
+		false
+	}
+	catch (e: NoCredentialException) {
 		false
 	}
 	

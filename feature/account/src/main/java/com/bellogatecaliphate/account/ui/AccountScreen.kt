@@ -2,7 +2,6 @@ package com.bellogatecaliphate.account.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -33,7 +32,7 @@ import com.bellogatecaliphate.core.model.dto.Content
 import com.bellogatecaliphate.core.model.dto.User
 import com.bellogatecaliphate.core.util.PLACEHOLDER_16DP
 import com.bellogatecaliphate.core.util.PLACEHOLDER_8DP
-import kotlinx.coroutines.launch
+import com.spr.jetpack_loading.components.indicators.BallScaleMultipleIndicator
 
 @Composable
 internal fun AccountScreen(
@@ -44,9 +43,8 @@ internal fun AccountScreen(
 	val context = LocalContext.current
 	val scope = rememberCoroutineScope()
 	AccountScreen(uiState = state, onLogin = {
-		scope.launch {
+		viewModel.performLogin {
 			viewModel.firebaseAuthentication.performLogin(context, serverClientId)
-			viewModel.checkUserLogin()
 		}
 	})
 }
@@ -61,14 +59,20 @@ private fun AccountScreen(uiState: UiState, onLogin: () -> Unit = {}) {
 			)
 		}
 	} else {
-		AnonymousUserAccountScreen(onLogin)
+		AnonymousUserAccountScreen(uiState, onLogin)
 	}
 }
 
 @Composable
-private fun AnonymousUserAccountScreen(onLogin: () -> Unit) {
-	Box(contentAlignment = Alignment.Center) {
-		Row {
+private fun AnonymousUserAccountScreen(uiState: UiState, onLogin: () -> Unit) {
+	Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
+		if (uiState.isLoading) {
+			BallScaleMultipleIndicator(
+				rippleCount = 4,
+				animationDuration = 1_000,
+				color = colorResource(id = R.color.light_purple),
+			)
+		} else {
 			Button(onClick = onLogin) { Text(text = stringResource(id = R.string.login)) }
 		}
 	}

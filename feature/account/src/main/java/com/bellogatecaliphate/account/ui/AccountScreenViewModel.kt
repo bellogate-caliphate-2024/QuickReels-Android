@@ -32,11 +32,19 @@ class AccountScreenViewModel @Inject constructor(
 	
 	fun checkUserLogin() = viewModelScope.launch {
 		val isUserLoggedIn = checkUserLoginUseCase()
-		_uiState.update { it.copy(isUserLoggedIn = true) }
+		_uiState.update { it.copy(isUserLoggedIn = isUserLoggedIn) }
 		if (isUserLoggedIn) {
 			setUpLoggedInUser()
 		}
 	}
+	
+	fun performLogin(onOpenGoogleAuthenticationLoginScreen: suspend () -> Unit) =
+			viewModelScope.launch {
+				_uiState.update { it.copy(isLoading = true) }
+				onOpenGoogleAuthenticationLoginScreen()
+				checkUserLogin()
+				_uiState.update { it.copy(isLoading = false) }
+			}
 	
 	private fun setUpLoggedInUser() {
 		getUserDetails()
