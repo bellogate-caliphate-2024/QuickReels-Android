@@ -68,6 +68,7 @@ private fun AnonymousUserAccountScreen(uiState: UiState, onLogin: () -> Unit) {
 	Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
 		if (uiState.isLoading) {
 			BallScaleMultipleIndicator(
+				largestBallDiameter = 40f,
 				rippleCount = 4,
 				animationDuration = 1_000,
 				color = colorResource(id = R.color.light_purple),
