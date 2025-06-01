@@ -128,8 +128,8 @@ internal class RemoteSource @Inject constructor(
 		userEmail: String,
 		page: Int,
 		numberOfContentPerPage: Int
-	): ContentsListResponse? {
-		return null
+	): ContentsListResponse {
+		return contentsListResponse
 	}
 	
 	override suspend fun likeContent(userEmail: String, contentId: String, isLiked: Boolean) =
