@@ -63,13 +63,6 @@ private fun Content(@PreviewParameter(ContentPreviewParameter::class) content: C
 				.fillMaxSize()
 				.clip(RoundedCornerShape(16.dp))
 		)
-		Image(
-			painter = painterResource(id = R.drawable.ic_launcher_background),
-			contentDescription = "content description",
-			modifier = Modifier
-				.fillMaxSize()
-				.clip(RoundedCornerShape(4.dp))
-		)
 		Column {
 			Image(painter = painterResource(id = R.drawable.eye), contentDescription = "")
 			Text(text = content.numberOfViews, color = Color.White)
