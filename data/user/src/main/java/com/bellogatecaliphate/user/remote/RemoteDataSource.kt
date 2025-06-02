@@ -5,7 +5,6 @@ import com.bellogatecaliphate.user.remote.firebase.FirebaseDataSource
 import com.bellogatecaliphate.user.remote.model.UserResponse
 import com.bellogatecaliphate.user.remote.model.UsersResponse
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
@@ -24,7 +23,6 @@ internal class RemoteDataSource @Inject constructor(
 	
 	override suspend fun getUser(userEmail: String): UserResponse = withContext(ioDispatcher) {
 		//api.getUser(userEmail)
-		delay(5_000)
 		UserResponse(
 			email = userEmail,
 			accountName = "Jeff Emuveyan",
