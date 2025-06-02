@@ -110,7 +110,8 @@ public class ActVideoTrimmer extends LocalizationActivity {
     private TrimVideoOptions trimVideoOptions;
 
     private long currentDuration, lastClickedTime;
-    private CompressOption compressOption;    Runnable updateSeekbar = new Runnable() {
+    private CompressOption compressOption;
+    private String outputPath;    Runnable updateSeekbar = new Runnable() {
         @Override
         public void run() {
             try {
@@ -126,7 +127,6 @@ public class ActVideoTrimmer extends LocalizationActivity {
             }
         }
     };
-    private String outputPath;
     private String local;
     private int trimType;
     private long fixedGap, minGap, minFromGap, maxToGap;
@@ -185,7 +185,7 @@ public class ActVideoTrimmer extends LocalizationActivity {
         try {
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setDisplayShowHomeEnabled(true);
-            actionBar.setTitle(title != null ? title : getString(R.string.txt_edt_video));
+            actionBar.setTitle(title != null ? title : getString(R.string.txt_crop_video));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -757,6 +757,7 @@ public class ActVideoTrimmer extends LocalizationActivity {
     void stopRepeatingTask() {
         seekHandler.removeCallbacks(updateSeekbar);
     }
+
 
 
 
