@@ -95,4 +95,6 @@ dependencies {
 	kaptAndroidTest(libs.hilt.compiler)
 	// progress indicator
 	implementation(libs.jetpack.loading)
+	// lottie
+	api(libs.lottie)
 }

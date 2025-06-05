@@ -14,7 +14,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.bellogatecaliphate.core.model.dto.Post
 import com.bellogatecaliphate.create_post.model.UiState
-import com.bellogatecaliphate.create_post.ui.create_post.upload_status.UploadStatusCardHolder
+import com.bellogatecaliphate.create_post.ui.create_post.upload_status.UploadStatusScreen
 import com.bellogatecaliphate.create_post.ui.create_post.util.activityLauncher
 import com.bellogatecaliphate.create_post.util.getActivity
 import com.bellogatecaliphate.create_post.util.video_trimer.utils.TrimVideo
@@ -54,8 +54,9 @@ private fun CreatePostScreen(
 			.fillMaxSize()
 			.background(color = Color.Black)
 	) {
-		UploadStatusCardHolder(
+		UploadStatusScreen(
 			Modifier.weight(1f),
+			1, // We only want to track one upload
 			uiState.existingUploads,
 			onPostClicked
 		)

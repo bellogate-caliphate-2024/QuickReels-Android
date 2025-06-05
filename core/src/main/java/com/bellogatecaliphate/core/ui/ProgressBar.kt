@@ -1,11 +1,22 @@
 package com.bellogatecaliphate.core.ui
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.colorResource
+import com.airbnb.lottie.RenderMode
+import com.airbnb.lottie.compose.LottieAnimation
+import com.airbnb.lottie.compose.LottieCompositionSpec
+import com.airbnb.lottie.compose.LottieConstants
+import com.airbnb.lottie.compose.animateLottieCompositionAsState
+import com.airbnb.lottie.compose.rememberLottieComposition
 import com.bellogatecaliphate.core.R
 import com.spr.jetpack_loading.components.indicators.BallScaleRippleIndicator
 
@@ -25,4 +36,28 @@ fun QuickReelsProgressBar(show: Boolean) {
 	BallScaleRippleIndicator(
 		color = colorResource(id = R.color.light_purple),
 	)
+}
+
+@Composable
+fun QuickReelsShapeLessProgressBar(modifier: Modifier = Modifier, show: Boolean = true) {
+	if (show.not()) return
+	Column(modifier.background(Color.Transparent)) {
+		val composition by rememberLottieComposition(
+			spec = LottieCompositionSpec.Url("https://lottie.host/ad57e9a5-e41a-4aa6-ae2a-93eabb438509/prqBpiIgeF.lottie")
+		)
+		val progress by animateLottieCompositionAsState(
+			composition = composition,
+			iterations = LottieConstants.IterateForever,
+		)
+		LottieAnimation(
+			contentScale = ContentScale.FillBounds,
+			modifier = modifier,
+			maintainOriginalImageBounds = true,
+			renderMode = RenderMode.AUTOMATIC,
+			composition = composition,
+			progress = {
+				progress
+			}
+		)
+	}
 }

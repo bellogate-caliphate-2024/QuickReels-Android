@@ -10,6 +10,9 @@ pluginManagement {
 		maven {
 			url = uri("https://jitpack.io")
 		}
+		maven {
+			url = uri("https://oss.sonatype.org/content/repositories/snapshots/")
+		}
 		mavenCentral()
 		gradlePluginPortal()
 		flatDir {
@@ -29,6 +32,9 @@ dependencyResolutionManagement {
 		google()
 		maven {
 			url = uri("https://jitpack.io")
+		}
+		maven {
+			url = uri("https://oss.sonatype.org/content/repositories/snapshots/")
 		}
 		mavenCentral()
 	}
