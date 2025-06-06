@@ -1,0 +1,50 @@
+package com.bellogatecaliphate.create_post.ui.create_post.upload_status.upload_status_screen_types
+
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
+import com.bellogatecaliphate.core.model.dto.Post
+import com.bellogatecaliphate.core.util.PLACEHOLDER_16DP
+import com.bellogatecaliphate.core.util.PLACEHOLDER_8DP
+import com.bellogatecaliphate.core.util.PLACEHOLDER_TEXT_SIZE_30
+import com.bellogatecaliphate.create_post.R
+import com.bellogatecaliphate.create_post.ui.create_post.upload_status.UploadStatusCard
+
+@Composable
+internal fun MultipleUploadsStatusScreen(
+	modifier: Modifier,
+	uploadsInProgress: List<Post>,
+	onPostClicked: (Post) -> Unit
+) {
+	Column(
+		modifier = modifier
+			.fillMaxWidth()
+			.background(color = Color.White)
+			.padding(10.dp)
+	) {
+		Text(stringResource(R.string.uploads), fontSize = PLACEHOLDER_TEXT_SIZE_30)
+		Spacer(modifier = Modifier.height(PLACEHOLDER_8DP))
+		LazyColumn(state = rememberLazyListState()) {
+			items(uploadsInProgress.size) { index ->
+				val post = uploadsInProgress[index]
+				UploadStatusCard(
+					post.time,
+					post.uploadProgressPercentage,
+					post.thumbnailFilePath
+				) { onPostClicked(post) }
+				Spacer(Modifier.height(PLACEHOLDER_16DP))
+			}
+		}
+	}
+}
