@@ -3,6 +3,7 @@ package com.bellogatecaliphate.core.ui
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -11,6 +12,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.unit.Dp
 import com.airbnb.lottie.RenderMode
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
@@ -39,8 +41,9 @@ fun QuickReelsProgressBar(show: Boolean) {
 }
 
 @Composable
-fun QuickReelsShapeLessProgressBar(modifier: Modifier = Modifier, show: Boolean = true) {
+fun QuickReelsCircularProgressBar(size: Dp, show: Boolean = true) {
 	if (show.not()) return
+	val modifier = Modifier.size(size)
 	Column(modifier.background(Color.Transparent)) {
 		val composition by rememberLottieComposition(
 			spec = LottieCompositionSpec.Url("https://lottie.host/ad57e9a5-e41a-4aa6-ae2a-93eabb438509/prqBpiIgeF.lottie")
