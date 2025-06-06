@@ -36,7 +36,8 @@ fun CreatePostScreen(
 			viewModel.resetGalleryState()
 			TrimVideo.activity(uri)?.start(context, videoTrimResultLauncher)
 		},
-		onStoragePermissionRationalDialogClosed = { viewModel.resetGalleryState() }
+		onStoragePermissionRationalDialogClosed = { viewModel.resetGalleryState() },
+		onCancelUploadClicked = viewModel::cancelUpload
 	)
 }
 
@@ -46,7 +47,8 @@ private fun CreatePostScreen(
 	openGallery: () -> Unit,
 	onPostClicked: (Post) -> Unit,
 	onVideoFileSelected: (uri: String?) -> Unit,
-	onStoragePermissionRationalDialogClosed: () -> Unit = {}
+	onStoragePermissionRationalDialogClosed: () -> Unit = {},
+	onCancelUploadClicked: (Post) -> Unit
 ) {
 	Column(
 		verticalArrangement = Arrangement.Bottom,
@@ -55,10 +57,11 @@ private fun CreatePostScreen(
 			.background(color = Color.Black)
 	) {
 		UploadStatusScreen(
-			Modifier.weight(1f),
-			1, // We only want to track one upload
-			uiState.existingUploads,
-			onPostClicked
+			modifier = Modifier.weight(1f),
+			numberOfUploadsInProgressToDisplay = 1, // We only want to track one upload
+			uploadsInProgress = uiState.existingUploads,
+			onPostClicked = onPostClicked,
+			onCancelClicked = onCancelUploadClicked
 		)
 		SelectVideoButton(openGallery)
 	}
@@ -74,5 +77,5 @@ private fun CreatePostScreen(
 @Preview(showBackground = true)
 @Composable
 private fun Preview() {
-	CreatePostScreen(UiState(), {}, {}, {}, {})
+	CreatePostScreen(UiState(), {}, {}, {}, {}, {})
 }

@@ -16,6 +16,10 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -30,46 +34,94 @@ import com.bellogatecaliphate.core.util.PLACEHOLDER_200DP
 import com.bellogatecaliphate.core.util.PLACEHOLDER_8DP
 import com.bellogatecaliphate.core.util.PLACEHOLDER_TEXT_SIZE_30
 import com.bellogatecaliphate.create_post.R
+import com.bellogatecaliphate.create_post.ui.delete_post.DeletePostConfirmationDialog
 
 @Composable
 internal fun UploadStatusScreen(
 	modifier: Modifier,
 	numberOfUploadsInProgressToDisplay: Int,
 	uploadsInProgress: List<Post>,
-	onPostClicked: (Post) -> Unit
+	onPostClicked: (Post) -> Unit,
+	onCancelClicked: (Post) -> Unit
 ) {
 	if (uploadsInProgress.isEmpty()) return
-	Scaffold(
-		topBar = {
-			Box(
-				modifier = Modifier
-					.background(Color.White)
-					.padding(PLACEHOLDER_16DP)
-					.fillMaxWidth(),
-				contentAlignment = Alignment.CenterEnd
-			) {
-				Image(
-					painterResource(R.drawable.ic_cancel),
-					contentDescription = "",
-					modifier = Modifier.clickable(onClick = {}),
-				)
-			}
-		}
-	) { innerPadding ->
-		Column(modifier = Modifier.padding(innerPadding)) {
-			if (numberOfUploadsInProgressToDisplay == 1) {
-				SingleUploadStatusScreen(uploadsInProgress.first(), onPostClicked)
-			} else {
-				MultipleUploadsStatusScreen(modifier, uploadsInProgress, onPostClicked)
-			}
-		}
+	Content(
+		modifier,
+		numberOfUploadsInProgressToDisplay,
+		uploadsInProgress,
+		onPostClicked,
+		onCancelClicked
+	)
+}
+
+@Composable
+private fun Content(
+	modifier: Modifier,
+	numberOfUploadsInProgressToDisplay: Int,
+	uploadsInProgress: List<Post>,
+	onPostClicked: (Post) -> Unit,
+	onCancelClicked: (Post) -> Unit
+) {
+	if (numberOfUploadsInProgressToDisplay == 1) {
+		SingleUploadStatusScreen(uploadsInProgress.first(), onPostClicked, onCancelClicked)
+	} else {
+		MultipleUploadsStatusScreen(modifier, uploadsInProgress, onPostClicked)
 	}
 }
 
 @Composable
-private fun SingleUploadStatusScreen(uploadInProgress: Post, onPostClicked: (Post) -> Unit) {
-	Column(
+private fun SingleUploadStatusScreen(
+	uploadInProgress: Post,
+	onPostClicked: (Post) -> Unit,
+	onCancelClicked: (Post) -> Unit
+) {
+	var showCancelUploadBottomSheetDialog by remember { mutableStateOf(false) }
+	Scaffold(
+		topBar = {
+			SingleUploadStatusScreenTopBar { showCancelUploadBottomSheetDialog = true }
+		}
+	) { innerPadding ->
+		SingleUploadStatusScreenContent(
+			modifier = Modifier.padding(innerPadding),
+			uploadInProgress,
+			onPostClicked
+		)
+	}
+	DeletePostConfirmationDialog(
+		isVisible = showCancelUploadBottomSheetDialog,
+		onConfirmationGiven = {
+			showCancelUploadBottomSheetDialog = false
+			onCancelClicked(uploadInProgress)
+		},
+		onDismiss = { showCancelUploadBottomSheetDialog = false }
+	)
+}
+
+@Composable
+private fun SingleUploadStatusScreenTopBar(onCancelClicked: () -> Unit) {
+	Box(
 		modifier = Modifier
+			.background(Color.White)
+			.padding(PLACEHOLDER_16DP)
+			.fillMaxWidth(),
+		contentAlignment = Alignment.CenterEnd
+	) {
+		Image(
+			painterResource(R.drawable.ic_cancel),
+			contentDescription = "",
+			modifier = Modifier.clickable(onClick = onCancelClicked),
+		)
+	}
+}
+
+@Composable
+private fun SingleUploadStatusScreenContent(
+	modifier: Modifier,
+	uploadInProgress: Post,
+	onPostClicked: (Post) -> Unit
+) {
+	Column(
+		modifier = modifier
 			.fillMaxSize()
 			.background(color = Color.White),
 		horizontalAlignment = Alignment.CenterHorizontally,
