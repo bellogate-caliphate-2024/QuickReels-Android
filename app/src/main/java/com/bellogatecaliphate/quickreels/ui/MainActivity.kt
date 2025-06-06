@@ -3,6 +3,7 @@ package com.bellogatecaliphate.quickreels.ui
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -10,8 +11,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTagsAsResourceId
@@ -26,6 +29,7 @@ import com.bellogatecaliphate.quickreels.R
 import com.bellogatecaliphate.quickreels.ui.menu.BottomAppBar
 import com.bellogatecaliphate.quickreels.ui.theme.QuickReelsTheme
 import com.bellogatecaliphate.timeline.navigation.timelineNavGraph
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -54,8 +58,23 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 private fun QuickReelsScreen() {
+	val systemUiController = rememberSystemUiController()
+	val darkTheme = isSystemInDarkTheme()
 	val navController = rememberNavController()
-	val serverClientId = LocalContext.current.getString(R.string.default_web_client_id)
+	val serverClientId =
+			LocalContext.current.getString(R.string.default_web_client_id) // This always shows
+	// error as if the string is not found. Just ignore the error and build the app.
+	SideEffect {
+		if (darkTheme) {
+			systemUiController.setSystemBarsColor(
+				color = Color.Black
+			)
+		} else {
+			systemUiController.setSystemBarsColor(
+				color = Color.White
+			)
+		}
+	}
 	Scaffold(
 		bottomBar = {
 			BottomAppBar { route: Route -> navController.navigate(route) }
