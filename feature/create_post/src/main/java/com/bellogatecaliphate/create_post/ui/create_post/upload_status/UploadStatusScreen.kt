@@ -1,6 +1,7 @@
 package com.bellogatecaliphate.create_post.ui.create_post.upload_status
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -36,14 +37,14 @@ internal fun UploadStatusScreen(
 ) {
 	if (uploadsInProgress.isEmpty()) return
 	if (numberOfUploadsInProgressToDisplay == 1) {
-		SingleUploadStatusScreen(uploadsInProgress.first())
+		SingleUploadStatusScreen(uploadsInProgress.first(), onPostClicked)
 	} else {
 		MultipleUploadsStatusScreen(modifier, uploadsInProgress, onPostClicked)
 	}
 }
 
 @Composable
-private fun SingleUploadStatusScreen(uploadInProgress: Post) {
+private fun SingleUploadStatusScreen(uploadInProgress: Post, onPostClicked: (Post) -> Unit) {
 	Column(
 		modifier = Modifier
 			.fillMaxSize()
@@ -51,7 +52,10 @@ private fun SingleUploadStatusScreen(uploadInProgress: Post) {
 		horizontalAlignment = Alignment.CenterHorizontally,
 		verticalArrangement = Arrangement.Center
 	) {
-		Box(contentAlignment = Alignment.Center) {
+		Box(
+			modifier = Modifier.clickable(onClick = { onPostClicked(uploadInProgress) }),
+			contentAlignment = Alignment.Center
+		) {
 			QuickReelsCircularProgressBar(PLACEHOLDER_200DP)
 			ThumbnailPreview(uploadInProgress.thumbnailFilePath, PLACEHOLDER_150DP)
 		}
