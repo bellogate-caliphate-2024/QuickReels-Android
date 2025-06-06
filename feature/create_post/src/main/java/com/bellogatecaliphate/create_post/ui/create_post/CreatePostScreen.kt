@@ -37,7 +37,7 @@ fun CreatePostScreen(
 			TrimVideo.activity(uri)?.start(context, videoTrimResultLauncher)
 		},
 		onStoragePermissionRationalDialogClosed = { viewModel.resetGalleryState() },
-		onCancelUploadClicked = viewModel::cancelUpload
+		onCancelUploadClicked = viewModel::cancelPostUpload
 	)
 }
 

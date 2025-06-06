@@ -14,8 +14,8 @@ interface IPostRepository {
 		thumbnailBase64String: String
 	)
 	
+	suspend fun cancelUploadingPost(postId: String)
 	suspend fun getOngoingPostsUploadStatus(exclude: PostEntity.UploadStatus): Flow<List<PostEntity>>
-	
 	suspend fun deletePost(postEntity: PostEntity)
-	suspend fun getPost(): PostEntity?
+	suspend fun getPost(postId: String): PostEntity?
 }

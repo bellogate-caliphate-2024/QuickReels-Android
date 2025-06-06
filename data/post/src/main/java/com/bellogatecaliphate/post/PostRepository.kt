@@ -10,6 +10,8 @@ import com.bellogatecaliphate.post.local.IPostLocalDataSource
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
+private const val UNIQUE_WORK_NAME_PREFIX = "upload_post_work_for-"
+
 internal class PostRepository @Inject constructor(
 	private val workManager: WorkManager,
 	private val oneTimeWorkRequestBuilder: OneTimeWorkRequest.Builder,
@@ -17,7 +19,7 @@ internal class PostRepository @Inject constructor(
 ) : IPostRepository {
 	
 	override fun uploadPost(
-		videoId: String,
+		postId: String,
 		videoFilePath: String,
 		userId: String,
 		time: String,
@@ -25,10 +27,10 @@ internal class PostRepository @Inject constructor(
 		thumbnailBase64String: String
 	) {
 		oneTimeWorkRequestBuilder
-			.addTag(videoId)
+			.addTag(postId)
 			.setInputData(
 				workDataOf(
-					"videoId" to videoId,
+					"videoId" to postId,
 					"videoFilePath" to videoFilePath,
 					"userId" to userId,
 					"time" to time,
@@ -38,10 +40,18 @@ internal class PostRepository @Inject constructor(
 			)
 		oneTimeWorkRequestBuilder.setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
 		workManager.enqueueUniqueWork(
-			"uploadVideoWorkFor-$videoId",
+			"$UNIQUE_WORK_NAME_PREFIX$postId",
 			ExistingWorkPolicy.REPLACE,
 			oneTimeWorkRequestBuilder.build()
 		)
+	}
+	
+	override suspend fun cancelUploadingPost(postId: String) {
+		workManager.cancelUniqueWork("$UNIQUE_WORK_NAME_PREFIX$postId")
+		val postEntity = localDataSource.getPostById(postId)
+		if (postEntity != null) {
+			localDataSource.deletePost(postEntity)
+		}
 	}
 	
 	override suspend fun getOngoingPostsUploadStatus(exclude: PostEntity.UploadStatus): Flow<List<PostEntity>> {
@@ -49,9 +59,10 @@ internal class PostRepository @Inject constructor(
 	}
 	
 	override suspend fun deletePost(postEntity: PostEntity) {
+		localDataSource.deletePost(postEntity)
 	}
 	
-	override suspend fun getPost(): PostEntity? {
-		return null
+	override suspend fun getPost(postId: String): PostEntity? {
+		return localDataSource.getPostById(postId)
 	}
 }

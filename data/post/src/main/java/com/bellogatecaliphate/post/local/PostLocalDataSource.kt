@@ -17,11 +17,11 @@ internal class PostLocalDataSource @Inject constructor(
 	}
 	
 	override suspend fun deletePost(postEntity: PostEntity) = withContext(ioDispatcher) {
-		postDao.insert(postEntity)
+		postDao.delete(postEntity)
 	}
 	
-	override suspend fun getPostById(postId: String): PostEntity? {
-		return postDao.getPostById(postId)
+	override suspend fun getPostById(postId: String): PostEntity? = withContext(ioDispatcher) {
+		postDao.getPostById(postId)
 	}
 	
 	override fun getPostsByStatus(status: PostEntity.UploadStatus): Flow<List<PostEntity>> =
