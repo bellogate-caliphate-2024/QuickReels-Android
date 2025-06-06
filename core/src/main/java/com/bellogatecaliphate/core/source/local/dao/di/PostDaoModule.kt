@@ -28,6 +28,10 @@ abstract class PostDaoModule {
 			return appDatabase.postDao().getPostsByStatus(status)
 		}
 		
+		override fun getAllPosts(): Flow<List<PostEntity>> {
+			return appDatabase.postDao().getAllPosts()
+		}
+		
 		override fun getAllPostsExcept(status: PostEntity.UploadStatus): Flow<List<PostEntity>> {
 			return appDatabase.postDao().getAllPostsExcept(status)
 		}

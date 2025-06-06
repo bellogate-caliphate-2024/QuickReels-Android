@@ -54,7 +54,7 @@ internal class PostRepository @Inject constructor(
 		}
 	}
 	
-	override suspend fun getOngoingPostsUploadStatus(exclude: PostEntity.UploadStatus): Flow<List<PostEntity>> {
+	override fun getOngoingPostsUploadStatus(exclude: PostEntity.UploadStatus): Flow<List<PostEntity>> {
 		return localDataSource.getAllPostsExcept(exclude)
 	}
 	
@@ -64,5 +64,9 @@ internal class PostRepository @Inject constructor(
 	
 	override suspend fun getPost(postId: String): PostEntity? {
 		return localDataSource.getPostById(postId)
+	}
+	
+	override fun getAllPosts(): Flow<List<PostEntity>> {
+		return localDataSource.getAllPosts()
 	}
 }

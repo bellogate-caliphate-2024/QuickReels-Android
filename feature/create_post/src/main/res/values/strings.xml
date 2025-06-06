@@ -28,4 +28,6 @@
     <string name="select_video">Select Video</string>">
     <string name="uploads">Uploads</string>">
     <string name="uploading">Uploading %s%%</string>">
+    <string name="uploaded_successfully">Uploaded successfully</string>">
+    <string name="upload_failed">Upload failed, try again</string>">
 </resources>

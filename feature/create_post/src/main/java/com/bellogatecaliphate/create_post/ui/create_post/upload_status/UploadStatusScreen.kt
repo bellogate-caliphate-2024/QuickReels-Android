@@ -23,6 +23,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -34,6 +35,7 @@ import com.bellogatecaliphate.core.util.PLACEHOLDER_200DP
 import com.bellogatecaliphate.core.util.PLACEHOLDER_8DP
 import com.bellogatecaliphate.core.util.PLACEHOLDER_TEXT_SIZE_30
 import com.bellogatecaliphate.create_post.R
+import com.bellogatecaliphate.create_post.ui.create_post.upload_status.util.provideUploadStatusMessage
 import com.bellogatecaliphate.create_post.ui.delete_post.DeletePostConfirmationDialog
 
 @Composable
@@ -131,12 +133,20 @@ private fun SingleUploadStatusScreenContent(
 			modifier = Modifier.clickable(onClick = { onPostClicked(uploadInProgress) }),
 			contentAlignment = Alignment.Center
 		) {
-			QuickReelsCircularProgressBar(PLACEHOLDER_200DP)
-			ThumbnailPreview(uploadInProgress.thumbnailFilePath, PLACEHOLDER_150DP)
+			if (uploadInProgress.isUploading) {
+				QuickReelsCircularProgressBar(PLACEHOLDER_200DP)
+				ThumbnailPreview(uploadInProgress.thumbnailFilePath, PLACEHOLDER_150DP)
+			}
+			if (uploadInProgress.isUploaded) {
+				SuccessIcon(PLACEHOLDER_200DP)
+			}
+			if (uploadInProgress.isUploadFailed) {
+				FailedIcon(PLACEHOLDER_200DP)
+			}
 		}
 		Spacer(modifier = Modifier.height(PLACEHOLDER_16DP))
 		Text(
-			stringResource(R.string.uploading, uploadInProgress.uploadProgressPercentage),
+			provideUploadStatusMessage(LocalContext.current, uploadInProgress),
 			fontSize = PLACEHOLDER_TEXT_SIZE_30
 		)
 	}

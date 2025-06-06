@@ -27,7 +27,11 @@ internal class PostLocalDataSource @Inject constructor(
 	override fun getPostsByStatus(status: PostEntity.UploadStatus): Flow<List<PostEntity>> =
 			postDao.getPostsByStatus(status)
 	
-	override suspend fun getAllPostsExcept(exclude: PostEntity.UploadStatus): Flow<List<PostEntity>> {
+	override fun getAllPosts(): Flow<List<PostEntity>> {
+		return postDao.getAllPosts()
+	}
+	
+	override fun getAllPostsExcept(exclude: PostEntity.UploadStatus): Flow<List<PostEntity>> {
 		return postDao.getAllPostsExcept(exclude)
 	}
 }

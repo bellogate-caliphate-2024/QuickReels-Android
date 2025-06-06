@@ -3,6 +3,12 @@ package com.bellogatecaliphate.core.source.local.entity
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
+internal enum class StatusNames {
+	IN_PROGRESS,
+	SUCCESS,
+	FAILED
+}
+
 @Entity(tableName = "posts")
 data class PostEntity(
 	@PrimaryKey val id: String,
@@ -15,9 +21,9 @@ data class PostEntity(
 ) {
 	open class UploadStatus(val status: String, val uploadProgressPercentage: Int) {
 		class InProgress(uploadProgressPercentage: Int) :
-				UploadStatus("InProgress", uploadProgressPercentage)
+				UploadStatus(StatusNames.IN_PROGRESS.name, uploadProgressPercentage)
 		
-		data object Success : UploadStatus("Success", 0)
-		data object Failed : UploadStatus("Failed", 0)
+		data object Success : UploadStatus(StatusNames.SUCCESS.name, 0)
+		data object Failed : UploadStatus(StatusNames.FAILED.name, 0)
 	}
 }

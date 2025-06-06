@@ -11,8 +11,8 @@ class GetOngoingPostsUploadStatusUseCase @Inject constructor(
 	private val postRepository: IPostRepository
 ) {
 	
-	suspend operator fun invoke(): Flow<List<Post>> {
-		return postRepository.getOngoingPostsUploadStatus(PostEntity.UploadStatus.Success)
+	operator fun invoke(): Flow<List<Post>> {
+		return postRepository.getAllPosts()
 			.map { it ->
 				it.map {
 					Post(

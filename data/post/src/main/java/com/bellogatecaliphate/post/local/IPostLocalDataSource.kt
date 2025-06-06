@@ -8,5 +8,6 @@ internal interface IPostLocalDataSource {
 	suspend fun deletePost(postEntity: PostEntity)
 	suspend fun getPostById(postId: String): PostEntity?
 	fun getPostsByStatus(status: PostEntity.UploadStatus): Flow<List<PostEntity>>
-	suspend fun getAllPostsExcept(exclude: PostEntity.UploadStatus): Flow<List<PostEntity>>
+	fun getAllPosts(): Flow<List<PostEntity>>
+	fun getAllPostsExcept(exclude: PostEntity.UploadStatus): Flow<List<PostEntity>>
 }

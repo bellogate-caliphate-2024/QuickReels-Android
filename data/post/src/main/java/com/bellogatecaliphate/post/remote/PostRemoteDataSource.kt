@@ -5,6 +5,7 @@ import com.bellogatecaliphate.post.remote.api.progress_request_body.ProgressRequ
 import com.bellogatecaliphate.post.remote.model.CreatePostRequest
 import com.bellogatecaliphate.post.remote.model.CreatePostResponse
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
 import java.io.File
 import javax.inject.Inject
@@ -19,7 +20,7 @@ internal class PostRemoteDataSource @Inject constructor(
 		onProgressUpdate: suspend (Int) -> Unit,
 		onError: suspend () -> Unit,
 		onFinish: suspend () -> Unit
-	): CreatePostResponse? =
+	): CreatePostResponse =
 			withContext(ioDispatcher) {
 				val videoFile = File(post.videoFilePath)
 				val progressRequestBody = ProgressRequestBody(
@@ -41,7 +42,7 @@ internal class PostRemoteDataSource @Inject constructor(
 						}
 					}
 				)
-				try {
+				/*try {
 					val result = api.uploadPost(
 						progressRequestBody,
 						post.id,
@@ -53,7 +54,18 @@ internal class PostRemoteDataSource @Inject constructor(
 				}
 				catch (e: Exception) {
 					return@withContext null
+				}*/
+				
+				suspend fun fakeProgress() {
+					for (i in 1 .. 100) {
+						delay(100)
+						onProgressUpdate(i)
+					}
+					onFinish()
 				}
+				
+				fakeProgress()
+				return@withContext CreatePostResponse(success = true)
 			}
 	
 }
