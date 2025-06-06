@@ -42,7 +42,7 @@ internal fun UploadStatusScreen(
 	numberOfUploadsInProgressToDisplay: Int,
 	uploadsInProgress: List<Post>,
 	onPostClicked: (Post) -> Unit,
-	onCancelClicked: (Post) -> Unit
+	onCancelUploadClicked: (Post) -> Unit
 ) {
 	if (uploadsInProgress.isEmpty()) return
 	Content(
@@ -50,7 +50,7 @@ internal fun UploadStatusScreen(
 		numberOfUploadsInProgressToDisplay,
 		uploadsInProgress,
 		onPostClicked,
-		onCancelClicked
+		onCancelUploadClicked
 	)
 }
 
@@ -60,10 +60,10 @@ private fun Content(
 	numberOfUploadsInProgressToDisplay: Int,
 	uploadsInProgress: List<Post>,
 	onPostClicked: (Post) -> Unit,
-	onCancelClicked: (Post) -> Unit
+	onCancelUploadClicked: (Post) -> Unit
 ) {
 	if (numberOfUploadsInProgressToDisplay == 1) {
-		SingleUploadStatusScreen(uploadsInProgress.first(), onPostClicked, onCancelClicked)
+		SingleUploadStatusScreen(uploadsInProgress.first(), onPostClicked, onCancelUploadClicked)
 	} else {
 		MultipleUploadsStatusScreen(modifier, uploadsInProgress, onPostClicked)
 	}
@@ -73,7 +73,7 @@ private fun Content(
 private fun SingleUploadStatusScreen(
 	uploadInProgress: Post,
 	onPostClicked: (Post) -> Unit,
-	onCancelClicked: (Post) -> Unit
+	onCancelUploadClicked: (Post) -> Unit
 ) {
 	var showCancelUploadBottomSheetDialog by remember { mutableStateOf(false) }
 	Scaffold(
@@ -91,7 +91,7 @@ private fun SingleUploadStatusScreen(
 		isVisible = showCancelUploadBottomSheetDialog,
 		onConfirmationGiven = {
 			showCancelUploadBottomSheetDialog = false
-			onCancelClicked(uploadInProgress)
+			onCancelUploadClicked(uploadInProgress)
 		},
 		onDismiss = { showCancelUploadBottomSheetDialog = false }
 	)

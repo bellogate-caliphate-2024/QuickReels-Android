@@ -61,7 +61,7 @@ private fun CreatePostScreen(
 			numberOfUploadsInProgressToDisplay = 1, // We only want to track one upload
 			uploadsInProgress = uiState.existingUploads,
 			onPostClicked = onPostClicked,
-			onCancelClicked = onCancelUploadClicked
+			onCancelUploadClicked = onCancelUploadClicked
 		)
 		SelectVideoButton(openGallery)
 	}
