@@ -70,7 +70,8 @@ internal fun BottomAppBar(
 			repeat(menuItems.size) {
 				MenuItem(
 					isSelected = menuItems[it].route == menuItems[indexOfCurrentSelectedMenuItem].route,
-					imageId = menuItems[it].imageId,
+					selectedImageId = menuItems[it].selectedImageId,
+					unSelectedImageId = menuItems[it].unSelectedImageId,
 					title = menuItems[it].title
 				) {
 					indexOfCurrentSelectedMenuItem = it
@@ -113,13 +114,16 @@ private fun Slider(sliderWidth: Dp = 10.dp, destinationXAxis: Int = 0) {
 @Composable
 private fun MenuItem(
 	isSelected: Boolean = false,
-	@DrawableRes imageId: Int = R.drawable.code,
+	@DrawableRes selectedImageId: Int = R.drawable.code,
+	@DrawableRes unSelectedImageId: Int = R.drawable.code,
 	@StringRes title: Int = R.string.home,
 	onClick: () -> Unit = {}
 ) {
 	
 	val selectedColor = colorResource(id = com.bellogatecaliphate.core.R.color.quickreels_purple)
 	val unselectedColor = colorResource(id = R.color.default_ash)
+	val isAccountMenuItem = title == R.string.account
+	val imageId = if (isSelected) selectedImageId else unSelectedImageId
 	
 	Column(
 		horizontalAlignment = Alignment.CenterHorizontally,
@@ -127,8 +131,20 @@ private fun MenuItem(
 			onClick()
 		}
 	) {
-		Image(painter = painterResource(id = imageId), contentDescription = "")
-		Spacer(modifier = Modifier.height(4.dp))
+		if (isAccountMenuItem) {
+			Image(
+				modifier = Modifier.size(24.dp),
+				painter = painterResource(id = R.drawable.google),
+				contentDescription = ""
+			)
+			Spacer(modifier = Modifier.height(1.dp))
+		} else {
+			Image(
+				painter = painterResource(id = imageId),
+				contentDescription = ""
+			)
+			Spacer(modifier = Modifier.height(4.dp))
+		}
 		Text(
 			modifier = Modifier.testTag(stringResource(id = title)),
 			color = if (isSelected) selectedColor else unselectedColor,
