@@ -48,7 +48,7 @@ private val menuItems = listOf(
 	Screen.Account
 )
 
-@Preview(showBackground = true, showSystemUi = true)
+@Preview(showBackground = true)
 @Composable
 internal fun BottomAppBar(
 	modifier: Modifier = Modifier,
@@ -78,7 +78,7 @@ internal fun BottomAppBar(
 	}
 }
 
-@Preview(showBackground = true, showSystemUi = true)
+@Preview(showBackground = true)
 @Composable
 private fun Slider(sliderWidth: Dp = 10.dp, destinationXAxis: Int = 0) {
 	
@@ -103,7 +103,7 @@ private fun Slider(sliderWidth: Dp = 10.dp, destinationXAxis: Int = 0) {
 	)
 }
 
-@Preview(showBackground = true, showSystemUi = true)
+@Preview(showBackground = true)
 @Composable
 private fun MenuItem(
 	@DrawableRes imageId: Int = R.drawable.code,
