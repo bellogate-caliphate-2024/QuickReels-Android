@@ -30,4 +30,7 @@
     <string name="uploading">Uploading %s%%</string>">
     <string name="uploaded_successfully">Uploaded successfully</string>">
     <string name="upload_failed">Upload failed, try again</string>">
+    <string name="create_post_primary_message">Upload 30 secs Movie clip</string>">
+    <string name="create_post_secondary_message">To upload movie clip, allow access to phone storage.</string>
+    ">
 </resources>

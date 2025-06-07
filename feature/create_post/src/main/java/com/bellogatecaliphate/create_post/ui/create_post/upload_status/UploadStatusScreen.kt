@@ -9,13 +9,14 @@ import com.bellogatecaliphate.create_post.ui.create_post.upload_status.upload_st
 @Composable
 internal fun UploadStatusScreen(
 	modifier: Modifier,
+	visible: Boolean,
 	numberOfUploadsInProgressToDisplay: Int,
 	uploadsInProgress: List<Post>,
 	onPostClicked: (Post) -> Unit,
 	onCancelUploadClicked: (Post) -> Unit,
 	onCloseUploadStatus: (Post) -> Unit
 ) {
-	if (uploadsInProgress.isEmpty()) return
+	if (visible.not()) return
 	Content(
 		modifier,
 		numberOfUploadsInProgressToDisplay,
