@@ -24,6 +24,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.testTag
@@ -60,7 +61,7 @@ internal fun BottomAppBar(
 	var xAxisPointOnScreenToSlideTo by remember { mutableIntStateOf(0) }
 	var indexOfCurrentSelectedMenuItem by remember { mutableIntStateOf(0) }
 	
-	Column(modifier) {
+	Column(modifier.background(Color.White)) {
 		Slider(sliderWidth, xAxisPointOnScreenToSlideTo)
 		Spacer(modifier = Modifier.height(12.dp))
 		Row(
