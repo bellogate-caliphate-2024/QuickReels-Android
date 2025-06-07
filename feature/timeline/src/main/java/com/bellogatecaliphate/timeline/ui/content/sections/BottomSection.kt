@@ -1,6 +1,7 @@
 package com.bellogatecaliphate.timeline.ui.content.sections
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -11,6 +12,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import com.bellogatecaliphate.timeline.R
 import com.bellogatecaliphate.timeline.ui.icons.CommentsIcon
@@ -29,7 +31,9 @@ internal fun BottomSection(
 	onLikeButtonPressed: (contentId: String, isLiked: Boolean) -> Unit,
 	onCommentButtonPressed: (contentId: String, totalNumberOfCommentsExpected: Int) -> Unit
 ) {
-	Column(Modifier.padding(PLACEHOLDER_8DP)) {
+	Column(Modifier
+		.background(Color.White)
+		.padding(PLACEHOLDER_8DP)) {
 		Row {
 			LikeIcon(contentId, isLiked, numberOfLikes, onLikeButtonPressed)
 			Spacer(modifier = Modifier.width(PLACEHOLDER_16DP))

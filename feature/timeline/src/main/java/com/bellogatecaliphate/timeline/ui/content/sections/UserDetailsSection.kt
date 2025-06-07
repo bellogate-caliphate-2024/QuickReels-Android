@@ -1,5 +1,6 @@
 package com.bellogatecaliphate.timeline.ui.content.sections
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -25,6 +26,7 @@ internal fun UserDetailsSection(userProfilePicture: String, userName: String, da
 	Row(
 		verticalAlignment = Alignment.CenterVertically,
 		modifier = Modifier
+			.background(Color.White)
 			.fillMaxWidth()
 			.padding(PLACEHOLDER_8DP)
 	) {
