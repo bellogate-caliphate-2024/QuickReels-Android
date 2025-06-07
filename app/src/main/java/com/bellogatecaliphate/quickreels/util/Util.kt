@@ -1,6 +1,6 @@
 package com.bellogatecaliphate.quickreels.util
 
-fun getPositionToSlideTo(
+fun getXAxisToSlideTo(
 	sliderWidth: Int,
 	screenWidth: Int,
 	positionOfMenuItem: Int

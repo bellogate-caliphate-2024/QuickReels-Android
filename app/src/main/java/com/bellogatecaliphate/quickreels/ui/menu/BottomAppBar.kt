@@ -20,7 +20,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -39,7 +38,7 @@ import androidx.compose.ui.unit.sp
 import com.bellogatecaliphate.core.model.routes.Route
 import com.bellogatecaliphate.quickreels.R
 import com.bellogatecaliphate.quickreels.model.Screen
-import com.bellogatecaliphate.quickreels.util.getPositionToSlideTo
+import com.bellogatecaliphate.quickreels.util.getXAxisToSlideTo
 import kotlin.math.roundToInt
 
 private val menuItems = listOf(
@@ -58,18 +57,25 @@ internal fun BottomAppBar(
 	
 	val screenWidth = LocalConfiguration.current.screenWidthDp
 	val sliderWidth = (screenWidth / menuItems.size).dp
-	var slideTo by remember { mutableIntStateOf(0) }
+	var xAxisPointOnScreenToSlideTo by remember { mutableIntStateOf(0) }
+	var indexOfCurrentSelectedMenuItem by remember { mutableIntStateOf(0) }
 	
 	Column(modifier) {
-		Slider(sliderWidth, slideTo)
+		Slider(sliderWidth, xAxisPointOnScreenToSlideTo)
 		Spacer(modifier = Modifier.height(12.dp))
 		Row(
 			horizontalArrangement = Arrangement.Absolute.SpaceAround,
 			modifier = Modifier.fillMaxWidth()
 		) {
 			repeat(menuItems.size) {
-				MenuItem(menuItems[it].imageId, menuItems[it].title) {
-					slideTo = getPositionToSlideTo(sliderWidth.value.toInt(), screenWidth, it)
+				MenuItem(
+					isSelected = menuItems[it].route == menuItems[indexOfCurrentSelectedMenuItem].route,
+					imageId = menuItems[it].imageId,
+					title = menuItems[it].title
+				) {
+					indexOfCurrentSelectedMenuItem = it
+					xAxisPointOnScreenToSlideTo =
+							getXAxisToSlideTo(sliderWidth.value.toInt(), screenWidth, it)
 					onMenuItemClicked(menuItems[it].route)
 				}
 			}
@@ -94,7 +100,7 @@ private fun Slider(sliderWidth: Dp = 10.dp, destinationXAxis: Int = 0) {
 	Box(
 		modifier = Modifier
 			.offset { offset }
-			.background(colorResource(id = R.color.light_blue))
+			.background(colorResource(id = com.bellogatecaliphate.core.R.color.quickreels_purple))
 			.size(sliderWidth, 4.dp)
 			.clickable(
 				interactionSource = remember { MutableInteractionSource() },
@@ -106,16 +112,18 @@ private fun Slider(sliderWidth: Dp = 10.dp, destinationXAxis: Int = 0) {
 @Preview(showBackground = true)
 @Composable
 private fun MenuItem(
+	isSelected: Boolean = false,
 	@DrawableRes imageId: Int = R.drawable.code,
 	@StringRes title: Int = R.string.home,
 	onClick: () -> Unit = {}
 ) {
-	var hasBeenSelected by remember { mutableStateOf(false) }
+	
+	val selectedColor = colorResource(id = com.bellogatecaliphate.core.R.color.quickreels_purple)
+	val unselectedColor = colorResource(id = R.color.default_ash)
 	
 	Column(
 		horizontalAlignment = Alignment.CenterHorizontally,
 		modifier = Modifier.clickable {
-			hasBeenSelected = ! hasBeenSelected
 			onClick()
 		}
 	) {
@@ -123,9 +131,7 @@ private fun MenuItem(
 		Spacer(modifier = Modifier.height(4.dp))
 		Text(
 			modifier = Modifier.testTag(stringResource(id = title)),
-			color = if (hasBeenSelected) colorResource(id = R.color.light_blue) else colorResource(
-				id = R.color.default_ash
-			),
+			color = if (isSelected) selectedColor else unselectedColor,
 			fontSize = 12.sp,
 			text = stringResource(id = title)
 		)
