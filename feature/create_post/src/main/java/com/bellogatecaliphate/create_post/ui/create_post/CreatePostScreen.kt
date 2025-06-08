@@ -35,7 +35,11 @@ import com.bellogatecaliphate.create_post.model.UiState
 import com.bellogatecaliphate.create_post.ui.create_post.upload_status.UploadStatusScreen
 import com.bellogatecaliphate.create_post.ui.create_post.util.activityLauncher
 import com.bellogatecaliphate.create_post.util.getActivity
+import com.bellogatecaliphate.create_post.util.video_trimer.utils.TrimType
 import com.bellogatecaliphate.create_post.util.video_trimer.utils.TrimVideo
+
+private const val SIXTY_SECONDS = 60L
+private const val ONE_SECOND = 1L
 
 @Composable
 fun CreatePostScreen(
@@ -52,7 +56,12 @@ fun CreatePostScreen(
 		onPostClicked = onPostClicked,
 		onVideoFileSelected = { uri ->
 			viewModel.resetGalleryState()
-			TrimVideo.activity(uri)?.start(context, videoTrimResultLauncher)
+			TrimVideo
+				.activity(uri)
+				?.setAccurateCut(true)
+				?.setTrimType(TrimType.MIN_MAX_DURATION)
+				?.setMinToMax(ONE_SECOND, SIXTY_SECONDS)
+				?.start(context, videoTrimResultLauncher)
 		},
 		onStoragePermissionRationalDialogClosed = { viewModel.resetGalleryState() },
 		onCancelUploadClicked = viewModel::cancelPostUpload,

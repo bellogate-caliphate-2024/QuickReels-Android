@@ -111,7 +111,9 @@ public class ActVideoTrimmer extends LocalizationActivity {
 
     private long currentDuration, lastClickedTime;
     private CompressOption compressOption;
-    private String outputPath;    Runnable updateSeekbar = new Runnable() {
+    private String outputPath;
+    private String local;
+    private int trimType;    Runnable updateSeekbar = new Runnable() {
         @Override
         public void run() {
             try {
@@ -127,8 +129,6 @@ public class ActVideoTrimmer extends LocalizationActivity {
             }
         }
     };
-    private String local;
-    private int trimType;
     private long fixedGap, minGap, minFromGap, maxToGap;
     private boolean hidePlayerSeek, isAccurateCut, showFileLocationAlert;
     private CustomProgressView progressView;
