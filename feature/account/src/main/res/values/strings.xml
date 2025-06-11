@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">My Application</string>
-    <string name="login">Login</string>
-    <string name="signup">Sign up</string>
+    <string name="continue_with_google">Continue with Google</string>
+    <string name="join">Join</string>
     <string name="user_has_no_content">No videos to show</string>
+    <string name="create_account">Create an account or join with an existing account</string>
 </resources>

@@ -1,4 +1,4 @@
-package com.bellogatecaliphate.account.ui.icons
+package com.bellogatecaliphate.account.ui.composables
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column

@@ -11,16 +11,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 import com.airbnb.lottie.RenderMode
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
-import com.bellogatecaliphate.core.R
-import com.spr.jetpack_loading.components.indicators.BallScaleRippleIndicator
 
 @Composable
 fun ProgressBar(show: Boolean) {
@@ -33,15 +31,7 @@ fun ProgressBar(show: Boolean) {
 }
 
 @Composable
-fun QuickReelsProgressBar(show: Boolean) {
-	if (show.not()) return
-	BallScaleRippleIndicator(
-		color = colorResource(id = R.color.light_purple),
-	)
-}
-
-@Composable
-fun QuickReelsCircularProgressBar(size: Dp, show: Boolean = true) {
+fun QuickReelsCircularProgressBar(show: Boolean = true, size: Dp = 40.dp) {
 	if (show.not()) return
 	val modifier = Modifier.size(size)
 	Column(modifier.background(Color.Transparent)) {

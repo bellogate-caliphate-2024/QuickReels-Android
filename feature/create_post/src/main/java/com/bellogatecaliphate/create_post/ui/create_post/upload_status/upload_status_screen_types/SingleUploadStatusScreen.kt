@@ -113,7 +113,7 @@ private fun SingleUploadStatusScreenContent(
 			contentAlignment = Alignment.Center
 		) {
 			if (uploadInProgress.isUploading) {
-				QuickReelsCircularProgressBar(PLACEHOLDER_200DP)
+				QuickReelsCircularProgressBar(size = PLACEHOLDER_200DP)
 				ThumbnailPreview(uploadInProgress.thumbnailFilePath, PLACEHOLDER_150DP)
 			}
 			if (uploadInProgress.isUploaded) {

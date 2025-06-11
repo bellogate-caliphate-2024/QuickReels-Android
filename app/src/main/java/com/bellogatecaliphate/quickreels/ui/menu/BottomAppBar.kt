@@ -135,7 +135,7 @@ private fun MenuItem(
 		if (isAccountMenuItem) {
 			Image(
 				modifier = Modifier.size(24.dp),
-				painter = painterResource(id = R.drawable.google),
+				painter = painterResource(id = com.bellogatecaliphate.core.R.drawable.google),
 				contentDescription = ""
 			)
 			Spacer(modifier = Modifier.height(1.dp))
