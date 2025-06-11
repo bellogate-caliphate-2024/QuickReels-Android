@@ -30,10 +30,11 @@ class AccountScreenViewModel @Inject constructor(
 		checkUserLogin()
 	}
 	
-	fun performLogin(onOpenGoogleAuthenticationLoginScreen: suspend () -> Unit) =
+	fun performLogin(onOpenGoogleAuthenticationLoginScreen: suspend () -> Boolean) =
 			viewModelScope.launch {
 				_uiState.update { it.copy(isLoading = true) }
-				onOpenGoogleAuthenticationLoginScreen()
+				val isLoginSuccessful = onOpenGoogleAuthenticationLoginScreen()
+				_uiState.update { it.copy(isLoading = isLoginSuccessful) }
 				checkUserLogin()
 			}
 	
