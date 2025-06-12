@@ -1,4 +1,4 @@
-package com.bellogatecaliphate.account.ui.content_history_grid_list
+package com.bellogatecaliphate.account.ui.composables
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box

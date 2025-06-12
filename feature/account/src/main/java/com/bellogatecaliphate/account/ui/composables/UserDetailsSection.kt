@@ -1,4 +1,4 @@
-package com.bellogatecaliphate.account.ui.user_details_section
+package com.bellogatecaliphate.account.ui.composables
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
