@@ -24,10 +24,10 @@ import com.bellogatecaliphate.account.navigation.accountNavGraph
 import com.bellogatecaliphate.chat.navigation.chatNavGraph
 import com.bellogatecaliphate.core.model.routes.Route
 import com.bellogatecaliphate.core.model.routes.timeline.TimelineNavGraphRoute
+import com.bellogatecaliphate.core.ui.theme.QuickReelsTheme
 import com.bellogatecaliphate.create_post.navigation.createPostNavGraph
 import com.bellogatecaliphate.quickreels.R
 import com.bellogatecaliphate.quickreels.ui.menu.BottomAppBar
-import com.bellogatecaliphate.quickreels.ui.theme.QuickReelsTheme
 import com.bellogatecaliphate.timeline.navigation.timelineNavGraph
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dagger.hilt.android.AndroidEntryPoint

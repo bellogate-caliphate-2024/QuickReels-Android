@@ -1,4 +1,4 @@
-package com.bellogatecaliphate.quickreels.ui.theme
+package com.bellogatecaliphate.core.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
