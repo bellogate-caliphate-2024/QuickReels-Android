@@ -107,4 +107,6 @@ dependencies {
 	// Coil
 	implementation(libs.coil.compose)
 	implementation(libs.coil.network.okhttp)
+	// Google Ads sdk
+	implementation(libs.play.services.ads)
 }

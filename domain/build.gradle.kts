@@ -64,4 +64,6 @@ dependencies {
 	// hilt
 	implementation(libs.hilt)
 	kapt(libs.hilt.compiler)
+	// Google Ads sdk
+	implementation(libs.play.services.ads)
 }

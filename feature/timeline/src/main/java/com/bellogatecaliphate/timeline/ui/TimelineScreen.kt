@@ -14,7 +14,6 @@ import com.bellogatecaliphate.bannerads.QuickReelsBannerAd
 import com.bellogatecaliphate.core.model.ads.Ads
 import com.bellogatecaliphate.core.ui.ProgressBar
 import com.bellogatecaliphate.core.ui.comments.CommentsBottomDialog
-import com.bellogatecaliphate.nativeads.QuickReelsNativeAdLoader
 import com.bellogatecaliphate.timeline.model.UiState
 import com.bellogatecaliphate.timeline.ui.content.Contents
 
@@ -23,7 +22,6 @@ fun TimeLineScreen(viewModel: TimeLineScreenViewModel = hiltViewModel()) {
 	val uiState = viewModel.uiState.collectAsStateWithLifecycle()
 	TimeLineScreen(
 		uiState = uiState.value,
-		adLoader = viewModel.getAdLoader(),
 		onLikeButtonPressed = { contentId, isLiked ->
 			viewModel.likeContent(contentId, isLiked)
 		},
@@ -45,7 +43,6 @@ fun TimeLineScreen(viewModel: TimeLineScreenViewModel = hiltViewModel()) {
 @Composable
 private fun TimeLineScreen(
 	uiState: UiState,
-	adLoader: QuickReelsNativeAdLoader,
 	onLikeButtonPressed: (contentId: String, isLiked: Boolean) -> Unit,
 	onCommentButtonPressed: (contentId: String, totalNumberOfCommentsExpected: Int) -> Unit,
 	onCommentsBottomDialogClosed: () -> Unit = {},
@@ -56,7 +53,6 @@ private fun TimeLineScreen(
 		ProgressBar(uiState.isLoading)
 		Contents(
 			uiState.listOfPaginatedContents.collectAsLazyPagingItems(),
-			adLoader,
 			onLikeButtonPressed,
 			onCommentButtonPressed
 		)

@@ -17,6 +17,7 @@ import com.google.firebase.auth.GoogleAuthProvider
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
+import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
 class FirebaseAuthentication @Inject constructor(
@@ -65,7 +66,7 @@ class FirebaseAuthentication @Inject constructor(
 			suspendCoroutine { continuation ->
 				val authCredential = GoogleAuthProvider.getCredential(idToken, null)
 				auth.signInWithCredential(authCredential).addOnCompleteListener { task ->
-					continuation.resumeWith(Result.success(task.isSuccessful))
+					continuation.resume(task.isSuccessful)
 				}
 			}
 	

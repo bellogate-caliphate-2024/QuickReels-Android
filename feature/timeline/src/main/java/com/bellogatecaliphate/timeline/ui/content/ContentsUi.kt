@@ -13,18 +13,16 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.paging.compose.LazyPagingItems
+import com.bellogatecaliphate.core.model.dto.Advert
 import com.bellogatecaliphate.core.model.dto.Content
-import com.bellogatecaliphate.core.ui.ProgressBar
 import com.bellogatecaliphate.nativeads.QuickReelsNativeAd
-import com.bellogatecaliphate.nativeads.QuickReelsNativeAdLoader
+import com.google.android.gms.ads.nativead.NativeAd
 
 @Composable
 internal fun Contents(
 	list: LazyPagingItems<Content>?,
-	adLoader: QuickReelsNativeAdLoader,
 	onLikeButtonPressed: (contentId: String, isLiked: Boolean) -> Unit,
 	onCommentButtonPressed: (contentId: String, totalNumberOfCommentsExpected: Int) -> Unit
 ) {
@@ -70,8 +68,8 @@ internal fun Contents(
 	) {
 		items(list.itemCount) { index ->
 			val content = list[index] ?: return@items
-			if (content.isAd) {
-				NativeAd(Modifier.fillParentMaxSize(), adLoader)
+			if (content is Advert) {
+				NativeAd(Modifier.fillParentMaxSize(), content.nativeAd)
 			} else {
 				ContentUi(
 					content,
@@ -85,8 +83,6 @@ internal fun Contents(
 }
 
 @Composable
-private fun NativeAd(modifier: Modifier, adLoader: QuickReelsNativeAdLoader) {
-	var showLoading by remember { mutableStateOf(true) }
-	ProgressBar(showLoading)
-	QuickReelsNativeAd(modifier, adLoader) { showLoading = false }
+private fun NativeAd(modifier: Modifier, ad: NativeAd?) {
+	QuickReelsNativeAd(modifier, ad)
 }

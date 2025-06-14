@@ -1,6 +1,6 @@
 package com.bellogatecaliphate.core.model.dto
 
-data class Content(
+open class Content(
 	val id: String,
 	val videoUrl: String,
 	val thumbnailUrl: String,

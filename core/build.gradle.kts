@@ -95,4 +95,6 @@ dependencies {
 	kaptAndroidTest(libs.hilt.compiler)
 	// lottie
 	api(libs.lottie)
+	// Google Ads sdk
+	implementation(libs.play.services.ads)
 }

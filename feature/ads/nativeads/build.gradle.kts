@@ -76,13 +76,12 @@ dependencies {
 	implementation(libs.androidx.runtime.android)
 	implementation(libs.androidx.ui.android)
 	implementation(libs.androidx.ui.viewbinding)
+	implementation(libs.androidx.constraintlayout)
 	testImplementation(libs.junit)
 	androidTestImplementation(libs.androidx.junit)
 	androidTestImplementation(libs.androidx.espresso.core)
 	// Google Ads sdk
 	implementation(libs.play.services.ads)
-	implementation(libs.play.services.ads)
-	implementation(libs.androidx.constraintlayout)
 	implementation(libs.error.prone.annotations)
 	// hilt
 	implementation(libs.hilt)

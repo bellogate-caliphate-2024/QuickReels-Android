@@ -3,16 +3,20 @@ package com.bellogatecaliphate.timeline.ui
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
+import androidx.paging.map
+import com.bellogatecaliphate.core.model.dto.Advert
+import com.bellogatecaliphate.core.model.dto.Content
 import com.bellogatecaliphate.domain.comments.GetCommentRepliesUseCase
 import com.bellogatecaliphate.domain.comments.GetCommentsUseCase
 import com.bellogatecaliphate.domain.comments.SaveReplyToACommentUseCase
 import com.bellogatecaliphate.domain.contents.GetContentsUseCase
 import com.bellogatecaliphate.domain.contents.like.LikeContentUseCase
-import com.bellogatecaliphate.nativeads.QuickReelsNativeAdLoader
+import com.bellogatecaliphate.nativeads.QuickReelsAdProvider
 import com.bellogatecaliphate.timeline.model.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -24,20 +28,15 @@ class TimeLineScreenViewModel @Inject constructor(
 	private val getCommentsUseCase: GetCommentsUseCase,
 	private val getCommentRepliesUseCase: GetCommentRepliesUseCase,
 	private val saveReplyToACommentUseCase: SaveReplyToACommentUseCase,
-	private val adLoader: QuickReelsNativeAdLoader
+	private val adProvider: QuickReelsAdProvider
 ) : ViewModel() {
 	
 	private val _uiState = MutableStateFlow(UiState())
 	internal val uiState = _uiState.asStateFlow()
 	
 	init {
+		loadAds()
 		getContents()
-	}
-	
-	private fun getContents() = viewModelScope.launch {
-		_uiState.update { it.copy(isLoading = true) }
-		val response = getContentsUseCase().cachedIn(viewModelScope)
-		_uiState.update { it.copy(listOfPaginatedContents = response, isLoading = false) }
 	}
 	
 	fun likeContent(contentId: String, isLiked: Boolean) = viewModelScope.launch {
@@ -78,5 +77,23 @@ class TimeLineScreenViewModel @Inject constructor(
 		// do something with saved
 	}
 	
-	fun getAdLoader() = adLoader
+	private fun loadAds() = viewModelScope.launch {
+		adProvider.loadAds()
+	}
+	
+	private fun getContents() {
+		_uiState.update { it.copy(isLoading = true) }
+		val response = getContentsUseCase().cachedIn(viewModelScope).map {
+			it.map { content -> mapContent(content, adProvider) }
+		}
+		_uiState.update { it.copy(listOfPaginatedContents = response, isLoading = false) }
+	}
+	
+	private suspend fun mapContent(content: Content, adProvider: QuickReelsAdProvider): Content {
+		return if (content.isAd) {
+			Advert(adProvider.getNextAd())
+		} else {
+			content
+		}
+	}
 }
