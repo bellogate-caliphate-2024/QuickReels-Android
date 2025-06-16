@@ -1,5 +1,6 @@
 package com.bellogatecaliphate.nativeads
 
+import android.util.Log
 import com.google.android.gms.ads.nativead.NativeAd
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.async
@@ -20,19 +21,23 @@ class QuickReelsAdProvider @Inject constructor(
 	
 	suspend fun loadAds() = withContext(ioDispatcher) {
 		val list = coroutineScope {
+			Log.e("QuickReelsNativeAdLoader", "coroutineScope start")
 			val deferredList = (1 .. NUMBER_OF_ADS_TO_LOAD_PER_REQUEST).map {
 				async { quickReelsNativeAdLoader.loadAd() }
 			}
+			Log.e("QuickReelsNativeAdLoader", "coroutineScope end")
 			deferredList.awaitAll()
 		}
+		Log.e("QuickReelsNativeAdLoader", "coroutineScope final end A")
 		adsCache.addAll(list)
+		Log.e("QuickReelsNativeAdLoader", "coroutineScope final end B")
 	}
 	
 	suspend fun getNextAd(): NativeAd? {
 		if (checkIfToLoadMoreAds()) {
-			loadAds()
+			//loadAds()
 		}
-		
+		if (adsCache.isEmpty()) return null
 		val latestAd = adsCache.first()
 		adsCache.removeAt(0)
 		return latestAd

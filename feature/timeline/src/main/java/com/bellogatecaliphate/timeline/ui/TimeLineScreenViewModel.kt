@@ -14,6 +14,7 @@ import com.bellogatecaliphate.domain.contents.like.LikeContentUseCase
 import com.bellogatecaliphate.nativeads.QuickReelsAdProvider
 import com.bellogatecaliphate.timeline.model.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.map
@@ -35,8 +36,10 @@ class TimeLineScreenViewModel @Inject constructor(
 	internal val uiState = _uiState.asStateFlow()
 	
 	init {
-		loadAds()
-		getContents()
+		viewModelScope.launch {
+			async { loadAds() }
+			async { getContents() }
+		}
 	}
 	
 	fun likeContent(contentId: String, isLiked: Boolean) = viewModelScope.launch {
@@ -77,7 +80,7 @@ class TimeLineScreenViewModel @Inject constructor(
 		// do something with saved
 	}
 	
-	private fun loadAds() = viewModelScope.launch {
+	private suspend fun loadAds() {
 		adProvider.loadAds()
 	}
 	
