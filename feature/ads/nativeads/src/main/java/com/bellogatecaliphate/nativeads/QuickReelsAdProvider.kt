@@ -7,7 +7,7 @@ import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-const val NUMBER_OF_ADS_TO_LOAD_PER_REQUEST = 8
+const val MAXIMUM_NUMBER_OF_ADS_TO_LOAD_PER_REQUEST = 8
 const val THRESHOLD_FOR_LOADING_MORE_ADS = 2
 
 class QuickReelsAdProvider @Inject constructor(
@@ -22,7 +22,8 @@ class QuickReelsAdProvider @Inject constructor(
 		if (checkIfTosStopLoadingAds()) return@withContext
 		isLoadingAds = true
 		
-		val deferredList = (1 .. NUMBER_OF_ADS_TO_LOAD_PER_REQUEST).map {
+		val numberOfIterations = (MAXIMUM_NUMBER_OF_ADS_TO_LOAD_PER_REQUEST - adsCache.size)
+		val deferredList = (1 .. numberOfIterations).map {
 			async {
 				quickReelsNativeAdLoader.loadAd({
 					adsCache.add(it)
@@ -36,12 +37,14 @@ class QuickReelsAdProvider @Inject constructor(
 	}
 	
 	suspend fun getNextAd(): NativeAd? {
-		if (checkIfToLoadMoreAds()) {
-			loadAds()
-		}
 		if (adsCache.isEmpty()) return null
 		val latestAd = adsCache.first()
 		adsCache.removeAt(0)
+		
+		if (checkIfToLoadMoreAds()) {
+			loadAds()
+		}
+		
 		return latestAd
 	}
 	
@@ -52,6 +55,6 @@ class QuickReelsAdProvider @Inject constructor(
 	}
 	
 	private fun checkIfTosStopLoadingAds(): Boolean {
-		return isLoadingAds && adsCache.size >= NUMBER_OF_ADS_TO_LOAD_PER_REQUEST
+		return isLoadingAds && adsCache.size >= MAXIMUM_NUMBER_OF_ADS_TO_LOAD_PER_REQUEST
 	}
 }
