@@ -1,6 +1,5 @@
 package com.bellogatecaliphate.nativeads
 
-import android.util.Log
 import com.google.android.gms.ads.nativead.NativeAd
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.async
@@ -28,7 +27,6 @@ class QuickReelsAdProvider @Inject constructor(
 				quickReelsNativeAdLoader.loadAd({
 					adsCache.add(it)
 					checkIfTosStopLoadingAds()
-					Log.e("JEFF", "Ads loaded ${adsCache.size}")
 				}, {
 					adsCache.add(null)
 					checkIfTosStopLoadingAds()
