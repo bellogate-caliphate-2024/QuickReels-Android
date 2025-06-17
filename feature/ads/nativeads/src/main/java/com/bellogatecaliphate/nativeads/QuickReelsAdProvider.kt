@@ -7,6 +7,11 @@ import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
+/**
+ * MAXIMUM_NUMBER_OF_ADS_TO_KEEP_IN_CACHE is the maximum number of ads that can be cached in the adsCache.
+ * When we load more ads, we make sure that no matter how many ads we load, we don't go beyond the 'MAXIMUM_NUMBER_OF_ADS_TO_KEEP_IN_CACHE' ads in the adsCache.
+ * THRESHOLD_FOR_LOADING_MORE_ADS is the smallest number of ads that need to be cached before loading more ads.
+ * */
 const val MAXIMUM_NUMBER_OF_ADS_TO_KEEP_IN_CACHE = 8
 const val THRESHOLD_FOR_LOADING_MORE_ADS = 2
 
