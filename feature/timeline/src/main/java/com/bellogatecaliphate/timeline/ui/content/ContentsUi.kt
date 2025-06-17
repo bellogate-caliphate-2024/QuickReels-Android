@@ -18,11 +18,12 @@ import androidx.paging.compose.LazyPagingItems
 import com.bellogatecaliphate.core.model.dto.Advert
 import com.bellogatecaliphate.core.model.dto.Content
 import com.bellogatecaliphate.nativeads.QuickReelsNativeAd
-import com.google.android.gms.ads.nativead.NativeAd
 
 @Composable
 internal fun Contents(
 	list: LazyPagingItems<Content>?,
+	advert: Advert?,
+	onAdRequest: () -> Unit,
 	onLikeButtonPressed: (contentId: String, isLiked: Boolean) -> Unit,
 	onCommentButtonPressed: (contentId: String, totalNumberOfCommentsExpected: Int) -> Unit
 ) {
@@ -69,7 +70,7 @@ internal fun Contents(
 		items(list.itemCount) { index ->
 			val content = list[index] ?: return@items
 			if (content is Advert) {
-				NativeAd(Modifier.fillParentMaxSize(), content.nativeAd)
+				NativeAd(Modifier.fillParentMaxSize(), advert, onAdRequest)
 			} else {
 				ContentUi(
 					content,
@@ -83,6 +84,9 @@ internal fun Contents(
 }
 
 @Composable
-private fun NativeAd(modifier: Modifier, ad: NativeAd?) {
-	QuickReelsNativeAd(modifier, ad)
+private fun NativeAd(modifier: Modifier, ad: Advert?, onAdRequest: () -> Unit) {
+	LaunchedEffect(Unit) {
+		onAdRequest()
+	}
+	QuickReelsNativeAd(modifier, ad?.nativeAd)
 }

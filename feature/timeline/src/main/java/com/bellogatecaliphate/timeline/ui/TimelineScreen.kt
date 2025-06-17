@@ -22,6 +22,9 @@ fun TimeLineScreen(viewModel: TimeLineScreenViewModel = hiltViewModel()) {
 	val uiState = viewModel.uiState.collectAsStateWithLifecycle()
 	TimeLineScreen(
 		uiState = uiState.value,
+		onAdRequest = {
+			viewModel.onAdRequest()
+		},
 		onLikeButtonPressed = { contentId, isLiked ->
 			viewModel.likeContent(contentId, isLiked)
 		},
@@ -43,6 +46,7 @@ fun TimeLineScreen(viewModel: TimeLineScreenViewModel = hiltViewModel()) {
 @Composable
 private fun TimeLineScreen(
 	uiState: UiState,
+	onAdRequest: () -> Unit,
 	onLikeButtonPressed: (contentId: String, isLiked: Boolean) -> Unit,
 	onCommentButtonPressed: (contentId: String, totalNumberOfCommentsExpected: Int) -> Unit,
 	onCommentsBottomDialogClosed: () -> Unit = {},
@@ -53,6 +57,8 @@ private fun TimeLineScreen(
 		ProgressBar(uiState.isLoading)
 		Contents(
 			uiState.listOfPaginatedContents.collectAsLazyPagingItems(),
+			uiState.adVert,
+			onAdRequest,
 			onLikeButtonPressed,
 			onCommentButtonPressed
 		)

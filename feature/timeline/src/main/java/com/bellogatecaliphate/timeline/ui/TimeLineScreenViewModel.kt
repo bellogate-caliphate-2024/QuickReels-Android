@@ -42,6 +42,11 @@ class TimeLineScreenViewModel @Inject constructor(
 		}
 	}
 	
+	fun onAdRequest() = viewModelScope.launch {
+		val latestAd = adProvider.getNextAd()
+		_uiState.update { it.copy(adVert = Advert(latestAd)) }
+	}
+	
 	fun likeContent(contentId: String, isLiked: Boolean) = viewModelScope.launch {
 		likeContentUseCase(contentId, isLiked)
 	}
@@ -80,10 +85,6 @@ class TimeLineScreenViewModel @Inject constructor(
 		// do something with saved
 	}
 	
-	private suspend fun loadAds() {
-		adProvider.loadAds()
-	}
-	
 	private fun getContents() {
 		_uiState.update { it.copy(isLoading = true) }
 		val response = getContentsUseCase().cachedIn(viewModelScope).map {
@@ -92,11 +93,15 @@ class TimeLineScreenViewModel @Inject constructor(
 		_uiState.update { it.copy(listOfPaginatedContents = response, isLoading = false) }
 	}
 	
-	private suspend fun mapContent(content: Content, adProvider: QuickReelsAdProvider): Content {
+	private fun mapContent(content: Content, adProvider: QuickReelsAdProvider): Content {
 		return if (content.isAd) {
-			Advert(adProvider.getNextAd())
+			Advert(null)
 		} else {
 			content
 		}
+	}
+	
+	private suspend fun loadAds() {
+		adProvider.loadAds()
 	}
 }

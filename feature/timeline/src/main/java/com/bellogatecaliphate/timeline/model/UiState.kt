@@ -1,6 +1,7 @@
 package com.bellogatecaliphate.timeline.model
 
 import androidx.paging.PagingData
+import com.bellogatecaliphate.core.model.dto.Advert
 import com.bellogatecaliphate.core.model.dto.Comment
 import com.bellogatecaliphate.core.model.dto.Content
 import kotlinx.coroutines.flow.Flow
@@ -17,5 +18,6 @@ internal data class UiState(
 	val listOfPaginatedComments: Flow<PagingData<Comment>> = emptyFlow(),
 	val listOfCommentReplies: List<Comment> = emptyList(),
 	val repliesPageNumber: Int? = null,
-	val canLoadMoreReplies: Boolean = false
+	val canLoadMoreReplies: Boolean = false,
+	val adVert: Advert? = null
 )

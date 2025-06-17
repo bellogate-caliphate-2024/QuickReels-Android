@@ -1,5 +1,6 @@
 package com.bellogatecaliphate.nativeads
 
+import android.util.Log
 import com.google.android.gms.ads.nativead.NativeAd
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.async
@@ -16,14 +17,21 @@ class QuickReelsAdProvider @Inject constructor(
 ) {
 	
 	private val adsCache: MutableList<NativeAd?> = mutableListOf()
+	private var isLoadingAds = false
 	
 	suspend fun loadAds() = withContext(ioDispatcher) {
+		if (checkIfTosStopLoadingAds()) return@withContext
+		isLoadingAds = true
+		
 		val deferredList = (1 .. NUMBER_OF_ADS_TO_LOAD_PER_REQUEST).map {
 			async {
 				quickReelsNativeAdLoader.loadAd({
 					adsCache.add(it)
+					checkIfTosStopLoadingAds()
+					Log.e("JEFF", "Ads loaded ${adsCache.size}")
 				}, {
 					adsCache.add(null)
+					checkIfTosStopLoadingAds()
 				})
 			}
 		}
@@ -44,5 +52,9 @@ class QuickReelsAdProvider @Inject constructor(
 		val adsCacheIsEmpty = adsCache.isEmpty()
 		val thresholdForLoadingMoreAdsReached = adsCache.size == THRESHOLD_FOR_LOADING_MORE_ADS
 		return (adsCacheIsEmpty || thresholdForLoadingMoreAdsReached)
+	}
+	
+	private fun checkIfTosStopLoadingAds(): Boolean {
+		return isLoadingAds && adsCache.size >= NUMBER_OF_ADS_TO_LOAD_PER_REQUEST
 	}
 }
