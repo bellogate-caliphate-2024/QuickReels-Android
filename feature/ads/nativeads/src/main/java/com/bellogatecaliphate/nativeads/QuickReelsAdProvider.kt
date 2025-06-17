@@ -15,7 +15,7 @@ class QuickReelsAdProvider @Inject constructor(
 	private val quickReelsNativeAdLoader: QuickReelsNativeAdLoader
 ) {
 	
-	private val adsCache: MutableList<NativeAd?> = mutableListOf()
+	private val adsCache: MutableList<NativeAd> = mutableListOf()
 	private var isLoadingAds = false
 	
 	suspend fun loadAds() = withContext(ioDispatcher) {
@@ -28,7 +28,6 @@ class QuickReelsAdProvider @Inject constructor(
 					adsCache.add(it)
 					checkIfTosStopLoadingAds()
 				}, {
-					adsCache.add(null)
 					checkIfTosStopLoadingAds()
 				})
 			}
