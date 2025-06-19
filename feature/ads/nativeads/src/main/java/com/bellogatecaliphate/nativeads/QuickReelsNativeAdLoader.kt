@@ -8,12 +8,12 @@ import com.google.android.gms.ads.nativead.NativeAd
 import com.google.android.gms.ads.nativead.NativeAdOptions
 import javax.inject.Inject
 
-class QuickReelsNativeAdLoader @Inject constructor(
+open class QuickReelsNativeAdLoader @Inject constructor(
 	private val adRequest: AdRequest,
 	private val adLoaderBuilder: AdLoader.Builder,
 ) {
 	
-	internal fun loadAd(onAdLoaded: (NativeAd) -> Unit, onAdFailedToLoad: () -> Unit) {
+	internal open fun loadAd(onAdLoaded: (NativeAd) -> Unit, onAdFailedToLoad: () -> Unit) {
 		adLoaderBuilder
 			.forNativeAd { ad: NativeAd ->
 				onAdLoaded(ad)

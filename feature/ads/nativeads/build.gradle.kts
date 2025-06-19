@@ -78,6 +78,8 @@ dependencies {
 	implementation(libs.androidx.ui.viewbinding)
 	implementation(libs.androidx.constraintlayout)
 	testImplementation(libs.junit)
+	testImplementation(libs.mockk)
+	testImplementation(libs.kotlinx.coroutines.test)
 	androidTestImplementation(libs.androidx.junit)
 	androidTestImplementation(libs.androidx.espresso.core)
 	// Google Ads sdk

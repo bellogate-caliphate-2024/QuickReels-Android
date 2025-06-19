@@ -1,5 +1,6 @@
 package com.bellogatecaliphate.nativeads
 
+import androidx.annotation.VisibleForTesting
 import com.google.android.gms.ads.nativead.NativeAd
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.async
@@ -62,4 +63,7 @@ class QuickReelsAdProvider @Inject constructor(
 	private fun checkIfTosStopLoadingAds(): Boolean {
 		return isLoadingAds && adsCache.size >= MAXIMUM_NUMBER_OF_ADS_TO_KEEP_IN_CACHE
 	}
+	
+	@VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+	fun getCacheSize() = adsCache.size
 }
