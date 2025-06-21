@@ -65,8 +65,9 @@ internal fun Contents(
 		previousIndex.intValue = currentIndex
 		previousOffset.intValue = currentOffset
 		
+		// Save list scroll position when user scrolls so that we can use it to preserve the list position:
 		if (! restored) {
-			restored = true // prevent collecting too early
+			restored = true // prevent collecting scroll position too early
 		} else {
 			snapshotFlow {
 				listState.firstVisibleItemIndex to listState.firstVisibleItemScrollOffset
