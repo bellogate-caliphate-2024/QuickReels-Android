@@ -85,6 +85,15 @@ class TimeLineScreenViewModel @Inject constructor(
 		// do something with saved
 	}
 	
+	fun saveScrollPosition(index: Int, offset: Int) {
+		_uiState.update {
+			it.copy(
+				firstVisibleItemIndex = index,
+				firstVisibleItemScrollOffset = offset
+			)
+		}
+	}
+	
 	private fun getContents() {
 		_uiState.update { it.copy(isLoading = true) }
 		val response = getContentsUseCase().cachedIn(viewModelScope).map {

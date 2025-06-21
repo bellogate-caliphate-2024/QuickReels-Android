@@ -77,7 +77,15 @@ private fun QuickReelsScreen() {
 	}
 	Scaffold(
 		bottomBar = {
-			BottomAppBar { route: Route -> navController.navigate(route) }
+			BottomAppBar { route: Route ->
+				navController.navigate(route) {
+					popUpTo(navController.graph.id) {
+						saveState = true
+					}
+					launchSingleTop = true
+					restoreState = true
+				}
+			}
 		}
 	) { innerPadding ->
 		Box(modifier = Modifier.padding(innerPadding)) {

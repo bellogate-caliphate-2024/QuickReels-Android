@@ -39,6 +39,9 @@ fun TimeLineScreen(viewModel: TimeLineScreenViewModel = hiltViewModel()) {
 		},
 		onLoadReplies = { originalCommentId, pageNumber ->
 			viewModel.getRepliesToComment(originalCommentId, pageNumber)
+		},
+		onSaveScrollPosition = { index, offset ->
+			viewModel.saveScrollPosition(index, offset)
 		}
 	)
 }
@@ -51,16 +54,20 @@ private fun TimeLineScreen(
 	onCommentButtonPressed: (contentId: String, totalNumberOfCommentsExpected: Int) -> Unit,
 	onCommentsBottomDialogClosed: () -> Unit = {},
 	onSaveReply: ((originalCommentId: String, reply: String) -> Unit)? = null,
-	onLoadReplies: (originalCommentId: String, pageNumber: Int) -> Unit = { _, _ -> }
+	onLoadReplies: (originalCommentId: String, pageNumber: Int) -> Unit = { _, _ -> },
+	onSaveScrollPosition: (index: Int, offset: Int) -> Unit
 ) {
 	Column {
 		ProgressBar(uiState.isLoading)
 		Contents(
-			uiState.listOfPaginatedContents.collectAsLazyPagingItems(),
-			uiState.adVert,
-			onAdRequest,
-			onLikeButtonPressed,
-			onCommentButtonPressed
+			list = uiState.listOfPaginatedContents.collectAsLazyPagingItems(),
+			advert = uiState.adVert,
+			firstVisibleItemIndex = uiState.firstVisibleItemIndex ?: 0,
+			firstVisibleItemScrollOffset = uiState.firstVisibleItemScrollOffset ?: 0,
+			onAdRequest = onAdRequest,
+			onLikeButtonPressed = onLikeButtonPressed,
+			onCommentButtonPressed = onCommentButtonPressed,
+			onSaveScrollPosition = onSaveScrollPosition
 		)
 		CommentsBottomDialog(
 			visible = uiState.openCommentsBottomSheet,

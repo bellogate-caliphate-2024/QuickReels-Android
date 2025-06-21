@@ -19,5 +19,7 @@ internal data class UiState(
 	val listOfCommentReplies: List<Comment> = emptyList(),
 	val repliesPageNumber: Int? = null,
 	val canLoadMoreReplies: Boolean = false,
-	val adVert: Advert? = null
+	val adVert: Advert? = null,
+	val firstVisibleItemIndex: Int? = null,
+	val firstVisibleItemScrollOffset: Int? = null
 )
