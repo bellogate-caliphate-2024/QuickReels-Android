@@ -82,7 +82,6 @@ private fun QuickReelsScreen() {
 					popUpTo(navController.graph.id) {
 						saveState = true
 					}
-					launchSingleTop = true
 					restoreState = true
 				}
 			}
