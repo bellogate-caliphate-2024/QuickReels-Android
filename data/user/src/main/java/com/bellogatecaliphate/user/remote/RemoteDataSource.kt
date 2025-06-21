@@ -28,7 +28,9 @@ internal class RemoteDataSource @Inject constructor(
 			accountName = "Jeff Emuveyan",
 			profilePictureUrl = "https://firebasestorage.googleapis.com/v0/b/memo-24031.appspot.com/o/p1.jpg?alt=media&token=630134db-35cb-41ea-9698-fa0cd25b80c0",
 			numberOfLikes = "100",
-			numberOfViews = "1000"
+			numberOfViews = "15k",
+			numberOfFollowers = "45k",
+			numberOfFollowing = "30"
 		)
 	}
 	

@@ -7,7 +7,9 @@ data class UserResponse(
 	val accountName: String,
 	val profilePictureUrl: String,
 	val numberOfLikes: String,
-	val numberOfViews: String
+	val numberOfViews: String,
+	val numberOfFollowers: String,
+	val numberOfFollowing: String
 ) {
 	
 	fun toUser(): User {
@@ -16,7 +18,9 @@ data class UserResponse(
 			accountName,
 			profilePictureUrl,
 			numberOfLikes,
-			numberOfViews
+			numberOfViews,
+			numberOfFollowers,
+			numberOfFollowing
 		)
 	}
 }

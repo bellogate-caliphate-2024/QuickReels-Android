@@ -5,6 +5,7 @@ import androidx.compose.ui.unit.sp
 import java.security.SecureRandom
 
 val PLACEHOLDER_IMAGE_40DP = 40.dp
+val PLACEHOLDER_2DP = 2.dp
 val PLACEHOLDER_4DP = 4.dp
 val PLACEHOLDER_8DP = 8.dp
 val PLACEHOLDER_16DP = 16.dp

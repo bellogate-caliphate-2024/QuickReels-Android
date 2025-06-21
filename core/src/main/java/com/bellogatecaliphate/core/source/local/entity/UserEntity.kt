@@ -10,10 +10,20 @@ data class UserEntity(
 	val accountName: String,
 	val profilePictureUrl: String,
 	val numberOfLikes: String,
-	val numberOfViews: String
+	val numberOfViews: String,
+	val numberOfFollowers: String,
+	val numberOfFollowing: String
 ) {
 	
 	fun toUser(): User {
-		return User(email, accountName, profilePictureUrl, numberOfLikes, numberOfViews)
+		return User(
+			email,
+			accountName,
+			profilePictureUrl,
+			numberOfLikes,
+			numberOfViews,
+			numberOfFollowers,
+			numberOfFollowing
+		)
 	}
 }

@@ -2,7 +2,6 @@ package com.bellogatecaliphate.chat.ui.users
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -52,6 +51,6 @@ internal fun User(chatUser: User, onUserSelected: (chatUser: User) -> Unit) {
 @Preview(showBackground = true)
 @Composable
 private fun PreviewUser() {
-	val chatUser = User("", "Jeff Emuveyan", "", "", "")
+	val chatUser = User("", "Jeff Emuveyan", "", "", "", "", "")
 	User(chatUser = chatUser) {}
 }

@@ -24,15 +24,23 @@ internal fun AccountScreen(
 ) {
 	val state = viewModel.uiState.collectAsStateWithLifecycle().value
 	val context = LocalContext.current
-	AccountScreen(uiState = state, onLogin = {
-		viewModel.performLogin {
-			viewModel.firebaseAuthentication.performLogin(context, serverClientId)
-		}
-	})
+	AccountScreen(
+		uiState = state,
+		onLogin = {
+			with(viewModel) {
+				performLogin { firebaseAuthentication.performLogin(context, serverClientId) }
+			}
+		},
+		onOpenProfileDetails = { }
+	)
 }
 
 @Composable
-private fun AccountScreen(uiState: UiState, onLogin: () -> Unit = {}) {
+private fun AccountScreen(
+	uiState: UiState,
+	onLogin: () -> Unit = {},
+	onOpenProfileDetails: (userEmail: String) -> Unit = {},
+) {
 	Box(
 		modifier = Modifier
 			.background(Color.White)
@@ -42,7 +50,8 @@ private fun AccountScreen(uiState: UiState, onLogin: () -> Unit = {}) {
 		if (uiState.isUserLoggedIn) {
 			LoggedInUserAccountScreen(
 				uiState = uiState,
-				listOfContentHistory = uiState.listOfContentHistory.collectAsLazyPagingItems()
+				listOfContentHistory = uiState.listOfContentHistory.collectAsLazyPagingItems(),
+				onOpenProfileDetails = onOpenProfileDetails
 			)
 		} else {
 			AnonymousUserAccountScreen(uiState, onLogin)

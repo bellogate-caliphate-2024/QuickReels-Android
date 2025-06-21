@@ -1,5 +1,8 @@
 package com.bellogatecaliphate.account.ui.composables
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -10,24 +13,30 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import com.bellogatecaliphate.account.R
+import com.bellogatecaliphate.core.model.dto.User
 import com.bellogatecaliphate.core.util.PLACEHOLDER_8DP
 import com.bellogatecaliphate.core.util.PLACEHOLDER_IMAGE_40DP
 
 @Composable
-internal fun UserDetailsSection(userProfilePicture: String, userName: String, userEmail: String) {
+internal fun UserDetailsSection(user: User, onOpenProfileDetails: (userEmail: String) -> Unit) {
 	Column(
 		Modifier
+			.clickable { onOpenProfileDetails(user.email) }
 			.fillMaxWidth()
 			.padding(PLACEHOLDER_8DP)
 	) {
-		Row {
+		Row(verticalAlignment = Alignment.CenterVertically) {
 			AsyncImage(
-				model = userProfilePicture,
+				model = user.profilePictureUrl,
 				contentDescription = "content description",
 				modifier = Modifier
 					.size(PLACEHOLDER_IMAGE_40DP)
@@ -35,9 +44,33 @@ internal fun UserDetailsSection(userProfilePicture: String, userName: String, us
 			)
 			Spacer(modifier = Modifier.width(PLACEHOLDER_8DP))
 			Column {
-				Text(text = userName)
-				Text(text = userEmail, color = colorResource(id = R.color.ash))
+				Text(text = user.accountName)
+				Row(verticalAlignment = Alignment.CenterVertically) {
+					Text(
+						text = "followers ${user.numberOfFollowers}",
+						color = colorResource(id = R.color.ash)
+					)
+					Spacer(Modifier.width(PLACEHOLDER_8DP))
+					Circle(color = colorResource(id = R.color.ash))
+					Spacer(Modifier.width(PLACEHOLDER_8DP))
+					Text(
+						text = "following ${user.numberOfFollowing}",
+						color = colorResource(id = R.color.ash)
+					)
+				}
 			}
 		}
 	}
+}
+
+@Composable
+fun Circle(
+	size: Dp = 8.dp,
+	color: Color
+) {
+	Box(
+		modifier = Modifier
+			.size(size)
+			.background(color, shape = CircleShape)
+	)
 }
