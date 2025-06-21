@@ -19,8 +19,9 @@ import com.bellogatecaliphate.core.util.PLACEHOLDER_16DP
 
 @Composable
 internal fun AccountScreen(
-	serverClientId: String,
 	viewModel: AccountScreenViewModel = hiltViewModel(),
+	serverClientId: String,
+	onLoginSuccessFul: (userProfilePictureUrl: String) -> Unit,
 ) {
 	val state = viewModel.uiState.collectAsStateWithLifecycle().value
 	val context = LocalContext.current
@@ -31,6 +32,7 @@ internal fun AccountScreen(
 				performLogin { firebaseAuthentication.performLogin(context, serverClientId) }
 			}
 		},
+		onLoginSuccessFul = onLoginSuccessFul,
 		onOpenProfileDetails = { }
 	)
 }
@@ -39,6 +41,7 @@ internal fun AccountScreen(
 private fun AccountScreen(
 	uiState: UiState,
 	onLogin: () -> Unit = {},
+	onLoginSuccessFul: (userProfilePictureUrl: String) -> Unit = {},
 	onOpenProfileDetails: (userEmail: String) -> Unit = {},
 ) {
 	Box(
@@ -53,6 +56,7 @@ private fun AccountScreen(
 				listOfContentHistory = uiState.listOfContentHistory.collectAsLazyPagingItems(),
 				onOpenProfileDetails = onOpenProfileDetails
 			)
+			onLoginSuccessFul(uiState.user?.profilePictureUrl ?: "")
 		} else {
 			AnonymousUserAccountScreen(uiState, onLogin)
 		}

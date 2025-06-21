@@ -12,6 +12,10 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -58,6 +62,7 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 private fun QuickReelsScreen() {
+	var currentUserProfilePicture by remember { mutableStateOf("") }
 	val systemUiController = rememberSystemUiController()
 	val darkTheme = isSystemInDarkTheme()
 	val navController = rememberNavController()
@@ -77,14 +82,17 @@ private fun QuickReelsScreen() {
 	}
 	Scaffold(
 		bottomBar = {
-			BottomAppBar { route: Route ->
-				navController.navigate(route) {
-					popUpTo(navController.graph.id) {
-						saveState = true
+			BottomAppBar(
+				currentUserProfilePictureUrl = currentUserProfilePicture,
+				onMenuItemClicked = { route: Route ->
+					navController.navigate(route) {
+						popUpTo(navController.graph.id) {
+							saveState = true
+						}
+						restoreState = true
 					}
-					restoreState = true
 				}
-			}
+			)
 		}
 	) { innerPadding ->
 		Box(modifier = Modifier.padding(innerPadding)) {
@@ -92,7 +100,9 @@ private fun QuickReelsScreen() {
 				timelineNavGraph(navController)
 				createPostNavGraph(navController)
 				chatNavGraph(navController)
-				accountNavGraph(navController, serverClientId)
+				accountNavGraph(navController, serverClientId) {
+					currentUserProfilePicture = it
+				}
 			}
 		}
 	}

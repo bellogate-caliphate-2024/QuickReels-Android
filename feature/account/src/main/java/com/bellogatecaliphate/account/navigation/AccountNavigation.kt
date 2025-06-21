@@ -8,10 +8,17 @@ import com.bellogatecaliphate.account.ui.AccountScreen
 import com.bellogatecaliphate.core.model.routes.account.Account
 import com.bellogatecaliphate.core.model.routes.account.AccountNavGraphRoute
 
-fun NavGraphBuilder.accountNavGraph(navController: NavHostController, serverClientId: String) {
+fun NavGraphBuilder.accountNavGraph(
+	navController: NavHostController,
+	serverClientId: String,
+	onLoginSuccessFul: (userProfilePictureUrl: String) -> Unit
+) {
 	navigation<AccountNavGraphRoute>(startDestination = Account::class) {
 		composable<Account> {
-			AccountScreen(serverClientId)
+			AccountScreen(
+				serverClientId = serverClientId,
+				onLoginSuccessFul = onLoginSuccessFul
+			)
 		}
 	}
 }

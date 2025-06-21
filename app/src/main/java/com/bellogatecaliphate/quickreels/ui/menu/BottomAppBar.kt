@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -24,7 +25,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.testTag
@@ -36,6 +39,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil3.compose.AsyncImage
 import com.bellogatecaliphate.core.model.routes.Route
 import com.bellogatecaliphate.quickreels.R
 import com.bellogatecaliphate.quickreels.model.Screen
@@ -52,6 +56,7 @@ private val menuItems = listOf(
 @Composable
 internal fun BottomAppBar(
 	modifier: Modifier = Modifier,
+	currentUserProfilePictureUrl: String? = null,
 	items: List<Screen> = menuItems,
 	onMenuItemClicked: (Route) -> Unit = {}
 ) {
@@ -73,7 +78,8 @@ internal fun BottomAppBar(
 					isSelected = menuItems[it].route == menuItems[indexOfCurrentSelectedMenuItem].route,
 					selectedImageId = menuItems[it].selectedImageId,
 					unSelectedImageId = menuItems[it].unSelectedImageId,
-					title = menuItems[it].title
+					title = menuItems[it].title,
+					currentUserProfilePictureUrl = currentUserProfilePictureUrl
 				) {
 					indexOfCurrentSelectedMenuItem = it
 					xAxisPointOnScreenToSlideTo =
@@ -118,6 +124,7 @@ private fun MenuItem(
 	@DrawableRes selectedImageId: Int = R.drawable.code,
 	@DrawableRes unSelectedImageId: Int = R.drawable.code,
 	@StringRes title: Int = R.string.home,
+	currentUserProfilePictureUrl: String? = null,
 	onClick: () -> Unit = {}
 ) {
 	
@@ -133,10 +140,16 @@ private fun MenuItem(
 		}
 	) {
 		if (isAccountMenuItem) {
-			Image(
-				modifier = Modifier.size(24.dp),
-				painter = painterResource(id = com.bellogatecaliphate.core.R.drawable.google),
-				contentDescription = ""
+			val profilePicture = if (currentUserProfilePictureUrl.isNullOrEmpty()) {
+				com.bellogatecaliphate.core.R.drawable.google
+			} else currentUserProfilePictureUrl
+			AsyncImage(
+				modifier = Modifier
+					.size(24.dp)
+					.clip(CircleShape),
+				model = profilePicture,
+				contentDescription = "Profile Image",
+				contentScale = ContentScale.Crop,
 			)
 			Spacer(modifier = Modifier.height(1.dp))
 		} else {

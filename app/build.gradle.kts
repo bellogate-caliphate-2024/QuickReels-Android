@@ -133,6 +133,9 @@ dependencies {
 	implementation(libs.bottom.navigation)
 	// serialization
 	implementation(libs.kotlinx.serialization.json)
+	// Coil
+	implementation(libs.coil.compose)
+	implementation(libs.coil.network.okhttp)
 	// mockWebServer
 	androidTestImplementation(libs.mockwebserver)
 	// Google Ads sdk
