@@ -93,6 +93,7 @@ dependencies {
 	implementation(project(":feature:timeline"))
 	implementation(project(":feature:chat"))
 	implementation(project(":feature:ads:appopenad"))
+	implementation(project(":domain"))
 	implementation(project(":core"))
 	implementation(libs.androidx.core.ktx)
 	implementation(libs.androidx.lifecycle.runtime.ktx)

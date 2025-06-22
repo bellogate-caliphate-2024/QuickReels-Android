@@ -5,7 +5,7 @@ import com.bellogatecaliphate.user.remote.model.UserResponse
 
 interface IUserRepository {
 	
-	fun getUserEmail(): String
+	fun getUserEmail(): String?
 	
 	suspend fun getUserFromRemote(email: String): UserResponse?
 	

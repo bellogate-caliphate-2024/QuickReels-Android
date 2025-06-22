@@ -10,7 +10,7 @@ class LikeContentUseCase @Inject constructor(
 ) {
 	
 	suspend operator fun invoke(contentId: String, isLiked: Boolean): Boolean {
-		val userEmail = userRepository.getUserEmail()
+		val userEmail = userRepository.getUserEmail() ?: ""
 		return contentRepository.likeContent(userEmail, contentId, isLiked)
 	}
 }

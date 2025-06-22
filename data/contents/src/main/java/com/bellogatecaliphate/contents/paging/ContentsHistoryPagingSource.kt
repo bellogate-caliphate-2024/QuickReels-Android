@@ -21,7 +21,7 @@ internal class ContentsHistoryPagingSource @Inject constructor(
 			// Start refresh at page 1 if undefined.
 			val nextPage = params.key ?: 1
 			val response = remoteSource.getContentsHistoryList(
-				userRepository.getUserEmail(),
+				userRepository.getUserEmail() ?: "",
 				nextPage
 			)
 			val list = response?.listOfContents ?: throw Exception()

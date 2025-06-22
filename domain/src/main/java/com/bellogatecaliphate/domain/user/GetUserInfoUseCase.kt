@@ -6,8 +6,8 @@ import javax.inject.Inject
 
 class GetUserInfoUseCase @Inject constructor(private val userRepository: IUserRepository) {
 	
-	suspend operator fun invoke(): User? {
-		val userEmail = userRepository.getUserEmail()
+	suspend operator fun invoke(userEmail: String? = userRepository.getUserEmail()): User? {
+		if (userEmail == null) return null
 		val user = userRepository.getUserFromRemote(userEmail)
 		return user?.toUser()
 	}

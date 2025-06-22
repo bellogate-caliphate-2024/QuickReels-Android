@@ -3,6 +3,7 @@ package com.bellogatecaliphate.quickreels.ui
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -12,16 +13,13 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTagsAsResourceId
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import com.bellogatecaliphate.account.navigation.accountNavGraph
@@ -39,6 +37,8 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 	
+	private val viewModel: MainActivityViewModel by viewModels()
+	
 	@OptIn(ExperimentalComposeUiApi::class)
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
@@ -53,7 +53,11 @@ class MainActivity : ComponentActivity() {
 						},
 					color = MaterialTheme.colorScheme.background
 				) {
-					QuickReelsScreen()
+					val uiState = viewModel.uiState.collectAsStateWithLifecycle()
+					QuickReelsScreen(
+						uiState = uiState.value,
+						onProfilePictureChanged = viewModel::onProfilePictureChanged
+					)
 				}
 			}
 		}
@@ -61,8 +65,10 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-private fun QuickReelsScreen() {
-	var currentUserProfilePicture by remember { mutableStateOf("") }
+private fun QuickReelsScreen(
+	uiState: UiState,
+	onProfilePictureChanged: (profilePictureUrl: String?) -> Unit = {}
+) {
 	val systemUiController = rememberSystemUiController()
 	val darkTheme = isSystemInDarkTheme()
 	val navController = rememberNavController()
@@ -83,7 +89,7 @@ private fun QuickReelsScreen() {
 	Scaffold(
 		bottomBar = {
 			BottomAppBar(
-				currentUserProfilePictureUrl = currentUserProfilePicture,
+				currentUserProfilePictureUrl = uiState.user?.profilePictureUrl,
 				onMenuItemClicked = { route: Route ->
 					navController.navigate(route) {
 						popUpTo(navController.graph.id) {
@@ -101,7 +107,7 @@ private fun QuickReelsScreen() {
 				createPostNavGraph(navController)
 				chatNavGraph(navController)
 				accountNavGraph(navController, serverClientId) {
-					currentUserProfilePicture = it
+					onProfilePictureChanged(it)
 				}
 			}
 		}

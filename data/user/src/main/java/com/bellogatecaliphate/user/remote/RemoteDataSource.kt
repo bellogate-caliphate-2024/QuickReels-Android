@@ -14,7 +14,7 @@ internal class RemoteDataSource @Inject constructor(
 	private val api: UserApi
 ) : IRemoteDataSource {
 	
-	override fun getUserEmail(): String = firebaseDataSource.getUserEmail()
+	override fun getUserEmail(): String? = firebaseDataSource.getUserEmail()
 	
 	override suspend fun getUsers(page: Int, numberOfUsersPerPage: Int): UsersResponse? =
 			withContext(ioDispatcher) {

@@ -14,7 +14,7 @@ internal class UserRepository @Inject constructor(
 	private val userPagingSource: UsersPagingSource
 ) : IUserRepository {
 	
-	override fun getUserEmail(): String = userRemoteDataSource.getUserEmail()
+	override fun getUserEmail(): String? = userRemoteDataSource.getUserEmail()
 	
 	override suspend fun getUserFromRemote(email: String): UserResponse? {
 		return userRemoteDataSource.getUser(email)

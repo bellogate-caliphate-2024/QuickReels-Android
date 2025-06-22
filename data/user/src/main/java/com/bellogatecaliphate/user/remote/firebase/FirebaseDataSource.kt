@@ -7,8 +7,8 @@ internal class FirebaseDataSource @Inject constructor(
 	private val auth: FirebaseAuth,
 ) {
 	
-	fun getUserEmail(): String {
-		return auth.currentUser?.email ?: ""
+	fun getUserEmail(): String? {
+		return auth.currentUser?.email
 	}
 	
 	fun isUserLoggedIn(): Boolean {
