@@ -29,6 +29,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.colorResource
@@ -40,6 +41,8 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
+import coil3.request.ImageRequest
+import coil3.request.crossfade
 import com.bellogatecaliphate.core.model.routes.Route
 import com.bellogatecaliphate.quickreels.R
 import com.bellogatecaliphate.quickreels.model.Screen
@@ -127,7 +130,7 @@ private fun MenuItem(
 	currentUserProfilePictureUrl: String? = null,
 	onClick: () -> Unit = {}
 ) {
-	
+	val context = LocalContext.current
 	val selectedColor = colorResource(id = com.bellogatecaliphate.core.R.color.quickreels_purple)
 	val unselectedColor = colorResource(id = R.color.default_ash)
 	val isAccountMenuItem = title == R.string.account
@@ -147,7 +150,10 @@ private fun MenuItem(
 				modifier = Modifier
 					.size(24.dp)
 					.clip(CircleShape),
-				model = profilePicture,
+				model = ImageRequest.Builder(context)
+					.data(profilePicture)
+					.crossfade(2_000) // enables fade animation
+					.build(),
 				contentDescription = "Profile Image",
 				contentScale = ContentScale.Crop,
 			)
