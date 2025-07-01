@@ -22,6 +22,7 @@ internal fun AccountScreen(
 	viewModel: AccountScreenViewModel = hiltViewModel(),
 	serverClientId: String,
 	onLoginSuccessFul: (userProfilePictureUrl: String) -> Unit,
+	onOpenProfileDetails: (userEmail: String) -> Unit = {}
 ) {
 	val state = viewModel.uiState.collectAsStateWithLifecycle().value
 	val context = LocalContext.current
@@ -33,7 +34,7 @@ internal fun AccountScreen(
 			}
 		},
 		onLoginSuccessFul = onLoginSuccessFul,
-		onOpenProfileDetails = { }
+		onOpenProfileDetails = onOpenProfileDetails
 	)
 }
 

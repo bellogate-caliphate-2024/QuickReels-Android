@@ -6,7 +6,7 @@ import com.bellogatecaliphate.core.model.dto.User
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 
-internal data class UiState(
+data class UiState(
 	val isLoading: Boolean = false,
 	val isUserLoggedIn: Boolean = false,
 	val user: User? = null,

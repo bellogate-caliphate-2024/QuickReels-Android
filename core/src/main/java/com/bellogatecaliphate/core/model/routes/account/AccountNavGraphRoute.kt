@@ -9,8 +9,12 @@ import kotlinx.serialization.Serializable
 
 // Route for nested graph
 @Serializable
-data object AccountNavGraphRoute : Route()
-
-// Routes inside nested graph
-@Serializable
-data object Account
+data object AccountNavGraphRoute : Route() {
+	
+	// Routes inside nested graph
+	@Serializable
+	data object Account
+	
+	@Serializable
+	data class ProfileDetail(val userEmail: String)
+}
