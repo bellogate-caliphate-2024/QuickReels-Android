@@ -43,7 +43,7 @@ internal fun ProfileDetailScreen(userEmail: String, onClose: () -> Unit) {
 }
 
 @Composable
-internal fun ProfileDetailScreen(uiState: UiState, onClose: () -> Unit, onRetry: () -> Unit) {
+private fun ProfileDetailScreen(uiState: UiState, onClose: () -> Unit, onRetry: () -> Unit) {
 	val unableToGetUserInfo = uiState.unableToGetUser
 	
 	Scaffold(
