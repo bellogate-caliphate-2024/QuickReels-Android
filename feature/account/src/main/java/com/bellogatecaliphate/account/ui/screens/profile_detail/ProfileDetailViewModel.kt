@@ -2,7 +2,8 @@ package com.bellogatecaliphate.account.ui.screens.profile_detail
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.bellogatecaliphate.domain.user.GetUserEmailUseCase
+import com.bellogatecaliphate.domain.user.CheckFollowingUseCase
+import com.bellogatecaliphate.domain.user.GetLoggedInUserEmailUseCase
 import com.bellogatecaliphate.domain.user.GetUserInfoUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -13,8 +14,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ProfileDetailViewModel @Inject constructor(
-	private val getUserEmailUseCase: GetUserEmailUseCase,
-	private val getUserInfoUseCase: GetUserInfoUseCase
+	private val getLoggedInUserEmailUseCase: GetLoggedInUserEmailUseCase,
+	private val getUserInfoUseCase: GetUserInfoUseCase,
+	private val checkFollowingUseCase: CheckFollowingUseCase
 ) : ViewModel() {
 	
 	private val _uiState = MutableStateFlow(UiState())
@@ -23,12 +25,17 @@ class ProfileDetailViewModel @Inject constructor(
 	fun getUserInfo(userEmail: String) = viewModelScope.launch {
 		_uiState.update { it.copy(isLoading = true, unableToGetUser = false) }
 		val user = getUserInfoUseCase(userEmail)
+		val userIsAFollower = checkFollowingUseCase(
+			loggedInUserEmail = getLoggedInUserEmailUseCase() ?: "",
+			emailOfUserToCheckFollowingStatus = userEmail
+		)
 		_uiState.update {
 			it.copy(
 				isLoading = false,
 				user = user,
 				unableToGetUser = user == null,
-				accountBelongsToLoggedInUser = getUserEmailUseCase() == userEmail
+				isFollowing = userIsAFollower,
+				accountBelongsToLoggedInUser = getLoggedInUserEmailUseCase() == userEmail
 			)
 		}
 	}

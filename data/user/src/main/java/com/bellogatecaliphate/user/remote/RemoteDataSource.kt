@@ -42,4 +42,26 @@ internal class RemoteDataSource @Inject constructor(
 			}
 	
 	override fun isUserLoggedIn(): Boolean = firebaseDataSource.isUserLoggedIn()
+	
+	override suspend fun followOrUnfollowUser(
+		userEmail: String,
+		emailOfUserToFollow: String,
+		isFollowing: Boolean
+	): Boolean = withContext(ioDispatcher) {
+		api.followOrUnfollowUser(
+			userEmail = userEmail,
+			emailOfUserToFollow = emailOfUserToFollow,
+			isFollowing = isFollowing
+		)
+	}
+	
+	override suspend fun checkIfUserIsFollowing(
+		loggedInUserEmail: String,
+		emailOfUserToCheckFollowingStatus: String
+	): Boolean = withContext(ioDispatcher) {
+		api.checkIfUserIsFollowing(
+			loggedInUserEmail = loggedInUserEmail,
+			emailOfUserToCheckFollowingStatus = emailOfUserToCheckFollowingStatus
+		)
+	}
 }

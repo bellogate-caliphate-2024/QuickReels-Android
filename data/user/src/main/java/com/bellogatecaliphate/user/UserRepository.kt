@@ -28,4 +28,27 @@ internal class UserRepository @Inject constructor(
 			Pager(PagingConfig(pageSize = 10)) { userPagingSource }
 	
 	override fun isUserLoggedIn(): Boolean = userRemoteDataSource.isUserLoggedIn()
+	
+	override suspend fun followOrUnfollowUser(
+		userEmail: String,
+		emailOfUserToFollow: String,
+		isFollowing: Boolean
+	): Boolean {
+		return userRemoteDataSource.followOrUnfollowUser(
+			userEmail = userEmail,
+			emailOfUserToFollow = emailOfUserToFollow,
+			isFollowing = isFollowing
+		)
+	}
+	
+	override suspend fun checkIfUserIsFollowing(
+		loggedInUserEmail: String,
+		emailOfUserToCheckFollowingStatus: String
+	): Boolean {
+		return userRemoteDataSource.checkIfUserIsFollowing(
+			loggedInUserEmail = loggedInUserEmail,
+			emailOfUserToCheckFollowingStatus = emailOfUserToCheckFollowingStatus
+		)
+	}
+	
 }

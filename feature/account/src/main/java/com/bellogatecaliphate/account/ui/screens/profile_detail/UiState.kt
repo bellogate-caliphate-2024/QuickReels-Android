@@ -6,5 +6,6 @@ data class UiState(
 	val isLoading: Boolean = false,
 	val unableToGetUser: Boolean = false,
 	val user: User? = null,
+	val isFollowing: Boolean? = null,
 	val accountBelongsToLoggedInUser: Boolean = false,
 )

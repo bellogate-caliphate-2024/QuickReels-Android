@@ -60,8 +60,8 @@ private fun ProfileDetailScreen(uiState: UiState, onClose: () -> Unit, onRetry: 
 			LoadingScreen(uiState.isLoading)
 			UserInfoScreen(
 				user = uiState.user,
-				accountBelongsToLoggedInUser = false,
-				isFollowing = false,
+				accountBelongsToLoggedInUser = uiState.accountBelongsToLoggedInUser,
+				isFollowing = uiState.isFollowing ?: false,
 				onFollowClicked = {},
 				onUnfollowClicked = {}
 			)

@@ -14,4 +14,15 @@ internal interface IRemoteDataSource {
 	suspend fun searchForUserByName(userName: String): List<UserResponse>
 	
 	fun isUserLoggedIn(): Boolean
+	
+	suspend fun followOrUnfollowUser(
+		userEmail: String,
+		emailOfUserToFollow: String,
+		isFollowing: Boolean
+	): Boolean
+	
+	suspend fun checkIfUserIsFollowing(
+		loggedInUserEmail: String,
+		emailOfUserToCheckFollowingStatus: String
+	): Boolean
 }

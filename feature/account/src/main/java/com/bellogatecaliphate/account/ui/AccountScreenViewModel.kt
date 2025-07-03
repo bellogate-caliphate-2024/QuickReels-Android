@@ -7,7 +7,7 @@ import com.bellogatecaliphate.account.model.UiState
 import com.bellogatecaliphate.account.ui.authentication.FirebaseAuthentication
 import com.bellogatecaliphate.domain.contents.GetContentsHistoryUseCase
 import com.bellogatecaliphate.domain.user.CheckUserLoginUseCase
-import com.bellogatecaliphate.domain.user.GetUserEmailUseCase
+import com.bellogatecaliphate.domain.user.GetLoggedInUserEmailUseCase
 import com.bellogatecaliphate.domain.user.GetUserInfoUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -21,7 +21,7 @@ class AccountScreenViewModel @Inject constructor(
 	private val getContentsHistoryUseCase: GetContentsHistoryUseCase,
 	private val checkUserLoginUseCase: CheckUserLoginUseCase,
 	private val getUserInfoUseCase: GetUserInfoUseCase,
-	private val getUserEmailUseCase: GetUserEmailUseCase,
+	private val getLoggedInUserEmailUseCase: GetLoggedInUserEmailUseCase,
 	val firebaseAuthentication: FirebaseAuthentication
 ) : ViewModel() {
 	
@@ -48,7 +48,7 @@ class AccountScreenViewModel @Inject constructor(
 		val isUserLoggedIn = checkUserLoginUseCase()
 		_uiState.update { it.copy(isUserLoggedIn = isUserLoggedIn) }
 		if (isUserLoggedIn) {
-			getUserEmailUseCase()?.let { getUserDetailsAndContentHistory(it) }
+			getLoggedInUserEmailUseCase()?.let { getUserDetailsAndContentHistory(it) }
 		}
 	}
 	
