@@ -13,7 +13,7 @@ fun NavGraphBuilder.timelineNavGraph(
 ) {
 	navigation<TimelineNavGraphRoute>(startDestination = TimelineNavGraphRoute.Timeline::class) {
 		composable<TimelineNavGraphRoute.Timeline> {
-			TimeLineScreen()
+			TimeLineScreen(onOpenAccountDetails = onOpenAccountDetails)
 		}
 	}
 }

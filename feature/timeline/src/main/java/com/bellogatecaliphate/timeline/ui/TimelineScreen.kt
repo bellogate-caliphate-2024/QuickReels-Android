@@ -18,7 +18,10 @@ import com.bellogatecaliphate.timeline.model.UiState
 import com.bellogatecaliphate.timeline.ui.content.Contents
 
 @Composable
-fun TimeLineScreen(viewModel: TimeLineScreenViewModel = hiltViewModel()) {
+fun TimeLineScreen(
+	viewModel: TimeLineScreenViewModel = hiltViewModel(),
+	onOpenAccountDetails: (accountUserEmail: String) -> Unit
+) {
 	val uiState = viewModel.uiState.collectAsStateWithLifecycle()
 	TimeLineScreen(
 		uiState = uiState.value,
@@ -42,7 +45,8 @@ fun TimeLineScreen(viewModel: TimeLineScreenViewModel = hiltViewModel()) {
 		},
 		onSaveScrollPosition = { index, offset ->
 			viewModel.saveScrollPosition(index, offset)
-		}
+		},
+		onOpenAccountDetails = onOpenAccountDetails
 	)
 }
 
@@ -55,7 +59,8 @@ private fun TimeLineScreen(
 	onCommentsBottomDialogClosed: () -> Unit = {},
 	onSaveReply: ((originalCommentId: String, reply: String) -> Unit)? = null,
 	onLoadReplies: (originalCommentId: String, pageNumber: Int) -> Unit = { _, _ -> },
-	onSaveScrollPosition: (index: Int, offset: Int) -> Unit
+	onSaveScrollPosition: (index: Int, offset: Int) -> Unit,
+	onOpenAccountDetails: (accountUserEmail: String) -> Unit
 ) {
 	Column {
 		ProgressBar(uiState.isLoading)
@@ -67,7 +72,8 @@ private fun TimeLineScreen(
 			onAdRequest = onAdRequest,
 			onLikeButtonPressed = onLikeButtonPressed,
 			onCommentButtonPressed = onCommentButtonPressed,
-			onSaveScrollPosition = onSaveScrollPosition
+			onSaveScrollPosition = onSaveScrollPosition,
+			onOpenAccountDetails = onOpenAccountDetails
 		)
 		CommentsBottomDialog(
 			visible = uiState.openCommentsBottomSheet,

@@ -17,19 +17,26 @@ internal fun ContentUi(
 	@PreviewParameter(ContentPreviewParameter::class) content: Content,
 	modifier: Modifier = Modifier,
 	onLikeButtonPressed: (contentId: String, isLiked: Boolean) -> Unit = { _, _ -> },
-	onCommentButtonPressed: (contentId: String, totalNumberOfCommentsExpected: Int) -> Unit = { _, _ -> }
+	onCommentButtonPressed: (contentId: String, totalNumberOfCommentsExpected: Int) -> Unit = { _, _ -> },
+	onOpenAccountDetails: (accountUserEmail: String) -> Unit = { _ -> }
 ) {
 	Column(modifier) {
-		UserDetailsSection(content.userProfilePicture, content.userName, content.date)
+		UserDetailsSection(
+			userEmail = content.userId,
+			userProfilePicture = content.userProfilePicture,
+			userName = content.userName,
+			date = content.date,
+			onOpenAccountDetails = onOpenAccountDetails,
+		)
 		VideoSection(Modifier.weight(1f), content.videoUrl, content.thumbnailUrl)
 		BottomSection(
-			content.id,
-			content.caption,
-			content.numberOfLikes,
-			content.numberOfComments,
-			content.isLiked,
-			onLikeButtonPressed,
-			onCommentButtonPressed
+			contentId = content.id,
+			caption = content.caption,
+			numberOfLikes = content.numberOfLikes,
+			numberOfComments = content.numberOfComments,
+			isLiked = content.isLiked,
+			onLikeButtonPressed = onLikeButtonPressed,
+			onCommentButtonPressed = onCommentButtonPressed
 		)
 	}
 }

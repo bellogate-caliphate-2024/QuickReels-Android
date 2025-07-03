@@ -30,7 +30,8 @@ internal fun Contents(
 	onAdRequest: () -> Unit,
 	onLikeButtonPressed: (contentId: String, isLiked: Boolean) -> Unit,
 	onCommentButtonPressed: (contentId: String, totalNumberOfCommentsExpected: Int) -> Unit,
-	onSaveScrollPosition: (index: Int, offset: Int) -> Unit
+	onSaveScrollPosition: (index: Int, offset: Int) -> Unit,
+	onOpenAccountDetails: (accountUserEmail: String) -> Unit
 ) {
 	if (list == null) return
 	val listState = remember {
@@ -92,10 +93,11 @@ internal fun Contents(
 				NativeAd(Modifier.fillParentMaxSize(), advert, onAdRequest)
 			} else {
 				ContentUi(
-					content,
-					Modifier.fillParentMaxSize(),
-					onLikeButtonPressed,
-					onCommentButtonPressed
+					content = content,
+					modifier = Modifier.fillParentMaxSize(),
+					onLikeButtonPressed = onLikeButtonPressed,
+					onCommentButtonPressed = onCommentButtonPressed,
+					onOpenAccountDetails = onOpenAccountDetails
 				)
 			}
 		}

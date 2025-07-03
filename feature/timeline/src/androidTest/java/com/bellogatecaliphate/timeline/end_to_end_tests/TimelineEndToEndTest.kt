@@ -31,7 +31,7 @@ class TimelineEndToEndTest {
 	@Test
 	fun z() {
 		composeTestRule.setContent {
-			TimeLineScreen()
+			TimeLineScreen(onOpenAccountDetails = onOpenAccountDetails)
 		}
 		composeTestRule.onNodeWithText("Continue").performClick()
 	}
