@@ -59,9 +59,10 @@ internal class RemoteDataSource @Inject constructor(
 		loggedInUserEmail: String,
 		emailOfUserToCheckFollowingStatus: String
 	): Boolean = withContext(ioDispatcher) {
-		api.checkIfUserIsFollowing(
+		/*api.checkIfUserIsFollowing(
 			loggedInUserEmail = loggedInUserEmail,
 			emailOfUserToCheckFollowingStatus = emailOfUserToCheckFollowingStatus
-		)
+		)*/
+		false
 	}
 }
