@@ -32,7 +32,7 @@ internal fun AccountScreen(
 	LaunchedEffect(Unit) { viewModel.findUser(userEmail) }
 	AccountScreen(
 		uiState = state,
-		showBackButton = userEmail == null,
+		showBackButton = userEmail != null,
 		onLogin = {
 			with(viewModel) {
 				performLogin { firebaseAuthentication.performLogin(context, serverClientId) }
