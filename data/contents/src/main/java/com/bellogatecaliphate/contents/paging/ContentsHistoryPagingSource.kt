@@ -5,16 +5,16 @@ import androidx.paging.PagingState
 import com.bellogatecaliphate.contents.remote.IRemoteSource
 import com.bellogatecaliphate.contents.remote.model.ContentResponse
 import dagger.assisted.Assisted
+import dagger.assisted.AssistedInject
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
-import javax.inject.Inject
 
 /**
  * Because we need to pass in the userEmail to the this class, we will use an @Assisted annotation
  * to manually inject it. See ContentsRepository for how we then inject this class, providing the userEmail,
  * using a factory.
  **/
-internal class ContentsHistoryPagingSource @Inject constructor(
+internal class ContentsHistoryPagingSource @AssistedInject constructor(
 	private val ioDispatchers: CoroutineDispatcher,
 	private val remoteSource: IRemoteSource,
 	@Assisted private val userEmail: String
