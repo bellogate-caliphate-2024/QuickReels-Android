@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -52,7 +53,11 @@ internal fun UserDetailsSection(
 		Spacer(modifier = Modifier.width(PLACEHOLDER_8DP))
 		Column {
 			Text(text = userName)
-			Text(text = date, color = Color.LightGray)
+			Text(
+				style = MaterialTheme.typography.bodySmall,
+				text = date,
+				color = Color.LightGray
+			)
 		}
 	}
 }

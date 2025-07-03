@@ -20,6 +20,13 @@ val Typography = Typography(
 		lineHeight = 24.sp,
 		letterSpacing = 0.5.sp
 	),
+	bodySmall = TextStyle(
+		fontFamily = FontFamily(Font(R.font.lato_regular)),
+		fontWeight = FontWeight.Normal,
+		fontSize = 14.sp,
+		lineHeight = 20.sp,
+		letterSpacing = 0.25.sp
+	),
 	// labelLarge: is typically the android default for Text composables inside Buttons.
 	labelLarge = TextStyle(
 		fontFamily = FontFamily(Font(R.font.lato_regular)),

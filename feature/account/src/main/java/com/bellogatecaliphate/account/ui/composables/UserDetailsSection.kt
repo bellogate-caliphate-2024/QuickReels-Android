@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -47,6 +48,7 @@ internal fun UserDetailsSection(user: User, onOpenProfileDetails: (userEmail: St
 				Text(text = user.accountName)
 				Row(verticalAlignment = Alignment.CenterVertically) {
 					Text(
+						style = MaterialTheme.typography.bodySmall,
 						text = "followers ${user.numberOfFollowers}",
 						color = colorResource(id = R.color.ash)
 					)
@@ -54,6 +56,7 @@ internal fun UserDetailsSection(user: User, onOpenProfileDetails: (userEmail: St
 					Circle(color = colorResource(id = R.color.ash))
 					Spacer(Modifier.width(PLACEHOLDER_8DP))
 					Text(
+						style = MaterialTheme.typography.bodySmall,
 						text = "following ${user.numberOfFollowing}",
 						color = colorResource(id = R.color.ash)
 					)
