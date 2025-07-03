@@ -23,6 +23,28 @@ internal class UserApiImpl @Inject constructor(private val retrofit: Retrofit) :
 	override suspend fun searchForUserByName(userName: String): List<UserResponse> {
 		return retrofit.create(UserApi::class.java).searchForUserByName(userName)
 	}
+	
+	override suspend fun followOrUnfollowUser(
+		userEmail: String,
+		emailOfUserToFollow: String,
+		isFollowing: Boolean
+	): Boolean {
+		return retrofit.create(UserApi::class.java).followOrUnfollowUser(
+			userEmail = userEmail,
+			emailOfUserToFollow = emailOfUserToFollow,
+			isFollowing = isFollowing
+		)
+	}
+	
+	override suspend fun checkIfUserIsFollowing(
+		loggedInUserEmail: String,
+		emailOfUserToCheckFollowingStatus: String
+	): Boolean {
+		return retrofit.create(UserApi::class.java).checkIfUserIsFollowing(
+			loggedInUserEmail = loggedInUserEmail,
+			emailOfUserToCheckFollowingStatus = emailOfUserToCheckFollowingStatus
+		)
+	}
 }
 
 @Module
