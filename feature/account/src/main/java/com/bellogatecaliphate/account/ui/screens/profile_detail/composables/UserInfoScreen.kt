@@ -1,9 +1,9 @@
 package com.bellogatecaliphate.account.ui.screens.profile_detail.composables
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -24,30 +24,42 @@ internal fun UserInfoScreen(
 	onUnfollowClicked: () -> Unit
 ) {
 	if (user == null) return
-	Column(
+	LazyColumn(
 		modifier = Modifier
 			.background(color = Color.White)
 			.fillMaxSize(),
 		horizontalAlignment = Alignment.CenterHorizontally,
 	) {
-		AsyncImage(
-			model = user.profilePictureUrl,
-			contentDescription = "content description",
-			modifier = Modifier
-				.size(PLACEHOLDER_200DP)
-				.clip(CircleShape)
-		)
-		CountSectionList(
-			numberOfFollowers = user.numberOfFollowers,
-			numberOfFollowing = user.numberOfFollowing,
-			numberOfViews = user.numberOfViews
-		)
-		FollowAndUnfollowButtonsSection(
-			show = accountBelongsToLoggedInUser.not(),
-			isFollowing = isFollowing,
-			onFollowClicked = onFollowClicked,
-			onUnfollowClicked = onUnfollowClicked
-		)
+		item {
+			AsyncImage(
+				model = user.profilePictureUrl,
+				contentDescription = "content description",
+				modifier = Modifier
+					.size(PLACEHOLDER_200DP)
+					.clip(CircleShape)
+			)
+		}
+		item {
+			CountSectionList(
+				numberOfFollowers = user.numberOfFollowers,
+				numberOfFollowing = user.numberOfFollowing,
+				numberOfViews = user.numberOfViews
+			)
+		}
+		item {
+			FollowAndUnfollowButtonsSection(
+				show = accountBelongsToLoggedInUser.not(),
+				isFollowing = isFollowing,
+				onFollowClicked = onFollowClicked,
+				onUnfollowClicked = onUnfollowClicked
+			)
+		}
+		item {
+			UserAccountInformationSection(
+				show = accountBelongsToLoggedInUser,
+				user = user
+			)
+		}
 	}
 }
 
