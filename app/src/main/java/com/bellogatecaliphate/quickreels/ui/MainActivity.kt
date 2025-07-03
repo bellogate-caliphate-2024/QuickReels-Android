@@ -25,6 +25,7 @@ import androidx.navigation.compose.rememberNavController
 import com.bellogatecaliphate.account.navigation.accountNavGraph
 import com.bellogatecaliphate.chat.navigation.chatNavGraph
 import com.bellogatecaliphate.core.model.routes.Route
+import com.bellogatecaliphate.core.model.routes.account.AccountNavGraphRoute
 import com.bellogatecaliphate.core.model.routes.timeline.TimelineNavGraphRoute
 import com.bellogatecaliphate.core.ui.theme.QuickReelsTheme
 import com.bellogatecaliphate.create_post.navigation.createPostNavGraph
@@ -103,7 +104,11 @@ private fun QuickReelsScreen(
 	) { innerPadding ->
 		Box(modifier = Modifier.padding(innerPadding)) {
 			NavHost(navController, startDestination = TimelineNavGraphRoute::class) {
-				timelineNavGraph(navController)
+				timelineNavGraph(
+					navController = navController,
+					onOpenAccountDetails = { accountUserEmail ->
+						navController.navigate(AccountNavGraphRoute.Account(accountUserEmail))
+					})
 				createPostNavGraph(navController)
 				chatNavGraph(navController)
 				accountNavGraph(navController, serverClientId) {

@@ -2,23 +2,27 @@ package com.bellogatecaliphate.contents
 
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
-import com.bellogatecaliphate.contents.paging.ContentsHistoryPagingSource
 import com.bellogatecaliphate.contents.paging.ContentsPagingSource
+import com.bellogatecaliphate.contents.paging.di.ContentsHistoryPagingSourceFactory
 import com.bellogatecaliphate.contents.remote.IRemoteSource
 import javax.inject.Inject
 
+/**
+ * Because we need to pass in the userEmail to the paging source, we will user a factory to inject
+ * this ContentsHistoryPagingSource.
+ **/
 internal class ContentsRepository @Inject constructor(
 	private val remoteSource: IRemoteSource,
 	private val contentsPagingSource: ContentsPagingSource,
-	private val contentsHistoryPagingSource: ContentsHistoryPagingSource,
+	private val contentsHistoryPagingSourceFactory: ContentsHistoryPagingSourceFactory,
 ) : IContentsRepository {
 	
 	override fun getPaginatedContents(page: Int) = Pager(config = PagingConfig(pageSize = 10)) {
 		contentsPagingSource
 	}
 	
-	override fun getPaginatedContentsHistory() =
-			Pager(PagingConfig(pageSize = 10)) { contentsHistoryPagingSource }
+	override fun getPaginatedContentsHistory(userEmail: String) =
+			Pager(PagingConfig(pageSize = 10)) { contentsHistoryPagingSourceFactory.create(userEmail) }
 	
 	override suspend fun likeContent(
 		userEmail: String,

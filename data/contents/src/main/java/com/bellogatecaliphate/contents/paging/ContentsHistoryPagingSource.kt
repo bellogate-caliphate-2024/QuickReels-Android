@@ -4,15 +4,20 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.bellogatecaliphate.contents.remote.IRemoteSource
 import com.bellogatecaliphate.contents.remote.model.ContentResponse
-import com.bellogatecaliphate.user.IUserRepository
+import dagger.assisted.Assisted
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
+/**
+ * Because we need to pass in the userEmail to the this class, we will use an @Assisted annotation
+ * to manually inject it. See ContentsRepository for how we then inject this class, providing the userEmail,
+ * using a factory.
+ **/
 internal class ContentsHistoryPagingSource @Inject constructor(
-	private val userRepository: IUserRepository,
 	private val ioDispatchers: CoroutineDispatcher,
-	private val remoteSource: IRemoteSource
+	private val remoteSource: IRemoteSource,
+	@Assisted private val userEmail: String
 ) : PagingSource<Int, ContentResponse>() {
 	
 	override suspend fun load(params: LoadParams<Int>):
@@ -20,10 +25,7 @@ internal class ContentsHistoryPagingSource @Inject constructor(
 		return@withContext try {
 			// Start refresh at page 1 if undefined.
 			val nextPage = params.key ?: 1
-			val response = remoteSource.getContentsHistoryList(
-				userRepository.getUserEmail() ?: "",
-				nextPage
-			)
+			val response = remoteSource.getContentsHistoryList(userEmail, nextPage)
 			val list = response?.listOfContents ?: throw Exception()
 			val isLastPage = response.isLastPage != null && response.isLastPage
 			LoadResult.Page(

@@ -7,6 +7,7 @@ import com.bellogatecaliphate.account.model.UiState
 import com.bellogatecaliphate.account.ui.authentication.FirebaseAuthentication
 import com.bellogatecaliphate.domain.contents.GetContentsHistoryUseCase
 import com.bellogatecaliphate.domain.user.CheckUserLoginUseCase
+import com.bellogatecaliphate.domain.user.GetUserEmailUseCase
 import com.bellogatecaliphate.domain.user.GetUserInfoUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,14 +21,19 @@ class AccountScreenViewModel @Inject constructor(
 	private val getContentsHistoryUseCase: GetContentsHistoryUseCase,
 	private val checkUserLoginUseCase: CheckUserLoginUseCase,
 	private val getUserInfoUseCase: GetUserInfoUseCase,
+	private val getUserEmailUseCase: GetUserEmailUseCase,
 	val firebaseAuthentication: FirebaseAuthentication
 ) : ViewModel() {
 	
 	private val _uiState = MutableStateFlow(UiState())
 	internal val uiState = _uiState.asStateFlow()
 	
-	init {
-		checkUserLogin()
+	fun findUser(userEmail: String?) {
+		if (userEmail == null) {
+			checkUserLogin()
+		} else {
+			getUserDetailsAndContentHistory(userEmail)
+		}
 	}
 	
 	fun performLogin(onOpenGoogleAuthenticationLoginScreen: suspend () -> Boolean) =
@@ -42,18 +48,18 @@ class AccountScreenViewModel @Inject constructor(
 		val isUserLoggedIn = checkUserLoginUseCase()
 		_uiState.update { it.copy(isUserLoggedIn = isUserLoggedIn) }
 		if (isUserLoggedIn) {
-			setUpLoggedInUser()
+			getUserEmailUseCase()?.let { getUserDetailsAndContentHistory(it) }
 		}
 	}
 	
-	private fun setUpLoggedInUser() {
-		getUserDetails()
-		getUserContentHistory()
+	private fun getUserDetailsAndContentHistory(userEmail: String) {
+		getUserDetails(userEmail)
+		getUserContentHistory(userEmail)
 	}
 	
-	private fun getUserDetails() = viewModelScope.launch {
+	private fun getUserDetails(userEmail: String) = viewModelScope.launch {
 		_uiState.update { it.copy(isLoading = true) }
-		val user = getUserInfoUseCase()
+		val user = getUserInfoUseCase(userEmail)
 		_uiState.update {
 			it.copy(
 				user = user,
@@ -64,8 +70,8 @@ class AccountScreenViewModel @Inject constructor(
 		}
 	}
 	
-	private fun getUserContentHistory() {
-		val listOfContentHistory = getContentsHistoryUseCase().cachedIn(viewModelScope)
+	private fun getUserContentHistory(userEmail: String) {
+		val listOfContentHistory = getContentsHistoryUseCase(userEmail).cachedIn(viewModelScope)
 		_uiState.update { it.copy(listOfContentHistory = listOfContentHistory) }
 	}
 }

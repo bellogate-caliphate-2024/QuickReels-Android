@@ -8,8 +8,8 @@ import javax.inject.Inject
 
 class GetContentsHistoryUseCase @Inject constructor(private val repository: IContentsRepository) {
 	
-	operator fun invoke() =
-			repository.getPaginatedContentsHistory().flow.map { pagingData ->
+	operator fun invoke(userEmail: String) =
+			repository.getPaginatedContentsHistory(userEmail).flow.map { pagingData ->
 				pagingData.map {
 					Content(
 						it.id ?: "",

@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -21,11 +22,13 @@ import com.bellogatecaliphate.core.util.PLACEHOLDER_16DP
 internal fun AccountScreen(
 	viewModel: AccountScreenViewModel = hiltViewModel(),
 	serverClientId: String,
+	userEmail: String?,
 	onLoginSuccessFul: (userProfilePictureUrl: String) -> Unit,
 	onOpenProfileDetails: (userEmail: String) -> Unit = {}
 ) {
 	val state = viewModel.uiState.collectAsStateWithLifecycle().value
 	val context = LocalContext.current
+	LaunchedEffect(Unit) { viewModel.findUser(userEmail) }
 	AccountScreen(
 		uiState = state,
 		onLogin = {

@@ -18,12 +18,16 @@ fun NavGraphBuilder.accountNavGraph(
 	onLoginSuccessFul: (userProfilePictureUrl: String) -> Unit
 ) {
 	navigation<AccountNavGraphRoute>(startDestination = AccountNavGraphRoute.Account::class) {
-		composable<AccountNavGraphRoute.Account> {
+		composable<AccountNavGraphRoute.Account> { backStackEntry ->
+			val account = backStackEntry.toRoute<AccountNavGraphRoute.Account>()
 			AccountScreen(
 				serverClientId = serverClientId,
+				userEmail = account.userEmail,
 				onLoginSuccessFul = onLoginSuccessFul,
 				onOpenProfileDetails = { userEmail ->
-					navController.navigate(AccountNavGraphRoute.ProfileDetail(userEmail))
+					navController.navigate(
+						AccountNavGraphRoute.ProfileDetail(userEmail = userEmail)
+					)
 				}
 			)
 		}

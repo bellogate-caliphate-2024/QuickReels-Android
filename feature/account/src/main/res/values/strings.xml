@@ -7,5 +7,7 @@
     <string name="followers">Followers</string>
     <string name="following">Following</string>
     <string name="views">Views</string>
+    <string name="follow">Follow</string>
+    <string name="unfollow">Unfollow</string>
     <string name="unable_to_get_user_info">Unable to get user, click to try again</string>
 </resources>

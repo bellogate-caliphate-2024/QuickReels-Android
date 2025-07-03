@@ -7,7 +7,10 @@ import androidx.navigation.navigation
 import com.bellogatecaliphate.core.model.routes.timeline.TimelineNavGraphRoute
 import com.bellogatecaliphate.timeline.ui.TimeLineScreen
 
-fun NavGraphBuilder.timelineNavGraph(navController: NavHostController) {
+fun NavGraphBuilder.timelineNavGraph(
+	navController: NavHostController,
+	onOpenAccountDetails: (accountUserEmail: String) -> Unit
+) {
 	navigation<TimelineNavGraphRoute>(startDestination = TimelineNavGraphRoute.Timeline::class) {
 		composable<TimelineNavGraphRoute.Timeline> {
 			TimeLineScreen()

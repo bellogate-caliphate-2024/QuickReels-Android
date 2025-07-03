@@ -13,7 +13,7 @@ data object AccountNavGraphRoute : Route() {
 	
 	// Routes inside nested graph
 	@Serializable
-	data object Account
+	data class Account(val userEmail: String? = null)
 	
 	@Serializable
 	data class ProfileDetail(val userEmail: String)
