@@ -25,13 +25,20 @@ import com.bellogatecaliphate.core.util.PLACEHOLDER_8DP
 @Composable
 internal fun LoggedInUserAccountScreen(
 	uiState: UiState,
+	showBackButton: Boolean = false,
 	listOfContentHistory: LazyPagingItems<Content>,
-	onOpenProfileDetails: (userEmail: String) -> Unit
+	onOpenProfileDetails: (userEmail: String) -> Unit,
+	onBackPressed: () -> Unit
 ) {
 	Column(horizontalAlignment = Alignment.CenterHorizontally) {
 		LoadingScreen(uiState.isLoading)
 		val user = uiState.user ?: return
-		UserDetailsSection(user, onOpenProfileDetails = onOpenProfileDetails)
+		UserDetailsSection(
+			user = user,
+			showBackButton = showBackButton,
+			onOpenProfileDetails = onOpenProfileDetails,
+			onBackPressed = onBackPressed
+		)
 		Spacer(
 			modifier = Modifier
 				.padding(horizontal = PLACEHOLDER_8DP)

@@ -28,7 +28,8 @@ fun NavGraphBuilder.accountNavGraph(
 					navController.navigate(
 						AccountNavGraphRoute.ProfileDetail(userEmail = userEmail)
 					)
-				}
+				},
+				onBackPressed = { navController.popBackStack() }
 			)
 		}
 		composable<AccountNavGraphRoute.ProfileDetail>(

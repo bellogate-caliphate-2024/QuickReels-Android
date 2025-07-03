@@ -24,29 +24,34 @@ internal fun AccountScreen(
 	serverClientId: String,
 	userEmail: String?,
 	onLoginSuccessFul: (userProfilePictureUrl: String) -> Unit,
-	onOpenProfileDetails: (userEmail: String) -> Unit = {}
+	onOpenProfileDetails: (userEmail: String) -> Unit = {},
+	onBackPressed: () -> Unit = {}
 ) {
 	val state = viewModel.uiState.collectAsStateWithLifecycle().value
 	val context = LocalContext.current
 	LaunchedEffect(Unit) { viewModel.findUser(userEmail) }
 	AccountScreen(
 		uiState = state,
+		showBackButton = userEmail == null,
 		onLogin = {
 			with(viewModel) {
 				performLogin { firebaseAuthentication.performLogin(context, serverClientId) }
 			}
 		},
 		onLoginSuccessFul = onLoginSuccessFul,
-		onOpenProfileDetails = onOpenProfileDetails
+		onOpenProfileDetails = onOpenProfileDetails,
+		onBackPressed = onBackPressed
 	)
 }
 
 @Composable
 private fun AccountScreen(
 	uiState: UiState,
+	showBackButton: Boolean = false,
 	onLogin: () -> Unit = {},
 	onLoginSuccessFul: (userProfilePictureUrl: String) -> Unit = {},
 	onOpenProfileDetails: (userEmail: String) -> Unit = {},
+	onBackPressed: () -> Unit = {}
 ) {
 	Box(
 		modifier = Modifier
@@ -57,8 +62,10 @@ private fun AccountScreen(
 		if (uiState.isUserLoggedIn) {
 			LoggedInUserAccountScreen(
 				uiState = uiState,
+				showBackButton = showBackButton,
 				listOfContentHistory = uiState.listOfContentHistory.collectAsLazyPagingItems(),
-				onOpenProfileDetails = onOpenProfileDetails
+				onOpenProfileDetails = onOpenProfileDetails,
+				onBackPressed = onBackPressed
 			)
 			onLoginSuccessFul(uiState.user?.profilePictureUrl ?: "")
 		} else {
