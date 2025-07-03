@@ -10,6 +10,6 @@
     <string name="follow">Follow</string>
     <string name="unfollow">Unfollow</string>
     <string name="logout">Logout</string>
-    <string name="delete_account">Delete Account</string>
+    <string name="save">Save</string>
     <string name="unable_to_get_user_info">Unable to get user, click to try again</string>
 </resources>

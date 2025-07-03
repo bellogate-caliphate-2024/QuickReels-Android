@@ -1,6 +1,9 @@
 package com.bellogatecaliphate.account.ui.screens.profile_detail.composables
 
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -11,7 +14,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.bellogatecaliphate.account.R
@@ -25,34 +30,49 @@ internal fun UserAccountInformationSection(
 ) {
 	if (show.not()) return
 	Column(
-		modifier = Modifier.fillMaxWidth(),
+		verticalArrangement = Arrangement.SpaceBetween,
+		modifier = Modifier.fillMaxSize(),
 		horizontalAlignment = Alignment.CenterHorizontally
 	) {
-		Text(
-			modifier = Modifier
-				.fillMaxWidth()
-				.padding(horizontal = PLACEHOLDER_16DP),
-			text = user?.email ?: "",
-			softWrap = true,
-			color = Color.Gray
-		)
-		TextField(
-			modifier = Modifier
-				.fillMaxWidth()
-				.padding(PLACEHOLDER_16DP),
-			value = user?.accountName ?: "",
-			onValueChange = {},
-			label = { Text("Account Name") },
-			shape = RoundedCornerShape(8.dp),
-			colors = TextFieldDefaults.colors(
-				focusedIndicatorColor = Color.Transparent,
-				unfocusedIndicatorColor = Color.Transparent
+		Column {
+			Text(
+				modifier = Modifier
+					.fillMaxWidth()
+					.padding(horizontal = PLACEHOLDER_16DP),
+				text = user?.email ?: "",
+				softWrap = true,
+				color = Color.Gray
 			)
-		)
+			TextField(
+				modifier = Modifier
+					.fillMaxWidth()
+					.padding(PLACEHOLDER_16DP),
+				value = user?.accountName ?: "",
+				onValueChange = {},
+				label = { Text("Account Name") },
+				shape = RoundedCornerShape(8.dp),
+				colors = TextFieldDefaults.colors(
+					focusedIndicatorColor = Color.Transparent,
+					unfocusedIndicatorColor = Color.Transparent
+				)
+			)
+			Text(
+				modifier = Modifier
+					.fillMaxWidth()
+					.padding(horizontal = PLACEHOLDER_16DP)
+					.clickable { },
+				text = stringResource(R.string.save),
+				softWrap = true,
+				color = colorResource(com.bellogatecaliphate.core.R.color.quickreels_purple),
+				textAlign = TextAlign.Center,
+			)
+		}
 		Text(
+			fontWeight = FontWeight.Bold,
 			modifier = Modifier
 				.fillMaxWidth()
-				.padding(horizontal = PLACEHOLDER_16DP),
+				.padding(horizontal = PLACEHOLDER_16DP)
+				.clickable { },
 			text = stringResource(R.string.logout),
 			softWrap = true,
 			color = Color.Red,
