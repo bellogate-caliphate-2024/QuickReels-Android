@@ -22,16 +22,6 @@ internal fun FollowAndUnfollowButtonsSection(
 ) {
 	if (show.not()) return
 	if (isFollowing) {
-		Button(
-			colors = ButtonDefaults.filledTonalButtonColors(
-				containerColor = colorResource(com.bellogatecaliphate.core.R.color.quickreels_purple),
-				contentColor = Color.White
-			),
-			onClick = onFollowClicked
-		) {
-			Text(stringResource(R.string.follow), fontSize = PLACEHOLDER_TEXT_SIZE_20)
-		}
-	} else {
 		OutlinedButton(
 			onClick = onUnfollowClicked,
 			border = BorderStroke(
@@ -43,6 +33,16 @@ internal fun FollowAndUnfollowButtonsSection(
 				color = colorResource(com.bellogatecaliphate.core.R.color.quickreels_purple),
 				text = stringResource(id = R.string.unfollow)
 			)
+		}
+	} else {
+		Button(
+			colors = ButtonDefaults.filledTonalButtonColors(
+				containerColor = colorResource(com.bellogatecaliphate.core.R.color.quickreels_purple),
+				contentColor = Color.White
+			),
+			onClick = onFollowClicked
+		) {
+			Text(stringResource(R.string.follow), fontSize = PLACEHOLDER_TEXT_SIZE_20)
 		}
 	}
 }
