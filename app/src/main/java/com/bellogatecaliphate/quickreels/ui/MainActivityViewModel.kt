@@ -29,6 +29,10 @@ internal class MainActivityViewModel @Inject constructor(
 		}
 	}
 	
+	fun onLogOut() {
+		_uiState.update { it.copy(hasLoggedOut = true) }
+	}
+	
 	private fun setCurrentUser() = viewModelScope.launch {
 		getUserInfoUseCase()?.let { loggedInUser ->
 			_uiState.update { it.copy(user = loggedInUser) }

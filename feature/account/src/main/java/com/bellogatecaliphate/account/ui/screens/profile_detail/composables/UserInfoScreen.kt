@@ -25,6 +25,7 @@ internal fun UserInfoScreen(
 	isFollowing: Boolean,
 	onFollowClicked: () -> Unit,
 	onUnfollowClicked: () -> Unit,
+	onLogOut: () -> Unit
 ) {
 	if (user == null) return
 	Column(
@@ -57,7 +58,7 @@ internal fun UserInfoScreen(
 			isUpdatingUserAccountName = isUpdatingUserAccountName,
 			user = user,
 			onSaveNewAccountName = onSaveNewAccountName,
-			onLogOut = {}
+			onLogOut = onLogOut
 		)
 	}
 }
@@ -79,9 +80,10 @@ private fun PreviewUserSection() {
 		accountBelongsToLoggedInUser = false,
 		isUpdatingFollowingStatus = false,
 		isUpdatingUserAccountName = false,
+		onSaveNewAccountName = { _, _ -> },
 		isFollowing = false,
 		onFollowClicked = {},
 		onUnfollowClicked = {},
-		onSaveNewAccountName = { _, _ -> }
+		onLogOut = {}
 	)
 }

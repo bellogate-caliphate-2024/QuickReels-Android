@@ -11,19 +11,25 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import com.bellogatecaliphate.account.R
+import com.bellogatecaliphate.core.ui.QuickReelsCircularProgressBar
 import com.bellogatecaliphate.core.util.PLACEHOLDER_16DP
 
 @Composable
-internal fun LogOutButton(onLogOut: () -> Unit) {
-	Text(
-		fontWeight = FontWeight.Bold,
-		modifier = Modifier
-			.fillMaxWidth()
-			.padding(horizontal = PLACEHOLDER_16DP)
-			.clickable { onLogOut() },
-		text = stringResource(R.string.logout),
-		softWrap = true,
-		color = Color.Red,
-		textAlign = TextAlign.Center,
-	)
+internal fun LogOutButton(showLogoutLoading: Boolean, onOpenLogOutBottomSheet: () -> Unit) {
+	if (showLogoutLoading.not()) {
+		Text(
+			fontWeight = FontWeight.Bold,
+			modifier = Modifier
+				.fillMaxWidth()
+				.padding(horizontal = PLACEHOLDER_16DP)
+				.clickable {
+					onOpenLogOutBottomSheet()
+				},
+			text = stringResource(R.string.logout),
+			softWrap = true,
+			color = Color.Red,
+			textAlign = TextAlign.Center,
+		)
+	}
+	QuickReelsCircularProgressBar(showLogoutLoading)
 }

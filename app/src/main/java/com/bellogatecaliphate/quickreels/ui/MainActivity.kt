@@ -13,6 +13,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -23,6 +24,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import com.bellogatecaliphate.account.navigation.accountNavGraph
+import com.bellogatecaliphate.account.ui.authentication.FirebaseAuthentication
 import com.bellogatecaliphate.chat.navigation.chatNavGraph
 import com.bellogatecaliphate.core.model.routes.Route
 import com.bellogatecaliphate.core.model.routes.account.AccountNavGraphRoute
@@ -34,16 +36,22 @@ import com.bellogatecaliphate.quickreels.ui.menu.BottomAppBar
 import com.bellogatecaliphate.timeline.navigation.timelineNavGraph
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 	
 	private val viewModel: MainActivityViewModel by viewModels()
 	
+	@Inject
+	lateinit var firebaseAuthentication: FirebaseAuthentication
+	
 	@OptIn(ExperimentalComposeUiApi::class)
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		setContent {
+			val scope = rememberCoroutineScope()
 			QuickReelsTheme {
 				// A surface container using the 'background' color from the theme
 				Surface(
@@ -57,6 +65,13 @@ class MainActivity : ComponentActivity() {
 					val uiState = viewModel.uiState.collectAsStateWithLifecycle()
 					QuickReelsScreen(
 						uiState = uiState.value,
+						onLogOut = {
+							scope.launch {
+								if (firebaseAuthentication.logoutUser(this@MainActivity)) {
+									viewModel.onLogOut()
+								}
+							}
+						},
 						onProfilePictureChanged = viewModel::onProfilePictureChanged
 					)
 				}
@@ -68,6 +83,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 private fun QuickReelsScreen(
 	uiState: UiState,
+	onLogOut: () -> Unit,
 	onProfilePictureChanged: (profilePictureUrl: String?) -> Unit = {}
 ) {
 	val systemUiController = rememberSystemUiController()
@@ -76,6 +92,7 @@ private fun QuickReelsScreen(
 	val serverClientId =
 			LocalContext.current.getString(R.string.default_web_client_id) // This always shows
 	// error as if the string is not found. Just ignore the error and build the app.
+	if (uiState.hasLoggedOut) navController.popBackStack()
 	SideEffect {
 		if (darkTheme) {
 			systemUiController.setSystemBarsColor(
@@ -111,7 +128,7 @@ private fun QuickReelsScreen(
 					})
 				createPostNavGraph(navController)
 				chatNavGraph(navController)
-				accountNavGraph(navController, serverClientId) {
+				accountNavGraph(navController, serverClientId, onLogOut) {
 					onProfilePictureChanged(it)
 				}
 			}

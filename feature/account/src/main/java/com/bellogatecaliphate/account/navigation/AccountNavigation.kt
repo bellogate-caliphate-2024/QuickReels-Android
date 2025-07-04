@@ -15,6 +15,7 @@ import com.bellogatecaliphate.core.model.routes.account.AccountNavGraphRoute
 fun NavGraphBuilder.accountNavGraph(
 	navController: NavHostController,
 	serverClientId: String,
+	onLogOut: () -> Unit,
 	onLoginSuccessFul: (userProfilePictureUrl: String) -> Unit
 ) {
 	navigation<AccountNavGraphRoute>(startDestination = AccountNavGraphRoute.Account::class) {
@@ -41,9 +42,11 @@ fun NavGraphBuilder.accountNavGraph(
 			},
 			content = { backStackEntry ->
 				val profileDetail = backStackEntry.toRoute<AccountNavGraphRoute.ProfileDetail>()
-				ProfileDetailScreen(profileDetail.userEmail) {
-					navController.popBackStack()
-				}
+				ProfileDetailScreen(
+					userEmailToSearchFor = profileDetail.userEmail,
+					onClose = { navController.popBackStack() },
+					onLogOut = onLogOut
+				)
 			}
 		)
 	}

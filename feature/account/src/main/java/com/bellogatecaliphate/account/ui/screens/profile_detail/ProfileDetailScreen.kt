@@ -24,7 +24,8 @@ import com.bellogatecaliphate.core.util.PLACEHOLDER_16DP
 @Composable
 internal fun ProfileDetailScreen(
 	userEmailToSearchFor: String,
-	onClose: () -> Unit
+	onClose: () -> Unit,
+	onLogOut: () -> Unit,
 ) {
 	val viewModel: ProfileDetailViewModel = hiltViewModel()
 	val uiState = viewModel.uiState.collectAsStateWithLifecycle().value
@@ -42,6 +43,7 @@ internal fun ProfileDetailScreen(
 		onUnfollowClicked = {
 			viewModel.followOrUnfollowUser(userEmailToSearchFor, false)
 		},
+		onLogOut = onLogOut,
 		onSaveNewAccountName = { userEmail, newUserAccountName ->
 			viewModel.saveNewAccountName(userEmail, newUserAccountName)
 		}
@@ -55,6 +57,7 @@ private fun ProfileDetailScreen(
 	onRetry: () -> Unit,
 	onFollowClicked: () -> Unit,
 	onUnfollowClicked: () -> Unit,
+	onLogOut: () -> Unit,
 	onSaveNewAccountName: (userEmail: String, newUserAccountName: String) -> Unit,
 ) {
 	val unableToGetUserInfo = uiState.unableToGetUser
@@ -86,6 +89,7 @@ private fun ProfileDetailScreen(
 				onSaveNewAccountName = onSaveNewAccountName,
 				isFollowing = uiState.isFollowing ?: false,
 				onFollowClicked = onFollowClicked,
+				onLogOut = onLogOut,
 				onUnfollowClicked = onUnfollowClicked
 			)
 			RetryScreen(unableToGetUserInfo, onRetry)

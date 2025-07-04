@@ -36,12 +36,13 @@ internal fun UserAccountInformationSection(
 	onLogOut: () -> Unit
 ) {
 	if (show.not()) return
+	var showLogoutLoading by remember { mutableStateOf(false) }
+	var showLogoutBottomSheet by remember { mutableStateOf(false) }
 	var showSaveAccountNameEditBottomSheet by remember { mutableStateOf(false) }
 	var newAccountName: String? by remember { mutableStateOf(null) }
 	val newValueForUserAccountNameIsAvailable = newAccountName != null &&
 	                                            newAccountName != user?.accountName
-	val showSaveButton = newValueForUserAccountNameIsAvailable &&
-	                     isUpdatingUserAccountName.not()
+	val showSaveButton = newValueForUserAccountNameIsAvailable && isUpdatingUserAccountName.not()
 	
 	Column(
 		verticalArrangement = Arrangement.SpaceBetween,
@@ -88,7 +89,23 @@ internal fun UserAccountInformationSection(
 				},
 				onDismiss = { showSaveAccountNameEditBottomSheet = false }
 			)
+			ConfirmationDialog(
+				show = showLogoutBottomSheet,
+				text = R.string.logout_message,
+				onConfirmationGiven = {
+					showLogoutBottomSheet = false
+					showLogoutLoading = true
+					onLogOut()
+				},
+				onDismiss = {
+					showLogoutBottomSheet = false
+					showLogoutLoading = false
+				}
+			)
 		}
-		LogOutButton(onLogOut = onLogOut)
+		LogOutButton(
+			showLogoutLoading = showLogoutLoading,
+			onOpenLogOutBottomSheet = { showLogoutBottomSheet = true }
+		)
 	}
 }

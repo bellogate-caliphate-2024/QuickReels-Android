@@ -16,4 +16,5 @@
     <string name="save_account_name">Do you want to save this account name?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="logout_message">Are you sure you want to log out?</string>
 </resources>
