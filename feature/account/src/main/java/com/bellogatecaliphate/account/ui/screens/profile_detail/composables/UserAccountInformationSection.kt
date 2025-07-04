@@ -59,7 +59,8 @@ internal fun UserAccountInformationSection(
 				onValueChange = {
 					newAccountName = it
 				},
-				label = { Text("Account Name") },
+				singleLine = true,
+				label = { Text(stringResource(R.string.account_name)) },
 				shape = RoundedCornerShape(8.dp),
 				colors = TextFieldDefaults.colors(
 					focusedIndicatorColor = Color.Transparent,

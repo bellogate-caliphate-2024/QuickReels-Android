@@ -12,4 +12,5 @@
     <string name="logout">Logout</string>
     <string name="save">Save</string>
     <string name="unable_to_get_user_info">Unable to get user, click to try again</string>
+    <string name="account_name">Account Name</string>
 </resources>
