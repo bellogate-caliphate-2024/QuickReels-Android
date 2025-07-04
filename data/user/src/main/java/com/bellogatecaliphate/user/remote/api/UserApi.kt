@@ -24,7 +24,7 @@ interface UserApi {
 	suspend fun followOrUnfollowUser(
 		userEmail: String,
 		emailOfUserToFollow: String,
-		isFollowing: Boolean
+		follow: Boolean
 	): Boolean
 	
 	@GET("checkIfUserIsFollowing")

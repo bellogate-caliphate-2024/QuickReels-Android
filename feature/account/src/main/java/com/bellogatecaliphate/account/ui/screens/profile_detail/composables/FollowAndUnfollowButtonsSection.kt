@@ -11,16 +11,19 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.bellogatecaliphate.account.R
+import com.bellogatecaliphate.core.ui.QuickReelsCircularProgressBar
 import com.bellogatecaliphate.core.util.PLACEHOLDER_TEXT_SIZE_20
 
 @Composable
 internal fun FollowAndUnfollowButtonsSection(
 	show: Boolean,
+	isUpdatingFollowingStatus: Boolean,
 	isFollowing: Boolean,
 	onFollowClicked: () -> Unit,
 	onUnfollowClicked: () -> Unit
 ) {
-	if (show.not()) return
+	QuickReelsCircularProgressBar(show = isUpdatingFollowingStatus)
+	if (show.not() || isUpdatingFollowingStatus) return
 	if (isFollowing) {
 		OutlinedButton(
 			onClick = onUnfollowClicked,

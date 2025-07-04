@@ -32,12 +32,12 @@ internal class UserRepository @Inject constructor(
 	override suspend fun followOrUnfollowUser(
 		userEmail: String,
 		emailOfUserToFollow: String,
-		isFollowing: Boolean
+		follow: Boolean
 	): Boolean {
 		return userRemoteDataSource.followOrUnfollowUser(
 			userEmail = userEmail,
 			emailOfUserToFollow = emailOfUserToFollow,
-			isFollowing = isFollowing
+			follow = follow
 		)
 	}
 	

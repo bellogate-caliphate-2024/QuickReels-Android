@@ -18,7 +18,7 @@ internal interface IRemoteDataSource {
 	suspend fun followOrUnfollowUser(
 		userEmail: String,
 		emailOfUserToFollow: String,
-		isFollowing: Boolean
+		follow: Boolean
 	): Boolean
 	
 	suspend fun checkIfUserIsFollowing(

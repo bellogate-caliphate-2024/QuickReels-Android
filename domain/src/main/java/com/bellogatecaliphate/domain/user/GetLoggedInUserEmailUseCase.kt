@@ -5,7 +5,7 @@ import javax.inject.Inject
 
 class GetLoggedInUserEmailUseCase @Inject constructor(private val userRepository: IUserRepository) {
 	
-	suspend operator fun invoke(): String? {
+	operator fun invoke(): String? {
 		return userRepository.getUserEmail()
 	}
 }

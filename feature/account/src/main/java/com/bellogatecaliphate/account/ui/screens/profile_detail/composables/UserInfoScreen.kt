@@ -19,6 +19,7 @@ import com.bellogatecaliphate.core.util.PLACEHOLDER_200DP
 internal fun UserInfoScreen(
 	user: User?,
 	accountBelongsToLoggedInUser: Boolean,
+	isUpdatingFollowingStatus: Boolean,
 	isFollowing: Boolean,
 	onFollowClicked: () -> Unit,
 	onUnfollowClicked: () -> Unit
@@ -44,6 +45,7 @@ internal fun UserInfoScreen(
 		)
 		FollowAndUnfollowButtonsSection(
 			show = accountBelongsToLoggedInUser.not(),
+			isUpdatingFollowingStatus = isUpdatingFollowingStatus,
 			isFollowing = isFollowing,
 			onFollowClicked = onFollowClicked,
 			onUnfollowClicked = onUnfollowClicked
@@ -70,6 +72,7 @@ private fun PreviewUserSection() {
 	UserInfoScreen(
 		user,
 		accountBelongsToLoggedInUser = false,
+		isUpdatingFollowingStatus = false,
 		isFollowing = false,
 		onFollowClicked = {},
 		onUnfollowClicked = {}

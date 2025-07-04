@@ -27,12 +27,12 @@ internal class UserApiImpl @Inject constructor(private val retrofit: Retrofit) :
 	override suspend fun followOrUnfollowUser(
 		userEmail: String,
 		emailOfUserToFollow: String,
-		isFollowing: Boolean
+		follow: Boolean
 	): Boolean {
 		return retrofit.create(UserApi::class.java).followOrUnfollowUser(
 			userEmail = userEmail,
 			emailOfUserToFollow = emailOfUserToFollow,
-			isFollowing = isFollowing
+			follow = follow
 		)
 	}
 	

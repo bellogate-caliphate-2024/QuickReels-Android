@@ -46,13 +46,15 @@ internal class RemoteDataSource @Inject constructor(
 	override suspend fun followOrUnfollowUser(
 		userEmail: String,
 		emailOfUserToFollow: String,
-		isFollowing: Boolean
+		follow: Boolean
 	): Boolean = withContext(ioDispatcher) {
-		api.followOrUnfollowUser(
+		/*api.followOrUnfollowUser(
 			userEmail = userEmail,
 			emailOfUserToFollow = emailOfUserToFollow,
-			isFollowing = isFollowing
-		)
+			follow = follow
+		)*/
+		delay(2_000)
+		true
 	}
 	
 	override suspend fun checkIfUserIsFollowing(

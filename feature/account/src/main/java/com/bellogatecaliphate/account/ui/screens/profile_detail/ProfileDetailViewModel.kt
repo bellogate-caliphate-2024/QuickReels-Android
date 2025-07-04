@@ -3,6 +3,7 @@ package com.bellogatecaliphate.account.ui.screens.profile_detail
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bellogatecaliphate.domain.user.CheckFollowingUseCase
+import com.bellogatecaliphate.domain.user.FollowUserUseCase
 import com.bellogatecaliphate.domain.user.GetLoggedInUserEmailUseCase
 import com.bellogatecaliphate.domain.user.GetUserInfoUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,7 +17,8 @@ import javax.inject.Inject
 class ProfileDetailViewModel @Inject constructor(
 	private val getLoggedInUserEmailUseCase: GetLoggedInUserEmailUseCase,
 	private val getUserInfoUseCase: GetUserInfoUseCase,
-	private val checkFollowingUseCase: CheckFollowingUseCase
+	private val checkFollowingUseCase: CheckFollowingUseCase,
+	private val followUserUseCase: FollowUserUseCase
 ) : ViewModel() {
 	
 	private val _uiState = MutableStateFlow(UiState())
@@ -39,4 +41,18 @@ class ProfileDetailViewModel @Inject constructor(
 			)
 		}
 	}
+	
+	fun followOrUnfollowUser(emailOfUserToFollow: String, follow: Boolean) =
+			viewModelScope.launch {
+				val userEmail = getLoggedInUserEmailUseCase()
+				_uiState.update { it.copy(isUpdatingFollowingStatus = true) }
+				
+				val result = followUserUseCase(
+					userEmail = userEmail ?: "",
+					emailOfUserToFollow = emailOfUserToFollow,
+					follow = follow
+				)
+				
+				_uiState.update { it.copy(isUpdatingFollowingStatus = false, isFollowing = result) }
+			}
 }

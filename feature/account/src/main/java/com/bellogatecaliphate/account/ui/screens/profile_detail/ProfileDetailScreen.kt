@@ -30,13 +30,29 @@ internal fun ProfileDetailScreen(
 	val uiState = viewModel.uiState.collectAsStateWithLifecycle().value
 	
 	LaunchedEffect(userEmailToSearchFor) { viewModel.getUserInfo(userEmailToSearchFor) }
-	ProfileDetailScreen(uiState, onClose, onRetry = {
-		viewModel.getUserInfo(userEmailToSearchFor)
-	})
+	ProfileDetailScreen(
+		uiState = uiState,
+		onClose = onClose,
+		onRetry = {
+			viewModel.getUserInfo(userEmailToSearchFor)
+		},
+		onFollowClicked = {
+			viewModel.followOrUnfollowUser(userEmailToSearchFor, true)
+		},
+		onUnfollowClicked = {
+			viewModel.followOrUnfollowUser(userEmailToSearchFor, false)
+		}
+	)
 }
 
 @Composable
-private fun ProfileDetailScreen(uiState: UiState, onClose: () -> Unit, onRetry: () -> Unit) {
+private fun ProfileDetailScreen(
+	uiState: UiState,
+	onClose: () -> Unit,
+	onRetry: () -> Unit,
+	onFollowClicked: () -> Unit,
+	onUnfollowClicked: () -> Unit
+) {
 	val unableToGetUserInfo = uiState.unableToGetUser
 	
 	Scaffold(
@@ -61,9 +77,10 @@ private fun ProfileDetailScreen(uiState: UiState, onClose: () -> Unit, onRetry: 
 			UserInfoScreen(
 				user = uiState.user,
 				accountBelongsToLoggedInUser = uiState.accountBelongsToLoggedInUser,
+				isUpdatingFollowingStatus = uiState.isUpdatingFollowingStatus,
 				isFollowing = uiState.isFollowing ?: false,
-				onFollowClicked = {},
-				onUnfollowClicked = {}
+				onFollowClicked = onFollowClicked,
+				onUnfollowClicked = onUnfollowClicked
 			)
 			RetryScreen(unableToGetUserInfo, onRetry)
 		}
