@@ -46,7 +46,7 @@ internal fun UserAccountInformationSection(
 		horizontalAlignment = Alignment.CenterHorizontally
 	) {
 		var newAccountName: String? by remember { mutableStateOf(null) }
-		Column {
+		Column(horizontalAlignment = Alignment.CenterHorizontally) {
 			Text(
 				modifier = Modifier
 					.fillMaxWidth()
