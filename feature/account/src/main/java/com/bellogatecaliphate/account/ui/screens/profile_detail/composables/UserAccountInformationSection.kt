@@ -1,9 +1,5 @@
 package com.bellogatecaliphate.account.ui.screens.profile_detail.composables
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -21,12 +17,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.bellogatecaliphate.account.R
+import com.bellogatecaliphate.account.ui.composables.ConfirmationDialog
+import com.bellogatecaliphate.account.ui.composables.LogOutButton
+import com.bellogatecaliphate.account.ui.composables.SaveButton
 import com.bellogatecaliphate.core.model.dto.User
 import com.bellogatecaliphate.core.ui.QuickReelsCircularProgressBar
 import com.bellogatecaliphate.core.util.PLACEHOLDER_16DP
@@ -40,12 +36,18 @@ internal fun UserAccountInformationSection(
 	onLogOut: () -> Unit
 ) {
 	if (show.not()) return
+	var showSaveAccountNameEditBottomSheet by remember { mutableStateOf(false) }
+	var newAccountName: String? by remember { mutableStateOf(null) }
+	val newValueForUserAccountNameIsAvailable = newAccountName != null &&
+	                                            newAccountName != user?.accountName
+	val showSaveButton = newValueForUserAccountNameIsAvailable &&
+	                     isUpdatingUserAccountName.not()
+	
 	Column(
 		verticalArrangement = Arrangement.SpaceBetween,
 		modifier = Modifier.fillMaxSize(),
 		horizontalAlignment = Alignment.CenterHorizontally
 	) {
-		var newAccountName: String? by remember { mutableStateOf(null) }
 		Column(horizontalAlignment = Alignment.CenterHorizontally) {
 			Text(
 				modifier = Modifier
@@ -72,52 +74,21 @@ internal fun UserAccountInformationSection(
 					unfocusedIndicatorColor = Color.Transparent
 				)
 			)
-			val newValueForUserAccountNameIsAvailable =
-					newAccountName != null && newAccountName != user?.accountName
-			val showSaveButton =
-					newValueForUserAccountNameIsAvailable && isUpdatingUserAccountName.not()
 			SaveButton(
 				show = showSaveButton,
-				onClick = {
-					onSaveNewAccountName(user?.email ?: "", newAccountName ?: "")
-				})
+				onClick = { showSaveAccountNameEditBottomSheet = true }
+			)
 			QuickReelsCircularProgressBar(show = isUpdatingUserAccountName)
+			ConfirmationDialog(
+				show = showSaveAccountNameEditBottomSheet,
+				text = R.string.save_account_name,
+				onConfirmationGiven = {
+					showSaveAccountNameEditBottomSheet = false
+					onSaveNewAccountName(user?.email ?: "", newAccountName ?: "")
+				},
+				onDismiss = { showSaveAccountNameEditBottomSheet = false }
+			)
 		}
 		LogOutButton(onLogOut = onLogOut)
-	}
-}
-
-@Composable
-private fun LogOutButton(onLogOut: () -> Unit) {
-	Text(
-		fontWeight = FontWeight.Bold,
-		modifier = Modifier
-			.fillMaxWidth()
-			.padding(horizontal = PLACEHOLDER_16DP)
-			.clickable { onLogOut() },
-		text = stringResource(R.string.logout),
-		softWrap = true,
-		color = Color.Red,
-		textAlign = TextAlign.Center,
-	)
-}
-
-@Composable
-private fun SaveButton(show: Boolean, onClick: () -> Unit) {
-	AnimatedVisibility(
-		show,
-		enter = fadeIn(),
-		exit = fadeOut()
-	) {
-		Text(
-			modifier = Modifier
-				.fillMaxWidth()
-				.padding(horizontal = PLACEHOLDER_16DP)
-				.clickable { onClick() },
-			text = stringResource(R.string.save),
-			softWrap = true,
-			color = colorResource(com.bellogatecaliphate.core.R.color.quickreels_purple),
-			textAlign = TextAlign.Center,
-		)
 	}
 }

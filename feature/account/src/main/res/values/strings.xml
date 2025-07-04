@@ -13,4 +13,7 @@
     <string name="save">Save</string>
     <string name="unable_to_get_user_info">Unable to get user, click to try again</string>
     <string name="account_name">Account Name</string>
+    <string name="save_account_name">Do you want to save this account name?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 </resources>
