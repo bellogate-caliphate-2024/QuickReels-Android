@@ -83,18 +83,23 @@ internal fun UserAccountInformationSection(
 				})
 			QuickReelsCircularProgressBar(show = isUpdatingUserAccountName)
 		}
-		Text(
-			fontWeight = FontWeight.Bold,
-			modifier = Modifier
-				.fillMaxWidth()
-				.padding(horizontal = PLACEHOLDER_16DP)
-				.clickable { onLogOut() },
-			text = stringResource(R.string.logout),
-			softWrap = true,
-			color = Color.Red,
-			textAlign = TextAlign.Center,
-		)
+		LogOutButton(onLogOut = onLogOut)
 	}
+}
+
+@Composable
+private fun LogOutButton(onLogOut: () -> Unit) {
+	Text(
+		fontWeight = FontWeight.Bold,
+		modifier = Modifier
+			.fillMaxWidth()
+			.padding(horizontal = PLACEHOLDER_16DP)
+			.clickable { onLogOut() },
+		text = stringResource(R.string.logout),
+		softWrap = true,
+		color = Color.Red,
+		textAlign = TextAlign.Center,
+	)
 }
 
 @Composable
