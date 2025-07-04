@@ -45,6 +45,16 @@ internal class UserApiImpl @Inject constructor(private val retrofit: Retrofit) :
 			emailOfUserToCheckFollowingStatus = emailOfUserToCheckFollowingStatus
 		)
 	}
+	
+	override suspend fun saveNewAccountName(
+		userEmail: String,
+		newUserAccountName: String
+	): Boolean {
+		return retrofit.create(UserApi::class.java).saveNewAccountName(
+			userEmail = userEmail,
+			newUserAccountName = newUserAccountName
+		)
+	}
 }
 
 @Module

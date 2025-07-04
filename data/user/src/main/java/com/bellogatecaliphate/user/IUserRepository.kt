@@ -25,4 +25,9 @@ interface IUserRepository {
 		loggedInUserEmail: String,
 		emailOfUserToCheckFollowingStatus: String
 	): Boolean
+	
+	suspend fun saveNewAccountName(
+		userEmail: String,
+		newUserAccountName: String
+	): Boolean
 }

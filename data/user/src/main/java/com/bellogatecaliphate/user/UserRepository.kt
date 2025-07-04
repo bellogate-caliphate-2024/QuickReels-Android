@@ -51,4 +51,13 @@ internal class UserRepository @Inject constructor(
 		)
 	}
 	
+	override suspend fun saveNewAccountName(
+		userEmail: String,
+		newUserAccountName: String
+	): Boolean {
+		return userRemoteDataSource.saveNewAccountName(
+			userEmail = userEmail,
+			newUserAccountName = newUserAccountName
+		)
+	}
 }

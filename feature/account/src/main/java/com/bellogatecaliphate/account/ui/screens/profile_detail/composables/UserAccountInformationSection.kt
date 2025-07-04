@@ -28,12 +28,16 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.bellogatecaliphate.account.R
 import com.bellogatecaliphate.core.model.dto.User
+import com.bellogatecaliphate.core.ui.QuickReelsCircularProgressBar
 import com.bellogatecaliphate.core.util.PLACEHOLDER_16DP
 
 @Composable
 internal fun UserAccountInformationSection(
 	show: Boolean,
+	isUpdatingUserAccountName: Boolean,
 	user: User?,
+	onSaveNewAccountName: (userEmail: String, newUserAccountName: String) -> Unit,
+	onLogOut: () -> Unit
 ) {
 	if (show.not()) return
 	Column(
@@ -59,6 +63,7 @@ internal fun UserAccountInformationSection(
 				onValueChange = {
 					newAccountName = it
 				},
+				enabled = isUpdatingUserAccountName.not(),
 				singleLine = true,
 				label = { Text(stringResource(R.string.account_name)) },
 				shape = RoundedCornerShape(8.dp),
@@ -67,15 +72,23 @@ internal fun UserAccountInformationSection(
 					unfocusedIndicatorColor = Color.Transparent
 				)
 			)
-			val showSaveButton = newAccountName != null && newAccountName != user?.accountName
-			SaveButton(show = showSaveButton, onClick = {})
+			val newValueForUserAccountNameIsAvailable =
+					newAccountName != null && newAccountName != user?.accountName
+			val showSaveButton =
+					newValueForUserAccountNameIsAvailable && isUpdatingUserAccountName.not()
+			SaveButton(
+				show = showSaveButton,
+				onClick = {
+					onSaveNewAccountName(user?.email ?: "", newAccountName ?: "")
+				})
+			QuickReelsCircularProgressBar(show = isUpdatingUserAccountName)
 		}
 		Text(
 			fontWeight = FontWeight.Bold,
 			modifier = Modifier
 				.fillMaxWidth()
 				.padding(horizontal = PLACEHOLDER_16DP)
-				.clickable { },
+				.clickable { onLogOut() },
 			text = stringResource(R.string.logout),
 			softWrap = true,
 			color = Color.Red,

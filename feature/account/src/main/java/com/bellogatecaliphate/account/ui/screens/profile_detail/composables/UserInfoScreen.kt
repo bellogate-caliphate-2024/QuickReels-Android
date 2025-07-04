@@ -20,9 +20,11 @@ internal fun UserInfoScreen(
 	user: User?,
 	accountBelongsToLoggedInUser: Boolean,
 	isUpdatingFollowingStatus: Boolean,
+	isUpdatingUserAccountName: Boolean,
+	onSaveNewAccountName: (userEmail: String, newUserAccountName: String) -> Unit,
 	isFollowing: Boolean,
 	onFollowClicked: () -> Unit,
-	onUnfollowClicked: () -> Unit
+	onUnfollowClicked: () -> Unit,
 ) {
 	if (user == null) return
 	Column(
@@ -52,7 +54,10 @@ internal fun UserInfoScreen(
 		)
 		UserAccountInformationSection(
 			show = accountBelongsToLoggedInUser,
-			user = user
+			isUpdatingUserAccountName = isUpdatingUserAccountName,
+			user = user,
+			onSaveNewAccountName = onSaveNewAccountName,
+			onLogOut = {}
 		)
 	}
 }
@@ -73,8 +78,10 @@ private fun PreviewUserSection() {
 		user,
 		accountBelongsToLoggedInUser = false,
 		isUpdatingFollowingStatus = false,
+		isUpdatingUserAccountName = false,
 		isFollowing = false,
 		onFollowClicked = {},
-		onUnfollowClicked = {}
+		onUnfollowClicked = {},
+		onSaveNewAccountName = { _, _ -> }
 	)
 }

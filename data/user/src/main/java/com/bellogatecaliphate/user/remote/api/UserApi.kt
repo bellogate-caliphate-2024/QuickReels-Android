@@ -32,4 +32,11 @@ interface UserApi {
 		loggedInUserEmail: String,
 		emailOfUserToCheckFollowingStatus: String
 	): Boolean
+	
+	@POST("save_new_account_name")
+	suspend fun saveNewAccountName(
+		userEmail: String,
+		newUserAccountName: String
+	): Boolean
+	
 }

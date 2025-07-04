@@ -67,4 +67,16 @@ internal class RemoteDataSource @Inject constructor(
 		)*/
 		false
 	}
+	
+	override suspend fun saveNewAccountName(
+		userEmail: String,
+		newUserAccountName: String
+	): Boolean = withContext(ioDispatcher) {
+		/*api.saveNewAccountName(
+			userEmail = userEmail,
+			newUserAccountName = newUserAccountName
+		)*/
+		delay(2_000)
+		true
+	}
 }

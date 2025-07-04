@@ -8,5 +8,6 @@ data class UiState(
 	val user: User? = null,
 	val isFollowing: Boolean? = null,
 	val accountBelongsToLoggedInUser: Boolean = false,
-	val isUpdatingFollowingStatus: Boolean = false
+	val isUpdatingFollowingStatus: Boolean = false,
+	val isUpdatingUserAccountName: Boolean = false
 )

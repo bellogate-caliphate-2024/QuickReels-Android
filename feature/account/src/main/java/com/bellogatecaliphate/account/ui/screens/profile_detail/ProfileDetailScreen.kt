@@ -41,6 +41,9 @@ internal fun ProfileDetailScreen(
 		},
 		onUnfollowClicked = {
 			viewModel.followOrUnfollowUser(userEmailToSearchFor, false)
+		},
+		onSaveNewAccountName = { userEmail, newUserAccountName ->
+			viewModel.saveNewAccountName(userEmail, newUserAccountName)
 		}
 	)
 }
@@ -51,7 +54,8 @@ private fun ProfileDetailScreen(
 	onClose: () -> Unit,
 	onRetry: () -> Unit,
 	onFollowClicked: () -> Unit,
-	onUnfollowClicked: () -> Unit
+	onUnfollowClicked: () -> Unit,
+	onSaveNewAccountName: (userEmail: String, newUserAccountName: String) -> Unit,
 ) {
 	val unableToGetUserInfo = uiState.unableToGetUser
 	
@@ -78,6 +82,8 @@ private fun ProfileDetailScreen(
 				user = uiState.user,
 				accountBelongsToLoggedInUser = uiState.accountBelongsToLoggedInUser,
 				isUpdatingFollowingStatus = uiState.isUpdatingFollowingStatus,
+				isUpdatingUserAccountName = uiState.isUpdatingUserAccountName,
+				onSaveNewAccountName = onSaveNewAccountName,
 				isFollowing = uiState.isFollowing ?: false,
 				onFollowClicked = onFollowClicked,
 				onUnfollowClicked = onUnfollowClicked
