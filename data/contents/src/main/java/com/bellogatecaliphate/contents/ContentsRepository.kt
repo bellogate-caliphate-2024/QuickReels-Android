@@ -31,4 +31,16 @@ internal class ContentsRepository @Inject constructor(
 	): Boolean {
 		return remoteSource.likeContent(userEmail, contentId, isLiked)
 	}
+	
+	override suspend fun deleteContent(userEmail: String, contentId: String): Boolean {
+		return remoteSource.deleteContent(userEmail, contentId)
+	}
+	
+	override suspend fun editContentCaption(
+		userEmail: String,
+		contentId: String,
+		newCaption: String
+	): Boolean {
+		return remoteSource.editContentCaption(userEmail, contentId, newCaption)
+	}
 }

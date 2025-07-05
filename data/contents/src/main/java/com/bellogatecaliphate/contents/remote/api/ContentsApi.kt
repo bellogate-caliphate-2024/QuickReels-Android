@@ -20,4 +20,14 @@ internal interface ContentsApi {
 		@Query("contentId") contentId: String,
 		@Query("contentId") isLiked: Boolean
 	): LikeContentResponse?
+	
+	@POST("deleteContent")
+	suspend fun deleteContent(userEmail: String, contentId: String): Boolean
+	
+	@POST("editContentCaption")
+	suspend fun editContentCaption(
+		userEmail: String,
+		contentId: String,
+		newCaption: String
+	): Boolean
 }

@@ -13,4 +13,12 @@ internal interface IRemoteSource {
 	): ContentsListResponse?
 	
 	suspend fun likeContent(userEmail: String, contentId: String, isLiked: Boolean): Boolean
+	
+	suspend fun deleteContent(userEmail: String, contentId: String): Boolean
+	
+	suspend fun editContentCaption(
+		userEmail: String,
+		contentId: String,
+		newCaption: String
+	): Boolean
 }

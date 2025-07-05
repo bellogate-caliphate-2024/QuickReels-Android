@@ -4,6 +4,7 @@ import com.bellogatecaliphate.contents.remote.api.ContentsApi
 import com.bellogatecaliphate.contents.remote.model.ContentResponse
 import com.bellogatecaliphate.contents.remote.model.ContentsListResponse
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
@@ -136,4 +137,21 @@ internal class RemoteSource @Inject constructor(
 			withContext(ioDispatcher) {
 				api.likeContent(userEmail, contentId, isLiked) !!.isSuccess
 			}
+	
+	override suspend fun deleteContent(userEmail: String, contentId: String): Boolean =
+			withContext(ioDispatcher) {
+				//api.deleteContent(userEmail, contentId)
+				delay(3_000)
+				true
+			}
+	
+	override suspend fun editContentCaption(
+		userEmail: String,
+		contentId: String,
+		newCaption: String
+	): Boolean = withContext(ioDispatcher) {
+		//api.editContentCaption(userEmail, contentId, newCaption)
+		delay(3_000)
+		true
+	}
 }
