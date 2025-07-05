@@ -70,7 +70,7 @@ internal fun ProfilePicture(
 				openImagePicker = false
 			},
 			onStoragePermissionRationalDialogClosed = {
-			
+				openImagePicker = false
 			}
 		)
 		ImageCropper(

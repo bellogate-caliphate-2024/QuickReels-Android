@@ -62,7 +62,7 @@ fun ImageFilePicker(
 
 /**
  * @param onGalleryDismissed: is called anytime the gallery is closed regardless of whether the user
- * selected a video or not. However, if the user did select a video, the uri will not be null.
+ * selected a picture or not. However, if the user did select a picture, the uri will not be null.
  * **/
 @Composable
 private fun ImageFileGallery(
