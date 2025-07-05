@@ -1,6 +1,7 @@
 package com.bellogatecaliphate.account.ui.composables
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.aspectRatio
@@ -31,7 +32,10 @@ import com.bellogatecaliphate.core.util.PLACEHOLDER_CONTENT_HISTORY_HEIGHT
 import com.bellogatecaliphate.core.util.PLACEHOLDER_CONTENT_HISTORY_WIDTH
 
 @Composable
-internal fun ContentHistoryGridList(list: LazyPagingItems<Content>) {
+internal fun ContentHistoryGridList(
+	list: LazyPagingItems<Content>,
+	onOpenContent: (contentId: Content) -> Unit
+) {
 	if (list.itemSnapshotList.isEmpty()) {
 		Box(contentAlignment = Alignment.Center) {
 			Text(stringResource(R.string.user_has_no_content))
@@ -41,19 +45,25 @@ internal fun ContentHistoryGridList(list: LazyPagingItems<Content>) {
 	LazyVerticalGrid(columns = GridCells.Adaptive(minSize = 128.dp)) {
 		items(list.itemCount) { index ->
 			val content = list[index]
-			content?.let { Content(it) }
+			content?.let {
+				Content(content = it, onOpenContent = onOpenContent)
+			}
 		}
 	}
 }
 
 @Composable
 @Preview(showBackground = true)
-private fun Content(@PreviewParameter(ContentPreviewParameter::class) content: Content) {
+private fun Content(
+	@PreviewParameter(ContentPreviewParameter::class) content: Content,
+	onOpenContent: (content: Content) -> Unit = {}
+) {
 	Box(
 		modifier = Modifier
 			.padding(start = PLACEHOLDER_4DP, end = PLACEHOLDER_4DP)
 			.size(PLACEHOLDER_CONTENT_HISTORY_WIDTH, PLACEHOLDER_CONTENT_HISTORY_HEIGHT)
-			.aspectRatio(1f),
+			.aspectRatio(1f)
+			.clickable { onOpenContent(content) },
 		contentAlignment = Alignment.Center
 	) {
 		AsyncImage(

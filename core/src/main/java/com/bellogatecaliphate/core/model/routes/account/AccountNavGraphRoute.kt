@@ -17,4 +17,11 @@ data object AccountNavGraphRoute : Route() {
 	
 	@Serializable
 	data class ProfileDetail(val userEmail: String)
+	
+	@Serializable
+	data class EditContent(
+		val userEmail: String,
+		val contentId: String,
+		val contentCaption: String
+	)
 }

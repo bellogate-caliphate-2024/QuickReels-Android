@@ -27,6 +27,22 @@ internal class ContentsApiImpl @Inject constructor(private val retrofit: Retrofi
 	): LikeContentResponse? {
 		return retrofit.create(ContentsApi::class.java).likeContent(userEmail, contentId, isLiked)
 	}
+	
+	override suspend fun deleteContent(userEmail: String, contentId: String): Boolean {
+		return retrofit.create(ContentsApi::class.java).deleteContent(userEmail, contentId)
+	}
+	
+	override suspend fun editContentCaption(
+		userEmail: String,
+		contentId: String,
+		newCaption: String
+	): Boolean {
+		return retrofit.create(ContentsApi::class.java).editContentCaption(
+			userEmail,
+			contentId,
+			newCaption
+		)
+	}
 }
 
 @Module

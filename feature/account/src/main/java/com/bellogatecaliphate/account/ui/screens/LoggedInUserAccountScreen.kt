@@ -28,7 +28,8 @@ internal fun LoggedInUserAccountScreen(
 	showBackButton: Boolean = false,
 	listOfContentHistory: LazyPagingItems<Content>,
 	onOpenProfileDetails: (userEmail: String) -> Unit,
-	onBackPressed: () -> Unit
+	onBackPressed: () -> Unit,
+	onOpenContent: (content: Content) -> Unit
 ) {
 	Column(horizontalAlignment = Alignment.CenterHorizontally) {
 		LoadingScreen(uiState.isLoading)
@@ -46,7 +47,10 @@ internal fun LoggedInUserAccountScreen(
 				.height(PLACEHOLDER_2DP)
 				.fillMaxWidth()
 		)
-		ContentHistoryGridList(listOfContentHistory)
+		ContentHistoryGridList(
+			list = listOfContentHistory,
+			onOpenContent = onOpenContent
+		)
 	}
 }
 

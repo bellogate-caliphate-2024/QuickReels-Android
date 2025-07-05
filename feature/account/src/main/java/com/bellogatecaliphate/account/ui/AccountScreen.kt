@@ -16,6 +16,7 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import com.bellogatecaliphate.account.model.UiState
 import com.bellogatecaliphate.account.ui.screens.AnonymousUserAccountScreen
 import com.bellogatecaliphate.account.ui.screens.LoggedInUserAccountScreen
+import com.bellogatecaliphate.core.model.dto.Content
 import com.bellogatecaliphate.core.util.PLACEHOLDER_16DP
 
 @Composable
@@ -25,7 +26,8 @@ internal fun AccountScreen(
 	userEmail: String?,
 	onLoginSuccessFul: (userProfilePictureUrl: String) -> Unit,
 	onOpenProfileDetails: (userEmail: String) -> Unit = {},
-	onBackPressed: () -> Unit = {}
+	onBackPressed: () -> Unit = {},
+	onOpenContent: (content: Content) -> Unit
 ) {
 	val state = viewModel.uiState.collectAsStateWithLifecycle().value
 	val context = LocalContext.current
@@ -40,7 +42,8 @@ internal fun AccountScreen(
 		},
 		onLoginSuccessFul = onLoginSuccessFul,
 		onOpenProfileDetails = onOpenProfileDetails,
-		onBackPressed = onBackPressed
+		onBackPressed = onBackPressed,
+		onOpenContent = onOpenContent
 	)
 }
 
@@ -51,7 +54,8 @@ private fun AccountScreen(
 	onLogin: () -> Unit = {},
 	onLoginSuccessFul: (userProfilePictureUrl: String) -> Unit = {},
 	onOpenProfileDetails: (userEmail: String) -> Unit = {},
-	onBackPressed: () -> Unit = {}
+	onBackPressed: () -> Unit = {},
+	onOpenContent: (content: Content) -> Unit = {}
 ) {
 	Box(
 		modifier = Modifier
@@ -65,7 +69,8 @@ private fun AccountScreen(
 				showBackButton = showBackButton,
 				listOfContentHistory = uiState.listOfContentHistory.collectAsLazyPagingItems(),
 				onOpenProfileDetails = onOpenProfileDetails,
-				onBackPressed = onBackPressed
+				onBackPressed = onBackPressed,
+				onOpenContent = onOpenContent
 			)
 			onLoginSuccessFul(uiState.user?.profilePictureUrl ?: "")
 		} else {
