@@ -69,7 +69,7 @@ private fun ImageFileGallery(
 	onGalleryDismissed: (bitmap: Bitmap?) -> Unit
 ) {
 	val context = LocalContext.current
-	val selectVideoResultLauncher =
+	val selectImageResultLauncher =
 			rememberLauncherForActivityResult(ActivityResultContracts.PickVisualMedia()) { result: Uri? ->
 				if (result != null) {
 					val bitmap = loadBitmapFromUri(context, result)
@@ -80,7 +80,7 @@ private fun ImageFileGallery(
 			}
 	
 	LaunchedEffect(Unit) {
-		selectVideoResultLauncher
+		selectImageResultLauncher
 			.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
 	}
 }
