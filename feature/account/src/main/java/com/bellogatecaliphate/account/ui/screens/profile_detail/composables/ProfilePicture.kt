@@ -42,13 +42,14 @@ internal fun ProfilePicture(
 	}
 	
 	Box(contentAlignment = Alignment.Center) {
-		val image: Any? = when {
-			isUploadingProfilePicture || profilePictureUploadSuccessful == true -> croppedProfilePicture
-			profilePictureUploadSuccessful == false                             -> profilePictureUrl
-			else                                                                -> profilePictureUrl
-		}
+		val profilePicture: Any? = getProfilePicture(
+			isUploadingProfilePicture = isUploadingProfilePicture,
+			profilePictureUploadSuccessful = profilePictureUploadSuccessful,
+			croppedProfilePicture = croppedProfilePicture,
+			profilePictureUrl = profilePictureUrl
+		)
 		AsyncImage(
-			model = image,
+			model = profilePicture,
 			contentDescription = "content description",
 			modifier = Modifier
 				.size(PLACEHOLDER_200DP)

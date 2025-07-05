@@ -79,7 +79,12 @@ class ProfileDetailViewModel @Inject constructor(
 	}
 	
 	fun changeProfilePicture(userEmail: String, newProfilePicture: Bitmap) = viewModelScope.launch {
-		_uiState.update { it.copy(isUploadingProfilePicture = true) }
+		_uiState.update {
+			it.copy(
+				isUploadingProfilePicture = true,
+				successfullyUploadedProfilePicture = null
+			)
+		}
 		val result = changeProfilePictureUseCase(
 			userEmail = userEmail,
 			newProfilePicture = newProfilePicture
