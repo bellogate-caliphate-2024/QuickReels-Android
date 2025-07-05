@@ -9,5 +9,7 @@ data class UiState(
 	val isFollowing: Boolean? = null,
 	val accountBelongsToLoggedInUser: Boolean = false,
 	val isUpdatingFollowingStatus: Boolean = false,
-	val isUpdatingUserAccountName: Boolean = false
+	val isUpdatingUserAccountName: Boolean = false,
+	val isUploadingProfilePicture: Boolean = false,
+	val successfullyUploadedProfilePicture: Boolean = false
 )

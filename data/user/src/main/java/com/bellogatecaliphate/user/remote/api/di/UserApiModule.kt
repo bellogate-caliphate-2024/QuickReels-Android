@@ -55,6 +55,16 @@ internal class UserApiImpl @Inject constructor(private val retrofit: Retrofit) :
 			newUserAccountName = newUserAccountName
 		)
 	}
+	
+	override suspend fun changeProfilePicture(
+		userEmail: String,
+		newProfilePictureBase64Encoded: String
+	): Boolean {
+		return retrofit.create(UserApi::class.java).changeProfilePicture(
+			userEmail = userEmail,
+			newProfilePictureBase64Encoded = newProfilePictureBase64Encoded
+		)
+	}
 }
 
 @Module

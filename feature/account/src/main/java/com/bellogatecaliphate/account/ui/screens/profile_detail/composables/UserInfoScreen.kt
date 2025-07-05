@@ -3,17 +3,12 @@ package com.bellogatecaliphate.account.ui.screens.profile_detail.composables
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
-import coil3.compose.AsyncImage
 import com.bellogatecaliphate.core.model.dto.User
-import com.bellogatecaliphate.core.util.PLACEHOLDER_200DP
 
 @Composable
 internal fun UserInfoScreen(
@@ -21,6 +16,7 @@ internal fun UserInfoScreen(
 	accountBelongsToLoggedInUser: Boolean,
 	isUpdatingFollowingStatus: Boolean,
 	isUpdatingUserAccountName: Boolean,
+	isUploadingProfilePicture: Boolean,
 	onSaveNewAccountName: (userEmail: String, newUserAccountName: String) -> Unit,
 	isFollowing: Boolean,
 	onFollowClicked: () -> Unit,
@@ -34,12 +30,10 @@ internal fun UserInfoScreen(
 			.fillMaxSize(),
 		horizontalAlignment = Alignment.CenterHorizontally,
 	) {
-		AsyncImage(
-			model = user.profilePictureUrl,
-			contentDescription = "content description",
-			modifier = Modifier
-				.size(PLACEHOLDER_200DP)
-				.clip(CircleShape)
+		ProfilePicture(
+			isUploadingProfilePicture = isUploadingProfilePicture,
+			accountBelongsToLoggedInUser = accountBelongsToLoggedInUser,
+			profilePictureUrl = user.profilePictureUrl
 		)
 		CountSectionList(
 			numberOfFollowers = user.numberOfFollowers,
@@ -80,6 +74,7 @@ private fun PreviewUserSection() {
 		accountBelongsToLoggedInUser = false,
 		isUpdatingFollowingStatus = false,
 		isUpdatingUserAccountName = false,
+		isUploadingProfilePicture = false,
 		onSaveNewAccountName = { _, _ -> },
 		isFollowing = false,
 		onFollowClicked = {},

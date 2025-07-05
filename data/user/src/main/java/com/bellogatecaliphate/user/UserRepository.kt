@@ -60,4 +60,14 @@ internal class UserRepository @Inject constructor(
 			newUserAccountName = newUserAccountName
 		)
 	}
+	
+	override suspend fun changeProfilePicture(
+		userEmail: String,
+		newProfilePictureBase64Encoded: String
+	): Boolean {
+		return userRemoteDataSource.changeProfilePicture(
+			userEmail = userEmail,
+			newProfilePictureBase64Encoded = newProfilePictureBase64Encoded
+		)
+	}
 }

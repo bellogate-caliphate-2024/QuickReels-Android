@@ -19,6 +19,7 @@ hiltAndroidTesting = "2.51.1"
 hiltCompiler = "1.2.0"
 hiltWork = "1.2.0"
 coreKtx = "1.12.0"
+imagecropview = "3.1.1"
 jetpackLoading = "1.1.0"
 junit = "4.13.2"
 junitVersion = "1.1.5"
@@ -78,6 +79,7 @@ androidx-paging-compose = { module = "androidx.paging:paging-compose", version.r
 androidx-paging-runtime = { module = "androidx.paging:paging-runtime", version.ref = "pagingRuntime" }
 coil-compose = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coilCompose" }
 coil-network-okhttp = { module = "io.coil-kt.coil3:coil-network-okhttp", version.ref = "coilCompose" }
+imagecropview = { module = "io.github.rroohit:ImageCropView", version.ref = "imagecropview" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinxCoroutinesTest" }
 lottie = { module = "com.airbnb.android:lottie-compose", version.ref = "lottie" }
 error_prone_annotations = { module = "com.google.errorprone:error_prone_annotations", version.ref = "error_prone_annotations" }

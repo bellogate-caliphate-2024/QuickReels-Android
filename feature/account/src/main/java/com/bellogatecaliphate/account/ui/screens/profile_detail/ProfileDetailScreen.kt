@@ -86,6 +86,7 @@ private fun ProfileDetailScreen(
 				accountBelongsToLoggedInUser = uiState.accountBelongsToLoggedInUser,
 				isUpdatingFollowingStatus = uiState.isUpdatingFollowingStatus,
 				isUpdatingUserAccountName = uiState.isUpdatingUserAccountName,
+				isUploadingProfilePicture = uiState.isUploadingProfilePicture,
 				onSaveNewAccountName = onSaveNewAccountName,
 				isFollowing = uiState.isFollowing ?: false,
 				onFollowClicked = onFollowClicked,

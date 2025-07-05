@@ -31,4 +31,9 @@ internal interface IRemoteDataSource {
 		newUserAccountName: String
 	): Boolean
 	
+	suspend fun changeProfilePicture(
+		userEmail: String,
+		newProfilePictureBase64Encoded: String
+	): Boolean
+	
 }

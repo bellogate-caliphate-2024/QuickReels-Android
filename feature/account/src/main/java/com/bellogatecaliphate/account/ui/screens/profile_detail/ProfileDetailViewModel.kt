@@ -1,7 +1,9 @@
 package com.bellogatecaliphate.account.ui.screens.profile_detail
 
+import android.graphics.Bitmap
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.bellogatecaliphate.domain.user.ChangeProfilePictureUseCase
 import com.bellogatecaliphate.domain.user.CheckFollowingUseCase
 import com.bellogatecaliphate.domain.user.FollowUserUseCase
 import com.bellogatecaliphate.domain.user.GetLoggedInUserEmailUseCase
@@ -20,7 +22,8 @@ class ProfileDetailViewModel @Inject constructor(
 	private val getUserInfoUseCase: GetUserInfoUseCase,
 	private val checkFollowingUseCase: CheckFollowingUseCase,
 	private val followUserUseCase: FollowUserUseCase,
-	private val saveUserAccountNameUseCase: SaveUserAccountNameUseCase
+	private val saveUserAccountNameUseCase: SaveUserAccountNameUseCase,
+	private val changeProfilePictureUseCase: ChangeProfilePictureUseCase
 ) : ViewModel() {
 	
 	private val _uiState = MutableStateFlow(UiState())
@@ -71,6 +74,20 @@ class ProfileDetailViewModel @Inject constructor(
 			it.copy(
 				isUpdatingUserAccountName = false,
 				user = it.user?.copy(accountName = latestAccountName)
+			)
+		}
+	}
+	
+	fun changeProfilePicture(userEmail: String, newProfilePicture: Bitmap) = viewModelScope.launch {
+		_uiState.update { it.copy(isUploadingProfilePicture = true) }
+		val result = changeProfilePictureUseCase(
+			userEmail = userEmail,
+			newProfilePicture = newProfilePicture
+		)
+		_uiState.update {
+			it.copy(
+				isUploadingProfilePicture = false,
+				successfullyUploadedProfilePicture = result
 			)
 		}
 	}

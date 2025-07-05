@@ -39,4 +39,10 @@ interface UserApi {
 		newUserAccountName: String
 	): Boolean
 	
+	@POST("change_profile_picture")
+	suspend fun changeProfilePicture(
+		userEmail: String,
+		newProfilePictureBase64Encoded: String
+	): Boolean
+	
 }

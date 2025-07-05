@@ -30,4 +30,10 @@ interface IUserRepository {
 		userEmail: String,
 		newUserAccountName: String
 	): Boolean
+	
+	suspend fun changeProfilePicture(
+		userEmail: String,
+		newProfilePictureBase64Encoded: String
+	): Boolean
+	
 }

@@ -4,7 +4,6 @@
     <string name="post">Post</string>
     <string name="close">Close</string>
     <string name="go_to_settings">Go to settings</string>
-    <string name="storage_permission_rationale">This app needs permission to access photos and videos on your device.\n\nOpen Settings app and grant this permission.</string>
     <string name="txt_empty" />
     <string name="txt_done">Done</string>
     <string name="txt_title_not_supported">Alert!</string>

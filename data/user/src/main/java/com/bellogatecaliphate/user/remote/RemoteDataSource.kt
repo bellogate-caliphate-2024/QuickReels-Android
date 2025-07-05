@@ -79,4 +79,16 @@ internal class RemoteDataSource @Inject constructor(
 		delay(2_000)
 		true
 	}
+	
+	override suspend fun changeProfilePicture(
+		userEmail: String,
+		newProfilePictureBase64Encoded: String
+	): Boolean = withContext(ioDispatcher) {
+		/*api.changeProfilePicture(
+			userEmail = userEmail,
+			newProfilePictureBase64Encoded = newProfilePictureBase64Encoded
+		)*/
+		delay(2_000)
+		true
+	}
 }

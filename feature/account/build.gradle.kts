@@ -104,6 +104,8 @@ dependencies {
 	// Coil
 	implementation(libs.coil.compose)
 	implementation(libs.coil.network.okhttp)
+	// Image cropper
+	implementation(libs.imagecropview)
 }
 
 fun DependencyHandler.googleAuthDependencies() {

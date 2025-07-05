@@ -1,6 +1,9 @@
-package com.bellogatecaliphate.create_post.ui.create_post
+package com.bellogatecaliphate.account.ui.screens.profile_detail.composables
 
+import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.ImageDecoder
 import android.net.Uri
 import android.provider.Settings
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -18,9 +21,9 @@ import com.google.accompanist.permissions.shouldShowRationale
 
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
-fun VideoFilePicker(
+fun ImageFilePicker(
 	visible: Boolean,
-	onGalleryDismissed: (uri: String?) -> Unit,
+	onGalleryDismissed: (image: Bitmap?) -> Unit,
 	onStoragePermissionRationalDialogClosed: () -> Unit = {}
 ) {
 	if (visible.not()) return
@@ -33,7 +36,7 @@ fun VideoFilePicker(
 	intent.setData(uri)
 	
 	when {
-		status.isGranted -> VideoFileGallery(
+		status.isGranted -> ImageFileGallery(
 			onGalleryDismissed
 		)
 		
@@ -62,17 +65,33 @@ fun VideoFilePicker(
  * selected a video or not. However, if the user did select a video, the uri will not be null.
  * **/
 @Composable
-private fun VideoFileGallery(
-	onGalleryDismissed: (uri: String?) -> Unit
+private fun ImageFileGallery(
+	onGalleryDismissed: (bitmap: Bitmap?) -> Unit
 ) {
-	
+	val context = LocalContext.current
 	val selectVideoResultLauncher =
 			rememberLauncherForActivityResult(ActivityResultContracts.PickVisualMedia()) { result: Uri? ->
-				onGalleryDismissed(result?.toString())
+				if (result != null) {
+					val bitmap = loadBitmapFromUri(context, result)
+					onGalleryDismissed(bitmap)
+				} else {
+					onGalleryDismissed(null)
+				}
 			}
 	
 	LaunchedEffect(Unit) {
 		selectVideoResultLauncher
-			.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.VideoOnly))
+			.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+	}
+}
+
+private fun loadBitmapFromUri(context: Context, uri: Uri): Bitmap? {
+	return try {
+		val source = ImageDecoder.createSource(context.contentResolver, uri)
+		ImageDecoder.decodeBitmap(source)
+	}
+	catch (e: Exception) {
+		e.printStackTrace()
+		null
 	}
 }
