@@ -103,7 +103,7 @@ private fun CreatePostScreen(
 	}
 	
 	VideoFilePicker(
-		uiState.requestStoragePermissionAndOpenGallery,
+		uiState.requestStoragePermissionAndOpenGallery, // TODO Logic to open gallery should not be tied to the viewmodel. See ImageFilePicker especially the ! status.isGranted -> {} block.
 		onVideoFileSelected,
 		onStoragePermissionRationalDialogClosed
 	)

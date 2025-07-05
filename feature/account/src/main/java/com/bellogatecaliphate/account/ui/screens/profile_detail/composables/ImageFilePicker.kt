@@ -53,6 +53,7 @@ fun ImageFilePicker(
 		}
 		
 		! status.isGranted -> {
+			onGalleryDismissed(null)
 			LaunchedEffect(Unit) {
 				storagePermission.launchPermissionRequest()
 			}
