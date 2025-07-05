@@ -1,5 +1,6 @@
 package com.bellogatecaliphate.account.ui.screens.profile_detail
 
+import android.graphics.Bitmap
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -44,6 +45,9 @@ internal fun ProfileDetailScreen(
 			viewModel.followOrUnfollowUser(userEmailToSearchFor, false)
 		},
 		onLogOut = onLogOut,
+		onUploadNewProfilePicture = { newProfilePicture ->
+			viewModel.changeProfilePicture(userEmailToSearchFor, newProfilePicture)
+		},
 		onSaveNewAccountName = { userEmail, newUserAccountName ->
 			viewModel.saveNewAccountName(userEmail, newUserAccountName)
 		}
@@ -58,6 +62,7 @@ private fun ProfileDetailScreen(
 	onFollowClicked: () -> Unit,
 	onUnfollowClicked: () -> Unit,
 	onLogOut: () -> Unit,
+	onUploadNewProfilePicture: (newProfilePicture: Bitmap) -> Unit,
 	onSaveNewAccountName: (userEmail: String, newUserAccountName: String) -> Unit,
 ) {
 	val unableToGetUserInfo = uiState.unableToGetUser
@@ -87,11 +92,13 @@ private fun ProfileDetailScreen(
 				isUpdatingFollowingStatus = uiState.isUpdatingFollowingStatus,
 				isUpdatingUserAccountName = uiState.isUpdatingUserAccountName,
 				isUploadingProfilePicture = uiState.isUploadingProfilePicture,
+				profilePictureUploadSuccessful = uiState.successfullyUploadedProfilePicture,
 				onSaveNewAccountName = onSaveNewAccountName,
 				isFollowing = uiState.isFollowing ?: false,
 				onFollowClicked = onFollowClicked,
 				onLogOut = onLogOut,
-				onUnfollowClicked = onUnfollowClicked
+				onUnfollowClicked = onUnfollowClicked,
+				onUploadNewProfilePicture = onUploadNewProfilePicture,
 			)
 			RetryScreen(unableToGetUserInfo, onRetry)
 		}

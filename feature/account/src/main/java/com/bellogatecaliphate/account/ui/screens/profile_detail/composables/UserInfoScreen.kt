@@ -1,5 +1,6 @@
 package com.bellogatecaliphate.account.ui.screens.profile_detail.composables
 
+import android.graphics.Bitmap
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -17,11 +18,13 @@ internal fun UserInfoScreen(
 	isUpdatingFollowingStatus: Boolean,
 	isUpdatingUserAccountName: Boolean,
 	isUploadingProfilePicture: Boolean,
-	onSaveNewAccountName: (userEmail: String, newUserAccountName: String) -> Unit,
+	profilePictureUploadSuccessful: Boolean?,
 	isFollowing: Boolean,
 	onFollowClicked: () -> Unit,
 	onUnfollowClicked: () -> Unit,
-	onLogOut: () -> Unit
+	onLogOut: () -> Unit,
+	onUploadNewProfilePicture: (newProfilePicture: Bitmap) -> Unit,
+	onSaveNewAccountName: (userEmail: String, newUserAccountName: String) -> Unit,
 ) {
 	if (user == null) return
 	Column(
@@ -33,7 +36,9 @@ internal fun UserInfoScreen(
 		ProfilePicture(
 			isUploadingProfilePicture = isUploadingProfilePicture,
 			accountBelongsToLoggedInUser = accountBelongsToLoggedInUser,
-			profilePictureUrl = user.profilePictureUrl
+			profilePictureUrl = user.profilePictureUrl,
+			profilePictureUploadSuccessful = profilePictureUploadSuccessful,
+			onUploadNewProfilePicture = onUploadNewProfilePicture
 		)
 		CountSectionList(
 			numberOfFollowers = user.numberOfFollowers,
@@ -79,6 +84,8 @@ private fun PreviewUserSection() {
 		isFollowing = false,
 		onFollowClicked = {},
 		onUnfollowClicked = {},
-		onLogOut = {}
+		onLogOut = {},
+		onUploadNewProfilePicture = {},
+		profilePictureUploadSuccessful = null
 	)
 }
