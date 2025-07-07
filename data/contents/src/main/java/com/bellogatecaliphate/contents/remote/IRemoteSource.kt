@@ -1,5 +1,6 @@
 package com.bellogatecaliphate.contents.remote
 
+import com.bellogatecaliphate.contents.remote.model.ContentResponse
 import com.bellogatecaliphate.contents.remote.model.ContentsListResponse
 
 internal interface IRemoteSource {
@@ -11,6 +12,8 @@ internal interface IRemoteSource {
 		page: Int,
 		numberOfContentPerPage: Int = 10
 	): ContentsListResponse?
+	
+	suspend fun getContent(contentId: String): ContentResponse?
 	
 	suspend fun likeContent(userEmail: String, contentId: String, isLiked: Boolean): Boolean
 	

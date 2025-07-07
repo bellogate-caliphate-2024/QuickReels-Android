@@ -20,4 +20,5 @@
     <string name="profile_picture_uploaded_failed">Profile picture update failed</string>">
     <string name="image_cropped">Image cropped</string>
     <string name="logout_message">Are you sure you want to log out?</string>
+    <string name="error_loading_content">Error loading content</string>
 </resources>

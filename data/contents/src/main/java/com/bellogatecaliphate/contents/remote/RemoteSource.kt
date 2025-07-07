@@ -133,6 +133,26 @@ internal class RemoteSource @Inject constructor(
 		return contentsListResponse
 	}
 	
+	override suspend fun getContent(contentId: String): ContentResponse =
+			withContext(ioDispatcher) {
+				//api.getContent(contentId)
+				delay(3_000)
+				ContentResponse(
+					"119992299222",
+					"https://firebasestorage.googleapis.com/v0/b/memo-24031.appspot.com/o/every_james_bond_gun-barrel_turn-n-shoot_h264_46303.mp4?alt=media&token=e8aed77b-9dfc-48c0-bf58-1de130a0c211",
+					"https://firebasestorage.googleapis.com/v0/b/memo-24031.appspot.com/o/1.jpeg?alt=media&token=03fa3168-a47c-4f2a-b169-76505fbd364f",
+					"This is a test caption about a movie written by peter jackson. The movie is so good.",
+					"05-05-200 - 10:30 am", "100",
+					"70",
+					"11",
+					"",
+					"Monday Manyy",
+					"https://firebasestorage.googleapis.com/v0/b/memo-24031.appspot.com/o/p1.jpg?alt=media&token=630134db-35cb-41ea-9698-fa0cd25b80c0",
+					false,
+					false
+				)
+			}
+	
 	override suspend fun likeContent(userEmail: String, contentId: String, isLiked: Boolean) =
 			withContext(ioDispatcher) {
 				api.likeContent(userEmail, contentId, isLiked) !!.isSuccess

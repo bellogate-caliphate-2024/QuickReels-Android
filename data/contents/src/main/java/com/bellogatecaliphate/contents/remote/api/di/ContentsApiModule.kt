@@ -1,6 +1,7 @@
 package com.bellogatecaliphate.contents.remote.api.di
 
 import com.bellogatecaliphate.contents.remote.api.ContentsApi
+import com.bellogatecaliphate.contents.remote.model.ContentResponse
 import com.bellogatecaliphate.contents.remote.model.ContentsListResponse
 import com.bellogatecaliphate.contents.remote.model.LikeContentResponse
 import dagger.Binds
@@ -42,6 +43,10 @@ internal class ContentsApiImpl @Inject constructor(private val retrofit: Retrofi
 			contentId,
 			newCaption
 		)
+	}
+	
+	override suspend fun getContent(contentId: String): ContentResponse {
+		return retrofit.create(ContentsApi::class.java).getContent(contentId)
 	}
 }
 

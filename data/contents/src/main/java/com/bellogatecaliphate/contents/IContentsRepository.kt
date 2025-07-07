@@ -5,6 +5,7 @@ import com.bellogatecaliphate.contents.remote.model.ContentResponse
 
 interface IContentsRepository {
 	fun getPaginatedContents(page: Int): Pager<Int, ContentResponse>
+	suspend fun getContent(contentId: String): ContentResponse?
 	fun getPaginatedContentsHistory(userEmail: String): Pager<Int, ContentResponse>
 	suspend fun likeContent(userEmail: String, contentId: String, isLiked: Boolean): Boolean
 	suspend fun deleteContent(userEmail: String, contentId: String): Boolean

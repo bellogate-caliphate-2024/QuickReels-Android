@@ -5,6 +5,7 @@ import androidx.paging.PagingConfig
 import com.bellogatecaliphate.contents.paging.ContentsPagingSource
 import com.bellogatecaliphate.contents.paging.di.ContentsHistoryPagingSourceFactory
 import com.bellogatecaliphate.contents.remote.IRemoteSource
+import com.bellogatecaliphate.contents.remote.model.ContentResponse
 import javax.inject.Inject
 
 /**
@@ -19,6 +20,10 @@ internal class ContentsRepository @Inject constructor(
 	
 	override fun getPaginatedContents(page: Int) = Pager(config = PagingConfig(pageSize = 10)) {
 		contentsPagingSource
+	}
+	
+	override suspend fun getContent(contentId: String): ContentResponse? {
+		return remoteSource.getContent(contentId)
 	}
 	
 	override fun getPaginatedContentsHistory(userEmail: String) =

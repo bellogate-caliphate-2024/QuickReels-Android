@@ -88,7 +88,10 @@ fun NavGraphBuilder.accountNavGraph(
 			},
 			content = { backStackEntry ->
 				val editContent = backStackEntry.toRoute<AccountNavGraphRoute.EditContent>()
-				EditContentScreen()
+				EditContentScreen(
+					contentId = editContent.contentId,
+					onClose = { navController.popBackStack() }
+				)
 			}
 		)
 	}

@@ -1,5 +1,6 @@
 package com.bellogatecaliphate.contents.remote.api
 
+import com.bellogatecaliphate.contents.remote.model.ContentResponse
 import com.bellogatecaliphate.contents.remote.model.ContentsListResponse
 import com.bellogatecaliphate.contents.remote.model.LikeContentResponse
 import retrofit2.http.GET
@@ -30,4 +31,7 @@ internal interface ContentsApi {
 		contentId: String,
 		newCaption: String
 	): Boolean
+	
+	@GET("now_playing")
+	suspend fun getContent(contentId: String): ContentResponse
 }
