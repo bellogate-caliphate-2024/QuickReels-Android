@@ -78,6 +78,7 @@ private fun EditContentScreen(
 					uiState.errorLoadingContent     -> Text(stringResource(R.string.error_loading_content))
 					uiState.errorSavingContent      -> {}
 					uiState.errorDeletingContent    -> {}
+					uiState.content != null         -> {}
 				}
 			}
 		}
