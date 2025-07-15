@@ -1,4 +1,4 @@
-package com.bellogatecaliphate.timeline.ui.content
+package com.bellogatecaliphate.core.ui.content
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
@@ -6,14 +6,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.bellogatecaliphate.core.model.dto.Content
-import com.bellogatecaliphate.timeline.ui.content.sections.BottomSection
-import com.bellogatecaliphate.timeline.ui.content.sections.UserDetailsSection
-import com.bellogatecaliphate.timeline.ui.content.sections.VideoSection
-import com.bellogatecaliphate.timeline.util.ContentPreviewParameter
+import com.bellogatecaliphate.core.ui.content.sections.BottomSection
+import com.bellogatecaliphate.core.ui.content.sections.UserDetailsSection
+import com.bellogatecaliphate.core.ui.content.sections.VideoSection
+import com.bellogatecaliphate.core.util.ContentPreviewParameter
 
 @Composable
 @Preview(showBackground = true)
-internal fun ContentUi(
+fun ContentListItem(
 	@PreviewParameter(ContentPreviewParameter::class) content: Content,
 	modifier: Modifier = Modifier,
 	onLikeButtonPressed: (contentId: String, isLiked: Boolean) -> Unit = { _, _ -> },

@@ -1,4 +1,4 @@
-package com.bellogatecaliphate.timeline.ui.content.sections
+package com.bellogatecaliphate.core.ui.content.sections
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -14,12 +14,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import com.bellogatecaliphate.timeline.R
-import com.bellogatecaliphate.timeline.ui.icons.CommentsIcon
-import com.bellogatecaliphate.timeline.ui.icons.LikeIcon
-import com.bellogatecaliphate.timeline.util.PLACEHOLDER_16DP
-import com.bellogatecaliphate.timeline.util.PLACEHOLDER_8DP
-import com.bellogatecaliphate.timeline.util.PLACEHOLDER_ICON_SIZE
+import com.bellogatecaliphate.core.R
+import com.bellogatecaliphate.core.ui.content.icons.CommentsIcon
+import com.bellogatecaliphate.core.ui.content.icons.LikeIcon
+import com.bellogatecaliphate.core.util.PLACEHOLDER_16DP
+import com.bellogatecaliphate.core.util.PLACEHOLDER_32DP
+import com.bellogatecaliphate.core.util.PLACEHOLDER_8DP
 
 @Composable
 internal fun BottomSection(
@@ -31,16 +31,18 @@ internal fun BottomSection(
 	onLikeButtonPressed: (contentId: String, isLiked: Boolean) -> Unit,
 	onCommentButtonPressed: (contentId: String, totalNumberOfCommentsExpected: Int) -> Unit
 ) {
-	Column(Modifier
-		.background(Color.White)
-		.padding(PLACEHOLDER_8DP)) {
+	Column(
+		Modifier
+			.background(Color.White)
+			.padding(PLACEHOLDER_8DP)
+	) {
 		Row {
 			LikeIcon(contentId, isLiked, numberOfLikes, onLikeButtonPressed)
 			Spacer(modifier = Modifier.width(PLACEHOLDER_16DP))
 			CommentsIcon(contentId, numberOfComments, onCommentButtonPressed)
 			Spacer(modifier = Modifier.width(PLACEHOLDER_8DP))
 			Image(
-				modifier = Modifier.size(PLACEHOLDER_ICON_SIZE),
+				modifier = Modifier.size(PLACEHOLDER_32DP),
 				painter = painterResource(id = R.drawable.icon_next),
 				contentDescription = ""
 			)

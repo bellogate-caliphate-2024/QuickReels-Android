@@ -1,7 +1,9 @@
 package com.bellogatecaliphate.core.util
 
+import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.bellogatecaliphate.core.model.dto.Content
 import java.security.SecureRandom
 
 val PLACEHOLDER_IMAGE_40DP = 40.dp
@@ -30,4 +32,24 @@ fun generateRandomNumberWithFixedLength(length: Int): String {
 		sb.append(random.nextInt(10))
 	}
 	return sb.toString()
+}
+
+class ContentPreviewParameter : PreviewParameterProvider<Content> {
+	override val values: Sequence<Content> = sequenceOf(
+		Content(
+			"119992299222",
+			"",
+			"",
+			"This is a test caption about a movie written by peter jackson. The movie is so good.",
+			"05-05-2023 - 10:30 am",
+			"70",
+			"23",
+			"",
+			"jeffemuveyan@gmail.com",
+			"Jeff Emuveyan",
+			"",
+			false,
+			false
+		)
+	)
 }

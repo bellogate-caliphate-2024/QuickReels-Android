@@ -15,7 +15,7 @@ import com.bellogatecaliphate.core.model.ads.Ads
 import com.bellogatecaliphate.core.ui.ProgressBar
 import com.bellogatecaliphate.core.ui.comments.CommentsBottomDialog
 import com.bellogatecaliphate.timeline.model.UiState
-import com.bellogatecaliphate.timeline.ui.content.Contents
+import com.bellogatecaliphate.timeline.ui.content.ContentsList
 
 @Composable
 fun TimeLineScreen(
@@ -64,7 +64,7 @@ private fun TimeLineScreen(
 ) {
 	Column {
 		ProgressBar(uiState.isLoading)
-		Contents(
+		ContentsList(
 			list = uiState.listOfPaginatedContents.collectAsLazyPagingItems(),
 			advert = uiState.adVert,
 			firstVisibleItemIndex = uiState.firstVisibleItemIndex ?: 0,

@@ -19,10 +19,11 @@ import androidx.compose.ui.Modifier
 import androidx.paging.compose.LazyPagingItems
 import com.bellogatecaliphate.core.model.dto.Advert
 import com.bellogatecaliphate.core.model.dto.Content
+import com.bellogatecaliphate.core.ui.content.ContentListItem
 import com.bellogatecaliphate.nativeads.QuickReelsNativeAd
 
 @Composable
-internal fun Contents(
+internal fun ContentsList(
 	list: LazyPagingItems<Content>?,
 	advert: Advert?,
 	firstVisibleItemIndex: Int,
@@ -92,7 +93,7 @@ internal fun Contents(
 			if (content is Advert) {
 				NativeAd(Modifier.fillParentMaxSize(), advert, onAdRequest)
 			} else {
-				ContentUi(
+				ContentListItem(
 					content = content,
 					modifier = Modifier.fillParentMaxSize(),
 					onLikeButtonPressed = onLikeButtonPressed,

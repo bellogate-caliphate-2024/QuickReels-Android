@@ -22,6 +22,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.bellogatecaliphate.account.R
 import com.bellogatecaliphate.core.ui.QuickReelsCircularProgressBar
+import com.bellogatecaliphate.core.ui.content.ContentListItem
 import com.bellogatecaliphate.core.util.PLACEHOLDER_16DP
 
 @Composable
@@ -45,7 +46,10 @@ internal fun EditContentScreen(
 private fun EditContentScreen(
 	uiState: UiState,
 	onClose: () -> Unit,
-	onRefresh: () -> Unit
+	onRefresh: () -> Unit,
+	onLikeButtonPressed: (contentId: String, isLiked: Boolean) -> Unit = { _, _ -> },
+	onCommentButtonPressed: (contentId: String, totalNumberOfCommentsExpected: Int) -> Unit = { _, _ -> },
+	onOpenAccountDetails: (accountUserEmail: String) -> Unit = { _ -> }
 ) {
 	
 	PullToRefreshBox(
@@ -78,7 +82,13 @@ private fun EditContentScreen(
 					uiState.errorLoadingContent     -> Text(stringResource(R.string.error_loading_content))
 					uiState.errorSavingContent      -> {}
 					uiState.errorDeletingContent    -> {}
-					uiState.content != null         -> {}
+					uiState.content != null         -> ContentListItem(
+						content = uiState.content,
+						modifier = Modifier.fillMaxSize(),
+						onLikeButtonPressed = onLikeButtonPressed,
+						onCommentButtonPressed = onCommentButtonPressed,
+						onOpenAccountDetails = onOpenAccountDetails
+					)
 				}
 			}
 		}

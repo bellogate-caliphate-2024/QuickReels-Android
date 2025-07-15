@@ -1,5 +1,6 @@
-package com.bellogatecaliphate.timeline.ui.content.sections
+package com.bellogatecaliphate.core.ui.content.sections
 
+//import coil3.compose.AsyncImage
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -21,9 +22,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
-import com.bellogatecaliphate.timeline.R
-import com.bellogatecaliphate.timeline.util.PLACEHOLDER_8DP
-import com.bellogatecaliphate.timeline.util.PLACEHOLDER_IMAGE_40DP
+import com.bellogatecaliphate.core.R
+import com.bellogatecaliphate.core.util.PLACEHOLDER_8DP
+import com.bellogatecaliphate.core.util.PLACEHOLDER_IMAGE_40DP
 
 @Composable
 internal fun UserDetailsSection(

@@ -97,4 +97,11 @@ dependencies {
 	api(libs.lottie)
 	// Google Ads sdk
 	implementation(libs.play.services.ads)
+	// Exo player:
+	implementation(libs.exoplayer)
+	implementation(libs.exoplayer.ui)
+	implementation(libs.exoplayer.common)
+	// Coil
+	implementation(libs.coil.compose)
+	implementation(libs.coil.network.okhttp)
 }

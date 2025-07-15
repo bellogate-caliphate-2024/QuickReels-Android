@@ -1,5 +1,6 @@
-package com.bellogatecaliphate.timeline.ui.content.sections
+package com.bellogatecaliphate.core.ui.content.sections
 
+//import coil3.compose.AsyncImage
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column

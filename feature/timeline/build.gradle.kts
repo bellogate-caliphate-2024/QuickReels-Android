@@ -92,7 +92,6 @@ dependencies {
 	// navigation graph
 	implementation(libs.navigation.graph)
 	
-	implementation("com.google.android.exoplayer:exoplayer:2.17.1")
 	implementation(libs.glide)
 	annotationProcessor(libs.compiler)
 	implementation("com.akexorcist:localization:1.2.9")
@@ -100,13 +99,6 @@ dependencies {
 	implementation("androidx.coordinatorlayout:coordinatorlayout:1.2.0")
 	implementation(libs.androidx.activity.ktx)
 	implementation(libs.kotlinx.serialization.json)
-	// Exo player:
-	implementation(libs.exoplayer)
-	implementation(libs.exoplayer.ui)
-	implementation(libs.exoplayer.common)
-	// Coil
-	implementation(libs.coil.compose)
-	implementation(libs.coil.network.okhttp)
 	// Google Ads sdk
 	implementation(libs.play.services.ads)
 }
