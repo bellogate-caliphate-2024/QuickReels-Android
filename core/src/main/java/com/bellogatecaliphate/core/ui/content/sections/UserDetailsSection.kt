@@ -38,14 +38,16 @@ import com.bellogatecaliphate.core.util.PLACEHOLDER_IMAGE_40DP
 
 @Composable
 internal fun UserDetailsSection(
-	contentBelongsToLoggedInUser: Boolean,
 	userEmail: String,
 	userProfilePicture: String,
 	userName: String,
 	date: String,
 	deleteContentInProgress: Boolean,
+	contentBelongsToLoggedInUser: Boolean,
+	showBackButton: Boolean,
 	onOpenAccountDetails: (accountUserEmail: String) -> Unit,
-	onDeleteContent: () -> Unit
+	onDeleteContent: () -> Unit,
+	onClose: () -> Unit,
 ) {
 	Row(
 		horizontalArrangement = Arrangement.SpaceBetween,
@@ -57,7 +59,18 @@ internal fun UserDetailsSection(
 			.padding(vertical = PLACEHOLDER_8DP, horizontal = PLACEHOLDER_16DP)
 			.clickable { onOpenAccountDetails(userEmail) }
 	) {
-		Row {
+		Row(
+			verticalAlignment = Alignment.CenterVertically,
+		) {
+			if (showBackButton) {
+				Image(
+					painterResource(R.drawable.back_arrow),
+					contentDescription = "",
+					modifier = Modifier
+						.clickable(onClick = onClose)
+				)
+				Spacer(Modifier.width(PLACEHOLDER_16DP))
+			}
 			AsyncImage(
 				placeholder = painterResource(R.drawable.placeholder_image),
 				model = userProfilePicture,

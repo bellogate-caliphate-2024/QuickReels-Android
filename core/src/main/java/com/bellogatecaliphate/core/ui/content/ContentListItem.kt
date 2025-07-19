@@ -18,11 +18,13 @@ fun ContentListItem(
 	modifier: Modifier = Modifier,
 	contentBelongsToLoggedInUser: Boolean = true,
 	deleteContentInProgress: Boolean = false,
+	showBackButton: Boolean = false,
 	onLikeButtonPressed: (contentId: String, isLiked: Boolean) -> Unit = { _, _ -> },
 	onCommentButtonPressed: (contentId: String, totalNumberOfCommentsExpected: Int) -> Unit = { _, _ -> },
 	onOpenAccountDetails: (accountUserEmail: String) -> Unit = { _ -> },
 	onShowMoreCaptionClicked: () -> Unit = {},
-	onDeleteContent: () -> Unit = {}
+	onDeleteContent: () -> Unit = {},
+	onClose: () -> Unit = {},
 ) {
 	Column(modifier) {
 		UserDetailsSection(
@@ -30,10 +32,12 @@ fun ContentListItem(
 			userEmail = content.userId,
 			userProfilePicture = content.userProfilePicture,
 			userName = content.userName,
+			showBackButton = showBackButton,
 			date = content.date,
 			onOpenAccountDetails = onOpenAccountDetails,
 			deleteContentInProgress = deleteContentInProgress,
-			onDeleteContent = onDeleteContent
+			onDeleteContent = onDeleteContent,
+			onClose = onClose
 		)
 		VideoSection(Modifier.weight(1f), content.videoUrl, content.thumbnailUrl)
 		BottomSection(

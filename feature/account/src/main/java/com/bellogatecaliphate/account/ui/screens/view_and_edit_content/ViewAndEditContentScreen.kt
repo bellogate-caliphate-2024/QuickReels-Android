@@ -1,15 +1,11 @@
 package com.bellogatecaliphate.account.ui.screens.view_and_edit_content
 
 import android.widget.Toast
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.Composable
@@ -18,14 +14,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.bellogatecaliphate.account.R
 import com.bellogatecaliphate.core.ui.QuickReelsCircularProgressBar
 import com.bellogatecaliphate.core.ui.content.ContentListItem
-import com.bellogatecaliphate.core.util.PLACEHOLDER_16DP
 
 @Composable
 internal fun EditContentScreen(
@@ -72,40 +66,28 @@ private fun EditContentScreen(
 		onRefresh = onRefresh,
 		modifier = Modifier.fillMaxSize()
 	) {
-		Scaffold(
-			modifier = Modifier.fillMaxSize(),
-			topBar = {
-				Image(
-					painterResource(R.drawable.back_arrow),
-					contentDescription = "",
-					modifier = Modifier
-						.clickable(onClick = onClose)
-						.padding(PLACEHOLDER_16DP),
+		Column(
+			modifier = Modifier
+				.background(color = Color.White)
+				.fillMaxSize(),
+			horizontalAlignment = Alignment.CenterHorizontally,
+			verticalArrangement = Arrangement.Center
+		) {
+			when {
+				uiState.isLoadingInitialContent -> QuickReelsCircularProgressBar()
+				uiState.errorLoadingContent     -> Text(stringResource(R.string.error_loading_content))
+				uiState.content != null         -> ContentListItem(
+					modifier = Modifier.fillMaxSize(),
+					content = uiState.content,
+					showBackButton = true,
+					contentBelongsToLoggedInUser = uiState.contentBelongsToLoggedInUser,
+					deleteContentInProgress = uiState.deleteContentInProgress,
+					onLikeButtonPressed = onLikeButtonPressed,
+					onCommentButtonPressed = onCommentButtonPressed,
+					onOpenAccountDetails = onOpenAccountDetails,
+					onDeleteContent = onDeleteContent,
+					onClose = onClose
 				)
-			}
-		) { innerPadding ->
-			Column(
-				modifier = Modifier
-					.background(color = Color.White)
-					.padding(innerPadding)
-					.fillMaxSize(),
-				horizontalAlignment = Alignment.CenterHorizontally,
-				verticalArrangement = Arrangement.Center
-			) {
-				when {
-					uiState.isLoadingInitialContent -> QuickReelsCircularProgressBar()
-					uiState.errorLoadingContent     -> Text(stringResource(R.string.error_loading_content))
-					uiState.content != null         -> ContentListItem(
-						modifier = Modifier.fillMaxSize(),
-						content = uiState.content,
-						contentBelongsToLoggedInUser = uiState.contentBelongsToLoggedInUser,
-						deleteContentInProgress = uiState.deleteContentInProgress,
-						onLikeButtonPressed = onLikeButtonPressed,
-						onCommentButtonPressed = onCommentButtonPressed,
-						onOpenAccountDetails = onOpenAccountDetails,
-						onDeleteContent = onDeleteContent
-					)
-				}
 			}
 		}
 	}
