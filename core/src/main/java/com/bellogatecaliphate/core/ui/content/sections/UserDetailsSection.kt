@@ -35,7 +35,6 @@ import com.bellogatecaliphate.core.util.PLACEHOLDER_16DP
 import com.bellogatecaliphate.core.util.PLACEHOLDER_24DP
 import com.bellogatecaliphate.core.util.PLACEHOLDER_8DP
 import com.bellogatecaliphate.core.util.PLACEHOLDER_IMAGE_40DP
-import com.bellogatecaliphate.core.util.isFalseOrNull
 
 @Composable
 internal fun UserDetailsSection(
@@ -45,7 +44,6 @@ internal fun UserDetailsSection(
 	userName: String,
 	date: String,
 	deleteContentInProgress: Boolean,
-	deleteContentSuccess: Boolean?,
 	onOpenAccountDetails: (accountUserEmail: String) -> Unit,
 	onDeleteContent: () -> Unit
 ) {
@@ -81,7 +79,6 @@ internal fun UserDetailsSection(
 		DeleteContentButton(
 			visible = contentBelongsToLoggedInUser,
 			deleteContentInProgress = deleteContentInProgress,
-			deleteContentSuccess = deleteContentSuccess,
 			onDeleteContent = onDeleteContent
 		)
 	}
@@ -91,13 +88,12 @@ internal fun UserDetailsSection(
 private fun DeleteContentButton(
 	visible: Boolean,
 	deleteContentInProgress: Boolean,
-	deleteContentSuccess: Boolean?,
 	onDeleteContent: () -> Unit
 ) {
 	if (visible.not()) return
 	var onDeleteContentClicked by remember { mutableStateOf(false) }
 	
-	if (deleteContentInProgress.not() || deleteContentSuccess.isFalseOrNull()) {
+	if (deleteContentInProgress.not()) {
 		Image(
 			painterResource(R.drawable.outline_delete),
 			contentDescription = "",

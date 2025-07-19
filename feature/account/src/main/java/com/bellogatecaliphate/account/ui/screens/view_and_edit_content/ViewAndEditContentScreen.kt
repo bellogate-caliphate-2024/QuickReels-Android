@@ -100,7 +100,6 @@ private fun EditContentScreen(
 						content = uiState.content,
 						contentBelongsToLoggedInUser = uiState.contentBelongsToLoggedInUser,
 						deleteContentInProgress = uiState.deleteContentInProgress,
-						deleteContentSuccess = uiState.deleteContentSuccess,
 						onLikeButtonPressed = onLikeButtonPressed,
 						onCommentButtonPressed = onCommentButtonPressed,
 						onOpenAccountDetails = onOpenAccountDetails,

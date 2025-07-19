@@ -18,7 +18,6 @@ fun ContentListItem(
 	modifier: Modifier = Modifier,
 	contentBelongsToLoggedInUser: Boolean = true,
 	deleteContentInProgress: Boolean = false,
-	deleteContentSuccess: Boolean? = false,
 	onLikeButtonPressed: (contentId: String, isLiked: Boolean) -> Unit = { _, _ -> },
 	onCommentButtonPressed: (contentId: String, totalNumberOfCommentsExpected: Int) -> Unit = { _, _ -> },
 	onOpenAccountDetails: (accountUserEmail: String) -> Unit = { _ -> },
@@ -34,7 +33,6 @@ fun ContentListItem(
 			date = content.date,
 			onOpenAccountDetails = onOpenAccountDetails,
 			deleteContentInProgress = deleteContentInProgress,
-			deleteContentSuccess = deleteContentSuccess,
 			onDeleteContent = onDeleteContent
 		)
 		VideoSection(Modifier.weight(1f), content.videoUrl, content.thumbnailUrl)
