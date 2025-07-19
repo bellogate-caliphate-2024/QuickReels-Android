@@ -1,9 +1,7 @@
 package com.bellogatecaliphate.account.ui.composables
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -18,14 +16,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import com.bellogatecaliphate.account.R
 import com.bellogatecaliphate.core.model.dto.User
+import com.bellogatecaliphate.core.ui.Circle
 import com.bellogatecaliphate.core.util.PLACEHOLDER_16DP
 import com.bellogatecaliphate.core.util.PLACEHOLDER_8DP
 import com.bellogatecaliphate.core.util.PLACEHOLDER_IMAGE_40DP
@@ -85,16 +81,4 @@ private fun BackButton(show: Boolean, onBackPressed: () -> Unit) {
 			.clickable(onClick = onBackPressed),
 	)
 	Spacer(modifier = Modifier.width(PLACEHOLDER_16DP))
-}
-
-@Composable
-fun Circle(
-	size: Dp = 8.dp,
-	color: Color
-) {
-	Box(
-		modifier = Modifier
-			.size(size)
-			.background(color, shape = CircleShape)
-	)
 }

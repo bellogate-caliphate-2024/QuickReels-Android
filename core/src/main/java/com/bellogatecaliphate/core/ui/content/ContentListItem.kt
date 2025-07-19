@@ -45,6 +45,7 @@ fun ContentListItem(
 			caption = content.caption,
 			numberOfLikes = content.numberOfLikes,
 			numberOfComments = content.numberOfComments,
+			contentBelongsToLoggedInUser = contentBelongsToLoggedInUser,
 			isLiked = content.isLiked,
 			onLikeButtonPressed = onLikeButtonPressed,
 			onCommentButtonPressed = onCommentButtonPressed,

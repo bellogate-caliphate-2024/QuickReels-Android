@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -19,15 +18,17 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.bellogatecaliphate.core.R
+import com.bellogatecaliphate.core.ui.Circle
 import com.bellogatecaliphate.core.ui.content.icons.CommentsIcon
 import com.bellogatecaliphate.core.ui.content.icons.LikeIcon
 import com.bellogatecaliphate.core.util.PLACEHOLDER_16DP
@@ -40,6 +41,7 @@ internal fun BottomSection(
 	caption: String,
 	numberOfLikes: String,
 	numberOfComments: String,
+	contentBelongsToLoggedInUser: Boolean,
 	isLiked: Boolean,
 	onLikeButtonPressed: (contentId: String, isLiked: Boolean) -> Unit,
 	onCommentButtonPressed: (contentId: String, totalNumberOfCommentsExpected: Int) -> Unit,
@@ -64,7 +66,7 @@ internal fun BottomSection(
 		Spacer(modifier = Modifier.height(PLACEHOLDER_8DP))
 		CaptionText(
 			text = caption,
-			textStyle = MaterialTheme.typography.bodySmall,
+			showEditButton = contentBelongsToLoggedInUser,
 			onShowMoreCaptionClicked = onShowMoreCaptionClicked
 		)
 	}
@@ -73,33 +75,52 @@ internal fun BottomSection(
 @Composable
 private fun CaptionText(
 	text: String,
-	modifier: Modifier = Modifier,
-	textStyle: TextStyle = LocalTextStyle.current,
+	showEditButton: Boolean,
 	onShowMoreCaptionClicked: () -> Unit
 ) {
 	var isOverflowing by remember { mutableStateOf(false) }
 	
-	Column(modifier = modifier) {
+	Column {
 		Text(
 			text = text,
 			maxLines = 3,
 			overflow = TextOverflow.Ellipsis,
-			style = textStyle,
+			style = MaterialTheme.typography.bodySmall,
 			onTextLayout = { layoutResult ->
 				isOverflowing = layoutResult.hasVisualOverflow
 			},
 			modifier = Modifier.fillMaxWidth()
 		)
 		
-		if (isOverflowing) {
-			Text(
-				text = stringResource(R.string.show_more),
-				color = Color.Black,
-				fontWeight = FontWeight.Bold,
-				modifier = Modifier
-					.padding(top = 4.dp)
-					.clickable { onShowMoreCaptionClicked() }
-			)
+		Row(
+			verticalAlignment = Alignment.CenterVertically,
+		) {
+			if (isOverflowing)
+				Text(
+					text = stringResource(R.string.show_more),
+					color = colorResource(R.color.quickreels_purple),
+					fontWeight = FontWeight.Bold,
+					modifier = Modifier
+						.clickable { onShowMoreCaptionClicked() }
+				)
+			Demarcation(isOverflowing && showEditButton)
+			if (showEditButton)
+				Text(
+					text = stringResource(R.string.edit),
+					color = colorResource(R.color.quickreels_purple),
+					fontWeight = FontWeight.Bold,
+					modifier = Modifier
+						.padding(top = 4.dp)
+						.clickable { onShowMoreCaptionClicked() }
+				)
 		}
 	}
+}
+
+@Composable
+private fun Demarcation(visible: Boolean) {
+	if (visible.not()) return
+	Spacer(modifier = Modifier.width(PLACEHOLDER_16DP))
+	Circle(color = colorResource(id = R.color.ash))
+	Spacer(modifier = Modifier.width(PLACEHOLDER_16DP))
 }
