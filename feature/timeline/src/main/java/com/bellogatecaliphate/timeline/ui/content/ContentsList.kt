@@ -94,8 +94,9 @@ internal fun ContentsList(
 				NativeAd(Modifier.fillParentMaxSize(), advert, onAdRequest)
 			} else {
 				ContentListItem(
-					content = content,
 					modifier = Modifier.fillParentMaxSize(),
+					content = content,
+					contentBelongsToLoggedInUser = false,
 					onLikeButtonPressed = onLikeButtonPressed,
 					onCommentButtonPressed = onCommentButtonPressed,
 					onOpenAccountDetails = onOpenAccountDetails

@@ -67,14 +67,22 @@ internal fun UserDetailsSection(
 				)
 			}
 		}
-		Image(
-			painterResource(R.drawable.outline_delete),
-			contentDescription = "",
-			modifier = Modifier
-				.clip(RoundedCornerShape(40.dp))
-				.clickable(onClick = {
-				
-				}),
-		)
+		DeleteContentButton(visible = contentBelongsToLoggedInUser)
 	}
+}
+
+@Composable
+private fun DeleteContentButton(
+	visible: Boolean
+) {
+	if (visible.not()) return
+	Image(
+		painterResource(R.drawable.outline_delete),
+		contentDescription = "",
+		modifier = Modifier
+			.clip(RoundedCornerShape(40.dp))
+			.clickable(onClick = {
+			
+			}),
+	)
 }

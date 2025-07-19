@@ -3,6 +3,7 @@ package com.bellogatecaliphate.account.ui.screens.view_and_edit_content
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bellogatecaliphate.domain.contents.GetContentUseCase
+import com.bellogatecaliphate.domain.user.GetLoggedInUserEmailUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -11,6 +12,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ViewAndEditContentScreenViewModel @Inject constructor(
+	private val getLoggedInUserEmailUseCase: GetLoggedInUserEmailUseCase,
 	private val getContentUseCase: GetContentUseCase,
 ) : ViewModel() {
 	
@@ -22,13 +24,14 @@ class ViewAndEditContentScreenViewModel @Inject constructor(
 			isRefreshing = isRefreshing,
 			isLoadingInitialContent = isRefreshing.not(),
 		)
-		val result = getContentUseCase(contentId)
+		val content = getContentUseCase(contentId)
 		
 		_uiState.value = _uiState.value.copy(
 			isRefreshing = false,
 			isLoadingInitialContent = false,
-			content = result,
-			errorLoadingContent = result == null,
+			content = content,
+			errorLoadingContent = content == null,
+			contentBelongsToLoggedInUser = getLoggedInUserEmailUseCase() == content?.userId
 		)
 	}
 }

@@ -83,8 +83,9 @@ private fun EditContentScreen(
 					uiState.errorSavingContent      -> {}
 					uiState.errorDeletingContent    -> {}
 					uiState.content != null         -> ContentListItem(
-						content = uiState.content,
 						modifier = Modifier.fillMaxSize(),
+						content = uiState.content,
+						contentBelongsToLoggedInUser = uiState.contentBelongsToLoggedInUser,
 						onLikeButtonPressed = onLikeButtonPressed,
 						onCommentButtonPressed = onCommentButtonPressed,
 						onOpenAccountDetails = onOpenAccountDetails

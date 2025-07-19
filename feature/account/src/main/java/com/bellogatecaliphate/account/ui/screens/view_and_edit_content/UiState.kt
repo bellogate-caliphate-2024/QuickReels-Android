@@ -9,4 +9,5 @@ data class UiState(
 	val errorSavingContent: Boolean = false,
 	val errorDeletingContent: Boolean = false,
 	val content: Content? = null,
+	val contentBelongsToLoggedInUser: Boolean = false
 )
