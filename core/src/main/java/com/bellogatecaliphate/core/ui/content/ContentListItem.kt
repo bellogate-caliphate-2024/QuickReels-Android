@@ -16,12 +16,15 @@ import com.bellogatecaliphate.core.util.ContentPreviewParameter
 fun ContentListItem(
 	@PreviewParameter(ContentPreviewParameter::class) content: Content,
 	modifier: Modifier = Modifier,
+	contentBelongsToLoggedInUser: Boolean = true,
 	onLikeButtonPressed: (contentId: String, isLiked: Boolean) -> Unit = { _, _ -> },
 	onCommentButtonPressed: (contentId: String, totalNumberOfCommentsExpected: Int) -> Unit = { _, _ -> },
-	onOpenAccountDetails: (accountUserEmail: String) -> Unit = { _ -> }
+	onOpenAccountDetails: (accountUserEmail: String) -> Unit = { _ -> },
+	onShowMoreCaptionClicked: () -> Unit = {}
 ) {
 	Column(modifier) {
 		UserDetailsSection(
+			contentBelongsToLoggedInUser = contentBelongsToLoggedInUser,
 			userEmail = content.userId,
 			userProfilePicture = content.userProfilePicture,
 			userName = content.userName,
@@ -36,7 +39,8 @@ fun ContentListItem(
 			numberOfComments = content.numberOfComments,
 			isLiked = content.isLiked,
 			onLikeButtonPressed = onLikeButtonPressed,
-			onCommentButtonPressed = onCommentButtonPressed
+			onCommentButtonPressed = onCommentButtonPressed,
+			onShowMoreCaptionClicked = onShowMoreCaptionClicked
 		)
 	}
 }

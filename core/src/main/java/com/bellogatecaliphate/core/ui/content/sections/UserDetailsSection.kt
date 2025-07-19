@@ -1,8 +1,10 @@
 package com.bellogatecaliphate.core.ui.content.sections
 
 //import coil3.compose.AsyncImage
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -23,11 +25,13 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import com.bellogatecaliphate.core.R
+import com.bellogatecaliphate.core.util.PLACEHOLDER_16DP
 import com.bellogatecaliphate.core.util.PLACEHOLDER_8DP
 import com.bellogatecaliphate.core.util.PLACEHOLDER_IMAGE_40DP
 
 @Composable
 internal fun UserDetailsSection(
+	contentBelongsToLoggedInUser: Boolean,
 	userEmail: String,
 	userProfilePicture: String,
 	userName: String,
@@ -35,30 +39,42 @@ internal fun UserDetailsSection(
 	onOpenAccountDetails: (accountUserEmail: String) -> Unit
 ) {
 	Row(
+		horizontalArrangement = Arrangement.SpaceBetween,
 		verticalAlignment = Alignment.CenterVertically,
 		modifier = Modifier
 			.background(Color.White)
 			.fillMaxWidth()
 			.clip(RoundedCornerShape(40.dp))
-			.padding(PLACEHOLDER_8DP)
+			.padding(vertical = PLACEHOLDER_8DP, horizontal = PLACEHOLDER_16DP)
 			.clickable { onOpenAccountDetails(userEmail) }
 	) {
-		AsyncImage(
-			placeholder = painterResource(R.drawable.placeholder_image),
-			model = userProfilePicture,
-			contentDescription = null,
-			modifier = Modifier
-				.size(PLACEHOLDER_IMAGE_40DP)
-				.clip(CircleShape)
-		)
-		Spacer(modifier = Modifier.width(PLACEHOLDER_8DP))
-		Column {
-			Text(text = userName)
-			Text(
-				style = MaterialTheme.typography.bodySmall,
-				text = date,
-				color = Color.LightGray
+		Row {
+			AsyncImage(
+				placeholder = painterResource(R.drawable.placeholder_image),
+				model = userProfilePicture,
+				contentDescription = null,
+				modifier = Modifier
+					.size(PLACEHOLDER_IMAGE_40DP)
+					.clip(CircleShape)
 			)
+			Spacer(modifier = Modifier.width(PLACEHOLDER_8DP))
+			Column {
+				Text(text = userName)
+				Text(
+					style = MaterialTheme.typography.bodySmall,
+					text = date,
+					color = Color.LightGray
+				)
+			}
 		}
+		Image(
+			painterResource(R.drawable.outline_delete),
+			contentDescription = "",
+			modifier = Modifier
+				.clip(RoundedCornerShape(40.dp))
+				.clickable(onClick = {
+				
+				}),
+		)
 	}
 }
