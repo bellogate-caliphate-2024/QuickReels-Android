@@ -20,9 +20,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.bellogatecaliphate.account.R
-import com.bellogatecaliphate.account.ui.composables.ConfirmationDialog
 import com.bellogatecaliphate.core.model.dto.User
 import com.bellogatecaliphate.core.ui.QuickReelsCircularProgressBar
+import com.bellogatecaliphate.core.ui.composables.ConfirmationDialog
 import com.bellogatecaliphate.core.util.PLACEHOLDER_16DP
 
 @Composable

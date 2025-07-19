@@ -17,6 +17,10 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -25,9 +29,13 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import com.bellogatecaliphate.core.R
+import com.bellogatecaliphate.core.ui.QuickReelsCircularProgressBar
+import com.bellogatecaliphate.core.ui.composables.ConfirmationDialog
 import com.bellogatecaliphate.core.util.PLACEHOLDER_16DP
+import com.bellogatecaliphate.core.util.PLACEHOLDER_24DP
 import com.bellogatecaliphate.core.util.PLACEHOLDER_8DP
 import com.bellogatecaliphate.core.util.PLACEHOLDER_IMAGE_40DP
+import com.bellogatecaliphate.core.util.isFalseOrNull
 
 @Composable
 internal fun UserDetailsSection(
@@ -36,7 +44,9 @@ internal fun UserDetailsSection(
 	userProfilePicture: String,
 	userName: String,
 	date: String,
-	onOpenAccountDetails: (accountUserEmail: String) -> Unit
+	deleteContentSuccess: Boolean?,
+	onOpenAccountDetails: (accountUserEmail: String) -> Unit,
+	onDeleteContent: () -> Unit
 ) {
 	Row(
 		horizontalArrangement = Arrangement.SpaceBetween,
@@ -67,22 +77,46 @@ internal fun UserDetailsSection(
 				)
 			}
 		}
-		DeleteContentButton(visible = contentBelongsToLoggedInUser)
+		DeleteContentButton(
+			visible = contentBelongsToLoggedInUser,
+			deleteContentSuccess = deleteContentSuccess,
+			onDeleteContent = onDeleteContent
+		)
 	}
 }
 
 @Composable
 private fun DeleteContentButton(
-	visible: Boolean
+	visible: Boolean,
+	deleteContentSuccess: Boolean?,
+	onDeleteContent: () -> Unit
 ) {
 	if (visible.not()) return
-	Image(
-		painterResource(R.drawable.outline_delete),
-		contentDescription = "",
-		modifier = Modifier
-			.clip(RoundedCornerShape(40.dp))
-			.clickable(onClick = {
-			
-			}),
+	var onDeleteContentClicked by remember { mutableStateOf(false) }
+	var onDeleteContentInProgress by remember { mutableStateOf(false) }
+	
+	if (onDeleteContentInProgress.not() && deleteContentSuccess.isFalseOrNull()) {
+		Image(
+			painterResource(R.drawable.outline_delete),
+			contentDescription = "",
+			modifier = Modifier
+				.clip(RoundedCornerShape(40.dp))
+				.clickable(onClick = {
+					onDeleteContentClicked = true
+				}),
+		)
+	}
+	QuickReelsCircularProgressBar(show = onDeleteContentInProgress, PLACEHOLDER_24DP)
+	ConfirmationDialog(
+		show = onDeleteContentClicked,
+		text = R.string.delete_this_post,
+		onConfirmationGiven = {
+			onDeleteContentInProgress = true
+			onDeleteContentClicked = false
+			onDeleteContent()
+		},
+		onDismiss = {
+			onDeleteContentClicked = false
+		}
 	)
 }

@@ -17,10 +17,12 @@ fun ContentListItem(
 	@PreviewParameter(ContentPreviewParameter::class) content: Content,
 	modifier: Modifier = Modifier,
 	contentBelongsToLoggedInUser: Boolean = true,
+	deleteContentSuccess: Boolean? = false,
 	onLikeButtonPressed: (contentId: String, isLiked: Boolean) -> Unit = { _, _ -> },
 	onCommentButtonPressed: (contentId: String, totalNumberOfCommentsExpected: Int) -> Unit = { _, _ -> },
 	onOpenAccountDetails: (accountUserEmail: String) -> Unit = { _ -> },
-	onShowMoreCaptionClicked: () -> Unit = {}
+	onShowMoreCaptionClicked: () -> Unit = {},
+	onDeleteContent: () -> Unit = {}
 ) {
 	Column(modifier) {
 		UserDetailsSection(
@@ -30,6 +32,8 @@ fun ContentListItem(
 			userName = content.userName,
 			date = content.date,
 			onOpenAccountDetails = onOpenAccountDetails,
+			deleteContentSuccess = deleteContentSuccess,
+			onDeleteContent = onDeleteContent
 		)
 		VideoSection(Modifier.weight(1f), content.videoUrl, content.thumbnailUrl)
 		BottomSection(

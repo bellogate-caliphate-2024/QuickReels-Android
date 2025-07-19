@@ -1,4 +1,4 @@
-package com.bellogatecaliphate.account.ui.composables
+package com.bellogatecaliphate.core.ui.composables
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Column
@@ -22,14 +22,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import com.bellogatecaliphate.account.R
+import com.bellogatecaliphate.core.R
 import com.bellogatecaliphate.core.util.PLACEHOLDER_16DP
 import com.bellogatecaliphate.core.util.PLACEHOLDER_24DP
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-internal fun ConfirmationDialog(
+fun ConfirmationDialog(
 	show: Boolean,
 	@StringRes text: Int,
 	onConfirmationGiven: () -> Unit,
@@ -64,7 +64,7 @@ internal fun ConfirmationDialog(
 				onConfirmationGiven()
 			}, modifier = Modifier.fillMaxWidth()) {
 				Text(
-					stringResource(id = R.string.yes),
+					stringResource(R.string.yes),
 					color = Color.Black,
 					fontWeight = FontWeight.Bold
 				)

@@ -34,6 +34,8 @@ fun generateRandomNumberWithFixedLength(length: Int): String {
 	return sb.toString()
 }
 
+fun Boolean?.isFalseOrNull() = this == null || ! this
+
 class ContentPreviewParameter : PreviewParameterProvider<Content> {
 	override val values: Sequence<Content> = sequenceOf(
 		Content(
