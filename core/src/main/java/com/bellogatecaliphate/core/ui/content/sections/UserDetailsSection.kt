@@ -106,7 +106,8 @@ private fun DeleteContentButton(
 				}),
 		)
 	}
-	QuickReelsCircularProgressBar(show = onDeleteContentInProgress, PLACEHOLDER_24DP)
+	val showProgress = onDeleteContentInProgress && deleteContentSuccess == null
+	QuickReelsCircularProgressBar(show = showProgress, PLACEHOLDER_24DP)
 	ConfirmationDialog(
 		show = onDeleteContentClicked,
 		text = R.string.delete_this_post,
