@@ -43,9 +43,12 @@ internal class ViewAndEditContentScreenViewModel @Inject constructor(
 	}
 	
 	fun deleteContent(contentId: String) = viewModelScope.launch {
+		_uiState.update {
+			it.copy(deleteContentInProgress = true)
+		}
 		val result = deleteContentUseCase(contentId)
 		_uiState.update {
-			it.copy(deleteContentSuccess = result)
+			it.copy(deleteContentSuccess = result, deleteContentInProgress = false)
 		}
 	}
 }

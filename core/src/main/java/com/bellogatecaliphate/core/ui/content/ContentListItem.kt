@@ -17,6 +17,7 @@ fun ContentListItem(
 	@PreviewParameter(ContentPreviewParameter::class) content: Content,
 	modifier: Modifier = Modifier,
 	contentBelongsToLoggedInUser: Boolean = true,
+	deleteContentInProgress: Boolean = false,
 	deleteContentSuccess: Boolean? = false,
 	onLikeButtonPressed: (contentId: String, isLiked: Boolean) -> Unit = { _, _ -> },
 	onCommentButtonPressed: (contentId: String, totalNumberOfCommentsExpected: Int) -> Unit = { _, _ -> },
@@ -32,6 +33,7 @@ fun ContentListItem(
 			userName = content.userName,
 			date = content.date,
 			onOpenAccountDetails = onOpenAccountDetails,
+			deleteContentInProgress = deleteContentInProgress,
 			deleteContentSuccess = deleteContentSuccess,
 			onDeleteContent = onDeleteContent
 		)

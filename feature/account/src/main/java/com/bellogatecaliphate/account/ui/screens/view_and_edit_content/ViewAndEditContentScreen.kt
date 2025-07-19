@@ -99,6 +99,7 @@ private fun EditContentScreen(
 						modifier = Modifier.fillMaxSize(),
 						content = uiState.content,
 						contentBelongsToLoggedInUser = uiState.contentBelongsToLoggedInUser,
+						deleteContentInProgress = uiState.deleteContentInProgress,
 						deleteContentSuccess = uiState.deleteContentSuccess,
 						onLikeButtonPressed = onLikeButtonPressed,
 						onCommentButtonPressed = onCommentButtonPressed,

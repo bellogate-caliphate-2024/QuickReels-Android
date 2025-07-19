@@ -44,6 +44,7 @@ internal fun UserDetailsSection(
 	userProfilePicture: String,
 	userName: String,
 	date: String,
+	deleteContentInProgress: Boolean,
 	deleteContentSuccess: Boolean?,
 	onOpenAccountDetails: (accountUserEmail: String) -> Unit,
 	onDeleteContent: () -> Unit
@@ -79,6 +80,7 @@ internal fun UserDetailsSection(
 		}
 		DeleteContentButton(
 			visible = contentBelongsToLoggedInUser,
+			deleteContentInProgress = deleteContentInProgress,
 			deleteContentSuccess = deleteContentSuccess,
 			onDeleteContent = onDeleteContent
 		)
@@ -88,14 +90,14 @@ internal fun UserDetailsSection(
 @Composable
 private fun DeleteContentButton(
 	visible: Boolean,
+	deleteContentInProgress: Boolean,
 	deleteContentSuccess: Boolean?,
 	onDeleteContent: () -> Unit
 ) {
 	if (visible.not()) return
 	var onDeleteContentClicked by remember { mutableStateOf(false) }
-	var onDeleteContentInProgress by remember { mutableStateOf(false) }
 	
-	if (onDeleteContentInProgress.not() && deleteContentSuccess.isFalseOrNull()) {
+	if (deleteContentInProgress.not() || deleteContentSuccess.isFalseOrNull()) {
 		Image(
 			painterResource(R.drawable.outline_delete),
 			contentDescription = "",
@@ -106,13 +108,11 @@ private fun DeleteContentButton(
 				}),
 		)
 	}
-	val showProgress = onDeleteContentInProgress && deleteContentSuccess == null
-	QuickReelsCircularProgressBar(show = showProgress, PLACEHOLDER_24DP)
+	QuickReelsCircularProgressBar(show = deleteContentInProgress, PLACEHOLDER_24DP)
 	ConfirmationDialog(
 		show = onDeleteContentClicked,
 		text = R.string.delete_this_post,
 		onConfirmationGiven = {
-			onDeleteContentInProgress = true
 			onDeleteContentClicked = false
 			onDeleteContent()
 		},
