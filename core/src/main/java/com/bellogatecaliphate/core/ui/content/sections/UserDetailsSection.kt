@@ -30,7 +30,7 @@ import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import com.bellogatecaliphate.core.R
 import com.bellogatecaliphate.core.ui.QuickReelsCircularProgressBar
-import com.bellogatecaliphate.core.ui.composables.ConfirmationDialog
+import com.bellogatecaliphate.core.ui.composables.QuickReelsBottomSheetDialog
 import com.bellogatecaliphate.core.util.PLACEHOLDER_16DP
 import com.bellogatecaliphate.core.util.PLACEHOLDER_24DP
 import com.bellogatecaliphate.core.util.PLACEHOLDER_8DP
@@ -118,7 +118,7 @@ private fun DeleteContentButton(
 		)
 	}
 	QuickReelsCircularProgressBar(show = deleteContentInProgress, PLACEHOLDER_24DP)
-	ConfirmationDialog(
+	QuickReelsBottomSheetDialog(
 		show = onDeleteContentClicked,
 		text = R.string.delete_this_post,
 		onConfirmationGiven = {

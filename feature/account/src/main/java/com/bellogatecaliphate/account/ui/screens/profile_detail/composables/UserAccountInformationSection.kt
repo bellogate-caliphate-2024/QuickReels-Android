@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.dp
 import com.bellogatecaliphate.account.R
 import com.bellogatecaliphate.core.model.dto.User
 import com.bellogatecaliphate.core.ui.QuickReelsCircularProgressBar
-import com.bellogatecaliphate.core.ui.composables.ConfirmationDialog
+import com.bellogatecaliphate.core.ui.composables.QuickReelsBottomSheetDialog
 import com.bellogatecaliphate.core.util.PLACEHOLDER_16DP
 
 @Composable
@@ -78,7 +78,7 @@ internal fun UserAccountInformationSection(
 				onClick = { showSaveAccountNameEditBottomSheet = true }
 			)
 			QuickReelsCircularProgressBar(show = isUpdatingUserAccountName)
-			ConfirmationDialog(
+			QuickReelsBottomSheetDialog(
 				show = showSaveAccountNameEditBottomSheet,
 				text = R.string.save_account_name,
 				onConfirmationGiven = {
@@ -87,7 +87,7 @@ internal fun UserAccountInformationSection(
 				},
 				onDismiss = { showSaveAccountNameEditBottomSheet = false }
 			)
-			ConfirmationDialog(
+			QuickReelsBottomSheetDialog(
 				show = showLogoutBottomSheet,
 				text = R.string.logout_message,
 				onConfirmationGiven = {

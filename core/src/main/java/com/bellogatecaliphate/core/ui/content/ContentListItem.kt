@@ -49,7 +49,6 @@ fun ContentListItem(
 			isLiked = content.isLiked,
 			onLikeButtonPressed = onLikeButtonPressed,
 			onCommentButtonPressed = onCommentButtonPressed,
-			onShowMoreCaptionClicked = onShowMoreCaptionClicked
 		)
 	}
 }

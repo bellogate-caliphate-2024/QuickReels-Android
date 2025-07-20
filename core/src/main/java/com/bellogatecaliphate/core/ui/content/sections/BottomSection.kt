@@ -25,10 +25,12 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.bellogatecaliphate.core.R
 import com.bellogatecaliphate.core.ui.Circle
+import com.bellogatecaliphate.core.ui.composables.QuickReelsBottomSheetDialog
 import com.bellogatecaliphate.core.ui.content.icons.CommentsIcon
 import com.bellogatecaliphate.core.ui.content.icons.LikeIcon
 import com.bellogatecaliphate.core.util.PLACEHOLDER_16DP
@@ -45,8 +47,8 @@ internal fun BottomSection(
 	isLiked: Boolean,
 	onLikeButtonPressed: (contentId: String, isLiked: Boolean) -> Unit,
 	onCommentButtonPressed: (contentId: String, totalNumberOfCommentsExpected: Int) -> Unit,
-	onShowMoreCaptionClicked: () -> Unit
 ) {
+	var showMoreCaption by remember { mutableStateOf(false) }
 	Column(
 		Modifier
 			.background(Color.White)
@@ -67,7 +69,12 @@ internal fun BottomSection(
 		CaptionText(
 			text = caption,
 			showEditButton = contentBelongsToLoggedInUser,
-			onShowMoreCaptionClicked = onShowMoreCaptionClicked
+			onShowMoreCaptionClicked = { showMoreCaption = true }
+		)
+		QuickReelsBottomSheetDialog(
+			show = showMoreCaption,
+			text = caption,
+			onDismiss = { showMoreCaption = false }
 		)
 	}
 }
@@ -89,12 +96,11 @@ private fun CaptionText(
 			onTextLayout = { layoutResult ->
 				isOverflowing = layoutResult.hasVisualOverflow
 			},
+			textAlign = TextAlign.Justify,
 			modifier = Modifier.fillMaxWidth()
 		)
-		
-		Row(
-			verticalAlignment = Alignment.CenterVertically,
-		) {
+		Spacer(modifier = Modifier.height(PLACEHOLDER_8DP))
+		Row(verticalAlignment = Alignment.CenterVertically) {
 			if (isOverflowing)
 				Text(
 					text = stringResource(R.string.show_more),
