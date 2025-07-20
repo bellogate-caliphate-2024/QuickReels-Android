@@ -47,10 +47,10 @@ internal fun EditCaptionBottomSheet(
 ) {
 	if (show.not()) return
 	// Am using a viewmodel because I want all network operations started inside here to end
-	// when this bottom sheet is closed. Note the since the composable (EditCaptionBottomSheet)
-	// that the viewmodel is attached to is note a navigation destination, the viewmodel will still
-	// be alive when the bottom sheet is closed and this composable is removed. The is why we manually
-	// cancel ongoing work in the viewmodel.
+	// when this bottom sheet is closed. Note that since the composable (the EditCaptionBottomSheet)
+	// that this viewmodel is attached to is not in a navigation destination, the viewmodel will still
+	// be alive when the bottom sheet is closed and  also when this composable is removed. This is why we manually
+	// cancel ongoing work in the viewmodel in our onDispose()
 	val viewModel: EditCaptionViewModel = hiltViewModel()
 	val uiState = viewModel.uiState.collectAsStateWithLifecycle().value
 	Content(
