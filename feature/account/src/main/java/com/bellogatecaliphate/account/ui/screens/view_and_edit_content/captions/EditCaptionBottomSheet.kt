@@ -16,6 +16,7 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -46,7 +47,10 @@ internal fun EditCaptionBottomSheet(
 ) {
 	if (show.not()) return
 	// Am using a viewmodel because I want all network operations started inside here to end
-	// when this bottom sheet is closed.
+	// when this bottom sheet is closed. Note the since the composable (EditCaptionBottomSheet)
+	// that the viewmodel is attached to is note a navigation destination, the viewmodel will still
+	// be alive when the bottom sheet is closed and this composable is removed. The is why we manually
+	// cancel ongoing work in the viewmodel.
 	val viewModel: EditCaptionViewModel = hiltViewModel()
 	val uiState = viewModel.uiState.collectAsStateWithLifecycle().value
 	Content(
@@ -58,6 +62,12 @@ internal fun EditCaptionBottomSheet(
 		onSavedSuccessfully = onSavedSuccessfully,
 		onDismiss = onDismiss
 	)
+	
+	DisposableEffect(Unit) {
+		onDispose {
+			viewModel.cancelOngoingWork()
+		}
+	}
 }
 
 @OptIn(ExperimentalMaterial3Api::class)

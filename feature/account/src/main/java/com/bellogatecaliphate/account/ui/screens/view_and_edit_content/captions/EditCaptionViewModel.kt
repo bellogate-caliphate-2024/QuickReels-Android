@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bellogatecaliphate.domain.contents.EditContentCaptionUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.cancelChildren
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -24,5 +25,10 @@ internal class EditCaptionViewModel @Inject constructor(
 		_uiState.update {
 			it.copy(isLoading = false, savedSuccessfully = result)
 		}
+	}
+	
+	fun cancelOngoingWork() {
+		_uiState.value = UiState()
+		viewModelScope.coroutineContext.cancelChildren() // Cancels all coroutines launched in this scope
 	}
 }
