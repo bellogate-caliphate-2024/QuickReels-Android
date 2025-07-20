@@ -45,6 +45,7 @@ internal fun EditCaptionBottomSheet(
 	onDismiss: () -> Unit,
 ) {
 	if (show.not()) return
+	// Am using a viewmodel because I want all network operations to end when this bottom sheet is closed.
 	val viewModel: EditCaptionViewModel = hiltViewModel()
 	val uiState = viewModel.uiState.collectAsStateWithLifecycle().value
 	Content(
