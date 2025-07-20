@@ -6,9 +6,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.bellogatecaliphate.core.model.dto.Content
-import com.bellogatecaliphate.core.ui.content.sections.BottomSection
 import com.bellogatecaliphate.core.ui.content.sections.UserDetailsSection
 import com.bellogatecaliphate.core.ui.content.sections.VideoSection
+import com.bellogatecaliphate.core.ui.content.sections.bottom_section.BottomSection
 import com.bellogatecaliphate.core.util.ContentPreviewParameter
 
 @Composable
