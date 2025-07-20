@@ -23,4 +23,7 @@
     <string name="error_loading_content">Error loading content</string>
     <string name="deleted">Deleted!</string>
     <string name="delete_failed">Failed to delete, try again</string>
+    <string name="caption_saved">Caption saved!</string>">
+    <string name="caption_saved_failed">Caption failed to saved, try again</string>">
+    <string name="save_edit">Save edit</string>
 </resources>

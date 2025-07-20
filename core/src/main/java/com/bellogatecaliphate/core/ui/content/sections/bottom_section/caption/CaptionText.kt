@@ -1,4 +1,4 @@
-package com.bellogatecaliphate.core.ui.content.sections.bottom_section.composables
+package com.bellogatecaliphate.core.ui.content.sections.bottom_section.caption
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column

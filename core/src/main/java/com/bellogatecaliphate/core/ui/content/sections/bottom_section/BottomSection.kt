@@ -21,8 +21,7 @@ import com.bellogatecaliphate.core.R
 import com.bellogatecaliphate.core.ui.composables.QuickReelsBottomSheetDialog
 import com.bellogatecaliphate.core.ui.content.icons.CommentsIcon
 import com.bellogatecaliphate.core.ui.content.icons.LikeIcon
-import com.bellogatecaliphate.core.ui.content.sections.bottom_section.composables.CaptionText
-import com.bellogatecaliphate.core.ui.content.sections.bottom_section.composables.EditCaptionBottomSheet
+import com.bellogatecaliphate.core.ui.content.sections.bottom_section.caption.CaptionText
 import com.bellogatecaliphate.core.util.PLACEHOLDER_16DP
 import com.bellogatecaliphate.core.util.PLACEHOLDER_32DP
 import com.bellogatecaliphate.core.util.PLACEHOLDER_8DP
@@ -37,9 +36,10 @@ internal fun BottomSection(
 	isLiked: Boolean,
 	onLikeButtonPressed: (contentId: String, isLiked: Boolean) -> Unit,
 	onCommentButtonPressed: (contentId: String, totalNumberOfCommentsExpected: Int) -> Unit,
+	onEditCaptionClicked: () -> Unit = {}
 ) {
 	var showMoreCaption by remember { mutableStateOf(false) }
-	var showEditCaption by remember { mutableStateOf(false) }
+	
 	Column(
 		Modifier
 			.background(Color.White)
@@ -62,20 +62,12 @@ internal fun BottomSection(
 			text = caption,
 			showEditButton = contentBelongsToLoggedInUser,
 			onShowMoreCaptionClicked = { showMoreCaption = true },
-			onEditCaptionClicked = { showEditCaption = true }
+			onEditCaptionClicked = onEditCaptionClicked
 		)
 		QuickReelsBottomSheetDialog(
 			show = showMoreCaption,
 			text = caption,
 			onDismiss = { showMoreCaption = false }
-		)
-		EditCaptionBottomSheet(
-			show = showEditCaption,
-			caption = caption,
-			onConfirmationGiven = { newCaption ->
-				showEditCaption = false
-			},
-			onDismiss = { showEditCaption = false }
 		)
 	}
 }

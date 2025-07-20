@@ -24,6 +24,7 @@ fun ContentListItem(
 	onOpenAccountDetails: (accountUserEmail: String) -> Unit = { _ -> },
 	onShowMoreCaptionClicked: () -> Unit = {},
 	onDeleteContent: () -> Unit = {},
+	onEditCaptionClicked: () -> Unit = {},
 	onClose: () -> Unit = {},
 ) {
 	Column(modifier) {
@@ -49,6 +50,7 @@ fun ContentListItem(
 			isLiked = content.isLiked,
 			onLikeButtonPressed = onLikeButtonPressed,
 			onCommentButtonPressed = onCommentButtonPressed,
+			onEditCaptionClicked = onEditCaptionClicked
 		)
 	}
 }
