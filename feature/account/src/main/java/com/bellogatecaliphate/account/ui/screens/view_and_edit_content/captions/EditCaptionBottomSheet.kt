@@ -98,7 +98,7 @@ private fun Content(
 			)
 			Spacer(modifier = Modifier.height(PLACEHOLDER_24DP))
 			QuickReelsCircularProgressBar(show = uiState.isLoading)
-			val showEditButton = uiState.isLoading.not() && uiState.savedSuccessfully == null
+			val showEditButton = uiState.isLoading.not() && uiState.savedSuccessfully != true
 			if (showEditButton)
 				TextButton(
 					onClick = {
