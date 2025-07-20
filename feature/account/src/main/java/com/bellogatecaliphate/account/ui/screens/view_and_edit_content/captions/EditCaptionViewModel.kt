@@ -19,7 +19,7 @@ internal class EditCaptionViewModel @Inject constructor(
 	val uiState = _uiState.asStateFlow()
 	
 	fun editCaption(contentId: String, newCaption: String) = viewModelScope.launch {
-		_uiState.update { it.copy(isLoading = true) }
+		_uiState.update { it.copy(isLoading = true, savedSuccessfully = null) }
 		val result = editCaptionUseCase(contentId, newCaption)
 		_uiState.update {
 			it.copy(isLoading = false, savedSuccessfully = result)
