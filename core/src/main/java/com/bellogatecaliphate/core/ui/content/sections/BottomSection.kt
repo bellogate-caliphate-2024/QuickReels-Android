@@ -54,6 +54,7 @@ internal fun BottomSection(
 			.background(Color.White)
 			.padding(vertical = PLACEHOLDER_8DP, horizontal = PLACEHOLDER_16DP)
 	) {
+		Spacer(modifier = Modifier.height(PLACEHOLDER_8DP))
 		Row {
 			LikeIcon(contentId, isLiked, numberOfLikes, onLikeButtonPressed)
 			Spacer(modifier = Modifier.width(PLACEHOLDER_16DP))
