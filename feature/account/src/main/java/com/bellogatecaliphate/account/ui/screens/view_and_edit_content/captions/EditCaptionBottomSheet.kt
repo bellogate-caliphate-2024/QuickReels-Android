@@ -20,7 +20,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -36,7 +35,6 @@ import com.bellogatecaliphate.account.R
 import com.bellogatecaliphate.core.ui.QuickReelsCircularProgressBar
 import com.bellogatecaliphate.core.util.PLACEHOLDER_16DP
 import com.bellogatecaliphate.core.util.PLACEHOLDER_24DP
-import kotlinx.coroutines.launch
 import com.bellogatecaliphate.core.R as CoreR
 
 @Composable
@@ -71,7 +69,6 @@ private fun Content(
 ) {
 	val context = LocalContext.current
 	val sheetState = rememberModalBottomSheetState()
-	val scope = rememberCoroutineScope()
 	var showBottomSheet by remember { mutableStateOf(false) }
 	var latestCaption by remember { mutableStateOf("") }
 	
@@ -104,13 +101,9 @@ private fun Content(
 			if (showEditButton)
 				TextButton(
 					onClick = {
-						scope.launch { sheetState.hide() }.invokeOnCompletion {
-							if (! sheetState.isVisible) {
-								showBottomSheet = false
-							}
-						}
 						onSave(latestCaption)
-					}, modifier = Modifier.fillMaxWidth()
+					},
+					modifier = Modifier.fillMaxWidth()
 				) {
 					Text(
 						stringResource(R.string.save_edit),
