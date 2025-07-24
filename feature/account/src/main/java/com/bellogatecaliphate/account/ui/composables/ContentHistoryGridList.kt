@@ -5,10 +5,8 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
@@ -28,7 +26,6 @@ import coil3.compose.AsyncImage
 import com.bellogatecaliphate.account.R
 import com.bellogatecaliphate.account.util.ContentPreviewParameter
 import com.bellogatecaliphate.core.model.dto.Content
-import com.bellogatecaliphate.core.util.PLACEHOLDER_4DP
 import com.bellogatecaliphate.core.util.PLACEHOLDER_CONTENT_HISTORY_HEIGHT
 import com.bellogatecaliphate.core.util.PLACEHOLDER_CONTENT_HISTORY_WIDTH
 
@@ -39,10 +36,7 @@ internal fun ContentHistoryGridList(
 ) {
 	LazyVerticalStaggeredGrid(
 		columns = StaggeredGridCells.Fixed(2),
-		modifier = Modifier
-			.fillMaxSize()
-			.padding(8.dp),
-		contentPadding = PaddingValues(8.dp),
+		modifier = Modifier.fillMaxSize(),
 		verticalItemSpacing = 8.dp,
 		horizontalArrangement = Arrangement.spacedBy(8.dp)
 	) {
@@ -63,7 +57,6 @@ private fun Content(
 ) {
 	Box(
 		modifier = Modifier
-			.padding(start = PLACEHOLDER_4DP, end = PLACEHOLDER_4DP)
 			.size(PLACEHOLDER_CONTENT_HISTORY_WIDTH, PLACEHOLDER_CONTENT_HISTORY_HEIGHT)
 			.aspectRatio(1f)
 			.clickable { onOpenContent(content) },
