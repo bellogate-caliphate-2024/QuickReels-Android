@@ -13,7 +13,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.paging.LoadState
@@ -74,11 +73,7 @@ private fun LoggedInUserAccountScreen(
 	onBackPressed: () -> Unit,
 	onOpenContent: (content: Content) -> Unit
 ) {
-	Column(
-		modifier = Modifier.fillMaxSize(),
-		verticalArrangement = Arrangement.Center,
-		horizontalAlignment = Alignment.CenterHorizontally
-	) {
+	Column {
 		if (user == null) return
 		UserDetailsSection(
 			user = user,
@@ -86,27 +81,33 @@ private fun LoggedInUserAccountScreen(
 			onOpenProfileDetails = onOpenProfileDetails,
 			onBackPressed = onBackPressed
 		)
-		Column(
-			verticalArrangement = Arrangement.Center,
-			horizontalAlignment = Alignment.CenterHorizontally,
+		NoContentToShow(Modifier.weight(1f), userHasNoContent)
+		Grid(
+			userHasNoContent = userHasNoContent,
+			listOfContentHistory = listOfContentHistory,
+			onOpenContent = onOpenContent
+		)
+	}
+}
+
+@Composable
+private fun Grid(
+	userHasNoContent: Boolean,
+	listOfContentHistory: LazyPagingItems<Content>,
+	onOpenContent: (content: Content) -> Unit
+) {
+	if (userHasNoContent.not()) {
+		Spacer(
 			modifier = Modifier
-				.weight(1f)
-				.fillMaxSize()
-				.background(Color.Blue)
-		) { NoContentToShow(userHasNoContent) }
-		if (userHasNoContent.not()) {
-			Spacer(
-				modifier = Modifier
-					.padding(horizontal = PLACEHOLDER_8DP)
-					.background(colorResource(id = R.color.light_ash))
-					.height(PLACEHOLDER_2DP)
-					.fillMaxWidth()
-			)
-			ContentHistoryGridList(
-				list = listOfContentHistory,
-				onOpenContent = onOpenContent
-			)
-		}
+				.padding(horizontal = PLACEHOLDER_8DP)
+				.background(colorResource(id = R.color.light_ash))
+				.height(PLACEHOLDER_2DP)
+				.fillMaxWidth()
+		)
+		ContentHistoryGridList(
+			list = listOfContentHistory,
+			onOpenContent = onOpenContent
+		)
 	}
 }
 
@@ -116,9 +117,15 @@ private fun ErrorLoadingInitialListItems() {
 }
 
 @Composable
-private fun NoContentToShow(visible: Boolean) {
+private fun NoContentToShow(modifier: Modifier, visible: Boolean) {
 	if (! visible) return
-	Text(text = stringResource(R.string.your_uploads_will_appear_here))
+	Column(
+		verticalArrangement = Arrangement.Center,
+		horizontalAlignment = Alignment.CenterHorizontally,
+		modifier = modifier.fillMaxSize()
+	) {
+		Text(text = stringResource(R.string.your_uploads_will_appear_here))
+	}
 }
 
 @Composable
