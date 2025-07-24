@@ -113,7 +113,13 @@ private fun Grid(
 
 @Composable
 private fun ErrorLoadingInitialListItems() {
-	Text(text = stringResource(R.string.error_loading_list_try_again))
+	Column(
+		verticalArrangement = Arrangement.Center,
+		horizontalAlignment = Alignment.CenterHorizontally,
+		modifier = Modifier.fillMaxSize()
+	) {
+		Text(text = stringResource(R.string.error_loading_list_try_again))
+	}
 }
 
 @Composable
