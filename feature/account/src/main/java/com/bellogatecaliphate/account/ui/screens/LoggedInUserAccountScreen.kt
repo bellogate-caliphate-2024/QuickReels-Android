@@ -1,6 +1,7 @@
 package com.bellogatecaliphate.account.ui.screens
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -12,6 +13,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.paging.LoadState
@@ -42,14 +44,17 @@ internal fun LoggedInUserAccountScreen(
 	val userHasNoContent = listOfContentHistory.loadState.refresh is LoadState.NotLoading &&
 	                       listOfContentHistory.itemCount == 0
 	
-	Column(horizontalAlignment = Alignment.CenterHorizontally) {
+	Column(
+		modifier = Modifier.fillMaxSize(),
+		horizontalAlignment = Alignment.CenterHorizontally
+	) {
 		when {
 			isLoadingInitialListItems    -> LoadingScreen()
 			errorLoadingInitialListItems -> ErrorLoadingInitialListItems()
-			userHasNoContent             -> NoContentToShow()
 			else                         -> LoggedInUserAccountScreen(
 				user = uiState.user,
 				listOfContentHistory = listOfContentHistory,
+				userHasNoContent = userHasNoContent,
 				showBackButton = showBackButton,
 				onOpenProfileDetails = onOpenProfileDetails,
 				onBackPressed = onBackPressed,
@@ -63,29 +68,46 @@ internal fun LoggedInUserAccountScreen(
 private fun LoggedInUserAccountScreen(
 	user: User?,
 	listOfContentHistory: LazyPagingItems<Content>,
+	userHasNoContent: Boolean,
 	showBackButton: Boolean = false,
 	onOpenProfileDetails: (userEmail: String) -> Unit,
 	onBackPressed: () -> Unit,
 	onOpenContent: (content: Content) -> Unit
 ) {
-	if (user == null) return
-	UserDetailsSection(
-		user = user,
-		showBackButton = showBackButton,
-		onOpenProfileDetails = onOpenProfileDetails,
-		onBackPressed = onBackPressed
-	)
-	Spacer(
-		modifier = Modifier
-			.padding(horizontal = PLACEHOLDER_8DP)
-			.background(colorResource(id = R.color.light_ash))
-			.height(PLACEHOLDER_2DP)
-			.fillMaxWidth()
-	)
-	ContentHistoryGridList(
-		list = listOfContentHistory,
-		onOpenContent = onOpenContent
-	)
+	Column(
+		modifier = Modifier.fillMaxSize(),
+		verticalArrangement = Arrangement.Center,
+		horizontalAlignment = Alignment.CenterHorizontally
+	) {
+		if (user == null) return
+		UserDetailsSection(
+			user = user,
+			showBackButton = showBackButton,
+			onOpenProfileDetails = onOpenProfileDetails,
+			onBackPressed = onBackPressed
+		)
+		Column(
+			verticalArrangement = Arrangement.Center,
+			horizontalAlignment = Alignment.CenterHorizontally,
+			modifier = Modifier
+				.weight(1f)
+				.fillMaxSize()
+				.background(Color.Blue)
+		) { NoContentToShow(userHasNoContent) }
+		if (userHasNoContent.not()) {
+			Spacer(
+				modifier = Modifier
+					.padding(horizontal = PLACEHOLDER_8DP)
+					.background(colorResource(id = R.color.light_ash))
+					.height(PLACEHOLDER_2DP)
+					.fillMaxWidth()
+			)
+			ContentHistoryGridList(
+				list = listOfContentHistory,
+				onOpenContent = onOpenContent
+			)
+		}
+	}
 }
 
 @Composable
@@ -94,7 +116,8 @@ private fun ErrorLoadingInitialListItems() {
 }
 
 @Composable
-private fun NoContentToShow() {
+private fun NoContentToShow(visible: Boolean) {
+	if (! visible) return
 	Text(text = stringResource(R.string.your_uploads_will_appear_here))
 }
 
