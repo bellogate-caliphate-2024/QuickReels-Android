@@ -5,7 +5,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
@@ -58,7 +57,6 @@ private fun Content(
 	Box(
 		modifier = Modifier
 			.size(PLACEHOLDER_CONTENT_HISTORY_WIDTH, PLACEHOLDER_CONTENT_HISTORY_HEIGHT)
-			.aspectRatio(1f)
 			.clickable { onOpenContent(content) },
 		contentAlignment = Alignment.Center
 	) {
@@ -67,9 +65,12 @@ private fun Content(
 			contentDescription = "content description",
 			modifier = Modifier
 				.fillMaxSize()
-				.clip(RoundedCornerShape(16.dp))
+				.clip(RoundedCornerShape(0.dp))
 		)
-		Column {
+		Column(
+			verticalArrangement = Arrangement.Center,
+			horizontalAlignment = Alignment.CenterHorizontally
+		) {
 			Image(painter = painterResource(id = R.drawable.eye), contentDescription = "")
 			Text(text = content.numberOfViews, color = Color.White)
 		}
