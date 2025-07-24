@@ -58,12 +58,10 @@ class AccountScreenViewModel @Inject constructor(
 	}
 	
 	private fun getUserDetails(userEmail: String) = viewModelScope.launch {
-		_uiState.update { it.copy(isLoading = true) }
 		val user = getUserInfoUseCase(userEmail)
 		_uiState.update {
 			it.copy(
 				user = user,
-				isLoading = false,
 				networkError = user == null,
 				isUserLoggedIn = user != null
 			)

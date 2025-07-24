@@ -26,4 +26,6 @@
     <string name="caption_saved">Caption saved!</string>">
     <string name="caption_saved_failed">Caption failed to saved, try again</string>">
     <string name="save_edit">Save edit</string>
+    <string name="error_loading_list_try_again">Error loading list, try again</string>
+    <string name="your_uploads_will_appear_here">Your uploads will appear here</string>
 </resources>

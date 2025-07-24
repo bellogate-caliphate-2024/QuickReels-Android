@@ -12,7 +12,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.paging.compose.collectAsLazyPagingItems
 import com.bellogatecaliphate.account.model.UiState
 import com.bellogatecaliphate.account.ui.screens.AnonymousUserAccountScreen
 import com.bellogatecaliphate.account.ui.screens.LoggedInUserAccountScreen
@@ -67,7 +66,6 @@ private fun AccountScreen(
 			LoggedInUserAccountScreen(
 				uiState = uiState,
 				showBackButton = showBackButton,
-				listOfContentHistory = uiState.listOfContentHistory.collectAsLazyPagingItems(),
 				onOpenProfileDetails = onOpenProfileDetails,
 				onBackPressed = onBackPressed,
 				onOpenContent = onOpenContent
