@@ -122,6 +122,7 @@ internal class RemoteSource @Inject constructor(
 		page: Int?,
 		numberOfContentPerPage: Int
 	): ContentsListResponse {
+		delay(3_000)
 		return contentsListResponse
 	}
 	
@@ -130,6 +131,7 @@ internal class RemoteSource @Inject constructor(
 		page: Int,
 		numberOfContentPerPage: Int
 	): ContentsListResponse {
+		delay(3_000)
 		return contentsListResponse
 	}
 	
