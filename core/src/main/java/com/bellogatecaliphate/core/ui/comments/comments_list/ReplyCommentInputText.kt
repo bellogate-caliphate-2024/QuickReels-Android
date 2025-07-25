@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -20,6 +21,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.bellogatecaliphate.core.R
 import com.bellogatecaliphate.core.util.PLACEHOLDER_16DP
+import com.bellogatecaliphate.core.util.PLACEHOLDER_8DP
 
 @Composable
 internal fun ReplyCommentInputText(
@@ -36,6 +38,7 @@ internal fun ReplyCommentInputText(
 			value = text,
 			onValueChange = { text = it }
 		)
+		Spacer(modifier = Modifier.height(PLACEHOLDER_8DP))
 		Row {
 			Text(
 				stringResource(id = R.string.send), Modifier.clickable { onReply(text) },

@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import com.bellogatecaliphate.core.model.dto.Comment
+import com.bellogatecaliphate.core.ui.QuickReelsCircularProgressBar
 import com.bellogatecaliphate.core.ui.comments.comments_list.CommentsList
 import com.bellogatecaliphate.core.ui.comments.no_comment.NoComment
 import com.bellogatecaliphate.core.util.PLACEHOLDER_8DP
@@ -33,7 +34,7 @@ internal fun Content(
 				listOfComments.loadState.source.append is LoadState.Loading
 		
 		if (isLoadingFirstSetOfComments) {
-			CircularProgressIndicator()
+			QuickReelsCircularProgressBar()
 		}
 		
 		if (noCommentsFound) {
