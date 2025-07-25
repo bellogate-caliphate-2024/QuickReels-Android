@@ -117,7 +117,7 @@ private fun DeleteContentButton(
 				}),
 		)
 	}
-	QuickReelsCircularProgressBar(show = deleteContentInProgress, PLACEHOLDER_24DP)
+	QuickReelsCircularProgressBar(show = deleteContentInProgress, size = PLACEHOLDER_24DP)
 	QuickReelsBottomSheetDialog(
 		show = onDeleteContentClicked,
 		text = R.string.delete_this_post,
