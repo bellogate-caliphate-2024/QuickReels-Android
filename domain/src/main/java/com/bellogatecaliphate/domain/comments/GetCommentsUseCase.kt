@@ -16,10 +16,11 @@ class GetCommentsUseCase @Inject constructor(
 			repository.getPaginatedComments(contentId).flow.map { pagingData ->
 				pagingData.map {
 					Comment(
-						it.commentId,
-						it.userId,
-						it.text,
-						it.date,
+						it.commentId ?: "",
+						it.userId ?: "",
+						it.userProfilePictureUrl ?: "",
+						it.text ?: "",
+						it.date ?: "",
 						it.numberOfReplies,
 						it.isReply,
 						it.parentCommentId

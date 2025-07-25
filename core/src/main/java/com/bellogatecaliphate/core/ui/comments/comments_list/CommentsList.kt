@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -37,7 +38,10 @@ internal fun CommentsList(
 		Modifier.padding(horizontal = PLACEHOLDER_16DP),
 		horizontalAlignment = Alignment.CenterHorizontally
 	) {
-		Text(text = getCommentsListHeaderText(listOfComments.itemCount))
+		Text(
+			text = getCommentsListHeaderText(listOfComments.itemCount),
+			style = MaterialTheme.typography.bodySmall
+		)
 		Spacer(modifier = Modifier.height(PLACEHOLDER_16DP))
 		LazyColumn(state = listState, modifier = Modifier.fillMaxSize()) {
 			items(listOfComments.itemCount) { index ->

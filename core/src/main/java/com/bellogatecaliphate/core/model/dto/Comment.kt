@@ -3,6 +3,7 @@ package com.bellogatecaliphate.core.model.dto
 data class Comment(
 	val commentId: String,
 	val userId: String,
+	val userProfilePictureUrl: String,
 	val text: String,
 	val date: String,
 	val numberOfReplies: Int?,

@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.width
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -38,12 +39,14 @@ internal fun ReplyCommentInputText(
 		Row {
 			Text(
 				stringResource(id = R.string.send), Modifier.clickable { onReply(text) },
-				color = colorResource(id = R.color.purple_300)
+				color = colorResource(id = R.color.purple_300),
+				style = MaterialTheme.typography.bodySmall
 			)
 			Spacer(modifier = Modifier.width(PLACEHOLDER_16DP))
 			Text(
 				stringResource(id = R.string.close), Modifier.clickable { onClose() },
-				color = colorResource(id = R.color.purple_300)
+				color = colorResource(id = R.color.purple_300),
+				style = MaterialTheme.typography.bodySmall
 			)
 		}
 	}

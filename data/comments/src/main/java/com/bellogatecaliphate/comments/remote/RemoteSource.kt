@@ -44,6 +44,9 @@ fun getComments(page: Int): CommentsListResponse {
 	}
 }
 
+val pic =
+		"https://firebasestorage.googleapis.com/v0/b/memo-24031.appspot.com/o/p1.jpg?alt=media&token=630134db-35cb-41ea-9698-fa0cd25b80c0"
+
 val commentsOne = CommentsListResponse(
 	"",
 	1,
@@ -51,16 +54,16 @@ val commentsOne = CommentsListResponse(
 	false,
 	listOf(
 		CommentResponse(
-			"", "", "FIRST Hahaha, I laughed so hard mehn!", "2025-10-02", 0,
+			"", "", pic, "FIRST Hahaha, I laughed so hard mehn!", "2025-10-02", 0,
 		),
 		CommentResponse(
-			"", "", "FIRST Will u see the film?", "2025-10-02", 0,
+			"", "", pic, "FIRST Will u see the film?", "2025-10-02", 0,
 		),
 		CommentResponse(
-			"", "", "FIRST I loved this movie", "2025-10-02", 0,
+			"", "", pic, "FIRST I loved this movie", "2025-10-02", 0,
 		),
 		CommentResponse(
-			"", "", "FIRST Is it worth the wait, guys?", "2025-10-02", 0,
+			"", "", pic, "FIRST Is it worth the wait, guys?", "2025-10-02", 0,
 		)
 	)
 )
@@ -72,16 +75,16 @@ val commentsTwo = CommentsListResponse(
 	false,
 	listOf(
 		CommentResponse(
-			"", "", "SECOND comment here bro", "2025-10-02", 0,
+			"", "", pic, "SECOND comment here bro", "2025-10-02", 0,
 		),
 		CommentResponse(
-			"", "", "SECOND scary movie! Dont watch alone", "2025-10-02", 0,
+			"", "", pic, "SECOND scary movie! Dont watch alone", "2025-10-02", 0,
 		),
 		CommentResponse(
-			"", "", "SECOND u must be joking", "2025-10-02", 0,
+			"", "", pic, "SECOND u must be joking", "2025-10-02", 0,
 		),
 		CommentResponse(
-			"", "", "SECOND I thinnk it is boring", "2025-10-02", 2,
+			"", "", pic, "SECOND I thinnk it is boring", "2025-10-02", 2,
 		)
 	)
 )
@@ -93,13 +96,13 @@ val commentsThree = CommentsListResponse(
 	true,
 	listOf(
 		CommentResponse(
-			"", "", "THIRD comment here bro", "2025-10-02", 0,
+			"", "", pic, "THIRD comment here bro", "2025-10-02", 0,
 		),
 		CommentResponse(
-			"", "", "THIRD scary movie! Dont watch alone", "2025-10-02", 0,
+			"", "", pic, "THIRD scary movie! Dont watch alone", "2025-10-02", 0,
 		),
 		CommentResponse(
-			"", "", "THIRD u must be joking", "2025-10-02", 0,
+			"", "", pic, "THIRD u must be joking", "2025-10-02", 0,
 		)
 	)
 )

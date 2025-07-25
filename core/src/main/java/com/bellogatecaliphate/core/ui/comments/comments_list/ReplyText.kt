@@ -1,6 +1,7 @@
 package com.bellogatecaliphate.core.ui.comments.comments_list
 
 import androidx.compose.foundation.clickable
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -14,6 +15,7 @@ internal fun ReplyText(visible: Boolean, onReplyClicked: () -> Unit) {
 	Text(
 		modifier = Modifier.clickable { onReplyClicked() },
 		text = stringResource(id = R.string.reply),
-		color = colorResource(id = R.color.ash)
+		color = colorResource(id = R.color.ash),
+		style = MaterialTheme.typography.bodySmall
 	)
 }

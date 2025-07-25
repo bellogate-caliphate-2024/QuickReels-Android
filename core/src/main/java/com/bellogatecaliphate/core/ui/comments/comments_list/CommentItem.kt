@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -22,6 +23,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
+import coil3.compose.AsyncImage
 import com.bellogatecaliphate.core.R
 import com.bellogatecaliphate.core.model.dto.Comment
 import com.bellogatecaliphate.core.ui.comments.util.CommentAndReplies
@@ -47,15 +49,8 @@ internal fun CommentItem(
 	Column(Modifier.fillMaxWidth()) {
 		Spacer(modifier = Modifier.height(PLACEHOLDER_8DP))
 		Row {
-			/*AsyncImage(
-				model = "https://example.com/image.jpg",
-				contentDescription = null,
-				modifier = Modifier
-					.size(PLACEHOLDER_IMAGE_40DP)
-					.clip(CircleShape)
-			)*/
-			Image(
-				painter = painterResource(id = R.drawable.ic_launcher_background),
+			AsyncImage(
+				model = comment.userProfilePictureUrl,
 				contentDescription = "content description",
 				modifier = Modifier
 					.size(PLACEHOLDER_IMAGE_40DP)
@@ -63,10 +58,17 @@ internal fun CommentItem(
 			)
 			Spacer(modifier = Modifier.width(PLACEHOLDER_8DP))
 			Column {
-				Text(text = comment.text)
+				Text(
+					text = comment.text,
+					style = MaterialTheme.typography.bodySmall
+				)
 				Spacer(modifier = Modifier.height(PLACEHOLDER_8DP))
 				Row {
-					Text(text = comment.date, color = colorResource(id = R.color.ash))
+					Text(
+						text = comment.date,
+						color = colorResource(id = R.color.ash),
+						style = MaterialTheme.typography.bodySmall
+					)
 					Spacer(modifier = Modifier.width(PLACEHOLDER_16DP))
 					ReplyText(openReplyCommentInputField.not()) {
 						openReplyCommentInputField = true

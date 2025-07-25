@@ -11,10 +11,11 @@ class GetCommentRepliesUseCase @Inject constructor(private val repository: IComm
 		val isLastPage = result?.isLastPage ?: false
 		val list = result?.comments?.map {
 			Comment(
-				it.commentId,
-				it.userId,
-				it.text,
-				it.date,
+				it.commentId ?: "",
+				it.userId ?: "",
+				it.userProfilePictureUrl ?: "",
+				it.text ?: "",
+				it.date ?: "",
 				it.numberOfReplies,
 				it.isReply,
 				it.parentCommentId
