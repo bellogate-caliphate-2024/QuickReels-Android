@@ -86,7 +86,7 @@ private fun TimeLineScreen(
 			onCommentsBottomDialogClosed = onCommentsBottomDialogClosed,
 			onSaveReply = onSaveReply,
 			onLoadReplies = onLoadReplies,
-			footer = { BannerAd() }
+			advertContainer = { BannerAd() }
 		)
 	}
 }

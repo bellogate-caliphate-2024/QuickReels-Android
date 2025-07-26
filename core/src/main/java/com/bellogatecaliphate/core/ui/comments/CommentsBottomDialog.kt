@@ -37,7 +37,7 @@ fun CommentsBottomDialog(
 	onCommentsBottomDialogClosed: () -> Unit = {},
 	onSaveReply: ((originalCommentId: String, reply: String) -> Unit)? = null,
 	onLoadReplies: (originalCommentId: String, pageNumber: Int) -> Unit = { _, _ -> },
-	footer: @Composable () -> Unit = {}
+	advertContainer: @Composable () -> Unit = {}
 ) {
 	if (visible.not()) return
 	val sheetState = rememberModalBottomSheetState()
@@ -50,7 +50,7 @@ fun CommentsBottomDialog(
 		sheetState = sheetState
 	) {
 		Column {
-			footer()
+			advertContainer()
 			Content(
 				noCommentsFound,
 				listOfComments,
