@@ -12,11 +12,15 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
+import com.bellogatecaliphate.core.R
 import com.bellogatecaliphate.core.model.dto.Comment
+import com.bellogatecaliphate.core.ui.Circle
+import com.bellogatecaliphate.core.ui.QuickReelsCircularProgressBar
 import com.bellogatecaliphate.core.ui.comments.util.getCommentsListHeaderText
 import com.bellogatecaliphate.core.ui.comments.util.previewComments
 import com.bellogatecaliphate.core.util.PLACEHOLDER_16DP
@@ -25,6 +29,8 @@ import kotlinx.coroutines.flow.flowOf
 @Composable
 internal fun CommentsList(
 	listOfComments: LazyPagingItems<Comment>,
+	isLoadingMoreComments: Boolean = false,
+	hasLoadedAllComments: Boolean = false,
 	isLoadingReplies: Boolean = false,
 	listOfReplies: List<Comment> = emptyList(),
 	repliesPageNumber: Int? = null,
@@ -43,7 +49,10 @@ internal fun CommentsList(
 			style = MaterialTheme.typography.bodySmall
 		)
 		Spacer(modifier = Modifier.height(PLACEHOLDER_16DP))
-		LazyColumn(state = listState, modifier = Modifier.fillMaxSize()) {
+		LazyColumn(
+			horizontalAlignment = Alignment.CenterHorizontally,
+			state = listState, modifier = Modifier.fillMaxSize()
+		) {
 			items(listOfComments.itemCount) { index ->
 				val comment = listOfComments[index]
 				comment?.let {
@@ -58,8 +67,26 @@ internal fun CommentsList(
 					)
 				}
 			}
+			item {
+				Footer(isLoadingMoreComments, hasLoadedAllComments)
+			}
 		}
 	}
+}
+
+@Composable
+private fun Footer(
+	isLoadingMoreComments: Boolean,
+	hasLoadedAllComments: Boolean,
+) {
+	Spacer(modifier = Modifier.height(PLACEHOLDER_16DP))
+	if (isLoadingMoreComments) {
+		QuickReelsCircularProgressBar()
+	}
+	if (hasLoadedAllComments) {
+		Circle(color = colorResource(id = R.color.ash))
+	}
+	Spacer(modifier = Modifier.height(PLACEHOLDER_16DP))
 }
 
 @Preview(showBackground = true)
