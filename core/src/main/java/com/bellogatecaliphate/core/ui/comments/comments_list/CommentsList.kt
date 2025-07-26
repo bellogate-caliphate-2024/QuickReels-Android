@@ -25,6 +25,7 @@ import kotlinx.coroutines.flow.flowOf
 @Composable
 internal fun CommentsList(
 	listOfComments: LazyPagingItems<Comment>,
+	loggedInUserEmail: String? = null,
 	isLoadingMoreComments: Boolean = false,
 	hasLoadedAllComments: Boolean = false,
 	isLoadingReplies: Boolean = false,
@@ -48,12 +49,13 @@ internal fun CommentsList(
 			comment?.let {
 				CommentItem(
 					comment = it,
-					isLoadingReplies,
-					listOfReplies,
-					repliesPageNumber,
-					canLoadMoreReplies,
-					onSaveReply,
-					onLoadReplies
+					loggedInUserEmail = loggedInUserEmail,
+					isLoadingReplies = isLoadingReplies,
+					listOfReplies = listOfReplies,
+					repliesPageNumber = repliesPageNumber,
+					canLoadMoreReplies = canLoadMoreReplies,
+					onSaveReply = onSaveReply,
+					onLoadReplies = onLoadReplies
 				)
 			}
 		}

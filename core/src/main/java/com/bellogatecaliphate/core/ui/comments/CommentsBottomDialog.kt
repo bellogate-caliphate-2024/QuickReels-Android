@@ -28,6 +28,7 @@ import com.bellogatecaliphate.core.ui.comments.dialog_content.Content
 @Composable
 fun CommentsBottomDialog(
 	visible: Boolean = false,
+	loggedInUserEmail: String?,
 	totalNumberOfCommentsExpected: Int,
 	listOfComments: LazyPagingItems<Comment>,
 	isLoadingReplies: Boolean = false,
@@ -52,6 +53,7 @@ fun CommentsBottomDialog(
 		Column {
 			advertContainer()
 			Content(
+				loggedInUserEmail,
 				noCommentsFound,
 				listOfComments,
 				totalNumberOfCommentsExpected,

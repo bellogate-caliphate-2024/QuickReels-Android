@@ -20,6 +20,7 @@ import com.bellogatecaliphate.core.util.PLACEHOLDER_16DP
 
 @Composable
 internal fun Content(
+	loggedInUserEmail: String?,
 	noCommentsFound: Boolean,
 	listOfComments: LazyPagingItems<Comment>,
 	totalNumberOfCommentsExpected: Int,
@@ -57,6 +58,7 @@ internal fun Content(
 			Spacer(modifier = Modifier.height(PLACEHOLDER_16DP))
 			CommentsList(
 				listOfComments,
+				loggedInUserEmail,
 				isLoadingMoreComments,
 				hasLoadedAllComments,
 				isLoadingReplies,

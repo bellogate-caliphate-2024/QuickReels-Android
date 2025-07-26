@@ -54,7 +54,12 @@ val commentsOne = CommentsListResponse(
 	false,
 	listOf(
 		CommentResponse(
-			"", "", pic, "FIRST Hahaha, I laughed so hard mehn!", "2025-10-02", 0,
+			"",
+			"jeffemuveyan@gmail.com",
+			pic,
+			"FIRST Hahaha, I laughed so hard mehn!",
+			"2025-10-02",
+			0,
 		),
 		CommentResponse(
 			"", "", pic, "FIRST Will u see the film?", "2025-10-02", 0,

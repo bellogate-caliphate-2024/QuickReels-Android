@@ -11,6 +11,7 @@ import com.bellogatecaliphate.domain.comments.GetCommentsUseCase
 import com.bellogatecaliphate.domain.comments.SaveReplyToACommentUseCase
 import com.bellogatecaliphate.domain.contents.GetContentsUseCase
 import com.bellogatecaliphate.domain.contents.like.LikeContentUseCase
+import com.bellogatecaliphate.domain.user.GetLoggedInUserEmailUseCase
 import com.bellogatecaliphate.nativeads.QuickReelsAdProvider
 import com.bellogatecaliphate.timeline.model.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -24,6 +25,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class TimeLineScreenViewModel @Inject constructor(
+	private val getLoggedInUserEmailUseCase: GetLoggedInUserEmailUseCase,
 	private val getContentsUseCase: GetContentsUseCase,
 	private val likeContentUseCase: LikeContentUseCase,
 	private val getCommentsUseCase: GetCommentsUseCase,
@@ -52,7 +54,12 @@ class TimeLineScreenViewModel @Inject constructor(
 	}
 	
 	fun getComments(contentId: String, totalNumberOfCommentsExpected: Int) = viewModelScope.launch {
-		_uiState.update { it.copy(openCommentsBottomSheet = true) }
+		_uiState.update {
+			it.copy(
+				openCommentsBottomSheet = true,
+				loggedInUserEmail = getLoggedInUserEmailUseCase()
+			)
+		}
 		val response = getCommentsUseCase(contentId).cachedIn(viewModelScope)
 		_uiState.update {
 			it.copy(

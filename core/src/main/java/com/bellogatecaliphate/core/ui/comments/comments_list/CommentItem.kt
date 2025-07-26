@@ -1,6 +1,5 @@
 package com.bellogatecaliphate.core.ui.comments.comments_list
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -20,7 +19,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import coil3.compose.AsyncImage
@@ -35,13 +33,15 @@ import com.bellogatecaliphate.core.util.PLACEHOLDER_IMAGE_40DP
 @Composable
 internal fun CommentItem(
 	comment: Comment,
+	loggedInUserEmail: String? = null,
 	isLoadingReplies: Boolean = false,
 	listOfReplies: List<Comment> = emptyList(),
 	repliesPageNumber: Int? = null,
 	canLoadMoreReplies: Boolean = false,
 	onSaveReply: ((originalCommentId: String, reply: String) -> Unit)? = null,
-	onLoadReplies: (originalCommentId: String, pageNumber: Int) -> Unit = {_, _ -> },
+	onLoadReplies: (originalCommentId: String, pageNumber: Int) -> Unit = { _, _ -> },
 ) {
+	val commentBelongsTologgedInUser = loggedInUserEmail == comment.userId
 	var openReplyCommentInputField by remember { mutableStateOf(false) }
 	val totalListOfReplies =
 			remember { mutableStateListOf<Comment>().apply { addAll(listOfReplies) } }
@@ -73,6 +73,8 @@ internal fun CommentItem(
 					ReplyText(openReplyCommentInputField.not()) {
 						openReplyCommentInputField = true
 					}
+					Spacer(modifier = Modifier.width(PLACEHOLDER_16DP))
+					DeleteText(commentBelongsTologgedInUser) { }
 				}
 				Spacer(modifier = Modifier.height(PLACEHOLDER_8DP))
 				ReplyCommentInputText(openReplyCommentInputField, {
