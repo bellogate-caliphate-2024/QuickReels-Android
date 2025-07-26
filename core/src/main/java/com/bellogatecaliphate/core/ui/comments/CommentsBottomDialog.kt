@@ -50,6 +50,7 @@ fun CommentsBottomDialog(
 		sheetState = sheetState
 	) {
 		Column {
+			footer()
 			Content(
 				noCommentsFound,
 				listOfComments,
@@ -60,7 +61,6 @@ fun CommentsBottomDialog(
 				onSaveReply,
 				onLoadReplies
 			)
-			footer()
 		}
 	}
 }
