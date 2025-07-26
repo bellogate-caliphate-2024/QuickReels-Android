@@ -19,6 +19,7 @@ import com.bellogatecaliphate.core.util.PLACEHOLDER_16DP
 internal fun Content(
 	noCommentsFound: Boolean,
 	listOfComments: LazyPagingItems<Comment>,
+	totalNumberOfCommentsExpected: Int,
 	isLoadingReplies: Boolean = false,
 	listOfReplies: List<Comment> = emptyList(),
 	repliesPageNumber: Int? = null,
@@ -46,6 +47,7 @@ internal fun Content(
 		if (listOfComments.itemCount > 0) {
 			CommentsList(
 				listOfComments,
+				totalNumberOfCommentsExpected,
 				isLoadingMoreComments,
 				hasLoadedAllComments,
 				isLoadingReplies,

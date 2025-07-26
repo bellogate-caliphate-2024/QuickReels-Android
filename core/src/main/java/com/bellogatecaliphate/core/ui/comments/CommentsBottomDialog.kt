@@ -54,6 +54,7 @@ fun CommentsBottomDialog(
 			Content(
 				noCommentsFound,
 				listOfComments,
+				totalNumberOfCommentsExpected,
 				isLoadingReplies,
 				listOfReplies,
 				repliesPageNumber,

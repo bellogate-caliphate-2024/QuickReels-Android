@@ -29,6 +29,7 @@ import kotlinx.coroutines.flow.flowOf
 @Composable
 internal fun CommentsList(
 	listOfComments: LazyPagingItems<Comment>,
+	totalNumberOfCommentsExpected: Int = 0,
 	isLoadingMoreComments: Boolean = false,
 	hasLoadedAllComments: Boolean = false,
 	isLoadingReplies: Boolean = false,
@@ -45,7 +46,7 @@ internal fun CommentsList(
 		horizontalAlignment = Alignment.CenterHorizontally
 	) {
 		Text(
-			text = getCommentsListHeaderText(listOfComments.itemCount),
+			text = getCommentsListHeaderText(totalNumberOfCommentsExpected),
 			style = MaterialTheme.typography.bodySmall
 		)
 		Spacer(modifier = Modifier.height(PLACEHOLDER_16DP))
