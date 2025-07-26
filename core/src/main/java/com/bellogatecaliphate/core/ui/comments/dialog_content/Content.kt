@@ -54,7 +54,7 @@ internal fun Content(
 		}
 		Spacer(modifier = Modifier.height(PLACEHOLDER_8DP))
 		if (isLoadingMoreComments) {
-			CircularProgressIndicator()
+			QuickReelsCircularProgressBar()
 		}
 		Spacer(modifier = Modifier.height(PLACEHOLDER_8DP))
 	}
