@@ -1,5 +1,6 @@
 package com.bellogatecaliphate.core.ui.comments.comments_list
 
+import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -19,6 +20,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -34,6 +36,7 @@ internal fun ReplyCommentInputText(
 	onClose: () -> Unit = {}
 ) {
 	if (visible.not()) return
+	val context = LocalContext.current
 	var text by remember { mutableStateOf("") }
 	
 	Column(Modifier.fillMaxWidth()) {
@@ -50,11 +53,14 @@ internal fun ReplyCommentInputText(
 		)
 		Spacer(modifier = Modifier.height(PLACEHOLDER_8DP))
 		Row {
-			Text(
-				stringResource(id = R.string.send), Modifier.clickable { onReply(text) },
-				color = colorResource(id = R.color.purple_300),
-				style = MaterialTheme.typography.bodySmall
-			)
+			SendButton {
+				if (text.isBlank())
+					Toast.makeText(
+						context,
+						context.getString(R.string.please_enter_a_reply), Toast.LENGTH_SHORT
+					).show()
+				else onReply(text)
+			}
 			Spacer(modifier = Modifier.width(PLACEHOLDER_16DP))
 			Text(
 				stringResource(id = R.string.close), Modifier.clickable { onClose() },
@@ -63,6 +69,17 @@ internal fun ReplyCommentInputText(
 			)
 		}
 	}
+}
+
+@Composable
+private fun SendButton(
+	onSendPressed: () -> Unit = {},
+) {
+	Text(
+		stringResource(id = R.string.send), Modifier.clickable { onSendPressed() },
+		color = colorResource(id = R.color.purple_300),
+		style = MaterialTheme.typography.bodySmall
+	)
 }
 
 @Preview(showBackground = true)
