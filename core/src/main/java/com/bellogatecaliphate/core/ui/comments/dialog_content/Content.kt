@@ -38,13 +38,15 @@ internal fun Content(
 		val hasLoadedAllComments =
 				listOfComments.loadState.source.append is LoadState.NotLoading
 		
+		if (noCommentsFound) {
+			NoComment()
+			Spacer(modifier = Modifier.height(PLACEHOLDER_16DP))
+			return
+		}
+		
 		if (isLoadingFirstSetOfComments) {
 			QuickReelsCircularProgressBar()
 			Spacer(modifier = Modifier.height(PLACEHOLDER_16DP))
-		}
-		
-		if (noCommentsFound) {
-			NoComment()
 		}
 		
 		if (listOfComments.itemCount > 0) {
