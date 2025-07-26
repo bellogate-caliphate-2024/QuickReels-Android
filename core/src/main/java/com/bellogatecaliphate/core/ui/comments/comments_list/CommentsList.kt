@@ -1,14 +1,11 @@
 package com.bellogatecaliphate.core.ui.comments.comments_list
 
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -21,7 +18,6 @@ import com.bellogatecaliphate.core.R
 import com.bellogatecaliphate.core.model.dto.Comment
 import com.bellogatecaliphate.core.ui.Circle
 import com.bellogatecaliphate.core.ui.QuickReelsCircularProgressBar
-import com.bellogatecaliphate.core.ui.comments.util.getCommentsListHeaderText
 import com.bellogatecaliphate.core.ui.comments.util.previewComments
 import com.bellogatecaliphate.core.util.PLACEHOLDER_16DP
 import kotlinx.coroutines.flow.flowOf
@@ -29,7 +25,6 @@ import kotlinx.coroutines.flow.flowOf
 @Composable
 internal fun CommentsList(
 	listOfComments: LazyPagingItems<Comment>,
-	totalNumberOfCommentsExpected: Int = 0,
 	isLoadingMoreComments: Boolean = false,
 	hasLoadedAllComments: Boolean = false,
 	isLoadingReplies: Boolean = false,
@@ -41,36 +36,29 @@ internal fun CommentsList(
 ) {
 	val listState = rememberLazyListState()
 	
-	Column(
-		Modifier.padding(horizontal = PLACEHOLDER_16DP),
-		horizontalAlignment = Alignment.CenterHorizontally
+	LazyColumn(
+		Modifier
+			.padding(horizontal = PLACEHOLDER_16DP)
+			.fillMaxSize(),
+		horizontalAlignment = Alignment.CenterHorizontally,
+		state = listState,
 	) {
-		Text(
-			text = getCommentsListHeaderText(totalNumberOfCommentsExpected),
-			style = MaterialTheme.typography.bodySmall
-		)
-		Spacer(modifier = Modifier.height(PLACEHOLDER_16DP))
-		LazyColumn(
-			horizontalAlignment = Alignment.CenterHorizontally,
-			state = listState, modifier = Modifier.fillMaxSize()
-		) {
-			items(listOfComments.itemCount) { index ->
-				val comment = listOfComments[index]
-				comment?.let {
-					CommentItem(
-						comment = it,
-						isLoadingReplies,
-						listOfReplies,
-						repliesPageNumber,
-						canLoadMoreReplies,
-						onSaveReply,
-						onLoadReplies
-					)
-				}
+		items(listOfComments.itemCount) { index ->
+			val comment = listOfComments[index]
+			comment?.let {
+				CommentItem(
+					comment = it,
+					isLoadingReplies,
+					listOfReplies,
+					repliesPageNumber,
+					canLoadMoreReplies,
+					onSaveReply,
+					onLoadReplies
+				)
 			}
-			item {
-				Footer(isLoadingMoreComments, hasLoadedAllComments)
-			}
+		}
+		item {
+			Footer(isLoadingMoreComments, hasLoadedAllComments)
 		}
 	}
 }

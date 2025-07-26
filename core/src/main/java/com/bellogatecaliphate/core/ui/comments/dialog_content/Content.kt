@@ -4,6 +4,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -13,6 +15,7 @@ import com.bellogatecaliphate.core.model.dto.Comment
 import com.bellogatecaliphate.core.ui.QuickReelsCircularProgressBar
 import com.bellogatecaliphate.core.ui.comments.comments_list.CommentsList
 import com.bellogatecaliphate.core.ui.comments.no_comment.NoComment
+import com.bellogatecaliphate.core.ui.comments.util.getCommentsListHeaderText
 import com.bellogatecaliphate.core.util.PLACEHOLDER_16DP
 
 @Composable
@@ -45,9 +48,13 @@ internal fun Content(
 		}
 		
 		if (listOfComments.itemCount > 0) {
+			Text(
+				text = getCommentsListHeaderText(totalNumberOfCommentsExpected),
+				style = MaterialTheme.typography.bodySmall
+			)
+			Spacer(modifier = Modifier.height(PLACEHOLDER_16DP))
 			CommentsList(
 				listOfComments,
-				totalNumberOfCommentsExpected,
 				isLoadingMoreComments,
 				hasLoadedAllComments,
 				isLoadingReplies,
