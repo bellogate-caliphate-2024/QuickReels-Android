@@ -1,5 +1,7 @@
 package com.bellogatecaliphate.core.ui.comments.comments_list
 
+import android.widget.Toast
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -11,56 +13,78 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import coil3.compose.AsyncImage
 import com.bellogatecaliphate.core.R
 import com.bellogatecaliphate.core.model.dto.Comment
+import com.bellogatecaliphate.core.ui.QuickReelsCircularProgressBar
 import com.bellogatecaliphate.core.ui.comments.util.CommentAndReplies
 import com.bellogatecaliphate.core.ui.comments.util.CommentAndRepliesPreviewParameter
 import com.bellogatecaliphate.core.util.PLACEHOLDER_16DP
 import com.bellogatecaliphate.core.util.PLACEHOLDER_8DP
 import com.bellogatecaliphate.core.util.PLACEHOLDER_IMAGE_40DP
+import com.bellogatecaliphate.core.util.PLACEHOLDER_IMAGE_45DP
 
 @Composable
 internal fun CommentItem(
 	comment: Comment,
 	loggedInUserEmail: String? = null,
+	commentDeletedSuccessfully: Boolean? = null,
 	isLoadingReplies: Boolean = false,
 	listOfReplies: List<Comment> = emptyList(),
 	repliesPageNumber: Int? = null,
 	canLoadMoreReplies: Boolean = false,
 	onSaveReply: ((originalCommentId: String, reply: String) -> Unit)? = null,
 	onLoadReplies: (originalCommentId: String, pageNumber: Int) -> Unit = { _, _ -> },
+	onDeleteComment: (commentId: String) -> Unit = { _ -> }
 ) {
+	
 	val commentBelongsTologgedInUser = loggedInUserEmail == comment.userId
 	var openReplyCommentInputField by remember { mutableStateOf(false) }
+	var isDeletingComment by remember { mutableStateOf(false) }
 	val totalListOfReplies =
 			remember { mutableStateListOf<Comment>().apply { addAll(listOfReplies) } }
+	
+	CommentDeleteStatusInfo(commentDeletedSuccessfully)
+	if (isDeletingComment && commentDeletedSuccessfully == false) isDeletingComment = false
+	if (isDeletingComment && commentDeletedSuccessfully == true) return
 	
 	Column(Modifier.fillMaxWidth()) {
 		Spacer(modifier = Modifier.height(PLACEHOLDER_8DP))
 		Row {
-			AsyncImage(
-				model = comment.userProfilePictureUrl,
-				contentDescription = "content description",
-				modifier = Modifier
-					.size(PLACEHOLDER_IMAGE_40DP)
-					.clip(CircleShape)
-			)
+			Box(contentAlignment = Alignment.Center) {
+				AsyncImage(
+					model = comment.userProfilePictureUrl,
+					contentDescription = "content description",
+					modifier = Modifier
+						.size(PLACEHOLDER_IMAGE_40DP)
+						.clip(CircleShape)
+				)
+				QuickReelsCircularProgressBar(
+					show = isDeletingComment,
+					size = PLACEHOLDER_IMAGE_45DP
+				)
+			}
 			Spacer(modifier = Modifier.width(PLACEHOLDER_8DP))
 			Column {
 				Text(
 					text = comment.text,
-					style = MaterialTheme.typography.bodySmall
+					style = MaterialTheme.typography.bodySmall,
+					textAlign = TextAlign.Justify,
 				)
 				Spacer(modifier = Modifier.height(PLACEHOLDER_8DP))
 				Row {
@@ -74,7 +98,10 @@ internal fun CommentItem(
 						openReplyCommentInputField = true
 					}
 					Spacer(modifier = Modifier.width(PLACEHOLDER_16DP))
-					DeleteText(commentBelongsTologgedInUser) { }
+					DeleteLabel(commentBelongsTologgedInUser && isDeletingComment.not()) {
+						isDeletingComment = true
+						onDeleteComment(comment.commentId)
+					}
 				}
 				Spacer(modifier = Modifier.height(PLACEHOLDER_8DP))
 				ReplyCommentInputText(openReplyCommentInputField, {
@@ -94,6 +121,21 @@ internal fun CommentItem(
 			canLoadMoreReplies,
 			onLoadReplies
 		)
+	}
+}
+
+@Composable
+private fun CommentDeleteStatusInfo(deletedSuccessfully: Boolean?) {
+	if (deletedSuccessfully == null) return
+	val context = LocalContext.current
+	val message = if (deletedSuccessfully) {
+		stringResource(R.string.deleted)
+	} else {
+		stringResource(R.string.failed_to_delete_try_again)
+	}
+	
+	LaunchedEffect(deletedSuccessfully) {
+		Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
 	}
 }
 

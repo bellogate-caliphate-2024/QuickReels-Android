@@ -7,6 +7,7 @@ import com.bellogatecaliphate.core.model.dto.Content
 import java.security.SecureRandom
 
 val PLACEHOLDER_IMAGE_40DP = 40.dp
+val PLACEHOLDER_IMAGE_45DP = 50.dp
 val PLACEHOLDER_2DP = 2.dp
 val PLACEHOLDER_4DP = 4.dp
 val PLACEHOLDER_8DP = 8.dp

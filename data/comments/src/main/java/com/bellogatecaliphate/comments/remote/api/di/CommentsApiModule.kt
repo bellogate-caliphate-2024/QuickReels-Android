@@ -31,6 +31,10 @@ internal class CommentsApiImpl @Inject constructor(private val retrofit: Retrofi
 	): SaveReplyToCommentResponse? {
 		return retrofit.create(CommentsApi::class.java).saveReply(originalCommentId, reply)
 	}
+	
+	override suspend fun deleteComment(commentId: String): Boolean {
+		return retrofit.create(CommentsApi::class.java).deleteComment(commentId)
+	}
 }
 
 @Module

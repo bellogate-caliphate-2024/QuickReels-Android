@@ -24,12 +24,14 @@ internal fun Content(
 	noCommentsFound: Boolean,
 	listOfComments: LazyPagingItems<Comment>,
 	totalNumberOfCommentsExpected: Int,
+	commentDeletedSuccessfully: Boolean? = null,
 	isLoadingReplies: Boolean = false,
 	listOfReplies: List<Comment> = emptyList(),
 	repliesPageNumber: Int? = null,
 	canLoadMoreReplies: Boolean = false,
 	onSaveReply: ((originalCommentId: String, reply: String) -> Unit)? = null,
 	onLoadReplies: (originalCommentId: String, pageNumber: Int) -> Unit = { _, _ -> },
+	onDeleteComment: (commentId: String) -> Unit = { _ -> }
 ) {
 	Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
 		val isLoadingFirstSetOfComments =
@@ -61,12 +63,14 @@ internal fun Content(
 				loggedInUserEmail,
 				isLoadingMoreComments,
 				hasLoadedAllComments,
+				commentDeletedSuccessfully,
 				isLoadingReplies,
 				listOfReplies,
 				repliesPageNumber,
 				canLoadMoreReplies,
 				onSaveReply,
-				onLoadReplies
+				onLoadReplies,
+				onDeleteComment
 			)
 		}
 	}

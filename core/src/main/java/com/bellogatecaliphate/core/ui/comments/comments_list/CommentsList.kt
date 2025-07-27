@@ -28,12 +28,14 @@ internal fun CommentsList(
 	loggedInUserEmail: String? = null,
 	isLoadingMoreComments: Boolean = false,
 	hasLoadedAllComments: Boolean = false,
+	commentDeletedSuccessfully: Boolean? = null,
 	isLoadingReplies: Boolean = false,
 	listOfReplies: List<Comment> = emptyList(),
 	repliesPageNumber: Int? = null,
 	canLoadMoreReplies: Boolean = false,
 	onSaveReply: ((originalCommentId: String, reply: String) -> Unit)? = null,
 	onLoadReplies: (originalCommentId: String, pageNumber: Int) -> Unit = { _, _ -> },
+	onDeleteComment: (commentId: String) -> Unit = { _ -> }
 ) {
 	val listState = rememberLazyListState()
 	
@@ -50,12 +52,14 @@ internal fun CommentsList(
 				CommentItem(
 					comment = it,
 					loggedInUserEmail = loggedInUserEmail,
+					commentDeletedSuccessfully = commentDeletedSuccessfully,
 					isLoadingReplies = isLoadingReplies,
 					listOfReplies = listOfReplies,
 					repliesPageNumber = repliesPageNumber,
 					canLoadMoreReplies = canLoadMoreReplies,
 					onSaveReply = onSaveReply,
-					onLoadReplies = onLoadReplies
+					onLoadReplies = onLoadReplies,
+					onDeleteComment = onDeleteComment
 				)
 			}
 		}

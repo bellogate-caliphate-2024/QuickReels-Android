@@ -12,4 +12,6 @@ interface ICommentsRepository {
 	suspend fun getCommentReplies(commentId: String, page: Int): CommentsListResponse?
 	
 	suspend fun saveReply(originalCommentId: String, reply: String): SaveReplyToCommentResponse?
+	
+	suspend fun deleteComment(commentId: String): Boolean
 }

@@ -22,5 +22,6 @@ internal data class UiState(
 	val adVert: Advert? = null,
 	val firstVisibleItemIndex: Int? = null,
 	val firstVisibleItemScrollOffset: Int? = null,
-	val loggedInUserEmail: String? = null
+	val loggedInUserEmail: String? = null,
+	val commentDeletedSuccessfully: Boolean? = null,
 )

@@ -6,6 +6,7 @@ import androidx.paging.cachedIn
 import androidx.paging.map
 import com.bellogatecaliphate.core.model.dto.Advert
 import com.bellogatecaliphate.core.model.dto.Content
+import com.bellogatecaliphate.domain.comments.DeleteCommentUseCase
 import com.bellogatecaliphate.domain.comments.GetCommentRepliesUseCase
 import com.bellogatecaliphate.domain.comments.GetCommentsUseCase
 import com.bellogatecaliphate.domain.comments.SaveReplyToACommentUseCase
@@ -31,6 +32,7 @@ class TimeLineScreenViewModel @Inject constructor(
 	private val getCommentsUseCase: GetCommentsUseCase,
 	private val getCommentRepliesUseCase: GetCommentRepliesUseCase,
 	private val saveReplyToACommentUseCase: SaveReplyToACommentUseCase,
+	private val deleteCommentUseCase: DeleteCommentUseCase,
 	private val adProvider: QuickReelsAdProvider
 ) : ViewModel() {
 	
@@ -84,6 +86,13 @@ class TimeLineScreenViewModel @Inject constructor(
 				repliesPageNumber = pageNumber,
 				canLoadMoreReplies = isLastPage
 			)
+		}
+	}
+	
+	fun deleteComment(commentId: String) = viewModelScope.launch {
+		val result = deleteCommentUseCase(commentId)
+		_uiState.update {
+			it.copy(commentDeletedSuccessfully = result)
 		}
 	}
 	

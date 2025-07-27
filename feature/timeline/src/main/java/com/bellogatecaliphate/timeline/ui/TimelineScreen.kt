@@ -43,6 +43,9 @@ fun TimeLineScreen(
 		onLoadReplies = { originalCommentId, pageNumber ->
 			viewModel.getRepliesToComment(originalCommentId, pageNumber)
 		},
+		onDeleteComment = { commentId ->
+			viewModel.deleteComment(commentId)
+		},
 		onSaveScrollPosition = { index, offset ->
 			viewModel.saveScrollPosition(index, offset)
 		},
@@ -59,6 +62,7 @@ private fun TimeLineScreen(
 	onCommentsBottomDialogClosed: () -> Unit = {},
 	onSaveReply: ((originalCommentId: String, reply: String) -> Unit)? = null,
 	onLoadReplies: (originalCommentId: String, pageNumber: Int) -> Unit = { _, _ -> },
+	onDeleteComment: (commentId: String) -> Unit = { _ -> },
 	onSaveScrollPosition: (index: Int, offset: Int) -> Unit,
 	onOpenAccountDetails: (accountUserEmail: String) -> Unit
 ) {
@@ -80,6 +84,7 @@ private fun TimeLineScreen(
 			loggedInUserEmail = uiState.loggedInUserEmail,
 			totalNumberOfCommentsExpected = uiState.totalNumberOfComments,
 			listOfComments = uiState.listOfPaginatedComments.collectAsLazyPagingItems(),
+			commentDeletedSuccessfully = uiState.commentDeletedSuccessfully,
 			isLoadingReplies = uiState.isLoadingReplies,
 			listOfReplies = uiState.listOfCommentReplies,
 			repliesPageNumber = uiState.repliesPageNumber,
@@ -87,6 +92,7 @@ private fun TimeLineScreen(
 			onCommentsBottomDialogClosed = onCommentsBottomDialogClosed,
 			onSaveReply = onSaveReply,
 			onLoadReplies = onLoadReplies,
+			onDeleteComment = onDeleteComment,
 			advertContainer = { BannerAd() }
 		)
 	}

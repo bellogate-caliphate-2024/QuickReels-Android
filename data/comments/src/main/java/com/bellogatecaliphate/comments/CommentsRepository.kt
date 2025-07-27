@@ -31,4 +31,8 @@ internal class CommentsRepository @Inject constructor(
 	): SaveReplyToCommentResponse? {
 		return remoteSource.saveReply(originalCommentId, reply)
 	}
+	
+	override suspend fun deleteComment(commentId: String): Boolean {
+		return remoteSource.deleteComment(commentId)
+	}
 }

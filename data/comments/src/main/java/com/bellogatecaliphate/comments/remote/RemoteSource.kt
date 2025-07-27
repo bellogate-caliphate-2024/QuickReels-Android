@@ -32,6 +32,12 @@ internal class RemoteSource @Inject constructor(
 	): SaveReplyToCommentResponse? = withContext(ioDispatcher) {
 		commentsApi.saveReply(originalCommentId, reply)
 	}
+	
+	override suspend fun deleteComment(commentId: String): Boolean = withContext(ioDispatcher) {
+		//return@withContext commentsApi.deleteComment(commentId)
+		delay(3_000)
+		true
+	}
 }
 
 fun getComments(page: Int): CommentsListResponse {
@@ -58,7 +64,7 @@ val commentsOne = CommentsListResponse(
 			"",
 			"jeffemuveyan@gmail.com",
 			pic,
-			"FIRST Hahaha, I laughed so hard mehn!",
+			"FIRST Hahaha, I laughed so hard mehn! So this film was produced very early on may 2021 before the cannes film festival. I loved it so much because it talked about so many things.",
 			"2025-10-02",
 			0,
 		),

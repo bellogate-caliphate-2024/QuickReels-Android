@@ -2,6 +2,7 @@ package com.bellogatecaliphate.comments.remote.api
 
 import com.bellogatecaliphate.comments.remote.model.CommentsListResponse
 import com.bellogatecaliphate.comments.remote.model.SaveReplyToCommentResponse
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -25,4 +26,7 @@ internal interface CommentsApi {
 		@Query("originalCommentId") originalCommentId: String,
 		@Query("reply") reply: String
 	): SaveReplyToCommentResponse?
+	
+	@DELETE
+	suspend fun deleteComment(@Query("commentId") commentId: String): Boolean
 }

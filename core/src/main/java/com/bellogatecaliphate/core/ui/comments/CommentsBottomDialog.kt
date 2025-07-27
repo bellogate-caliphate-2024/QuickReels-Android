@@ -14,6 +14,8 @@ import com.bellogatecaliphate.core.ui.comments.dialog_content.Content
  * after the user clicked on the button to open comments.
  * @param totalNumberOfCommentsExpected is the total number of comments that the content has.
  * @param listOfComments is the paginated list of comments.
+ * @param isDeletingComment is true when the user is deleting a comment.
+ * @param commentDeletedSuccessfully is true when the comment has been deleted successfully.
  * @param isLoadingReplies is true when the ap is loading the list of replies to a comment.
  * @param listOfReplies is a non paginated list of replies to a comment.
  * @param repliesPageNumber is the current page number of replies that has been loaded.
@@ -21,7 +23,8 @@ import com.bellogatecaliphate.core.ui.comments.dialog_content.Content
  * @param onCommentsBottomDialogClosed is called when the user closes the CommentsBottomDialog.
  * @param onSaveReply is called when the user writes a reply to a comment and presses the save button.
  * @param onLoadReplies is called when the user clicks on the button to load replies on a comment.
- * @param footer this is the composable that should be displayed at the bottom of the comments.
+ * @param onDeleteComment is called when the user gives consent to delete a comment.
+ * @param advertContainer this is the composable that should be displayed at the top of the comments.
  *
  * ***/
 @OptIn(ExperimentalMaterial3Api::class)
@@ -31,6 +34,7 @@ fun CommentsBottomDialog(
 	loggedInUserEmail: String?,
 	totalNumberOfCommentsExpected: Int,
 	listOfComments: LazyPagingItems<Comment>,
+	commentDeletedSuccessfully: Boolean? = null,
 	isLoadingReplies: Boolean = false,
 	listOfReplies: List<Comment> = emptyList(),
 	repliesPageNumber: Int? = null,
@@ -38,6 +42,7 @@ fun CommentsBottomDialog(
 	onCommentsBottomDialogClosed: () -> Unit = {},
 	onSaveReply: ((originalCommentId: String, reply: String) -> Unit)? = null,
 	onLoadReplies: (originalCommentId: String, pageNumber: Int) -> Unit = { _, _ -> },
+	onDeleteComment: (commentId: String) -> Unit = { _ -> },
 	advertContainer: @Composable () -> Unit = {}
 ) {
 	if (visible.not()) return
@@ -53,16 +58,18 @@ fun CommentsBottomDialog(
 		Column {
 			advertContainer()
 			Content(
-				loggedInUserEmail,
-				noCommentsFound,
-				listOfComments,
-				totalNumberOfCommentsExpected,
-				isLoadingReplies,
-				listOfReplies,
-				repliesPageNumber,
-				canLoadMoreReplies,
-				onSaveReply,
-				onLoadReplies
+				loggedInUserEmail = loggedInUserEmail,
+				noCommentsFound = noCommentsFound,
+				listOfComments = listOfComments,
+				totalNumberOfCommentsExpected = totalNumberOfCommentsExpected,
+				commentDeletedSuccessfully = commentDeletedSuccessfully,
+				isLoadingReplies = isLoadingReplies,
+				listOfReplies = listOfReplies,
+				repliesPageNumber = repliesPageNumber,
+				canLoadMoreReplies = canLoadMoreReplies,
+				onSaveReply = onSaveReply,
+				onLoadReplies = onLoadReplies,
+				onDeleteComment = onDeleteComment
 			)
 		}
 	}
