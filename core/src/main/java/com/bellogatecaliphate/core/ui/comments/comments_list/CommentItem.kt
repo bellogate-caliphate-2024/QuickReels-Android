@@ -59,7 +59,7 @@ internal fun CommentItem(
 	val totalListOfReplies =
 			remember { mutableStateListOf<Comment>().apply { addAll(listOfReplies) } }
 	
-	CommentDeleteStatusInfo(commentDeletedSuccessfully)
+	CommentDeleteStatusInfo(isDeletingComment, commentDeletedSuccessfully)
 	if (isDeletingComment && commentDeletedSuccessfully == false) isDeletingComment = false
 	if (isDeletingComment && commentDeletedSuccessfully == true) return
 	
@@ -125,8 +125,8 @@ internal fun CommentItem(
 }
 
 @Composable
-private fun CommentDeleteStatusInfo(deletedSuccessfully: Boolean?) {
-	if (deletedSuccessfully == null) return
+private fun CommentDeleteStatusInfo(isDeletingComment: Boolean, deletedSuccessfully: Boolean?) {
+	if (! isDeletingComment || deletedSuccessfully == null) return
 	val context = LocalContext.current
 	val message = if (deletedSuccessfully) {
 		stringResource(R.string.deleted)
