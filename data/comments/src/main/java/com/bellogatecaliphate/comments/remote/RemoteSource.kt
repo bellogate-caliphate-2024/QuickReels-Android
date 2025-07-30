@@ -55,13 +55,13 @@ val pic =
 		"https://firebasestorage.googleapis.com/v0/b/memo-24031.appspot.com/o/p1.jpg?alt=media&token=630134db-35cb-41ea-9698-fa0cd25b80c0"
 
 val commentsOne = CommentsListResponse(
-	"",
+	"11",
 	1,
 	2,
 	false,
 	listOf(
 		CommentResponse(
-			"",
+			"1",
 			"jeffemuveyan@gmail.com",
 			pic,
 			"FIRST Hahaha, I laughed so hard mehn! So this film was produced very early on may 2021 before the cannes film festival. I loved it so much because it talked about so many things.",
@@ -69,70 +69,70 @@ val commentsOne = CommentsListResponse(
 			0,
 		),
 		CommentResponse(
-			"", "", pic, "FIRST Will u see the film?", "2025-10-02", 0,
+			"2", "", pic, "FIRST Will u see the film?", "2025-10-02", 0,
 		),
 		CommentResponse(
-			"", "", pic, "FIRST I loved this movie", "2025-10-02", 0,
+			"3", "", pic, "FIRST I loved this movie", "2025-10-02", 0,
 		),
 		CommentResponse(
-			"", "", pic, "FIRST Is it worth the wait, guys?", "2025-10-02", 0,
+			"4", "jeffemuveyan@gmail.com", pic, "This is a bizare comment", "2025-10-02", 0,
 		)
 	)
 )
 
 val commentsTwo = CommentsListResponse(
-	"",
+	"22",
 	2,
 	3,
 	false,
 	listOf(
 		CommentResponse(
-			"", "", pic, "SECOND comment here bro", "2025-10-02", 0,
+			"5", "", pic, "SECOND comment here bro", "2025-10-02", 0,
 		),
 		CommentResponse(
-			"", "", pic, "SECOND scary movie! Dont watch alone", "2025-10-02", 0,
+			"6", "", pic, "SECOND scary movie! Dont watch alone", "2025-10-02", 0,
 		),
 		CommentResponse(
-			"", "", pic, "SECOND u must be joking", "2025-10-02", 0,
+			"7", "", pic, "SECOND u must be joking", "2025-10-02", 0,
 		),
 		CommentResponse(
-			"", "", pic, "SECOND I thinnk it is boring", "2025-10-02", 2,
+			"8", "", pic, "SECOND I thinnk it is boring", "2025-10-02", 2,
 		)
 	)
 )
 
 val commentsThree = CommentsListResponse(
-	"",
+	"33",
 	3,
 	4,
 	false,
 	listOf(
 		CommentResponse(
-			"", "", pic, "THIRD comment here bro", "2025-10-02", 0,
+			"9", "", pic, "THIRD comment here bro", "2025-10-02", 0,
 		),
 		CommentResponse(
-			"", "", pic, "THIRD scary movie! Dont watch alone", "2025-10-02", 0,
+			"10", "", pic, "THIRD scary movie! Dont watch alone", "2025-10-02", 0,
 		),
 		CommentResponse(
-			"", "", pic, "THIRD u must be joking", "2025-10-02", 0,
+			"11", "", pic, "THIRD u must be joking", "2025-10-02", 0,
 		)
 	)
 )
 
 val commentsFour = CommentsListResponse(
-	"",
+	"44",
 	4,
 	null,
 	true,
 	listOf(
 		CommentResponse(
-			"", "", pic, "THIRD comment here bro", "2025-10-02", 0,
+			"12", "", pic, "THIRD comment here bro", "2025-10-02", 0,
 		),
 		CommentResponse(
-			"", "", pic, "THIRD scary movie! Dont watch alone", "2025-10-02", 0,
+			"13", "", pic, "THIRD scary movie! Dont watch alone", "2025-10-02", 0,
 		),
 		CommentResponse(
-			"", "", pic, "THIRD u must be joking", "2025-10-02", 0,
+			"14", "", pic, "THIRD u must be joking", "2025-10-02", 0,
 		)
 	)
 )

@@ -85,6 +85,7 @@ private fun TimeLineScreen(
 			totalNumberOfCommentsExpected = uiState.totalNumberOfComments,
 			listOfComments = uiState.listOfPaginatedComments.collectAsLazyPagingItems(),
 			commentDeletedSuccessfully = uiState.commentDeletedSuccessfully,
+			listOfDeletedComments = uiState.deletedComments,
 			isLoadingReplies = uiState.isLoadingReplies,
 			listOfReplies = uiState.listOfCommentReplies,
 			repliesPageNumber = uiState.repliesPageNumber,

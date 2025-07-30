@@ -29,6 +29,7 @@ internal fun CommentsList(
 	isLoadingMoreComments: Boolean = false,
 	hasLoadedAllComments: Boolean = false,
 	commentDeletedSuccessfully: Boolean? = null,
+	listOfDeletedComments: MutableList<String> = mutableListOf(),
 	isLoadingReplies: Boolean = false,
 	listOfReplies: List<Comment> = emptyList(),
 	repliesPageNumber: Int? = null,
@@ -51,6 +52,7 @@ internal fun CommentsList(
 			comment?.let {
 				CommentItem(
 					comment = it,
+					visible = listOfDeletedComments.contains(it.commentId).not(),
 					loggedInUserEmail = loggedInUserEmail,
 					commentDeletedSuccessfully = commentDeletedSuccessfully,
 					isLoadingReplies = isLoadingReplies,
