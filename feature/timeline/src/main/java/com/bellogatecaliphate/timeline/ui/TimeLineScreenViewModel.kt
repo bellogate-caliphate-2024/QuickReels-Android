@@ -92,14 +92,19 @@ class TimeLineScreenViewModel @Inject constructor(
 	fun deleteComment(commentId: String) = viewModelScope.launch {
 		_uiState.update { it.copy(commentDeletedSuccessfully = null) }
 		val listOfDeletedComments = _uiState.value.deletedComments
+		var totalNumberOfComments = _uiState.value.totalNumberOfComments
 		
 		val result = deleteCommentUseCase(commentId)
-		if (result) listOfDeletedComments.add(commentId)
+		if (result) {
+			listOfDeletedComments.add(commentId)
+			totalNumberOfComments -= 1
+		}
 		
 		_uiState.update {
 			it.copy(
 				commentDeletedSuccessfully = result,
-				deletedComments = listOfDeletedComments
+				deletedComments = listOfDeletedComments,
+				totalNumberOfComments = totalNumberOfComments
 			)
 		}
 	}
