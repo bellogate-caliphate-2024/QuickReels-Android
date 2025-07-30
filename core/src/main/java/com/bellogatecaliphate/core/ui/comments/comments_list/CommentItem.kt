@@ -53,7 +53,6 @@ internal fun CommentItem(
 	onLoadReplies: (originalCommentId: String, pageNumber: Int) -> Unit = { _, _ -> },
 	onDeleteComment: (commentId: String) -> Unit = { _ -> }
 ) {
-	
 	val commentBelongsTologgedInUser = loggedInUserEmail == comment.userId
 	var openReplyCommentInputField by remember { mutableStateOf(false) }
 	var isDeletingComment by remember { mutableStateOf(false) }
@@ -64,7 +63,6 @@ internal fun CommentItem(
 	CommentDeleteStatusInfo(isDeletingComment, commentDeletedSuccessfully)
 	if (visible.not()) return
 	if (isDeletingComment && commentDeletedSuccessfully == false) isDeletingComment = false
-	if (isDeletingComment && commentDeletedSuccessfully == true) return
 	
 	Column(Modifier.fillMaxWidth()) {
 		Spacer(modifier = Modifier.height(PLACEHOLDER_8DP))
