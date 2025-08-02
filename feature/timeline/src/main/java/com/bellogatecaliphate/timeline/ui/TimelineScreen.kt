@@ -1,18 +1,22 @@
 package com.bellogatecaliphate.timeline.ui
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.bellogatecaliphate.bannerads.QuickReelsBannerAd
 import com.bellogatecaliphate.core.model.ads.Ads
-import com.bellogatecaliphate.core.ui.ProgressBar
+import com.bellogatecaliphate.core.ui.QuickReelsCircularProgressBar
 import com.bellogatecaliphate.core.ui.comments.CommentsBottomDialog
 import com.bellogatecaliphate.timeline.model.UiState
 import com.bellogatecaliphate.timeline.ui.content.ContentsList
@@ -66,36 +70,45 @@ private fun TimeLineScreen(
 	onSaveScrollPosition: (index: Int, offset: Int) -> Unit,
 	onOpenAccountDetails: (accountUserEmail: String) -> Unit
 ) {
-	Column {
-		ProgressBar(uiState.isLoading)
-		ContentsList(
-			list = uiState.listOfPaginatedContents.collectAsLazyPagingItems(),
-			advert = uiState.adVert,
-			firstVisibleItemIndex = uiState.firstVisibleItemIndex ?: 0,
-			firstVisibleItemScrollOffset = uiState.firstVisibleItemScrollOffset ?: 0,
-			onAdRequest = onAdRequest,
-			onLikeButtonPressed = onLikeButtonPressed,
-			onCommentButtonPressed = onCommentButtonPressed,
-			onSaveScrollPosition = onSaveScrollPosition,
-			onOpenAccountDetails = onOpenAccountDetails
-		)
-		CommentsBottomDialog(
-			visible = uiState.openCommentsBottomSheet,
-			loggedInUserEmail = uiState.loggedInUserEmail,
-			totalNumberOfCommentsExpected = uiState.totalNumberOfComments,
-			listOfComments = uiState.listOfPaginatedComments.collectAsLazyPagingItems(),
-			commentDeletedSuccessfully = uiState.commentDeletedSuccessfully,
-			listOfDeletedComments = uiState.deletedComments,
-			isLoadingReplies = uiState.isLoadingReplies,
-			listOfReplies = uiState.listOfCommentReplies,
-			repliesPageNumber = uiState.repliesPageNumber,
-			canLoadMoreReplies = uiState.canLoadMoreReplies,
-			onCommentsBottomDialogClosed = onCommentsBottomDialogClosed,
-			onSaveReply = onSaveReply,
-			onLoadReplies = onLoadReplies,
-			onDeleteComment = onDeleteComment,
-			advertContainer = { BannerAd() }
-		)
+	val listOfContents = uiState.listOfPaginatedContents.collectAsLazyPagingItems()
+	val isLoadingInitialListItems = listOfContents.loadState.refresh is LoadState.Loading
+	val errorLoadingInitialListItems = listOfContents.loadState.refresh is LoadState.Error
+	Column(
+		modifier = Modifier.fillMaxSize(),
+		verticalArrangement = Arrangement.Center,
+		horizontalAlignment = Alignment.CenterHorizontally
+	) {
+		QuickReelsCircularProgressBar(show = isLoadingInitialListItems)
+		if (isLoadingInitialListItems.not()) {
+			ContentsList(
+				list = listOfContents,
+				advert = uiState.adVert,
+				firstVisibleItemIndex = uiState.firstVisibleItemIndex ?: 0,
+				firstVisibleItemScrollOffset = uiState.firstVisibleItemScrollOffset ?: 0,
+				onAdRequest = onAdRequest,
+				onLikeButtonPressed = onLikeButtonPressed,
+				onCommentButtonPressed = onCommentButtonPressed,
+				onSaveScrollPosition = onSaveScrollPosition,
+				onOpenAccountDetails = onOpenAccountDetails
+			)
+			CommentsBottomDialog(
+				visible = uiState.openCommentsBottomSheet,
+				loggedInUserEmail = uiState.loggedInUserEmail,
+				totalNumberOfCommentsExpected = uiState.totalNumberOfComments,
+				listOfComments = uiState.listOfPaginatedComments.collectAsLazyPagingItems(),
+				commentDeletedSuccessfully = uiState.commentDeletedSuccessfully,
+				listOfDeletedComments = uiState.deletedComments,
+				isLoadingReplies = uiState.isLoadingReplies,
+				listOfReplies = uiState.listOfCommentReplies,
+				repliesPageNumber = uiState.repliesPageNumber,
+				canLoadMoreReplies = uiState.canLoadMoreReplies,
+				onCommentsBottomDialogClosed = onCommentsBottomDialogClosed,
+				onSaveReply = onSaveReply,
+				onLoadReplies = onLoadReplies,
+				onDeleteComment = onDeleteComment,
+				advertContainer = { BannerAd() }
+			)
+		}
 	}
 }
 

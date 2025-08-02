@@ -124,11 +124,10 @@ class TimeLineScreenViewModel @Inject constructor(
 	}
 	
 	private fun getContents() {
-		_uiState.update { it.copy(isLoading = true) }
 		val response = getContentsUseCase().cachedIn(viewModelScope).map {
 			it.map { content -> mapContent(content, adProvider) }
 		}
-		_uiState.update { it.copy(listOfPaginatedContents = response, isLoading = false) }
+		_uiState.update { it.copy(listOfPaginatedContents = response) }
 	}
 	
 	private fun mapContent(content: Content, adProvider: QuickReelsAdProvider): Content {
