@@ -13,8 +13,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.bellogatecaliphate.core.R
 
 @Composable
 fun DualColorButton(
@@ -28,7 +30,7 @@ fun DualColorButton(
 	) {
 		Box(
 			modifier = Modifier
-				.background(Color(0xFFFFC552))
+				.background(colorResource(R.color.quickreels_yellow))
 				.padding(horizontal = 12.dp, vertical = 4.dp),
 			contentAlignment = Alignment.Center
 		) {
@@ -42,7 +44,7 @@ fun DualColorButton(
 		
 		Box(
 			modifier = Modifier
-				.background(Color(0xFF221937))
+				.background(colorResource(R.color.quickreels_purple))
 				.padding(horizontal = 12.dp, vertical = 4.dp),
 			contentAlignment = Alignment.Center
 		) {

@@ -13,5 +13,6 @@
     <color name="icon_ash">#C0C0C0</color>
     <color name="light_purple">#82829B</color>
     <color name="quickreels_purple">#221937</color>
+    <color name="quickreels_yellow">#ffc552</color>
     <color name="quickreels_delete_color">#E91E63</color>
 </resources>
