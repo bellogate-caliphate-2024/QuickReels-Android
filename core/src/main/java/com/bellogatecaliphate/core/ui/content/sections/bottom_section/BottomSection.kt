@@ -2,9 +2,11 @@ package com.bellogatecaliphate.core.ui.content.sections.bottom_section
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -20,10 +22,11 @@ import androidx.compose.ui.res.painterResource
 import com.bellogatecaliphate.core.R
 import com.bellogatecaliphate.core.ui.composables.QuickReelsBottomSheetDialog
 import com.bellogatecaliphate.core.ui.content.icons.CommentsIcon
+import com.bellogatecaliphate.core.ui.content.icons.DualColorButton
 import com.bellogatecaliphate.core.ui.content.icons.LikeIcon
 import com.bellogatecaliphate.core.ui.content.sections.bottom_section.caption.CaptionText
 import com.bellogatecaliphate.core.util.PLACEHOLDER_16DP
-import com.bellogatecaliphate.core.util.PLACEHOLDER_32DP
+import com.bellogatecaliphate.core.util.PLACEHOLDER_24DP
 import com.bellogatecaliphate.core.util.PLACEHOLDER_8DP
 
 @Composable
@@ -46,16 +49,19 @@ internal fun BottomSection(
 			.padding(vertical = PLACEHOLDER_8DP, horizontal = PLACEHOLDER_16DP)
 	) {
 		Spacer(modifier = Modifier.height(PLACEHOLDER_8DP))
-		Row {
-			LikeIcon(contentId, isLiked, numberOfLikes, onLikeButtonPressed)
-			Spacer(modifier = Modifier.width(PLACEHOLDER_16DP))
-			CommentsIcon(contentId, numberOfComments, onCommentButtonPressed)
-			Spacer(modifier = Modifier.width(PLACEHOLDER_8DP))
-			Image(
-				modifier = Modifier.size(PLACEHOLDER_32DP),
-				painter = painterResource(id = R.drawable.icon_next),
-				contentDescription = ""
-			)
+		Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+			Row {
+				LikeIcon(contentId, isLiked, numberOfLikes, onLikeButtonPressed)
+				Spacer(modifier = Modifier.width(PLACEHOLDER_24DP))
+				CommentsIcon(contentId, numberOfComments, onCommentButtonPressed)
+				Spacer(modifier = Modifier.width(PLACEHOLDER_24DP))
+				Image(
+					modifier = Modifier.size(PLACEHOLDER_24DP),
+					painter = painterResource(id = R.drawable.icon_next),
+					contentDescription = ""
+				)
+			}
+			DualColorButton {}
 		}
 		Spacer(modifier = Modifier.height(PLACEHOLDER_8DP))
 		CaptionText(

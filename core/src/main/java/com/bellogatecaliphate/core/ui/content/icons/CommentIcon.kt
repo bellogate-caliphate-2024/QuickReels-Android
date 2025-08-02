@@ -13,7 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import com.bellogatecaliphate.core.R
-import com.bellogatecaliphate.core.util.PLACEHOLDER_32DP
+import com.bellogatecaliphate.core.util.PLACEHOLDER_24DP
 import com.bellogatecaliphate.core.util.PLACEHOLDER_8DP
 
 @Composable
@@ -27,7 +27,7 @@ internal fun CommentsIcon(
 		horizontalAlignment = Alignment.CenterHorizontally
 	) {
 		Image(
-			modifier = Modifier.size(PLACEHOLDER_32DP),
+			modifier = Modifier.size(PLACEHOLDER_24DP),
 			painter = painterResource(id = R.drawable.icon_chat),
 			contentDescription = ""
 		)
