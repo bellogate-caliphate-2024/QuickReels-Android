@@ -13,9 +13,6 @@ import androidx.work.Configuration
 import com.bellogatecaliphate.appopenad.AppOpenAdManager
 import com.google.android.gms.ads.MobileAds
 import dagger.hilt.android.HiltAndroidApp
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltAndroidApp
@@ -48,8 +45,7 @@ class MainApplication : Application(), Configuration.Provider,
 	}
 	
 	private fun setUpAds(context: Context) {
-		val backgroundScope = CoroutineScope(Dispatchers.IO)
-		backgroundScope.launch { MobileAds.initialize(context) {} }
+		MobileAds.initialize(context) {}
 		appOpenAdManager = AppOpenAdManager()
 	}
 	
