@@ -22,11 +22,12 @@ fun ContentListItem(
 	onLikeButtonPressed: (contentId: String, isLiked: Boolean) -> Unit = { _, _ -> },
 	onCommentButtonPressed: (contentId: String, totalNumberOfCommentsExpected: Int) -> Unit = { _, _ -> },
 	onOpenAccountDetails: (accountUserEmail: String) -> Unit = { _ -> },
-	onShowMoreCaptionClicked: () -> Unit = {},
 	onDeleteContent: () -> Unit = {},
 	onEditCaptionClicked: () -> Unit = {},
+	onDownloadClicked: () -> Unit = {},
 	onClose: () -> Unit = {},
 ) {
+	
 	Column(modifier) {
 		UserDetailsSection(
 			contentBelongsToLoggedInUser = contentBelongsToLoggedInUser,
@@ -50,7 +51,8 @@ fun ContentListItem(
 			isLiked = content.isLiked,
 			onLikeButtonPressed = onLikeButtonPressed,
 			onCommentButtonPressed = onCommentButtonPressed,
-			onEditCaptionClicked = onEditCaptionClicked
+			onEditCaptionClicked = onEditCaptionClicked,
+			onDownloadClicked = onDownloadClicked
 		)
 	}
 }

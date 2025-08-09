@@ -32,7 +32,8 @@ internal fun ContentsList(
 	onLikeButtonPressed: (contentId: String, isLiked: Boolean) -> Unit,
 	onCommentButtonPressed: (contentId: String, totalNumberOfCommentsExpected: Int) -> Unit,
 	onSaveScrollPosition: (index: Int, offset: Int) -> Unit,
-	onOpenAccountDetails: (accountUserEmail: String) -> Unit
+	onOpenAccountDetails: (accountUserEmail: String) -> Unit,
+	onDownloadClicked: () -> Unit = {},
 ) {
 	if (list == null) return
 	val listState = remember {
@@ -99,7 +100,8 @@ internal fun ContentsList(
 					contentBelongsToLoggedInUser = false,
 					onLikeButtonPressed = onLikeButtonPressed,
 					onCommentButtonPressed = onCommentButtonPressed,
-					onOpenAccountDetails = onOpenAccountDetails
+					onOpenAccountDetails = onOpenAccountDetails,
+					onDownloadClicked = onDownloadClicked
 				)
 			}
 		}

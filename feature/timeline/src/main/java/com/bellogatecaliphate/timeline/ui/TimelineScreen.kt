@@ -7,8 +7,14 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -20,13 +26,16 @@ import com.bellogatecaliphate.core.ui.QuickReelsCircularProgressBar
 import com.bellogatecaliphate.core.ui.comments.CommentsBottomDialog
 import com.bellogatecaliphate.timeline.model.UiState
 import com.bellogatecaliphate.timeline.ui.content.ContentsList
+import com.example.interstitialads.QuickReelsInterstitialAd
 
 @Composable
 fun TimeLineScreen(
 	viewModel: TimeLineScreenViewModel = hiltViewModel(),
 	onOpenAccountDetails: (accountUserEmail: String) -> Unit
 ) {
+	val context = LocalContext.current
 	val uiState = viewModel.uiState.collectAsStateWithLifecycle()
+	
 	TimeLineScreen(
 		uiState = uiState.value,
 		onAdRequest = {
@@ -55,6 +64,8 @@ fun TimeLineScreen(
 		},
 		onOpenAccountDetails = onOpenAccountDetails
 	)
+	
+	LaunchedEffect(Unit) { QuickReelsInterstitialAd.loadAds(context) }
 }
 
 @Composable
@@ -70,9 +81,12 @@ private fun TimeLineScreen(
 	onSaveScrollPosition: (index: Int, offset: Int) -> Unit,
 	onOpenAccountDetails: (accountUserEmail: String) -> Unit
 ) {
+	val context = LocalContext.current
 	val listOfContents = uiState.listOfPaginatedContents.collectAsLazyPagingItems()
 	val isLoadingInitialListItems = listOfContents.loadState.refresh is LoadState.Loading
 	val errorLoadingInitialListItems = listOfContents.loadState.refresh is LoadState.Error
+	var showInterstitialAd by remember { mutableStateOf(false) }
+	
 	Column(
 		modifier = Modifier.fillMaxSize(),
 		verticalArrangement = Arrangement.Center,
@@ -89,7 +103,8 @@ private fun TimeLineScreen(
 				onLikeButtonPressed = onLikeButtonPressed,
 				onCommentButtonPressed = onCommentButtonPressed,
 				onSaveScrollPosition = onSaveScrollPosition,
-				onOpenAccountDetails = onOpenAccountDetails
+				onOpenAccountDetails = onOpenAccountDetails,
+				onDownloadClicked = { showInterstitialAd = true }
 			)
 			CommentsBottomDialog(
 				visible = uiState.openCommentsBottomSheet,
@@ -108,6 +123,14 @@ private fun TimeLineScreen(
 				onDeleteComment = onDeleteComment,
 				advertContainer = { BannerAd() }
 			)
+			LaunchedEffect(showInterstitialAd) {
+				QuickReelsInterstitialAd.showAdOrSkip(
+					show = showInterstitialAd,
+					context = context,
+					onAdSkipped = { showInterstitialAd = false },
+					onAdDismissed = { showInterstitialAd = false }
+				)
+			}
 		}
 	}
 }

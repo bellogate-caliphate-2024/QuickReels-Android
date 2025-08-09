@@ -22,7 +22,7 @@ import androidx.compose.ui.res.painterResource
 import com.bellogatecaliphate.core.R
 import com.bellogatecaliphate.core.ui.composables.QuickReelsBottomSheetDialog
 import com.bellogatecaliphate.core.ui.content.icons.CommentsIcon
-import com.bellogatecaliphate.core.ui.content.icons.DualColorButton
+import com.bellogatecaliphate.core.ui.content.icons.DownloadButton
 import com.bellogatecaliphate.core.ui.content.icons.LikeIcon
 import com.bellogatecaliphate.core.ui.content.sections.bottom_section.caption.CaptionText
 import com.bellogatecaliphate.core.util.PLACEHOLDER_16DP
@@ -39,7 +39,8 @@ internal fun BottomSection(
 	isLiked: Boolean,
 	onLikeButtonPressed: (contentId: String, isLiked: Boolean) -> Unit,
 	onCommentButtonPressed: (contentId: String, totalNumberOfCommentsExpected: Int) -> Unit,
-	onEditCaptionClicked: () -> Unit = {}
+	onEditCaptionClicked: () -> Unit = {},
+	onDownloadClicked: () -> Unit = {}
 ) {
 	var showMoreCaption by remember { mutableStateOf(false) }
 	
@@ -61,7 +62,7 @@ internal fun BottomSection(
 					contentDescription = ""
 				)
 			}
-			DualColorButton {}
+			DownloadButton(onDownloadClicked)
 		}
 		Spacer(modifier = Modifier.height(PLACEHOLDER_8DP))
 		CaptionText(

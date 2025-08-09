@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.dp
 import com.bellogatecaliphate.core.R
 
 @Composable
-fun DualColorButton(
+fun DownloadButton(
 	onClickDownload: () -> Unit
 ) {
 	Row(
