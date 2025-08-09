@@ -15,7 +15,7 @@ object QuickReelsInterstitialAd {
 	fun showAdOrNot(
 		show: Boolean,
 		context: Context,
-		onNoAdShown: (() -> Unit),
+		onWillNotShowAd: (() -> Unit),
 		onAdDismissed: (() -> Unit)
 	) {
 		if (show.not()) return

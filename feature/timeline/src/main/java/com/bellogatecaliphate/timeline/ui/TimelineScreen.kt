@@ -128,7 +128,7 @@ private fun TimeLineScreen(
 					show = showInterstitialAd,
 					context = context,
 					onAdDismissed = { showInterstitialAd = false },
-					onNoAdShown = { showInterstitialAd = false }
+					onWillNotShowAd = { showInterstitialAd = false }
 				)
 			}
 		}
