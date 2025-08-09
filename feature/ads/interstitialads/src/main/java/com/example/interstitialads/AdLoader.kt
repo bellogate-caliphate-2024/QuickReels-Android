@@ -17,7 +17,8 @@ private const val MAXIMUM_NUMBER_OF_ADS_TO_LOAD = 8
 internal class AdLoader {
 	
 	private val job = Job()
-	private val scope = CoroutineScope(Dispatchers.Main + job) // use Main not IO
+	private val scope = CoroutineScope(Dispatchers.Main + job) // use Main not IO because
+	// InterstitialAd.load must run on UI thread
 	
 	fun loadAds(context: Context, onAdLoaded: (ad: InterstitialAd) -> Unit) = scope.launch {
 		(1 .. MAXIMUM_NUMBER_OF_ADS_TO_LOAD).map {
