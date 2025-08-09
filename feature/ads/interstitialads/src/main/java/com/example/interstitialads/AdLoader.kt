@@ -12,24 +12,32 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.suspendCancellableCoroutine
+import kotlin.coroutines.resume
 
 private const val MAXIMUM_NUMBER_OF_ADS_TO_LOAD = 8
 
 internal class AdLoader {
 	
 	private val job = Job()
-	private val scope = CoroutineScope(Dispatchers.Main + job) // use Main not IO because
+	private val scope = CoroutineScope(Dispatchers.Main + job) // Use Dispatchers.Main because
 	// InterstitialAd.load must run on UI thread
 	
-	fun loadAds(context: Context, onAdLoaded: (ad: InterstitialAd) -> Unit) = scope.launch {
-		(1 .. MAXIMUM_NUMBER_OF_ADS_TO_LOAD).map {
+	fun loadAds(context: Context, onAdLoaded: (InterstitialAd) -> Unit) = scope.launch {
+		val ads = (1 .. MAXIMUM_NUMBER_OF_ADS_TO_LOAD).map {
 			async {
-				load(context, onAdLoaded)
+				loadSuspend(context)
 			}
 		}.awaitAll()
+		
+		ads.filterNotNull().forEach { ad ->
+			onAdLoaded(ad)
+		}
 	}
 	
-	private fun load(context: Context, onAdLoaded: (InterstitialAd) -> Unit) {
+	private suspend fun loadSuspend(
+		context: Context
+	): InterstitialAd? = suspendCancellableCoroutine { cont ->
 		InterstitialAd.load(
 			context,
 			BuildConfig.AD_UNIT_DOWNLOAD_BUTTON_INTERSTITIAL_AD,
@@ -37,14 +45,15 @@ internal class AdLoader {
 			object : InterstitialAdLoadCallback() {
 				
 				override fun onAdLoaded(ad: InterstitialAd) {
-					Log.i("JEFF", "Add loaded successfuly")
-					onAdLoaded(ad)
+					Log.i("JEFF", "ad loaded successfully")
+					cont.resume(ad)
 				}
 				
 				override fun onAdFailedToLoad(adError: LoadAdError) {
-					Log.i("JEFF", "Ad failed to load")
+					Log.i("JEFF", "ad loaded failure")
+					cont.resume(null)
 				}
-			},
+			}
 		)
 	}
 }
