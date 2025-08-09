@@ -2,6 +2,7 @@ package com.example.interstitialads
 
 import android.app.Activity
 import android.content.Context
+import android.util.Log
 import com.google.android.gms.ads.AdError
 import com.google.android.gms.ads.FullScreenContentCallback
 
@@ -10,19 +11,32 @@ object QuickReelsInterstitialAd {
 	private val adsCache = Cache
 	private var adLoader = AdLoader()
 	
-	fun loadAds(context: Context) = adLoader.loadAds(context) { adsCache.cacheAd(it) }
+	fun loadAds(context: Context) {
+		Log.i("JEFF", "attempting to load ads")
+		adLoader.loadAds(context) { adsCache.cacheAd(it) }
+	}
 	
 	fun showAdOrNot(
 		show: Boolean,
 		context: Context,
-		onWillNotShowAd: (() -> Unit),
+		onAdIsNotReadyTobeShownOrHasBeenSkipped: (() -> Unit),
 		onAdDismissed: (() -> Unit)
 	) {
-		if (show.not()) return
-		
-		if (adsCache.shouldLoadAds()) loadAds(context)
+		Log.i("JEFF", "attempting to show an ad $show")
 		val latestAd = adsCache.getAd()
-		if (latestAd == null) loadAds(context)
+		when {
+			show.not()                                   -> {
+				onAdDismissed()
+				return
+			}
+			
+			adsCache.shouldLoadAds() || latestAd == null -> {
+				onAdIsNotReadyTobeShownOrHasBeenSkipped()
+				loadAds(context)
+				return
+			}
+		}
+		
 		latestAd?.fullScreenContentCallback =
 				object : FullScreenContentCallback() {
 					override fun onAdDismissedFullScreenContent() {

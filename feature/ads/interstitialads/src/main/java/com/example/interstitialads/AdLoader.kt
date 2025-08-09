@@ -1,6 +1,7 @@
 package com.example.interstitialads
 
 import android.content.Context
+import android.util.Log
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.interstitial.InterstitialAd
@@ -35,9 +36,14 @@ internal class AdLoader {
 			AdRequest.Builder().build(),
 			object : InterstitialAdLoadCallback() {
 				
-				override fun onAdLoaded(ad: InterstitialAd) = onAdLoaded(ad)
+				override fun onAdLoaded(ad: InterstitialAd) {
+					Log.i("JEFF", "Add loaded successfuly")
+					onAdLoaded(ad)
+				}
 				
-				override fun onAdFailedToLoad(adError: LoadAdError) {}
+				override fun onAdFailedToLoad(adError: LoadAdError) {
+					Log.i("JEFF", "Ad failed to load")
+				}
 			},
 		)
 	}

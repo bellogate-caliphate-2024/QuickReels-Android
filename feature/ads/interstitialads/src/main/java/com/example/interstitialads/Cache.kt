@@ -1,5 +1,6 @@
 package com.example.interstitialads
 
+import android.util.Log
 import com.google.android.gms.ads.interstitial.InterstitialAd
 
 internal object Cache {
@@ -7,6 +8,7 @@ internal object Cache {
 	private val adsCache: MutableList<InterstitialAd> = mutableListOf()
 	
 	fun getAd(): InterstitialAd? {
+		Log.i("JEFF", "Size: ${adsCache.size}")
 		if (adsCache.isEmpty()) return null
 		val latestAd = adsCache.first()
 		adsCache.removeAt(0)
