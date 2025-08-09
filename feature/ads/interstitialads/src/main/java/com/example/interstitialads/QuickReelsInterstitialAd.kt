@@ -23,17 +23,21 @@ object QuickReelsInterstitialAd {
 		onAdDismissed: (() -> Unit)
 	) {
 		Log.i("JEFF", "attempting to show an ad $show")
+		if (show.not()) {
+			onAdDismissed()
+			return
+		}
+		
 		val latestAd = adsCache.getAd()
 		when {
-			show.not()                                   -> {
-				onAdDismissed()
-				return
-			}
-			
-			adsCache.shouldLoadAds() || latestAd == null -> {
+			latestAd == null         -> {
 				onAdIsNotReadyTobeShownOrHasBeenSkipped()
 				loadAds(context)
 				return
+			}
+			
+			adsCache.shouldLoadAds() -> {
+				loadAds(context)
 			}
 		}
 		

@@ -19,19 +19,28 @@ private const val MAXIMUM_NUMBER_OF_ADS_TO_LOAD = 8
 
 internal class AdLoader {
 	
-	private val job = Job()
-	private val scope = CoroutineScope(Dispatchers.Main + job) // Use Dispatchers.Main because
-	// InterstitialAd.load must run on UI thread
+	private val scope = CoroutineScope(Dispatchers.Main + Job()) // Use Dispatchers.Main because
 	
-	fun loadAds(context: Context, onAdLoaded: (InterstitialAd) -> Unit) = scope.launch {
-		val ads = (1 .. MAXIMUM_NUMBER_OF_ADS_TO_LOAD).map {
-			async {
-				loadSuspend(context)
-			}
-		}.awaitAll()
+	// InterstitialAd.load must run on UI thread
+	private var activeLoadJob: Job? = null
+	
+	fun loadAds(context: Context, onAdLoaded: (InterstitialAd) -> Unit) {
+		if (activeLoadJob?.isActive == true) {
+			Log.i("JEFF", "AdLoader: Already loading ads, skipping new request.")
+			return
+		}
 		
-		ads.filterNotNull().forEach { ad ->
-			onAdLoaded(ad)
+		activeLoadJob = scope.launch {
+			val ads = (1 .. MAXIMUM_NUMBER_OF_ADS_TO_LOAD).map {
+				async {
+					loadSuspend(context)
+				}
+			}.awaitAll()
+			
+			ads.filterNotNull().forEach { ad ->
+				onAdLoaded(ad)
+			}
+			activeLoadJob = null
 		}
 	}
 	
@@ -45,13 +54,13 @@ internal class AdLoader {
 			object : InterstitialAdLoadCallback() {
 				
 				override fun onAdLoaded(ad: InterstitialAd) {
-					Log.i("JEFF", "ad loaded successfully")
-					cont.resume(ad)
+					Log.i("JEFF", "successfully loaded ad!!")
+					if (cont.isActive) cont.resume(ad)
 				}
 				
 				override fun onAdFailedToLoad(adError: LoadAdError) {
-					Log.i("JEFF", "ad loaded failure")
-					cont.resume(null)
+					Log.i("JEFF", "failed to load ad")
+					if (cont.isActive) cont.resume(null)
 				}
 			}
 		)
