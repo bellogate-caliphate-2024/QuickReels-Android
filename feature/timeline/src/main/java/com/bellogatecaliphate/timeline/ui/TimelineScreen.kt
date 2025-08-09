@@ -124,11 +124,11 @@ private fun TimeLineScreen(
 				advertContainer = { BannerAd() }
 			)
 			LaunchedEffect(showInterstitialAd) {
-				QuickReelsInterstitialAd.showAdOrSkip(
+				QuickReelsInterstitialAd.showAdOrNot(
 					show = showInterstitialAd,
 					context = context,
-					onAdSkipped = { showInterstitialAd = false },
-					onAdDismissed = { showInterstitialAd = false }
+					onAdDismissed = { showInterstitialAd = false },
+					onNoAdShown = { showInterstitialAd = false }
 				)
 			}
 		}
