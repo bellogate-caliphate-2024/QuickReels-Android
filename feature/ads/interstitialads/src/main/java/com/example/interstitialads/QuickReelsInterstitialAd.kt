@@ -16,7 +16,7 @@ object QuickReelsInterstitialAd {
 		adLoader.loadAds(context) { adsCache.cacheAd(it) }
 	}
 	
-	fun showAdOrNot(
+	fun showInterstitialAd(
 		show: Boolean,
 		context: Context,
 		onAdIsNotReadyTobeShownOrHasBeenSkipped: (() -> Unit),

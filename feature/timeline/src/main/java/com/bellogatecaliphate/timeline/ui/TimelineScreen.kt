@@ -9,7 +9,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -27,6 +27,8 @@ import com.bellogatecaliphate.core.ui.comments.CommentsBottomDialog
 import com.bellogatecaliphate.timeline.model.UiState
 import com.bellogatecaliphate.timeline.ui.content.ContentsList
 import com.example.interstitialads.QuickReelsInterstitialAd
+
+private const val NUMBER_OF_CLICK_ATTEMPTS_BEFORE_SHOWING_INTERSTITIAL_AD = 2
 
 @Composable
 fun TimeLineScreen(
@@ -85,7 +87,7 @@ private fun TimeLineScreen(
 	val listOfContents = uiState.listOfPaginatedContents.collectAsLazyPagingItems()
 	val isLoadingInitialListItems = listOfContents.loadState.refresh is LoadState.Loading
 	val errorLoadingInitialListItems = listOfContents.loadState.refresh is LoadState.Error
-	var showInterstitialAd by remember { mutableStateOf(false) }
+	var numberOfClicksOnDownloadButton by remember { mutableIntStateOf(0) }
 	
 	Column(
 		modifier = Modifier.fillMaxSize(),
@@ -104,7 +106,7 @@ private fun TimeLineScreen(
 				onCommentButtonPressed = onCommentButtonPressed,
 				onSaveScrollPosition = onSaveScrollPosition,
 				onOpenAccountDetails = onOpenAccountDetails,
-				onDownloadClicked = { showInterstitialAd = true }
+				onDownloadClicked = { numberOfClicksOnDownloadButton += 1 }
 			)
 			CommentsBottomDialog(
 				visible = uiState.openCommentsBottomSheet,
@@ -123,12 +125,12 @@ private fun TimeLineScreen(
 				onDeleteComment = onDeleteComment,
 				advertContainer = { BannerAd() }
 			)
-			LaunchedEffect(showInterstitialAd) {
-				QuickReelsInterstitialAd.showAdOrNot(
-					show = showInterstitialAd,
+			LaunchedEffect(numberOfClicksOnDownloadButton) {
+				QuickReelsInterstitialAd.showInterstitialAd(
+					show = numberOfClicksOnDownloadButton == NUMBER_OF_CLICK_ATTEMPTS_BEFORE_SHOWING_INTERSTITIAL_AD,
 					context = context,
-					onAdDismissed = { showInterstitialAd = false },
-					onAdIsNotReadyTobeShownOrHasBeenSkipped = { showInterstitialAd = false }
+					onAdDismissed = { numberOfClicksOnDownloadButton = 0 },
+					onAdIsNotReadyTobeShownOrHasBeenSkipped = { numberOfClicksOnDownloadButton = 0 }
 				)
 			}
 		}
