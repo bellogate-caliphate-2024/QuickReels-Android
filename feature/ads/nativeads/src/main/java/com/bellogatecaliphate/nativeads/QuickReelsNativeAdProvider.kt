@@ -43,14 +43,12 @@ class QuickReelsNativeAdProvider @Inject constructor(
 	}
 	
 	suspend fun getNextAd(): NativeAd? {
-		if (adsCache.isEmpty()) return null
-		val latestAd = adsCache.first()
-		adsCache.removeAt(0)
-		
 		if (checkIfToLoadMoreAds()) {
 			loadAds()
+			return null
 		}
-		
+		val latestAd = adsCache.first()
+		adsCache.removeAt(0)
 		return latestAd
 	}
 	
