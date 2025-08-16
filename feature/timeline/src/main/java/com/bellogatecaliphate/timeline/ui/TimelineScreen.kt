@@ -88,6 +88,8 @@ private fun TimeLineScreen(
 	val isLoadingInitialListItems = listOfContents.loadState.refresh is LoadState.Loading
 	val errorLoadingInitialListItems = listOfContents.loadState.refresh is LoadState.Error
 	var numberOfClicksOnDownloadButton by remember { mutableIntStateOf(0) }
+	val showInterstitialAd =
+			numberOfClicksOnDownloadButton == NUMBER_OF_CLICK_ATTEMPTS_BEFORE_SHOWING_INTERSTITIAL_AD
 	
 	Column(
 		modifier = Modifier.fillMaxSize(),
@@ -127,7 +129,7 @@ private fun TimeLineScreen(
 			)
 			LaunchedEffect(numberOfClicksOnDownloadButton) {
 				QuickReelsInterstitialAd.showInterstitialAd(
-					show = numberOfClicksOnDownloadButton == NUMBER_OF_CLICK_ATTEMPTS_BEFORE_SHOWING_INTERSTITIAL_AD,
+					show = showInterstitialAd,
 					context = context,
 					onAdDismissed = { numberOfClicksOnDownloadButton = 0 },
 					onAdIsNotReadyTobeShownOrHasBeenSkipped = { numberOfClicksOnDownloadButton = 0 }
