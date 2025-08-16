@@ -10,7 +10,7 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Assert
 import org.junit.Test
 
-class QuickReelsAdProviderTest {
+class QuickReelsNativeAdProviderTest {
 	
 	private val testScheduler = TestCoroutineScheduler()
 	
@@ -19,7 +19,7 @@ class QuickReelsAdProviderTest {
 			runTest(testScheduler) {
 				val dispatcher = StandardTestDispatcher(testScheduler)
 				val adLoader = FakeQuickReelsNativeAdLoader(mockk(), mockk())
-				val adProvider = QuickReelsAdProvider(dispatcher, adLoader)
+				val adProvider = QuickReelsNativeAdProvider(dispatcher, adLoader)
 				
 				adProvider.loadAds()
 				Assert.assertEquals(8, adProvider.getCacheSize())

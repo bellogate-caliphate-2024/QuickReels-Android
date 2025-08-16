@@ -16,7 +16,7 @@ import javax.inject.Inject
 const val MAXIMUM_NUMBER_OF_ADS_TO_KEEP_IN_CACHE = 8
 const val THRESHOLD_FOR_LOADING_MORE_ADS = 2
 
-class QuickReelsAdProvider @Inject constructor(
+class QuickReelsNativeAdProvider @Inject constructor(
 	private val ioDispatcher: CoroutineDispatcher,
 	private val quickReelsNativeAdLoader: QuickReelsNativeAdLoader
 ) {

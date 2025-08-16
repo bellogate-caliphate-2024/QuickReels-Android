@@ -13,7 +13,7 @@ import com.bellogatecaliphate.domain.comments.SaveReplyToACommentUseCase
 import com.bellogatecaliphate.domain.contents.GetContentsUseCase
 import com.bellogatecaliphate.domain.contents.like.LikeContentUseCase
 import com.bellogatecaliphate.domain.user.GetLoggedInUserEmailUseCase
-import com.bellogatecaliphate.nativeads.QuickReelsAdProvider
+import com.bellogatecaliphate.nativeads.QuickReelsNativeAdProvider
 import com.bellogatecaliphate.timeline.model.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.async
@@ -33,7 +33,7 @@ class TimeLineScreenViewModel @Inject constructor(
 	private val getCommentRepliesUseCase: GetCommentRepliesUseCase,
 	private val saveReplyToACommentUseCase: SaveReplyToACommentUseCase,
 	private val deleteCommentUseCase: DeleteCommentUseCase,
-	private val adProvider: QuickReelsAdProvider
+	private val adProvider: QuickReelsNativeAdProvider
 ) : ViewModel() {
 	
 	private val _uiState = MutableStateFlow(UiState())
@@ -130,7 +130,7 @@ class TimeLineScreenViewModel @Inject constructor(
 		_uiState.update { it.copy(listOfPaginatedContents = response) }
 	}
 	
-	private fun mapContent(content: Content, adProvider: QuickReelsAdProvider): Content {
+	private fun mapContent(content: Content, adProvider: QuickReelsNativeAdProvider): Content {
 		return if (content.isAd) {
 			Advert(null)
 		} else {
