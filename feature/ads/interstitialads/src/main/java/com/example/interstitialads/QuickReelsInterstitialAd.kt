@@ -19,7 +19,7 @@ object QuickReelsInterstitialAd {
 	fun showInterstitialAd(
 		show: Boolean,
 		context: Context,
-		onAdIsNotReadyTobeShownOrHasBeenSkipped: (() -> Unit),
+		onAdIsNotReadyTobeShown: (() -> Unit),
 		onAdDismissed: (() -> Unit)
 	) {
 		Log.i("JEFF", "attempting to show an ad $show")
@@ -33,7 +33,7 @@ object QuickReelsInterstitialAd {
 		// when necessary.
 		when {
 			latestAd == null         -> {
-				onAdIsNotReadyTobeShownOrHasBeenSkipped()
+				onAdIsNotReadyTobeShown()
 				loadAds(context)
 				return
 			}

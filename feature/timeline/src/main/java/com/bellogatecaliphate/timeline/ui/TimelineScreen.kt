@@ -132,7 +132,7 @@ private fun TimeLineScreen(
 					show = showInterstitialAd,
 					context = context,
 					onAdDismissed = { numberOfClicksOnDownloadButton = 0 },
-					onAdIsNotReadyTobeShownOrHasBeenSkipped = { numberOfClicksOnDownloadButton = 0 }
+					onAdIsNotReadyTobeShown = { numberOfClicksOnDownloadButton = 0 }
 				)
 			}
 		}
