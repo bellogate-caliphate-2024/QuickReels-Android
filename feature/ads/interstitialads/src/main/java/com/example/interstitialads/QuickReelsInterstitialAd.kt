@@ -29,6 +29,8 @@ object QuickReelsInterstitialAd {
 		}
 		
 		val latestAd = adsCache.getAd()
+		// calling adsCache.getAd() will remove the ad from the cache. So make sure to call it only
+		// when necessary.
 		when {
 			latestAd == null         -> {
 				onAdIsNotReadyTobeShownOrHasBeenSkipped()
