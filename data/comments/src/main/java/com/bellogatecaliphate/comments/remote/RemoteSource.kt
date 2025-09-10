@@ -23,8 +23,14 @@ internal class RemoteSource @Inject constructor(
 		getComments(page)
 	}
 	
-	override suspend fun getCommentReplies(commentId: String, page: Int): CommentsListResponse? =
-			withContext(ioDispatcher) { commentsApi.getCommentReplies(commentId, page) }
+	override suspend fun getCommentReplies(
+		commentId: String,
+		page: Int
+	): CommentsListResponse = withContext(ioDispatcher) {
+		//commentsApi.getCommentReplies(commentId, page)
+		delay(4_000)
+		getReplies(page)
+	}
 	
 	override suspend fun saveReply(
 		originalCommentId: String,
@@ -133,6 +139,76 @@ val commentsFour = CommentsListResponse(
 		),
 		CommentResponse(
 			"14", "", pic, "THIRD u must be joking", "2025-10-02", 0,
+		)
+	)
+)
+
+fun getReplies(page: Int): CommentsListResponse {
+	return when (page) {
+		1    -> repliesBatchOne
+		2    -> repliesBatchTwo
+		else -> {
+			repliesBatchOne
+		}
+	}
+}
+
+val repliesBatchOne = CommentsListResponse(
+	"11",
+	1,
+	2,
+	false,
+	listOf(
+		CommentResponse(
+			"1",
+			"jeffemuveyan@gmail.com",
+			pic,
+			"FIRST Hahaha, I laughed so hard mehn! So this film was produced very early on may 2021 before the cannes film festival. I loved it so much because it talked about so many things.",
+			"2025-10-02",
+			0,
+			parentCommentId = "8"
+		),
+		CommentResponse(
+			"2", "", pic, "FIRST Will u see the film?", "2025-10-02", 0,
+			parentCommentId = "8"
+		),
+		CommentResponse(
+			"3", "", pic, "FIRST I loved this movie", "2025-10-02", 0,
+			parentCommentId = "8"
+		),
+		CommentResponse(
+			"4", "jeffemuveyan@gmail.com", pic, "This is a bizare comment", "2025-10-02", 0,
+			parentCommentId = "8"
+		)
+	)
+)
+
+val repliesBatchTwo = CommentsListResponse(
+	"11",
+	2,
+	null,
+	true,
+	listOf(
+		CommentResponse(
+			"1",
+			"jeffemuveyan@gmail.com",
+			pic,
+			"FIRST Hahaha, I laughed so hard mehn! So this film was produced very early on may 2021 before the cannes film festival. I loved it so much because it talked about so many things.",
+			"2025-10-02",
+			0,
+			parentCommentId = "8"
+		),
+		CommentResponse(
+			"2", "", pic, "second replies text", "2025-10-02", 0,
+			parentCommentId = "8"
+		),
+		CommentResponse(
+			"3", "", pic, "second replies text message here", "2025-10-02", 0,
+			parentCommentId = "8"
+		),
+		CommentResponse(
+			"4", "jeffemuveyan@gmail.com", pic, "This is the last replies", "2025-10-02", 0,
+			parentCommentId = "8"
 		)
 	)
 )
