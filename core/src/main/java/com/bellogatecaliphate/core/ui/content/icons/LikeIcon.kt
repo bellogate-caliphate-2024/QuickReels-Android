@@ -31,14 +31,15 @@ internal fun LikeIcon(
 	val icon = if (isLiked) R.drawable.baseline_favorite_24 else R.drawable.icon_heart
 	
 	Column(
-		modifier = Modifier.clickable {
-			isLiked = ! isLiked
-			onCLick(contentId, isLiked)
-		},
 		horizontalAlignment = Alignment.CenterHorizontally
 	) {
 		Image(
-			modifier = Modifier.size(PLACEHOLDER_24DP),
+			modifier = Modifier
+				.size(PLACEHOLDER_24DP)
+				.clickable {
+					isLiked = ! isLiked
+					onCLick(contentId, isLiked)
+				},
 			painter = painterResource(id = icon),
 			contentDescription = ""
 		)
