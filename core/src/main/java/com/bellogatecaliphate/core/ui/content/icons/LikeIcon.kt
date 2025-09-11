@@ -28,7 +28,7 @@ internal fun LikeIcon(
 	onCLick: (contentId: String, isLiked: Boolean) -> Unit
 ) {
 	var isLiked by remember { mutableStateOf(isAlreadyLiked) }
-	val icon = if (isLiked) R.drawable.icon_heart else R.drawable.icon_heart
+	val icon = if (isLiked) R.drawable.baseline_favorite_24 else R.drawable.icon_heart
 	
 	Column(
 		modifier = Modifier.clickable {
