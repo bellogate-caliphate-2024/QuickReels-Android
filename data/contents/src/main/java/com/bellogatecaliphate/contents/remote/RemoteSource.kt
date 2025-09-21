@@ -25,7 +25,7 @@ internal class RemoteSource @Inject constructor(
 			"jeffemuveyan@gmail.com",
 			"Monday Manyy",
 			"https://firebasestorage.googleapis.com/v0/b/memo-24031.appspot.com/o/p1.jpg?alt=media&token=630134db-35cb-41ea-9698-fa0cd25b80c0",
-			false,
+			true,
 			false
 		),
 		ContentResponse(isAd = true),
@@ -55,7 +55,8 @@ internal class RemoteSource @Inject constructor(
 			"0",
 			"",
 			"Wednesday Wendy",
-			"", false,
+			"",
+			true,
 			false
 		),
 		ContentResponse(isAd = true),
@@ -82,7 +83,8 @@ internal class RemoteSource @Inject constructor(
 			"0",
 			"",
 			"Friday Fry",
-			"", false,
+			"",
+			true,
 			false
 		),
 		ContentResponse(
