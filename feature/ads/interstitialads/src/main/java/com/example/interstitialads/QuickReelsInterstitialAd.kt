@@ -2,7 +2,6 @@ package com.example.interstitialads
 
 import android.app.Activity
 import android.content.Context
-import android.util.Log
 import com.google.android.gms.ads.AdError
 import com.google.android.gms.ads.FullScreenContentCallback
 
@@ -12,7 +11,6 @@ object QuickReelsInterstitialAd {
 	private var adLoader = AdLoader()
 	
 	fun loadAds(context: Context) {
-		Log.i("JEFF", "attempting to load ads")
 		adLoader.loadAds(context) { adsCache.cacheAd(it) }
 	}
 	
@@ -22,7 +20,6 @@ object QuickReelsInterstitialAd {
 		onAdIsNotReadyTobeShown: (() -> Unit),
 		onAdDismissed: (() -> Unit)
 	) {
-		Log.i("JEFF", "attempting to show an ad $show")
 		if (show.not()) {
 			onAdDismissed()
 			return
