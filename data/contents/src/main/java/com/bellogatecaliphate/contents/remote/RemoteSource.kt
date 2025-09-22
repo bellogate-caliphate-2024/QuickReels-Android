@@ -303,7 +303,9 @@ internal class RemoteSource @Inject constructor(
 	
 	override suspend fun likeContent(userEmail: String, contentId: String, isLiked: Boolean) =
 			withContext(ioDispatcher) {
-				api.likeContent(userEmail, contentId, isLiked) !!.isSuccess
+				//api.likeContent(userEmail, contentId, isLiked) !!.isSuccess
+				delay(3_000)
+				true
 			}
 	
 	override suspend fun deleteContent(userEmail: String, contentId: String): Boolean =
