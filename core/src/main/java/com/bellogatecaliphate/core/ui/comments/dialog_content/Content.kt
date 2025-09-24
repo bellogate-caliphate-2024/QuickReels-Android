@@ -22,7 +22,7 @@ import com.bellogatecaliphate.core.util.PLACEHOLDER_16DP
 internal fun Content(
 	loggedInUserEmail: String?,
 	noCommentsFound: Boolean,
-	listOfComments: LazyPagingItems<Comment>,
+	listOfComments: LazyPagingItems<Comment>?,
 	totalNumberOfCommentsExpected: Int,
 	commentDeletedSuccessfully: Boolean? = null,
 	listOfDeletedComments: MutableList<String> = mutableListOf(),
@@ -36,11 +36,11 @@ internal fun Content(
 ) {
 	Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
 		val isLoadingFirstSetOfComments =
-				listOfComments.loadState.source.refresh is LoadState.Loading
+				listOfComments?.loadState?.source?.refresh is LoadState.Loading
 		val isLoadingMoreComments =
-				listOfComments.loadState.source.append is LoadState.Loading
+				listOfComments?.loadState?.source?.append is LoadState.Loading
 		val hasLoadedAllComments =
-				listOfComments.loadState.source.append is LoadState.NotLoading
+				listOfComments?.loadState?.source?.append is LoadState.NotLoading
 		
 		if (noCommentsFound) {
 			NoComment()
@@ -53,7 +53,7 @@ internal fun Content(
 			Spacer(modifier = Modifier.height(PLACEHOLDER_16DP))
 		}
 		
-		if (listOfComments.itemCount > 0) {
+		if (listOfComments != null && listOfComments.itemCount > 0) {
 			Text(
 				text = getCommentsListHeaderText(totalNumberOfCommentsExpected),
 				style = MaterialTheme.typography.bodySmall

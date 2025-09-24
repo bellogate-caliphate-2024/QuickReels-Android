@@ -12,7 +12,7 @@ import javax.inject.Inject
 class GetContentsUseCase @Inject constructor(private val repository: IContentsRepository) {
 	
 	operator fun invoke(): Flow<PagingData<Content>> {
-		return repository.getPaginatedContents(1).flow.map {
+		return repository.getPaginatedContents(1).map {
 			it.map { contentResponse ->
 				contentResponse.toContent()
 			}

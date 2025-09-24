@@ -13,7 +13,7 @@ class GetCommentsUseCase @Inject constructor(
 ) {
 	
 	operator fun invoke(contentId: String): Flow<PagingData<Comment>> =
-			repository.getPaginatedComments(contentId).flow.map { pagingData ->
+			repository.getPaginatedComments(contentId).map { pagingData ->
 				pagingData.map {
 					Comment(
 						it.commentId ?: "",

@@ -1,13 +1,14 @@
 package com.bellogatecaliphate.comments
 
-import androidx.paging.Pager
+import androidx.paging.PagingData
 import com.bellogatecaliphate.comments.remote.model.CommentResponse
 import com.bellogatecaliphate.comments.remote.model.CommentsListResponse
 import com.bellogatecaliphate.comments.remote.model.SaveReplyToCommentResponse
+import kotlinx.coroutines.flow.Flow
 
 interface ICommentsRepository {
 	
-	fun getPaginatedComments(contentId: String): Pager<Int, CommentResponse>
+	fun getPaginatedComments(contentId: String): Flow<PagingData<CommentResponse>>
 	
 	suspend fun getCommentReplies(commentId: String, page: Int): CommentsListResponse?
 	

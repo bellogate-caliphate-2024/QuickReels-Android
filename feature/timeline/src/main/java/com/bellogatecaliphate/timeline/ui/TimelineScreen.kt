@@ -19,14 +19,18 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.paging.LoadState
+import androidx.paging.PagingData
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.bellogatecaliphate.bannerads.QuickReelsBannerAd
 import com.bellogatecaliphate.core.model.ads.Ads
+import com.bellogatecaliphate.core.model.dto.Comment
+import com.bellogatecaliphate.core.model.dto.Content
 import com.bellogatecaliphate.core.ui.QuickReelsCircularProgressBar
 import com.bellogatecaliphate.core.ui.comments.CommentsBottomDialog
 import com.bellogatecaliphate.timeline.model.UiState
 import com.bellogatecaliphate.timeline.ui.content.ContentsList
 import com.example.interstitialads.QuickReelsInterstitialAd
+import kotlinx.coroutines.flow.Flow
 
 private const val NUMBER_OF_CLICK_ATTEMPTS_BEFORE_SHOWING_INTERSTITIAL_AD = 2
 
@@ -37,9 +41,13 @@ fun TimeLineScreen(
 ) {
 	val context = LocalContext.current
 	val uiState = viewModel.uiState.collectAsStateWithLifecycle()
+	val contents = viewModel.listOfContents.collectAsStateWithLifecycle()
+	val comments = viewModel.comments.collectAsStateWithLifecycle()
 	
 	TimeLineScreen(
 		uiState = uiState.value,
+		contents = contents.value,
+		comments = comments.value,
 		onAdRequest = {
 			viewModel.onAdRequest()
 		},
@@ -73,6 +81,8 @@ fun TimeLineScreen(
 @Composable
 private fun TimeLineScreen(
 	uiState: UiState,
+	contents: Flow<PagingData<Content>>?,
+	comments: Flow<PagingData<Comment>>?,
 	onAdRequest: () -> Unit,
 	onLikeButtonPressed: (contentId: String, isLiked: Boolean) -> Unit,
 	onCommentButtonPressed: (contentId: String, totalNumberOfCommentsExpected: Int) -> Unit,
@@ -81,12 +91,12 @@ private fun TimeLineScreen(
 	onLoadReplies: (originalCommentId: String, pageNumber: Int) -> Unit = { _, _ -> },
 	onDeleteComment: (commentId: String) -> Unit = { _ -> },
 	onSaveScrollPosition: (index: Int, offset: Int) -> Unit,
-	onOpenAccountDetails: (accountUserEmail: String) -> Unit
+	onOpenAccountDetails: (accountUserEmail: String) -> Unit,
 ) {
 	val context = LocalContext.current
-	val listOfContents = uiState.listOfPaginatedContents.collectAsLazyPagingItems()
-	val isLoadingInitialListItems = listOfContents.loadState.refresh is LoadState.Loading
-	val errorLoadingInitialListItems = listOfContents.loadState.refresh is LoadState.Error
+	val listOfContents = contents?.collectAsLazyPagingItems()
+	val isLoadingInitialListItems = listOfContents?.loadState?.refresh is LoadState.Loading
+	val errorLoadingInitialListItems = listOfContents?.loadState?.refresh is LoadState.Error
 	var numberOfClicksOnDownloadButton by remember { mutableIntStateOf(0) }
 	val showInterstitialAd =
 			numberOfClicksOnDownloadButton == NUMBER_OF_CLICK_ATTEMPTS_BEFORE_SHOWING_INTERSTITIAL_AD
@@ -114,7 +124,7 @@ private fun TimeLineScreen(
 				visible = uiState.openCommentsBottomSheet,
 				loggedInUserEmail = uiState.loggedInUserEmail,
 				totalNumberOfCommentsExpected = uiState.totalNumberOfComments,
-				listOfComments = uiState.listOfPaginatedComments.collectAsLazyPagingItems(),
+				listOfComments = comments?.collectAsLazyPagingItems(),
 				commentDeletedSuccessfully = uiState.commentDeletedSuccessfully,
 				listOfDeletedComments = uiState.deletedComments,
 				isLoadingReplies = uiState.isLoadingReplies,

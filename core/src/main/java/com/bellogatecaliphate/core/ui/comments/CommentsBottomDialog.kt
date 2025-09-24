@@ -14,7 +14,6 @@ import com.bellogatecaliphate.core.ui.comments.dialog_content.Content
  * after the user clicked on the button to open comments.
  * @param totalNumberOfCommentsExpected is the total number of comments that the content has.
  * @param listOfComments is the paginated list of comments.
- * @param isDeletingComment is true when the user is deleting a comment.
  * @param commentDeletedSuccessfully is true when the comment has been deleted successfully.
  * @param isLoadingReplies is true when the ap is loading the list of replies to a comment.
  * @param listOfReplies is a non paginated list of replies to a comment.
@@ -33,7 +32,7 @@ fun CommentsBottomDialog(
 	visible: Boolean = false,
 	loggedInUserEmail: String?,
 	totalNumberOfCommentsExpected: Int,
-	listOfComments: LazyPagingItems<Comment>,
+	listOfComments: LazyPagingItems<Comment>?,
 	commentDeletedSuccessfully: Boolean? = null,
 	listOfDeletedComments: MutableList<String> = mutableListOf(),
 	isLoadingReplies: Boolean = false,

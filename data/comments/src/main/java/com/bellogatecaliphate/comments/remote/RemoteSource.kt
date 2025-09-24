@@ -51,8 +51,10 @@ fun getComments(page: Int): CommentsListResponse {
 		1    -> commentsOne
 		2    -> commentsTwo
 		3    -> commentsThree
+		4    -> commentsFour
+		5    -> commentsFive
 		else -> {
-			commentsFour
+			commentsSix
 		}
 	}
 }
@@ -128,8 +130,8 @@ val commentsThree = CommentsListResponse(
 val commentsFour = CommentsListResponse(
 	"44",
 	4,
-	null,
-	true,
+	5,
+	false,
 	listOf(
 		CommentResponse(
 			"12", "", pic, "THIRD comment here bro", "2025-10-02", 0,
@@ -139,6 +141,42 @@ val commentsFour = CommentsListResponse(
 		),
 		CommentResponse(
 			"14", "", pic, "THIRD u must be joking", "2025-10-02", 0,
+		)
+	)
+)
+
+val commentsFive = CommentsListResponse(
+	"55",
+	5,
+	6,
+	false,
+	listOf(
+		CommentResponse(
+			"1255", "", pic, "555 comment here bro", "2025-10-02", 0,
+		),
+		CommentResponse(
+			"1355", "", pic, "555 scary movie! Dont watch alone", "2025-10-02", 0,
+		),
+		CommentResponse(
+			"1455", "", pic, "555 u must be joking", "2025-10-02", 0,
+		)
+	)
+)
+
+val commentsSix = CommentsListResponse(
+	"66",
+	6,
+	null,
+	true,
+	listOf(
+		CommentResponse(
+			"1266", "", pic, "66 comment here bro", "2025-10-02", 0,
+		),
+		CommentResponse(
+			"1366", "", pic, "66 scary movie! Dont watch alone", "2025-10-02", 0,
+		),
+		CommentResponse(
+			"1466", "", pic, "66 u must be joking", "2025-10-02", 0,
 		)
 	)
 )

@@ -2,9 +2,11 @@ package com.bellogatecaliphate.timeline.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import androidx.paging.map
 import com.bellogatecaliphate.core.model.dto.Advert
+import com.bellogatecaliphate.core.model.dto.Comment
 import com.bellogatecaliphate.core.model.dto.Content
 import com.bellogatecaliphate.domain.comments.DeleteCommentUseCase
 import com.bellogatecaliphate.domain.comments.GetCommentRepliesUseCase
@@ -17,6 +19,7 @@ import com.bellogatecaliphate.nativeads.QuickReelsNativeAdProvider
 import com.bellogatecaliphate.timeline.model.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.async
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.map
@@ -39,6 +42,12 @@ class TimeLineScreenViewModel @Inject constructor(
 	private val _uiState = MutableStateFlow(UiState())
 	internal val uiState = _uiState.asStateFlow()
 	
+	private val _listOfContents = MutableStateFlow<Flow<PagingData<Content>>?>(null)
+	internal val listOfContents = _listOfContents.asStateFlow()
+	
+	private val _comments = MutableStateFlow<Flow<PagingData<Comment>>?>(null)
+	internal val comments = _comments.asStateFlow()
+	
 	init {
 		viewModelScope.launch {
 			async { loadAds() }
@@ -55,20 +64,18 @@ class TimeLineScreenViewModel @Inject constructor(
 		likeContentUseCase(contentId, isLiked)
 	}
 	
-	fun getComments(contentId: String, totalNumberOfCommentsExpected: Int) = viewModelScope.launch {
+	fun getComments(
+		contentId: String,
+		totalNumberOfCommentsExpected: Int
+	) {
 		_uiState.update {
 			it.copy(
+				totalNumberOfComments = totalNumberOfCommentsExpected,
 				openCommentsBottomSheet = true,
 				loggedInUserEmail = getLoggedInUserEmailUseCase()
 			)
 		}
-		val response = getCommentsUseCase(contentId).cachedIn(viewModelScope)
-		_uiState.update {
-			it.copy(
-				totalNumberOfComments = totalNumberOfCommentsExpected,
-				listOfPaginatedComments = response
-			)
-		}
+		_comments.value = getCommentsUseCase(contentId).cachedIn(viewModelScope)
 	}
 	
 	fun onCommentsBottomDialogClosed() {
@@ -127,7 +134,7 @@ class TimeLineScreenViewModel @Inject constructor(
 		val response = getContentsUseCase().cachedIn(viewModelScope).map {
 			it.map { content -> mapContent(content, adProvider) }
 		}
-		_uiState.update { it.copy(listOfPaginatedContents = response) }
+		_listOfContents.value = response
 	}
 	
 	private fun mapContent(content: Content, adProvider: QuickReelsNativeAdProvider): Content {

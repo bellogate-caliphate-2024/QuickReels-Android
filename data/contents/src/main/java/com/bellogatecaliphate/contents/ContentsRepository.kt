@@ -20,7 +20,7 @@ internal class ContentsRepository @Inject constructor(
 	
 	override fun getPaginatedContents(page: Int) = Pager(config = PagingConfig(pageSize = 10)) {
 		contentsPagingSource
-	}
+	}.flow
 	
 	override suspend fun getContent(contentId: String): ContentResponse? {
 		return remoteSource.getContent(contentId)
