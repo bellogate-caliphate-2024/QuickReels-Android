@@ -16,6 +16,7 @@ import com.bellogatecaliphate.core.util.ContentPreviewParameter
 fun ContentListItem(
 	@PreviewParameter(ContentPreviewParameter::class) content: Content,
 	modifier: Modifier = Modifier,
+	listOfLikedContents: MutableMap<String, Boolean?> = mutableMapOf(),
 	contentBelongsToLoggedInUser: Boolean = true,
 	deleteContentInProgress: Boolean = false,
 	showBackButton: Boolean = false,
@@ -46,6 +47,7 @@ fun ContentListItem(
 			contentId = content.id,
 			caption = content.caption,
 			numberOfLikes = content.numberOfLikes,
+			listOfLikedContents = listOfLikedContents,
 			numberOfComments = content.numberOfComments,
 			contentBelongsToLoggedInUser = contentBelongsToLoggedInUser,
 			isLiked = content.isLiked,

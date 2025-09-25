@@ -23,11 +23,15 @@ import com.bellogatecaliphate.core.util.PLACEHOLDER_8DP
 @Composable
 internal fun LikeIcon(
 	contentId: String,
-	isAlreadyLiked: Boolean,
+	listOfLikedContentsFromLocal: MutableMap<String, Boolean?>,
+	likedFromRemote: Boolean,
 	existingNumberOfLikes: String?,
 	onCLick: (contentId: String, isLiked: Boolean) -> Unit
 ) {
-	var isLiked by remember { mutableStateOf(isAlreadyLiked) }
+	val isLikedFromLocal = listOfLikedContentsFromLocal[contentId] != null
+	val isLiked = if (isLikedFromLocal) {
+		listOfLikedContentsFromLocal[contentId] !!
+	} else likedFromRemote
 	var latestNumberOfLikes by remember { mutableStateOf(existingNumberOfLikes?.toInt()) }
 	val icon = if (isLiked) R.drawable.baseline_favorite_24 else R.drawable.icon_heart
 	
@@ -38,12 +42,10 @@ internal fun LikeIcon(
 			modifier = Modifier
 				.size(PLACEHOLDER_24DP)
 				.clickable {
-					isLiked = ! isLiked
 					latestNumberOfLikes = if (isLiked) {
 						latestNumberOfLikes?.plus(1)
-					} else latestNumberOfLikes?.minus(1)
-					
-					onCLick(contentId, isLiked)
+					} else latestNumberOfLikes?.minus(- 1)
+					onCLick(contentId, ! isLiked)
 				},
 			painter = painterResource(id = icon),
 			contentDescription = ""

@@ -113,6 +113,7 @@ private fun TimeLineScreen(
 				advert = uiState.adVert,
 				firstVisibleItemIndex = uiState.firstVisibleItemIndex ?: 0,
 				firstVisibleItemScrollOffset = uiState.firstVisibleItemScrollOffset ?: 0,
+				listOfLikedContents = uiState.likedContents,
 				onAdRequest = onAdRequest,
 				onLikeButtonPressed = onLikeButtonPressed,
 				onCommentButtonPressed = onCommentButtonPressed,

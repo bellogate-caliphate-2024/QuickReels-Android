@@ -34,6 +34,7 @@ internal fun BottomSection(
 	contentId: String,
 	caption: String,
 	numberOfLikes: String,
+	listOfLikedContents: MutableMap<String, Boolean?>,
 	numberOfComments: String,
 	contentBelongsToLoggedInUser: Boolean,
 	isLiked: Boolean,
@@ -52,7 +53,13 @@ internal fun BottomSection(
 		Spacer(modifier = Modifier.height(PLACEHOLDER_8DP))
 		Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
 			Row {
-				LikeIcon(contentId, isLiked, numberOfLikes, onLikeButtonPressed)
+				LikeIcon(
+					contentId = contentId,
+					listOfLikedContentsFromLocal = listOfLikedContents,
+					likedFromRemote = isLiked,
+					existingNumberOfLikes = numberOfLikes,
+					onCLick = onLikeButtonPressed
+				)
 				Spacer(modifier = Modifier.width(PLACEHOLDER_24DP))
 				CommentsIcon(contentId, numberOfComments, onCommentButtonPressed)
 				Spacer(modifier = Modifier.width(PLACEHOLDER_24DP))

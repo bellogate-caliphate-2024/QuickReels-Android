@@ -18,6 +18,7 @@ import com.bellogatecaliphate.domain.user.GetLoggedInUserEmailUseCase
 import com.bellogatecaliphate.nativeads.QuickReelsNativeAdProvider
 import com.bellogatecaliphate.timeline.model.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -26,6 +27,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.coroutines.cancellation.CancellationException
 
 @HiltViewModel
 class TimeLineScreenViewModel @Inject constructor(
@@ -48,6 +50,8 @@ class TimeLineScreenViewModel @Inject constructor(
 	private val _comments = MutableStateFlow<Flow<PagingData<Comment>>?>(null)
 	internal val comments = _comments.asStateFlow()
 	
+	private val likeJobs = mutableMapOf<String, Job>()
+	
 	init {
 		viewModelScope.launch {
 			async { loadAds() }
@@ -61,7 +65,33 @@ class TimeLineScreenViewModel @Inject constructor(
 	}
 	
 	fun likeContent(contentId: String, isLiked: Boolean) = viewModelScope.launch {
-		likeContentUseCase(contentId, isLiked)
+		_uiState.update { current ->
+			current.copy(
+				likedContents = current.likedContents.toMutableMap().apply {
+					this[contentId] = isLiked
+				}
+			)
+		}
+		likeJobs[contentId]?.cancel()
+		val job = viewModelScope.launch {
+			try {
+				likeContentUseCase(contentId, isLiked)
+			}
+			catch (e: CancellationException) {
+				// job was cancelled → ignore.
+			}
+			catch (e: Exception) {
+				_uiState.update { current ->
+					current.copy(
+						likedContents = current.likedContents.toMutableMap().apply {
+							this[contentId] = ! isLiked
+						}
+					)
+				}
+			}
+		}
+		
+		likeJobs[contentId] = job
 	}
 	
 	fun getComments(

@@ -17,5 +17,6 @@ internal data class UiState(
 	val firstVisibleItemScrollOffset: Int? = null,
 	val loggedInUserEmail: String? = null,
 	val commentDeletedSuccessfully: Boolean? = null,
-	val deletedComments: MutableList<String> = mutableListOf()
+	val deletedComments: MutableList<String> = mutableListOf(),
+	val likedContents: MutableMap<String, Boolean?> = mutableMapOf(),
 )
