@@ -9,10 +9,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -28,11 +24,17 @@ internal fun LikeIcon(
 	existingNumberOfLikes: String?,
 	onCLick: (contentId: String, isLiked: Boolean) -> Unit
 ) {
-	val isLikedFromLocal = listOfLikedContentsFromLocal[contentId] != null
-	val isLiked = if (isLikedFromLocal) {
+	val hasCachedValue = listOfLikedContentsFromLocal[contentId] != null
+	
+	val isLiked = if (hasCachedValue) {
 		listOfLikedContentsFromLocal[contentId] !!
 	} else likedFromRemote
-	var latestNumberOfLikes by remember { mutableStateOf(existingNumberOfLikes?.toInt()) }
+	
+	val latestNumberOfLikes = if (hasCachedValue) {
+		val value = existingNumberOfLikes?.toInt()
+		if (isLiked) value?.plus(1) else value?.minus(1)
+	} else existingNumberOfLikes?.toInt()
+	
 	val icon = if (isLiked) R.drawable.baseline_favorite_24 else R.drawable.icon_heart
 	
 	Column(
@@ -42,9 +44,6 @@ internal fun LikeIcon(
 			modifier = Modifier
 				.size(PLACEHOLDER_24DP)
 				.clickable {
-					latestNumberOfLikes = if (isLiked) {
-						latestNumberOfLikes?.plus(1)
-					} else latestNumberOfLikes?.minus(- 1)
 					onCLick(contentId, ! isLiked)
 				},
 			painter = painterResource(id = icon),
