@@ -31,18 +31,17 @@ internal fun LikeIcon(
 	} else likedFromRemote
 	
 	val latestNumberOfLikes = if (hasCachedLikedOrUnlikedValue) {
-		val cachedLikedOrUnlikedValue = listOfLikedContentsFromLocal[contentId] !!
-		val latestNumberOfLikes = if (likedFromRemote && cachedLikedOrUnlikedValue.not()) {
-			existingNumberOfLikes?.toInt()?.minus(1)
-		} else if (likedFromRemote.not() && cachedLikedOrUnlikedValue) {
-			existingNumberOfLikes?.toInt()?.plus(1)
-		} else if (likedFromRemote && cachedLikedOrUnlikedValue) {
-			existingNumberOfLikes?.toInt()
-		} else {
-			existingNumberOfLikes?.toInt()
+		val cachedIsLiked = listOfLikedContentsFromLocal[contentId] !!
+		val currentLikes = existingNumberOfLikes?.toInt() ?: 0
+		
+		when {
+			likedFromRemote && cachedIsLiked.not() -> currentLikes - 1
+			likedFromRemote.not() && cachedIsLiked -> currentLikes + 1
+			else                                   -> currentLikes
 		}
-		latestNumberOfLikes
-	} else existingNumberOfLikes?.toInt()
+	} else {
+		existingNumberOfLikes?.toInt()
+	}
 	
 	val icon = if (isLiked) R.drawable.baseline_favorite_24 else R.drawable.icon_heart
 	
