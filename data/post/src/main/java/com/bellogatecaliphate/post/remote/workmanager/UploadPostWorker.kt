@@ -10,7 +10,6 @@ import com.bellogatecaliphate.core.source.local.entity.PostEntity
 import com.bellogatecaliphate.post.local.IPostLocalDataSource
 import com.bellogatecaliphate.post.remote.IPostRemoteDataSource
 import com.bellogatecaliphate.post.remote.workmanager.notification.createForegroundInfo
-import com.bellogatecaliphate.post.util.createPostEntity
 import com.bellogatecaliphate.post.util.createPostRequest
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
@@ -36,18 +35,13 @@ internal class UploadPostWorker @AssistedInject constructor(
 	override suspend fun getForegroundInfo(): ForegroundInfo {
 		return createForegroundInfo(
 			applicationContext,
-			inputData.getString("videoId") ?: DEFAULT_NOTIFICATION_ID,
+			inputData.getString("postId") ?: DEFAULT_NOTIFICATION_ID,
 			id
 		)
 	}
 	
 	override suspend fun doWork(): Result {
-		savePost(inputData)
 		return syncPost(inputData)
-	}
-	
-	private suspend fun savePost(inputData: Data) {
-		localDataSource.savePost(createPostEntity(inputData))
 	}
 	
 	private suspend fun syncPost(inputData: Data): Result {

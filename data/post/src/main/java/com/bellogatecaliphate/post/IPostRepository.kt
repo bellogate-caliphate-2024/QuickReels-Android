@@ -5,8 +5,17 @@ import kotlinx.coroutines.flow.Flow
 
 interface IPostRepository {
 	
-	fun uploadPost(
-		videoId: String,
+	suspend fun uploadPost(
+		postId: String,
+		videoFilePath: String,
+		userId: String,
+		time: String,
+		description: String,
+		thumbnailBase64String: String
+	)
+	
+	suspend fun savePost(
+		postId: String,
 		videoFilePath: String,
 		userId: String,
 		time: String,

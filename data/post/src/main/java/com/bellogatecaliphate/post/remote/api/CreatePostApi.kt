@@ -13,7 +13,7 @@ internal interface CreatePostApi {
 	@POST("create_post")
 	suspend fun uploadPost(
 		@Part videoFile: RequestBody,
-		@Query("videoId") videoId: String,
+		@Query("postId") postId: String,
 		@Query("userId") userId: String,
 		@Query("time") time: String,
 		@Query("caption") caption: String,

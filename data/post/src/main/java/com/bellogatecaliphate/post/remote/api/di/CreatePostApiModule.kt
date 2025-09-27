@@ -14,13 +14,13 @@ internal class CreatePostImpl @Inject constructor(private val retrofit: Retrofit
 	
 	override suspend fun uploadPost(
 		videoFile: RequestBody,
-		videoId: String,
+		postId: String,
 		userId: String,
 		time: String,
 		caption: String
 	): CreatePostResponse? {
 		return retrofit.create(CreatePostApi::class.java)
-			.uploadPost(videoFile, videoId, userId, time, caption)
+			.uploadPost(videoFile, postId, userId, time, caption)
 	}
 }
 
