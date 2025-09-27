@@ -21,7 +21,6 @@ object QuickReelsInterstitialAd {
 		onAdDismissed: (() -> Unit)
 	) {
 		if (show.not()) {
-			onAdDismissed()
 			return
 		}
 		
