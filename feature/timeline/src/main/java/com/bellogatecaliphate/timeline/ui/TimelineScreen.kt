@@ -32,7 +32,7 @@ import com.bellogatecaliphate.timeline.ui.content.ContentsList
 import com.example.interstitialads.QuickReelsInterstitialAd
 import kotlinx.coroutines.flow.Flow
 
-private const val NUMBER_OF_CLICK_ATTEMPTS_BEFORE_SHOWING_INTERSTITIAL_AD = 2
+private const val NUMBER_OF_CLICK_ATTEMPTS_BEFORE_SHOWING_INTERSTITIAL_AD = 3
 
 @Composable
 fun TimeLineScreen(
