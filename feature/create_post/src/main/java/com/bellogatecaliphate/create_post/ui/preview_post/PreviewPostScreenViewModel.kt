@@ -11,6 +11,7 @@ import com.bellogatecaliphate.domain.post.GetVideoThumbnailUseCase
 import com.bellogatecaliphate.domain.post.SaveVideoThumbnailFileUseCase
 import com.bellogatecaliphate.domain.user.GetUserInfoUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -31,6 +32,7 @@ class PreviewPostScreenViewModel @Inject constructor(
 	
 	fun validateVideoCaption(videoPath: String, captionText: String) = viewModelScope.launch {
 		_state.update { it.copy(isLoading = true, videoCaptionTextIsNotProvided = false) }
+		delay(1_000) // This delay is needed to allow the UI react. Don't remove it.
 		
 		val isCaptionAvailable = captionText.isNotEmpty() && captionText.isNotBlank()
 		if (isCaptionAvailable) {
