@@ -13,5 +13,6 @@ open class Content(
 	val userName: String,
 	val userProfilePicture: String,
 	val isLiked: Boolean,
-	val isAd: Boolean
+	val isAd: Boolean,
+	val redirectUrl: String
 )

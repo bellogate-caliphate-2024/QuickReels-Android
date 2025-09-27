@@ -24,7 +24,8 @@ class GetContentsHistoryUseCase @Inject constructor(private val repository: ICon
 						it.userName ?: "",
 						it.userProfilePicture ?: "",
 						it.isLiked ?: false,
-						it.isAd ?: false
+						it.isAd ?: false,
+						it.redirectUrl ?: ""
 					)
 				}
 			}

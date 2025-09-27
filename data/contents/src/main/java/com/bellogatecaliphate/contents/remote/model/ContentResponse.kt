@@ -13,5 +13,6 @@ data class ContentResponse(
 	val userName: String? = null,
 	val userProfilePicture: String? = null,
 	val isLiked: Boolean? = null,
-	val isAd: Boolean? = null
+	val isAd: Boolean? = null,
+	val redirectUrl: String? = null
 )

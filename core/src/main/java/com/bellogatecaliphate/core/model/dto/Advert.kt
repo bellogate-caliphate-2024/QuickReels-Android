@@ -8,5 +8,5 @@ class Advert(val nativeAd: NativeAd?) : Content(
 	"", "",
 	"", "",
 	"", "",
-	"", false, false
+	"", false, false, ""
 )

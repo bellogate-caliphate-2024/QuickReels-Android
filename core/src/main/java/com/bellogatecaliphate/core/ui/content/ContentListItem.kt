@@ -50,6 +50,7 @@ fun ContentListItem(
 			listOfLikedContents = listOfLikedContents,
 			numberOfComments = content.numberOfComments,
 			contentBelongsToLoggedInUser = contentBelongsToLoggedInUser,
+			redirectUrl = content.redirectUrl,
 			isLiked = content.isLiked,
 			onLikeButtonPressed = onLikeButtonPressed,
 			onCommentButtonPressed = onCommentButtonPressed,

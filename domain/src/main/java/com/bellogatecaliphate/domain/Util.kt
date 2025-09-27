@@ -17,6 +17,7 @@ fun ContentResponse.toContent(): Content {
 		userName ?: "",
 		userProfilePicture ?: "",
 		isLiked ?: false,
-		isAd ?: false
+		isAd ?: false,
+		redirectUrl ?: ""
 	)
 }

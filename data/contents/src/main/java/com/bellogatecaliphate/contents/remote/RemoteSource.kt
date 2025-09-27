@@ -26,7 +26,8 @@ internal class RemoteSource @Inject constructor(
 			"Monday Manyy",
 			"https://firebasestorage.googleapis.com/v0/b/memo-24031.appspot.com/o/p1.jpg?alt=media&token=630134db-35cb-41ea-9698-fa0cd25b80c0",
 			true,
-			false
+			false,
+			"www.wwe.com"
 		),
 		ContentResponse(isAd = true),
 		ContentResponse(
@@ -42,7 +43,8 @@ internal class RemoteSource @Inject constructor(
 			"Tuesday Tuee",
 			"https://firebasestorage.googleapis.com/v0/b/memo-24031.appspot.com/o/p2.jpg?alt=media&token=518d902-2efc-4739-8b96-00be0fff78f",
 			false,
-			false
+			false,
+			"www.wwe.com"
 		),
 		ContentResponse(isAd = true),
 		ContentResponse(
@@ -57,7 +59,8 @@ internal class RemoteSource @Inject constructor(
 			"Wednesday Wendy",
 			"",
 			true,
-			false
+			false,
+			"www.wwe.com"
 		),
 		ContentResponse(isAd = true),
 		ContentResponse(
@@ -71,7 +74,8 @@ internal class RemoteSource @Inject constructor(
 			"",
 			"Thursday Thur",
 			"", false,
-			false
+			false,
+			"www.wwe.com"
 		),
 		ContentResponse(
 			"898989898",
@@ -85,7 +89,8 @@ internal class RemoteSource @Inject constructor(
 			"Friday Fry",
 			"",
 			true,
-			false
+			false,
+			"www.wwe.com"
 		),
 		ContentResponse(
 			"898989898",
@@ -98,7 +103,8 @@ internal class RemoteSource @Inject constructor(
 			"",
 			"Saturday Saturn",
 			"", false,
-			false
+			false,
+			"www.wwe.com"
 		),
 		ContentResponse(
 			"898989898",
@@ -111,7 +117,8 @@ internal class RemoteSource @Inject constructor(
 			"",
 			"Sunday Sunny",
 			"", false,
-			false
+			false,
+			"www.wwe.com"
 		),
 	)
 	
@@ -127,7 +134,8 @@ internal class RemoteSource @Inject constructor(
 			"",
 			"Second pagination begins here",
 			"", false,
-			false
+			false,
+			"www.wwe.com"
 		),
 		ContentResponse(isAd = true),
 		ContentResponse(isAd = true),
@@ -143,7 +151,8 @@ internal class RemoteSource @Inject constructor(
 			"Last content for the week",
 			"https://firebasestorage.googleapis.com/v0/b/memo-24031.appspot.com/o/p1.jpg?alt=media&token=630134db-35cb-41ea-9698-fa0cd25b80c0",
 			false,
-			false
+			false,
+			"www.wwe.com"
 		),
 		
 		)
