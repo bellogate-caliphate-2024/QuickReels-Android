@@ -38,6 +38,9 @@ internal fun EditContentScreen(
 	EditContentScreen(
 		uiState = uiState,
 		onClose = onClose,
+		onLikeButtonPressed = { contentId, isLiked ->
+			viewModel.likeContent(contentId, isLiked)
+		},
 		onRefresh = { viewModel.getContent(isRefreshing = true, contentId = contentId) },
 		onDeleteContent = { viewModel.deleteContent(contentId = contentId) },
 	)
@@ -85,6 +88,7 @@ private fun EditContentScreen(
 				uiState.content != null         -> ContentListItem(
 					modifier = Modifier.fillMaxSize(),
 					content = uiState.content,
+					listOfLikedContents = uiState.likedContents,
 					showBackButton = true,
 					contentBelongsToLoggedInUser = uiState.contentBelongsToLoggedInUser,
 					deleteContentInProgress = uiState.deleteContentInProgress,

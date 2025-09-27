@@ -10,5 +10,6 @@ data class UiState(
 	val deleteContentInProgress: Boolean = false,
 	val deleteContentSuccess: Boolean? = null,
 	val content: Content? = null,
-	val contentBelongsToLoggedInUser: Boolean = false
+	val contentBelongsToLoggedInUser: Boolean = false,
+	val likedContents: MutableMap<String, Boolean?> = mutableMapOf(),
 )
