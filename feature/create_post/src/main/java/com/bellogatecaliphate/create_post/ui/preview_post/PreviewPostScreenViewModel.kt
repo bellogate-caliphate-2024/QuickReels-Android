@@ -32,7 +32,7 @@ class PreviewPostScreenViewModel @Inject constructor(
 	
 	fun validateVideoCaption(videoPath: String, captionText: String) = viewModelScope.launch {
 		_state.update { it.copy(isLoading = true, videoCaptionTextIsNotProvided = false) }
-		delay(1_000) // This delay is needed to allow the UI react. Don't remove it.
+		delay(500) // This delay is needed to allow the UI react. Don't remove it.
 		
 		val isCaptionAvailable = captionText.isNotEmpty() && captionText.isNotBlank()
 		if (isCaptionAvailable) {
