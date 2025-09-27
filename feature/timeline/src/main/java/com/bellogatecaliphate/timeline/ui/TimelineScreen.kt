@@ -1,11 +1,14 @@
 package com.bellogatecaliphate.timeline.ui
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -14,7 +17,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -27,6 +32,7 @@ import com.bellogatecaliphate.core.model.dto.Comment
 import com.bellogatecaliphate.core.model.dto.Content
 import com.bellogatecaliphate.core.ui.QuickReelsCircularProgressBar
 import com.bellogatecaliphate.core.ui.comments.CommentsBottomDialog
+import com.bellogatecaliphate.timeline.R
 import com.bellogatecaliphate.timeline.model.UiState
 import com.bellogatecaliphate.timeline.ui.content.ContentsList
 import com.example.interstitialads.QuickReelsInterstitialAd
@@ -72,7 +78,10 @@ fun TimeLineScreen(
 		onSaveScrollPosition = { index, offset ->
 			viewModel.saveScrollPosition(index, offset)
 		},
-		onOpenAccountDetails = onOpenAccountDetails
+		onOpenAccountDetails = onOpenAccountDetails,
+		onRetry = {
+			viewModel.getContents()
+		}
 	)
 	
 	LaunchedEffect(Unit) { QuickReelsInterstitialAd.loadAds(context) }
@@ -92,6 +101,7 @@ private fun TimeLineScreen(
 	onDeleteComment: (commentId: String) -> Unit = { _ -> },
 	onSaveScrollPosition: (index: Int, offset: Int) -> Unit,
 	onOpenAccountDetails: (accountUserEmail: String) -> Unit,
+	onRetry: () -> Unit
 ) {
 	val context = LocalContext.current
 	val listOfContents = contents?.collectAsLazyPagingItems()
@@ -102,12 +112,16 @@ private fun TimeLineScreen(
 			numberOfClicksOnDownloadButton == NUMBER_OF_CLICK_ATTEMPTS_BEFORE_SHOWING_INTERSTITIAL_AD
 	
 	Column(
-		modifier = Modifier.fillMaxSize(),
+		modifier = Modifier
+			.fillMaxSize()
+			.background(Color.White),
 		verticalArrangement = Arrangement.Center,
 		horizontalAlignment = Alignment.CenterHorizontally
 	) {
 		QuickReelsCircularProgressBar(show = isLoadingInitialListItems)
-		if (isLoadingInitialListItems.not()) {
+		val successfullyLoadedInitialListItems =
+				isLoadingInitialListItems.not() && errorLoadingInitialListItems.not()
+		if (successfullyLoadedInitialListItems) {
 			ContentsList(
 				list = listOfContents,
 				advert = uiState.adVert,
@@ -147,7 +161,20 @@ private fun TimeLineScreen(
 				)
 			}
 		}
+		ErrorMessage(
+			show = errorLoadingInitialListItems && isLoadingInitialListItems.not(),
+			onRetry = onRetry
+		)
 	}
+}
+
+@Composable
+private fun ErrorMessage(show: Boolean, onRetry: () -> Unit) {
+	if (show.not()) return
+	Text(
+		modifier = Modifier.clickable { onRetry() },
+		text = stringResource(R.string.error_loading_timeline_click_to_retry)
+	)
 }
 
 @Composable

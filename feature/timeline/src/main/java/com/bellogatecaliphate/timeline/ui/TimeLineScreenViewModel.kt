@@ -59,6 +59,13 @@ class TimeLineScreenViewModel @Inject constructor(
 		}
 	}
 	
+	fun getContents() {
+		val response = getContentsUseCase().cachedIn(viewModelScope).map {
+			it.map { content -> mapContent(content, adProvider) }
+		}
+		_listOfContents.value = response
+	}
+	
 	fun onAdRequest() = viewModelScope.launch {
 		val latestAd = adProvider.getNextAd()
 		_uiState.update { it.copy(adVert = Advert(latestAd)) }
@@ -158,13 +165,6 @@ class TimeLineScreenViewModel @Inject constructor(
 				firstVisibleItemScrollOffset = offset
 			)
 		}
-	}
-	
-	private fun getContents() {
-		val response = getContentsUseCase().cachedIn(viewModelScope).map {
-			it.map { content -> mapContent(content, adProvider) }
-		}
-		_listOfContents.value = response
 	}
 	
 	private fun mapContent(content: Content, adProvider: QuickReelsNativeAdProvider): Content {
