@@ -30,12 +30,18 @@ class PreviewPostScreenViewModel @Inject constructor(
 	val state = _state.asStateFlow()
 	
 	fun validateVideoCaption(videoPath: String, captionText: String) = viewModelScope.launch {
-		_state.update { it.copy(isLoading = true) }
+		_state.update { it.copy(isLoading = true, videoCaptionTextIsNotProvided = false) }
 		
 		val isCaptionAvailable = captionText.isNotEmpty() && captionText.isNotBlank()
 		if (isCaptionAvailable) {
-			_state.update { it.copy(post = createPost(videoPath, captionText)) }
-			_state.update { it.copy(isLoading = false, showConfirmationBottomSheet = true) }
+			_state.update {
+				it.copy(
+					isLoading = false,
+					showConfirmationBottomSheet = true,
+					videoCaptionTextIsNotProvided = false,
+					post = createPost(videoPath, captionText)
+				)
+			}
 		} else {
 			_state.update { it.copy(isLoading = false, videoCaptionTextIsNotProvided = true) }
 		}
