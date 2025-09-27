@@ -64,19 +64,15 @@ private fun PreviewPostScreen(
 		VideoCaptionSection(isReadOnly, text) { text = it }
 		BottomSection(text, isReadOnly, uiState.isLoading, onSendButtonClicked)
 	}
-	when {
-		uiState.videoCaptionTextIsNotProvided -> {
-			VideoCaptionNotProvidedPrompt()
-		}
-		
-		uiState.showConfirmationBottomSheet   -> {
-			UploadPostConfirmationDialog(
-				uiState.post,
-				onConfirmationButtonClicked,
-				onConfirmationDialogDismissed
-			)
-		}
-	}
+	VideoCaptionNotProvidedPrompt(
+		show = uiState.videoCaptionTextIsNotProvided
+	)
+	UploadPostConfirmationDialog(
+		show = uiState.showConfirmationBottomSheet,
+		post = uiState.post,
+		onConfirmationButtonClicked,
+		onConfirmationDialogDismissed
+	)
 }
 
 @Preview(showBackground = true)

@@ -37,7 +37,7 @@ class PreviewPostScreenViewModel @Inject constructor(
 			_state.update { it.copy(post = createPost(videoPath, captionText)) }
 			_state.update { it.copy(isLoading = false, showConfirmationBottomSheet = true) }
 		} else {
-			_state.update { it.copy(videoCaptionTextIsNotProvided = true) }
+			_state.update { it.copy(isLoading = false, videoCaptionTextIsNotProvided = true) }
 		}
 	}
 	

@@ -28,12 +28,13 @@ import com.bellogatecaliphate.create_post.R
 import kotlinx.coroutines.launch
 
 @Composable
-fun UploadPostConfirmationDialog(
+internal fun UploadPostConfirmationDialog(
+	show: Boolean,
 	post: Post?,
 	onConfirmationButtonClicked: (Post) -> Unit,
 	onDismiss: () -> Unit
 ) {
-	if (post == null) return
+	if (show.not() || post == null) return
 	UploadPostConfirmationDialog(
 		onConfirmationGiven = { onConfirmationButtonClicked(post) },
 		onDismiss = onDismiss
