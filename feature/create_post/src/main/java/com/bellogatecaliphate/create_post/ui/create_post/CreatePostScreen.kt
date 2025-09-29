@@ -1,5 +1,6 @@
 package com.bellogatecaliphate.create_post.ui.create_post
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -13,6 +14,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -48,6 +50,7 @@ fun CreatePostScreen(
 	viewModel: CreatePostScreenViewModel = hiltViewModel(),
 	onPostReadyForPreview: (videoPath: String, videoCaption: String?, isReadOnly: Boolean) -> Unit = { _, _, _ -> },
 	onPostClicked: (Post) -> Unit = {},
+	onLoginSuccessFul: (userProfilePictureUrl: String) -> Unit,
 ) {
 	val activity = LocalContext.current.getActivity()
 	val context = LocalContext.current
@@ -77,7 +80,8 @@ fun CreatePostScreen(
 		},
 		onStoragePermissionRationalDialogClosed = { viewModel.resetGalleryState() },
 		onCancelUploadClicked = viewModel::cancelPostUpload,
-		onCloseUploadStatus = viewModel::cancelPostUpload
+		onCloseUploadStatus = viewModel::cancelPostUpload,
+		onLoginSuccessFul = onLoginSuccessFul
 	)
 }
 
@@ -89,8 +93,10 @@ private fun CreatePostScreen(
 	onVideoFileSelected: (uri: String?) -> Unit,
 	onStoragePermissionRationalDialogClosed: () -> Unit = {},
 	onCancelUploadClicked: (Post) -> Unit,
-	onCloseUploadStatus: (Post) -> Unit
+	onCloseUploadStatus: (Post) -> Unit,
+	onLoginSuccessFul: (userProfilePictureUrl: String) -> Unit,
 ) {
+	val context = LocalContext.current
 	Column(
 		verticalArrangement = Arrangement.Bottom,
 		modifier = Modifier
@@ -120,6 +126,19 @@ private fun CreatePostScreen(
 		onVideoFileSelected,
 		onStoragePermissionRationalDialogClosed
 	)
+	
+	LaunchedEffect(uiState.networkError) {
+		if (uiState.networkError) {
+			Toast.makeText(
+				context,
+				context.getString(R.string.network_error_try_again), Toast.LENGTH_SHORT
+			).show()
+		}
+	}
+	
+	if (uiState.isUserLoggedIn) {
+		onLoginSuccessFul(uiState.user?.profilePictureUrl ?: "")
+	}
 }
 
 @Composable
@@ -169,5 +188,5 @@ private fun DefaultContent(
 @Preview(showBackground = true)
 @Composable
 private fun Preview() {
-	CreatePostScreen(UiState(), {}, {}, {}, {}, {}, {})
+	CreatePostScreen(UiState(), {}, {}, {}, {}, {}, {}, {})
 }

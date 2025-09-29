@@ -31,5 +31,6 @@
     <string name="upload_failed">Upload failed, try again</string>">
     <string name="create_post_primary_message">Upload a Movie clip</string>">
     <string name="create_post_secondary_message">Create and share short movie clips with others</string>
+    <string name="network_error_try_again">Network Error, try again</string>
     ">
 </resources>

@@ -8,6 +8,8 @@ import com.bellogatecaliphate.create_post.model.UiState
 import com.bellogatecaliphate.domain.post.CancelPostUploadUseCase
 import com.bellogatecaliphate.domain.post.GetOngoingPostsUploadStatusUseCase
 import com.bellogatecaliphate.domain.user.CheckUserLoginUseCase
+import com.bellogatecaliphate.domain.user.GetLoggedInUserEmailUseCase
+import com.bellogatecaliphate.domain.user.GetUserInfoUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -21,6 +23,8 @@ class CreatePostScreenViewModel @Inject constructor(
 	private val getOngoingPostsUploadStatusUseCase: GetOngoingPostsUploadStatusUseCase,
 	private val cancelPostUploadUseCase: CancelPostUploadUseCase,
 	private val checkUserLoginUseCase: CheckUserLoginUseCase,
+	private val getUserInfoUseCase: GetUserInfoUseCase,
+	private val getLoggedInUserEmailUseCase: GetLoggedInUserEmailUseCase,
 	val firebaseAuthentication: FirebaseAuthentication
 ) : ViewModel() {
 	
@@ -33,8 +37,14 @@ class CreatePostScreenViewModel @Inject constructor(
 	
 	fun openGalleryOrLogin(onOpenGoogleAuthenticationLoginScreen: suspend () -> Boolean) =
 			viewModelScope.launch {
-				_state.update { it.copy(requestStoragePermissionAndOpenGallery = false) }
+				_state.update {
+					it.copy(
+						requestStoragePermissionAndOpenGallery = false,
+						networkError = false
+					)
+				}
 				delay(500)
+				
 				val isUserLoggedIn = checkUserLoginUseCase()
 				if (isUserLoggedIn) {
 					_state.update { it.copy(requestStoragePermissionAndOpenGallery = true) }
@@ -63,7 +73,19 @@ class CreatePostScreenViewModel @Inject constructor(
 				val isLoginSuccessful = onOpenGoogleAuthenticationLoginScreen()
 				if (isLoginSuccessful) {
 					_state.update { it.copy(requestStoragePermissionAndOpenGallery = true) }
+					getLoggedInUserEmailUseCase()?.let { getUserDetails(it) }
 				}
 				_state.update { it.copy(isLoading = false) }
 			}
+	
+	private fun getUserDetails(userEmail: String) = viewModelScope.launch {
+		val user = getUserInfoUseCase(userEmail)
+		_state.update {
+			it.copy(
+				user = user,
+				networkError = user == null,
+				isUserLoggedIn = user != null
+			)
+		}
+	}
 }

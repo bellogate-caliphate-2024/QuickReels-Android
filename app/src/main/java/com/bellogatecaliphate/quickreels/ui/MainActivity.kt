@@ -121,13 +121,15 @@ private fun QuickReelsScreen(
 	) { innerPadding ->
 		Box(modifier = Modifier.padding(innerPadding)) {
 			NavHost(navController, startDestination = TimelineNavGraphRoute::class) {
+				chatNavGraph(navController)
 				timelineNavGraph(
 					navController = navController,
 					onOpenAccountDetails = { accountUserEmail ->
 						navController.navigate(AccountNavGraphRoute.Account(accountUserEmail))
 					})
-				createPostNavGraph(serverClientId, navController)
-				chatNavGraph(navController)
+				createPostNavGraph(serverClientId, navController) {
+					onProfilePictureChanged(it)
+				}
 				accountNavGraph(navController, serverClientId, onLogOut) {
 					onProfilePictureChanged(it)
 				}

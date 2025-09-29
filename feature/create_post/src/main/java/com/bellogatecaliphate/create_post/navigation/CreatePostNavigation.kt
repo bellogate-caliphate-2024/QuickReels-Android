@@ -12,7 +12,11 @@ import com.bellogatecaliphate.core.model.routes.create_post.CreatePostNavGraphRo
 import com.bellogatecaliphate.create_post.ui.create_post.CreatePostScreen
 import com.bellogatecaliphate.create_post.ui.preview_post.PreviewPostScreen
 
-fun NavGraphBuilder.createPostNavGraph(serverClientId: String, navController: NavHostController) {
+fun NavGraphBuilder.createPostNavGraph(
+	serverClientId: String,
+	navController: NavHostController,
+	onLoginSuccessFul: (userProfilePictureUrl: String) -> Unit
+) {
 	navigation<CreatePostNavGraphRoute>(startDestination = CreatePostNavGraphRoute.CreatePost::class) {
 		composable<CreatePostNavGraphRoute.CreatePost> {
 			CreatePostScreen(
@@ -30,7 +34,8 @@ fun NavGraphBuilder.createPostNavGraph(serverClientId: String, navController: Na
 					navController.navigate(
 						CreatePostNavGraphRoute.PreviewPost(post.videoFilePath, post.caption, true)
 					)
-				}
+				},
+				onLoginSuccessFul = onLoginSuccessFul
 			)
 		}
 		composable<CreatePostNavGraphRoute.PreviewPost>(
