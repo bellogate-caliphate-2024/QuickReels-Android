@@ -31,7 +31,7 @@ class CreatePostScreenViewModel @Inject constructor(
 		observeOngoingPostUploads()
 	}
 	
-	fun requestPermissionAndOpenGallery(onOpenGoogleAuthenticationLoginScreen: suspend () -> Boolean) =
+	fun openGalleryOrLogin(onOpenGoogleAuthenticationLoginScreen: suspend () -> Boolean) =
 			viewModelScope.launch {
 				_state.update { it.copy(requestStoragePermissionAndOpenGallery = false) }
 				delay(500)

@@ -57,7 +57,7 @@ fun CreatePostScreen(
 		uiState = viewModel.state.collectAsStateWithLifecycle().value,
 		openGallery = {
 			with(viewModel) {
-				requestPermissionAndOpenGallery {
+				openGalleryOrLogin {
 					firebaseAuthentication.performLogin(
 						context,
 						serverClientId
