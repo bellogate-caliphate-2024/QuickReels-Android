@@ -61,6 +61,9 @@ class CreatePostScreenViewModel @Inject constructor(
 			viewModelScope.launch {
 				_state.update { it.copy(isLoading = true) }
 				val isLoginSuccessful = onOpenGoogleAuthenticationLoginScreen()
+				if (isLoginSuccessful) {
+					_state.update { it.copy(requestStoragePermissionAndOpenGallery = true) }
+				}
 				_state.update { it.copy(isLoading = false) }
 			}
 }
