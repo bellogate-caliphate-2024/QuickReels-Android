@@ -1,4 +1,4 @@
-package com.bellogatecaliphate.account.ui.authentication
+package com.bellogatecaliphate.core.ui.authentication
 
 import android.content.Context
 import androidx.credentials.ClearCredentialStateRequest

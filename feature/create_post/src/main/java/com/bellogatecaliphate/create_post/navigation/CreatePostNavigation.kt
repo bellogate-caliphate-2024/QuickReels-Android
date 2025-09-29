@@ -12,10 +12,11 @@ import com.bellogatecaliphate.core.model.routes.create_post.CreatePostNavGraphRo
 import com.bellogatecaliphate.create_post.ui.create_post.CreatePostScreen
 import com.bellogatecaliphate.create_post.ui.preview_post.PreviewPostScreen
 
-fun NavGraphBuilder.createPostNavGraph(navController: NavHostController) {
+fun NavGraphBuilder.createPostNavGraph(serverClientId: String, navController: NavHostController) {
 	navigation<CreatePostNavGraphRoute>(startDestination = CreatePostNavGraphRoute.CreatePost::class) {
 		composable<CreatePostNavGraphRoute.CreatePost> {
 			CreatePostScreen(
+				serverClientId = serverClientId,
 				onPostReadyForPreview = { videoPath, videoCaption, isReadOnly ->
 					navController.navigate(
 						CreatePostNavGraphRoute.PreviewPost(

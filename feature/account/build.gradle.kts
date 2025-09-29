@@ -97,22 +97,9 @@ dependencies {
 	implementation(libs.exoplayer.common)
 	// Paging:
 	implementation(libs.androidx.paging.compose.android)
-	// firebase
-	implementation(platform(libs.firebase.bom))
-	// firebase auth
-	googleAuthDependencies()
 	// Coil
 	implementation(libs.coil.compose)
 	implementation(libs.coil.network.okhttp)
 	// Image cropper
 	implementation(libs.imagecropview)
-}
-
-fun DependencyHandler.googleAuthDependencies() {
-	// firebase auth
-	implementation(libs.firebase.auth)
-	// Also add the dependencies for the Credential Manager libraries and specify their versions
-	implementation(libs.androidx.credentials)
-	implementation(libs.androidx.credentials.play.services.auth)
-	implementation(libs.googleid)
 }

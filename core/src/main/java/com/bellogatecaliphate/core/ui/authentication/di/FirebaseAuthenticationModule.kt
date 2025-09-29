@@ -1,4 +1,4 @@
-package com.bellogatecaliphate.account.ui.authentication.di
+package com.bellogatecaliphate.core.ui.authentication.di
 
 import androidx.credentials.GetCredentialRequest
 import com.google.android.libraries.identity.googleid.GetGoogleIdOption

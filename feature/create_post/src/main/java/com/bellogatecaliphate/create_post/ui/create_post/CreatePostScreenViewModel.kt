@@ -3,9 +3,11 @@ package com.bellogatecaliphate.create_post.ui.create_post
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bellogatecaliphate.core.model.dto.Post
+import com.bellogatecaliphate.core.ui.authentication.FirebaseAuthentication
 import com.bellogatecaliphate.create_post.model.UiState
 import com.bellogatecaliphate.domain.post.CancelPostUploadUseCase
 import com.bellogatecaliphate.domain.post.GetOngoingPostsUploadStatusUseCase
+import com.bellogatecaliphate.domain.user.CheckUserLoginUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -16,7 +18,9 @@ import javax.inject.Inject
 @HiltViewModel
 class CreatePostScreenViewModel @Inject constructor(
 	private val getOngoingPostsUploadStatusUseCase: GetOngoingPostsUploadStatusUseCase,
-	private val cancelPostUploadUseCase: CancelPostUploadUseCase
+	private val cancelPostUploadUseCase: CancelPostUploadUseCase,
+	private val checkUserLoginUseCase: CheckUserLoginUseCase,
+	val firebaseAuthentication: FirebaseAuthentication
 ) : ViewModel() {
 	
 	private val _state = MutableStateFlow(UiState())
@@ -26,8 +30,13 @@ class CreatePostScreenViewModel @Inject constructor(
 		observeOngoingPostUploads()
 	}
 	
-	fun requestPermissionAndOpenGallery() {
-		_state.update { it.copy(requestStoragePermissionAndOpenGallery = true) }
+	fun requestPermissionAndOpenGallery(onOpenGoogleAuthenticationLoginScreen: suspend () -> Boolean) {
+		val isUserLoggedIn = checkUserLoginUseCase()
+		if (isUserLoggedIn) {
+			_state.update { it.copy(requestStoragePermissionAndOpenGallery = true) }
+		} else {
+			performLogin(onOpenGoogleAuthenticationLoginScreen)
+		}
 	}
 	
 	fun resetGalleryState() {
@@ -43,4 +52,11 @@ class CreatePostScreenViewModel @Inject constructor(
 			_state.update { it.copy(existingUploads = liveResults) }
 		}
 	}
+	
+	private fun performLogin(onOpenGoogleAuthenticationLoginScreen: suspend () -> Boolean) =
+			viewModelScope.launch {
+				_state.update { it.copy(isLoading = true) }
+				val isLoginSuccessful = onOpenGoogleAuthenticationLoginScreen()
+				_state.update { it.copy(isLoading = false) }
+			}
 }

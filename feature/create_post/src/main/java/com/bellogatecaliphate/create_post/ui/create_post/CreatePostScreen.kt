@@ -26,6 +26,7 @@ import androidx.compose.ui.tooling.preview.PreviewScreenSizes
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.bellogatecaliphate.core.model.dto.Post
+import com.bellogatecaliphate.core.ui.QuickReelsCircularProgressBar
 import com.bellogatecaliphate.core.util.PLACEHOLDER_16DP
 import com.bellogatecaliphate.core.util.PLACEHOLDER_200DP
 import com.bellogatecaliphate.core.util.PLACEHOLDER_24DP
@@ -43,16 +44,27 @@ private const val ONE_SECOND = 1L
 
 @Composable
 fun CreatePostScreen(
+	serverClientId: String,
 	viewModel: CreatePostScreenViewModel = hiltViewModel(),
 	onPostReadyForPreview: (videoPath: String, videoCaption: String?, isReadOnly: Boolean) -> Unit = { _, _, _ -> },
 	onPostClicked: (Post) -> Unit = {},
 ) {
-	val context = LocalContext.current.getActivity()
+	val activity = LocalContext.current.getActivity()
+	val context = LocalContext.current
 	val videoTrimResultLauncher = activityLauncher(onPostReadyForPreview)
 	
 	CreatePostScreen(
 		uiState = viewModel.state.collectAsStateWithLifecycle().value,
-		openGallery = viewModel::requestPermissionAndOpenGallery,
+		openGallery = {
+			with(viewModel) {
+				requestPermissionAndOpenGallery {
+					firebaseAuthentication.performLogin(
+						context,
+						serverClientId
+					)
+				}
+			}
+		},
 		onPostClicked = onPostClicked,
 		onVideoFileSelected = { uri ->
 			viewModel.resetGalleryState()
@@ -61,7 +73,7 @@ fun CreatePostScreen(
 				?.setAccurateCut(true)
 				?.setTrimType(TrimType.MIN_MAX_DURATION)
 				?.setMinToMax(ONE_SECOND, SIXTY_SECONDS)
-				?.start(context, videoTrimResultLauncher)
+				?.start(activity, videoTrimResultLauncher)
 		},
 		onStoragePermissionRationalDialogClosed = { viewModel.resetGalleryState() },
 		onCancelUploadClicked = viewModel::cancelPostUpload,
@@ -88,6 +100,7 @@ private fun CreatePostScreen(
 	) {
 		DefaultContent(
 			visible = uiState.existingUploads.isEmpty(),
+			isLoading = uiState.isLoading,
 			openGallery = openGallery
 		)
 		UploadStatusScreen(
@@ -112,6 +125,7 @@ private fun CreatePostScreen(
 @Composable
 private fun DefaultContent(
 	visible: Boolean,
+	isLoading: Boolean,
 	openGallery: () -> Unit
 ) {
 	if (visible.not()) return
@@ -136,14 +150,17 @@ private fun DefaultContent(
 			textAlign = TextAlign.Center
 		)
 		Spacer(modifier = Modifier.height(PLACEHOLDER_24DP))
-		Button(
-			colors = ButtonDefaults.filledTonalButtonColors(
-				containerColor = colorResource(com.bellogatecaliphate.core.R.color.quickreels_purple),
-				contentColor = Color.White
-			),
-			onClick = openGallery
-		) {
-			Text(stringResource(R.string.select_video), fontSize = PLACEHOLDER_TEXT_SIZE_20)
+		QuickReelsCircularProgressBar(show = isLoading)
+		if (isLoading.not()) {
+			Button(
+				colors = ButtonDefaults.filledTonalButtonColors(
+					containerColor = colorResource(com.bellogatecaliphate.core.R.color.quickreels_purple),
+					contentColor = Color.White
+				),
+				onClick = openGallery
+			) {
+				Text(stringResource(R.string.select_video), fontSize = PLACEHOLDER_TEXT_SIZE_20)
+			}
 		}
 	}
 }

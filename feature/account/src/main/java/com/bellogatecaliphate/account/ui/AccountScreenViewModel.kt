@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
 import com.bellogatecaliphate.account.model.UiState
-import com.bellogatecaliphate.account.ui.authentication.FirebaseAuthentication
+import com.bellogatecaliphate.core.ui.authentication.FirebaseAuthentication
 import com.bellogatecaliphate.domain.contents.GetContentsHistoryUseCase
 import com.bellogatecaliphate.domain.user.CheckUserLoginUseCase
 import com.bellogatecaliphate.domain.user.GetLoggedInUserEmailUseCase

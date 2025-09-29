@@ -24,11 +24,11 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import com.bellogatecaliphate.account.navigation.accountNavGraph
-import com.bellogatecaliphate.account.ui.authentication.FirebaseAuthentication
 import com.bellogatecaliphate.chat.navigation.chatNavGraph
 import com.bellogatecaliphate.core.model.routes.Route
 import com.bellogatecaliphate.core.model.routes.account.AccountNavGraphRoute
 import com.bellogatecaliphate.core.model.routes.timeline.TimelineNavGraphRoute
+import com.bellogatecaliphate.core.ui.authentication.FirebaseAuthentication
 import com.bellogatecaliphate.core.ui.theme.QuickReelsTheme
 import com.bellogatecaliphate.create_post.navigation.createPostNavGraph
 import com.bellogatecaliphate.quickreels.R
@@ -126,7 +126,7 @@ private fun QuickReelsScreen(
 					onOpenAccountDetails = { accountUserEmail ->
 						navController.navigate(AccountNavGraphRoute.Account(accountUserEmail))
 					})
-				createPostNavGraph(navController)
+				createPostNavGraph(serverClientId, navController)
 				chatNavGraph(navController)
 				accountNavGraph(navController, serverClientId, onLogOut) {
 					onProfilePictureChanged(it)
