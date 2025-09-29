@@ -9,6 +9,7 @@ import com.bellogatecaliphate.domain.post.CancelPostUploadUseCase
 import com.bellogatecaliphate.domain.post.GetOngoingPostsUploadStatusUseCase
 import com.bellogatecaliphate.domain.user.CheckUserLoginUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -30,14 +31,17 @@ class CreatePostScreenViewModel @Inject constructor(
 		observeOngoingPostUploads()
 	}
 	
-	fun requestPermissionAndOpenGallery(onOpenGoogleAuthenticationLoginScreen: suspend () -> Boolean) {
-		val isUserLoggedIn = checkUserLoginUseCase()
-		if (isUserLoggedIn) {
-			_state.update { it.copy(requestStoragePermissionAndOpenGallery = true) }
-		} else {
-			performLogin(onOpenGoogleAuthenticationLoginScreen)
-		}
-	}
+	fun requestPermissionAndOpenGallery(onOpenGoogleAuthenticationLoginScreen: suspend () -> Boolean) =
+			viewModelScope.launch {
+				_state.update { it.copy(requestStoragePermissionAndOpenGallery = false) }
+				delay(500)
+				val isUserLoggedIn = checkUserLoginUseCase()
+				if (isUserLoggedIn) {
+					_state.update { it.copy(requestStoragePermissionAndOpenGallery = true) }
+				} else {
+					performLogin(onOpenGoogleAuthenticationLoginScreen)
+				}
+			}
 	
 	fun resetGalleryState() {
 		_state.update { it.copy(requestStoragePermissionAndOpenGallery = false) }
