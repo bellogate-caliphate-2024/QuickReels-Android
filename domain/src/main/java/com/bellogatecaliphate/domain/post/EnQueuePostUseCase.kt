@@ -11,19 +11,13 @@ class EnQueuePostUseCase @Inject constructor(
 ) {
 	
 	suspend operator fun invoke(post: Post) {
-		try {
-			postRepository.uploadPost(
-				post.id,
-				post.videoFilePath,
-				userRepository.getUserEmail() ?: "",
-				post.time,
-				post.caption,
-				post.thumbnailFilePath ?: ""
-			)
-		}
-		catch (e: Exception) {
-			val x = e.message
-			val y = x?.length
-		}
+		postRepository.uploadPost(
+			post.id,
+			post.videoFilePath,
+			userRepository.getUserEmail() ?: "",
+			post.time,
+			post.caption,
+			post.thumbnailFilePath ?: ""
+		)
 	}
 }
