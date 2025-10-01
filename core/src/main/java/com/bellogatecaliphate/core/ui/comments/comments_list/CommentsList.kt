@@ -24,6 +24,7 @@ import kotlinx.coroutines.flow.flowOf
 
 @Composable
 internal fun CommentsList(
+	contentId: String,
 	listOfComments: LazyPagingItems<Comment>,
 	loggedInUserEmail: String? = null,
 	isLoadingMoreComments: Boolean = false,
@@ -36,7 +37,7 @@ internal fun CommentsList(
 	canLoadMoreReplies: Boolean = false,
 	onSaveReply: ((originalCommentId: String, reply: String) -> Unit)? = null,
 	onLoadReplies: (originalCommentId: String, pageNumber: Int) -> Unit = { _, _ -> },
-	onDeleteComment: (commentId: String) -> Unit = { _ -> }
+	onDeleteComment: (contentId: String, commentId: String) -> Unit = { _, _ -> }
 ) {
 	val listState = rememberLazyListState()
 	
@@ -52,6 +53,7 @@ internal fun CommentsList(
 			comment?.let {
 				CommentItem(
 					comment = it,
+					contentId = contentId,
 					visible = listOfDeletedComments.contains(it.commentId).not(),
 					loggedInUserEmail = loggedInUserEmail,
 					commentDeletedSuccessfully = commentDeletedSuccessfully,
@@ -89,5 +91,8 @@ private fun Footer(
 @Preview(showBackground = true)
 @Composable
 private fun PreviewCommentsList() {
-	CommentsList(listOfComments = flowOf(PagingData.from(previewComments)).collectAsLazyPagingItems())
+	CommentsList(
+		contentId = "",
+		listOfComments = flowOf(PagingData.from(previewComments)).collectAsLazyPagingItems()
+	)
 }

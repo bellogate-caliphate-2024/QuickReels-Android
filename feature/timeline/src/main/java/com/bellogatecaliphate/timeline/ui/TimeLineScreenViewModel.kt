@@ -135,7 +135,7 @@ class TimeLineScreenViewModel @Inject constructor(
 		}
 	}
 	
-	fun deleteComment(commentId: String) = viewModelScope.launch {
+	fun deleteComment(contentId: String, commentId: String) = viewModelScope.launch {
 		_uiState.update { it.copy(commentDeletedSuccessfully = null) }
 		val listOfDeletedComments = _uiState.value.deletedComments
 		var totalNumberOfComments = _uiState.value.totalNumberOfComments
@@ -150,7 +150,11 @@ class TimeLineScreenViewModel @Inject constructor(
 			it.copy(
 				commentDeletedSuccessfully = result,
 				deletedComments = listOfDeletedComments,
-				totalNumberOfComments = totalNumberOfComments
+				totalNumberOfComments = totalNumberOfComments,
+				mapOfContentsAndNewNumberOfComments = it.mapOfContentsAndNewNumberOfComments.toMutableMap()
+					.apply {
+						this[contentId] = totalNumberOfComments
+					}
 			)
 		}
 	}

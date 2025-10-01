@@ -22,19 +22,20 @@ import com.bellogatecaliphate.core.util.PLACEHOLDER_8DP
 
 @Composable
 internal fun RepliesList(
+	contentId: String,
 	commentId: String,
 	replies: List<Comment>,
 	repliesPageNumber: Int? = null,
 	isLoadingReplies: Boolean = false,
 	canLoadMoreReplies: Boolean = false,
-	onLoadMoreReplies: (originalCommentId: String, pageToLoad: Int) -> Unit = {_, _ ->}
+	onLoadMoreReplies: (originalCommentId: String, pageToLoad: Int) -> Unit = { _, _ -> }
 ) {
 	
 	Column(
 		Modifier.padding(horizontal = PLACEHOLDER_24DP),
 		horizontalAlignment = Alignment.CenterHorizontally
 	) {
-		replies.forEach { CommentItem(comment = it) }
+		replies.forEach { CommentItem(comment = it, contentId = contentId) }
 		if (canLoadMoreReplies) {
 			Spacer(modifier = Modifier.height(PLACEHOLDER_8DP))
 			if (isLoadingReplies) {
@@ -58,5 +59,9 @@ internal fun RepliesList(
 private fun PreviewRepliesList(
 	@PreviewParameter(CommentAndRepliesPreviewParameter::class) commentAndReplies: CommentAndReplies,
 ) {
-	RepliesList(commentAndReplies.comment.commentId, commentAndReplies.replies)
+	RepliesList(
+		contentId = "",
+		commentId = commentAndReplies.comment.commentId,
+		replies = commentAndReplies.replies
+	)
 }

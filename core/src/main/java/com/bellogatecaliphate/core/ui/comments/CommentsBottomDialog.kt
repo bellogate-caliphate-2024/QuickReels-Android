@@ -30,6 +30,7 @@ import com.bellogatecaliphate.core.ui.comments.dialog_content.Content
 @Composable
 fun CommentsBottomDialog(
 	visible: Boolean = false,
+	contentId: String,
 	loggedInUserEmail: String?,
 	totalNumberOfCommentsExpected: Int,
 	listOfComments: LazyPagingItems<Comment>?,
@@ -42,7 +43,7 @@ fun CommentsBottomDialog(
 	onCommentsBottomDialogClosed: () -> Unit = {},
 	onSaveReply: ((originalCommentId: String, reply: String) -> Unit)? = null,
 	onLoadReplies: (originalCommentId: String, pageNumber: Int) -> Unit = { _, _ -> },
-	onDeleteComment: (commentId: String) -> Unit = { _ -> },
+	onDeleteComment: (contentId: String, commentId: String) -> Unit = { _, _ -> },
 	advertContainer: @Composable () -> Unit = {}
 ) {
 	if (visible.not()) return
@@ -58,6 +59,7 @@ fun CommentsBottomDialog(
 		Column {
 			advertContainer()
 			Content(
+				contentId = contentId,
 				loggedInUserEmail = loggedInUserEmail,
 				noCommentsFound = noCommentsFound,
 				listOfComments = listOfComments,

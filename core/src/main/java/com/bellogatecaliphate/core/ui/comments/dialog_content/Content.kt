@@ -20,6 +20,7 @@ import com.bellogatecaliphate.core.util.PLACEHOLDER_16DP
 
 @Composable
 internal fun Content(
+	contentId: String,
 	loggedInUserEmail: String?,
 	noCommentsFound: Boolean,
 	listOfComments: LazyPagingItems<Comment>?,
@@ -32,7 +33,7 @@ internal fun Content(
 	canLoadMoreReplies: Boolean = false,
 	onSaveReply: ((originalCommentId: String, reply: String) -> Unit)? = null,
 	onLoadReplies: (originalCommentId: String, pageNumber: Int) -> Unit = { _, _ -> },
-	onDeleteComment: (commentId: String) -> Unit = { _ -> }
+	onDeleteComment: (contentId: String, commentId: String) -> Unit = { _, _ -> }
 ) {
 	Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
 		val isLoadingFirstSetOfComments =
@@ -60,6 +61,7 @@ internal fun Content(
 			)
 			Spacer(modifier = Modifier.height(PLACEHOLDER_16DP))
 			CommentsList(
+				contentId,
 				listOfComments,
 				loggedInUserEmail,
 				isLoadingMoreComments,

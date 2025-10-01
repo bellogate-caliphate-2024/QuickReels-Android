@@ -20,10 +20,16 @@ import com.bellogatecaliphate.core.util.PLACEHOLDER_8DP
 internal fun CommentsIcon(
 	contentId: String,
 	numberOfComments: String?,
-	onCLick: (contentId: String, totalNumberOfCommentsExpected: Int) -> Unit
+	onCLick: (contentId: String, totalNumberOfCommentsExpected: Int) -> Unit,
+	listOfContentsAndNewNumberOfComments: MutableMap<String, Int>
 ) {
+	val hasCachedNumberOfComments = listOfContentsAndNewNumberOfComments[contentId] != null
+	val latestNumberOfComments = if (hasCachedNumberOfComments) {
+		listOfContentsAndNewNumberOfComments[contentId]?.toString()
+	} else numberOfComments
+	
 	Column(
-		Modifier.clickable { onCLick(contentId, numberOfComments?.toIntOrNull() ?: 0) },
+		Modifier.clickable { onCLick(contentId, latestNumberOfComments?.toIntOrNull() ?: 0) },
 		horizontalAlignment = Alignment.CenterHorizontally
 	) {
 		Image(
@@ -31,9 +37,9 @@ internal fun CommentsIcon(
 			painter = painterResource(id = R.drawable.icon_chat),
 			contentDescription = ""
 		)
-		if (! numberOfComments.isNullOrEmpty()) {
+		if (! latestNumberOfComments.isNullOrEmpty()) {
 			Spacer(modifier = Modifier.height(PLACEHOLDER_8DP))
-			Text(text = numberOfComments, style = MaterialTheme.typography.bodySmall)
+			Text(text = latestNumberOfComments, style = MaterialTheme.typography.bodySmall)
 		}
 	}
 }

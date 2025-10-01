@@ -32,6 +32,7 @@ internal fun BottomSection(
 	caption: String,
 	numberOfLikes: String,
 	mapOfLikedAndUnlikedContents: MutableMap<String, Boolean?>,
+	mapOfContentsAndNewNumberOfComments: MutableMap<String, Int>,
 	numberOfComments: String,
 	contentBelongsToLoggedInUser: Boolean,
 	redirectUrl: String,
@@ -59,7 +60,12 @@ internal fun BottomSection(
 					onCLick = onLikeButtonPressed
 				)
 				Spacer(modifier = Modifier.width(PLACEHOLDER_24DP))
-				CommentsIcon(contentId, numberOfComments, onCommentButtonPressed)
+				CommentsIcon(
+					contentId = contentId,
+					numberOfComments = numberOfComments,
+					listOfContentsAndNewNumberOfComments = mapOfContentsAndNewNumberOfComments,
+					onCLick = onCommentButtonPressed
+				)
 				Spacer(modifier = Modifier.width(PLACEHOLDER_24DP))
 				ShareIcon(redirectUrl)
 			}

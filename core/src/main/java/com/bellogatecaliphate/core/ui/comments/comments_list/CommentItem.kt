@@ -42,6 +42,7 @@ import com.bellogatecaliphate.core.util.PLACEHOLDER_IMAGE_45DP
 @Composable
 internal fun CommentItem(
 	comment: Comment,
+	contentId: String,
 	visible: Boolean = true, // we need this visibility so that when the user scrolls down and back up the list, deleted item remain hidden.
 	loggedInUserEmail: String? = null,
 	commentDeletedSuccessfully: Boolean? = null,
@@ -51,7 +52,7 @@ internal fun CommentItem(
 	canLoadMoreReplies: Boolean = false,
 	onSaveReply: ((originalCommentId: String, reply: String) -> Unit)? = null,
 	onLoadReplies: (originalCommentId: String, pageNumber: Int) -> Unit = { _, _ -> },
-	onDeleteComment: (commentId: String) -> Unit = { _ -> }
+	onDeleteComment: (contentId: String, commentId: String) -> Unit = { _, _ -> }
 ) {
 	val commentBelongsTologgedInUser = loggedInUserEmail == comment.userId
 	var openReplyCommentInputField by remember { mutableStateOf(false) }
@@ -101,7 +102,7 @@ internal fun CommentItem(
 					Spacer(modifier = Modifier.width(PLACEHOLDER_16DP))
 					DeleteLabel(commentBelongsTologgedInUser && isDeletingComment.not()) {
 						isDeletingComment = true
-						onDeleteComment(comment.commentId)
+						onDeleteComment(contentId, comment.commentId)
 					}
 				}
 				Spacer(modifier = Modifier.height(PLACEHOLDER_8DP))
@@ -115,6 +116,7 @@ internal fun CommentItem(
 		}
 		NumberOfReplies(comment, isLoadingReplies, totalListOfReplies.size, onLoadReplies)
 		RepliesList(
+			contentId,
 			comment.commentId,
 			totalListOfReplies,
 			repliesPageNumber,
@@ -146,6 +148,7 @@ private fun PreviewCommentItem(
 	@PreviewParameter(CommentAndRepliesPreviewParameter::class) commentAndReplies: CommentAndReplies,
 ) {
 	CommentItem(
+		contentId = "",
 		visible = true,
 		comment = commentAndReplies.comment,
 		listOfReplies = commentAndReplies.replies,

@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -72,8 +73,8 @@ fun TimeLineScreen(
 		onLoadReplies = { originalCommentId, pageNumber ->
 			viewModel.getRepliesToComment(originalCommentId, pageNumber)
 		},
-		onDeleteComment = { commentId ->
-			viewModel.deleteComment(commentId)
+		onDeleteComment = { contentId, commentId ->
+			viewModel.deleteComment(contentId, commentId)
 		},
 		onSaveScrollPosition = { index, offset ->
 			viewModel.saveScrollPosition(index, offset)
@@ -98,7 +99,7 @@ private fun TimeLineScreen(
 	onCommentsBottomDialogClosed: () -> Unit = {},
 	onSaveReply: ((originalCommentId: String, reply: String) -> Unit)? = null,
 	onLoadReplies: (originalCommentId: String, pageNumber: Int) -> Unit = { _, _ -> },
-	onDeleteComment: (commentId: String) -> Unit = { _ -> },
+	onDeleteComment: (contentId: String, commentId: String) -> Unit = { _, _ -> },
 	onSaveScrollPosition: (index: Int, offset: Int) -> Unit,
 	onOpenAccountDetails: (accountUserEmail: String) -> Unit,
 	onRetry: () -> Unit
@@ -110,6 +111,7 @@ private fun TimeLineScreen(
 	var numberOfClicksOnDownloadButton by remember { mutableIntStateOf(0) }
 	val showInterstitialAd =
 			numberOfClicksOnDownloadButton == NUMBER_OF_CLICK_ATTEMPTS_BEFORE_SHOWING_INTERSTITIAL_AD
+	var commentsContentId by remember { mutableStateOf("") }
 	
 	Column(
 		modifier = Modifier
@@ -128,15 +130,20 @@ private fun TimeLineScreen(
 				firstVisibleItemIndex = uiState.firstVisibleItemIndex ?: 0,
 				firstVisibleItemScrollOffset = uiState.firstVisibleItemScrollOffset ?: 0,
 				mapOfLikedAndUnlikedContents = uiState.mapOfLikedAndUnlikedContents,
+				mapOfContentsAndNewNumberOfComments = uiState.mapOfContentsAndNewNumberOfComments,
 				onAdRequest = onAdRequest,
 				onLikeButtonPressed = onLikeButtonPressed,
-				onCommentButtonPressed = onCommentButtonPressed,
+				onCommentButtonPressed = { contentId, totalNumberOfCommentsExpected ->
+					commentsContentId = contentId
+					onCommentButtonPressed(contentId, totalNumberOfCommentsExpected)
+				},
 				onSaveScrollPosition = onSaveScrollPosition,
 				onOpenAccountDetails = onOpenAccountDetails,
 				onDownloadClicked = { numberOfClicksOnDownloadButton += 1 }
 			)
 			CommentsBottomDialog(
 				visible = uiState.openCommentsBottomSheet,
+				contentId = commentsContentId,
 				loggedInUserEmail = uiState.loggedInUserEmail,
 				totalNumberOfCommentsExpected = uiState.totalNumberOfComments,
 				listOfComments = comments?.collectAsLazyPagingItems(),
