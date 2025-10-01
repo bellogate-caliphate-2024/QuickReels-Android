@@ -18,5 +18,5 @@ internal data class UiState(
 	val loggedInUserEmail: String? = null,
 	val commentDeletedSuccessfully: Boolean? = null,
 	val deletedComments: MutableList<String> = mutableListOf(),
-	val likedContents: MutableMap<String, Boolean?> = mutableMapOf(),
+	val mapOfLikedAndUnlikedContents: MutableMap<String, Boolean?> = mutableMapOf(),
 )

@@ -74,9 +74,10 @@ class TimeLineScreenViewModel @Inject constructor(
 	fun likeContent(contentId: String, isLiked: Boolean) = viewModelScope.launch {
 		_uiState.update { current ->
 			current.copy(
-				likedContents = current.likedContents.toMutableMap().apply {
-					this[contentId] = isLiked
-				}
+				mapOfLikedAndUnlikedContents = current.mapOfLikedAndUnlikedContents.toMutableMap()
+					.apply {
+						this[contentId] = isLiked
+					}
 			)
 		}
 		likeJobs[contentId]?.cancel()
@@ -90,9 +91,10 @@ class TimeLineScreenViewModel @Inject constructor(
 			catch (e: Exception) {
 				_uiState.update { current ->
 					current.copy(
-						likedContents = current.likedContents.toMutableMap().apply {
-							this[contentId] = ! isLiked
-						}
+						mapOfLikedAndUnlikedContents = current.mapOfLikedAndUnlikedContents.toMutableMap()
+							.apply {
+								this[contentId] = ! isLiked
+							}
 					)
 				}
 			}

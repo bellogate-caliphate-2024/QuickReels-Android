@@ -88,7 +88,7 @@ private fun EditContentScreen(
 				uiState.content != null         -> ContentListItem(
 					modifier = Modifier.fillMaxSize(),
 					content = uiState.content,
-					listOfLikedContents = uiState.likedContents,
+					mapOfLikedAndUnlikedContents = uiState.likedContents,
 					showBackButton = true,
 					contentBelongsToLoggedInUser = uiState.contentBelongsToLoggedInUser,
 					deleteContentInProgress = uiState.deleteContentInProgress,

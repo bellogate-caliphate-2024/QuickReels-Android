@@ -28,7 +28,7 @@ internal fun ContentsList(
 	advert: Advert?,
 	firstVisibleItemIndex: Int,
 	firstVisibleItemScrollOffset: Int,
-	listOfLikedContents: MutableMap<String, Boolean?>,
+	mapOfLikedAndUnlikedContents: MutableMap<String, Boolean?>,
 	onAdRequest: () -> Unit,
 	onLikeButtonPressed: (contentId: String, isLiked: Boolean) -> Unit,
 	onCommentButtonPressed: (contentId: String, totalNumberOfCommentsExpected: Int) -> Unit,
@@ -98,7 +98,7 @@ internal fun ContentsList(
 				ContentListItem(
 					modifier = Modifier.fillParentMaxSize(),
 					content = content,
-					listOfLikedContents = listOfLikedContents,
+					mapOfLikedAndUnlikedContents = mapOfLikedAndUnlikedContents,
 					contentBelongsToLoggedInUser = false,
 					onLikeButtonPressed = onLikeButtonPressed,
 					onCommentButtonPressed = onCommentButtonPressed,

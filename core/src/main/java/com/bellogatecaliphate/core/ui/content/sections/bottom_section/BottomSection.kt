@@ -31,7 +31,7 @@ internal fun BottomSection(
 	contentId: String,
 	caption: String,
 	numberOfLikes: String,
-	listOfLikedContents: MutableMap<String, Boolean?>,
+	mapOfLikedAndUnlikedContents: MutableMap<String, Boolean?>,
 	numberOfComments: String,
 	contentBelongsToLoggedInUser: Boolean,
 	redirectUrl: String,
@@ -53,7 +53,7 @@ internal fun BottomSection(
 			Row {
 				LikeIcon(
 					contentId = contentId,
-					listOfLikedContentsFromLocal = listOfLikedContents,
+					listOfLikedContentsFromLocal = mapOfLikedAndUnlikedContents,
 					likedFromRemote = isLiked,
 					existingNumberOfLikes = numberOfLikes,
 					onCLick = onLikeButtonPressed
