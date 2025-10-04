@@ -16,8 +16,11 @@ internal data class UiState(
 	val firstVisibleItemIndex: Int? = null,
 	val firstVisibleItemScrollOffset: Int? = null,
 	val loggedInUserEmail: String? = null,
+	val isUploadingComment: Boolean = false,
+	val commentUploadedSuccessfully: Boolean? = null,
 	val commentDeletedSuccessfully: Boolean? = null,
 	val deletedComments: MutableList<String> = mutableListOf(),
 	val mapOfLikedAndUnlikedContents: MutableMap<String, Boolean?> = mutableMapOf(),
 	val mapOfContentsAndNewNumberOfComments: MutableMap<String, Int> = mutableMapOf(),
+	val listOfCachedComments: List<Comment> = emptyList()
 )

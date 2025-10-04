@@ -8,6 +8,9 @@ import androidx.paging.map
 import com.bellogatecaliphate.core.model.dto.Advert
 import com.bellogatecaliphate.core.model.dto.Comment
 import com.bellogatecaliphate.core.model.dto.Content
+import com.bellogatecaliphate.domain.GenerateIdUseCase
+import com.bellogatecaliphate.domain.GetDateUseCase
+import com.bellogatecaliphate.domain.comments.AddCommentUseCase
 import com.bellogatecaliphate.domain.comments.DeleteCommentUseCase
 import com.bellogatecaliphate.domain.comments.GetCommentRepliesUseCase
 import com.bellogatecaliphate.domain.comments.GetCommentsUseCase
@@ -15,6 +18,7 @@ import com.bellogatecaliphate.domain.comments.SaveReplyToACommentUseCase
 import com.bellogatecaliphate.domain.contents.GetContentsUseCase
 import com.bellogatecaliphate.domain.contents.like.LikeContentUseCase
 import com.bellogatecaliphate.domain.user.GetLoggedInUserEmailUseCase
+import com.bellogatecaliphate.domain.user.GetUserInfoUseCase
 import com.bellogatecaliphate.nativeads.QuickReelsNativeAdProvider
 import com.bellogatecaliphate.timeline.model.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -32,12 +36,16 @@ import kotlin.coroutines.cancellation.CancellationException
 @HiltViewModel
 class TimeLineScreenViewModel @Inject constructor(
 	private val getLoggedInUserEmailUseCase: GetLoggedInUserEmailUseCase,
+	private val getUserInfoUseCase: GetUserInfoUseCase,
 	private val getContentsUseCase: GetContentsUseCase,
 	private val likeContentUseCase: LikeContentUseCase,
 	private val getCommentsUseCase: GetCommentsUseCase,
 	private val getCommentRepliesUseCase: GetCommentRepliesUseCase,
 	private val saveReplyToACommentUseCase: SaveReplyToACommentUseCase,
 	private val deleteCommentUseCase: DeleteCommentUseCase,
+	private val getDateUseCase: GetDateUseCase,
+	private val addCommentUseCase: AddCommentUseCase,
+	private val generateIdUseCase: GenerateIdUseCase,
 	private val adProvider: QuickReelsNativeAdProvider
 ) : ViewModel() {
 	
@@ -103,15 +111,46 @@ class TimeLineScreenViewModel @Inject constructor(
 		likeJobs[contentId] = job
 	}
 	
+	fun addComment(
+		contentId: String,
+		parentCommentId: String?,
+		comment: String
+	) = viewModelScope.launch {
+		_uiState.update { it.copy(isUploadingComment = true, commentUploadedSuccessfully = null) }
+		
+		val cachedComment = Comment(
+			commentId = generateIdUseCase(),
+			userId = getLoggedInUserEmailUseCase() ?: "",
+			userProfilePictureUrl = getUserInfoUseCase()?.profilePictureUrl ?: "",
+			text = comment,
+			date = getDateUseCase(showTime = false),
+			numberOfReplies = 0,
+			isReply = parentCommentId != null,
+			parentCommentId = parentCommentId
+		)
+		
+		val result = addCommentUseCase(contentId, parentCommentId, cachedComment)
+		_uiState.update {
+			it.copy(
+				isUploadingComment = false,
+				commentUploadedSuccessfully = result,
+				listOfCachedComments = if (result) it.listOfCachedComments.toMutableList()
+					.apply { add(cachedComment) } else it.listOfCachedComments,
+			)
+		}
+	}
+	
 	fun getComments(
 		contentId: String,
 		totalNumberOfCommentsExpected: Int
 	) {
 		_uiState.update {
 			it.copy(
+				commentUploadedSuccessfully = null,
 				totalNumberOfComments = totalNumberOfCommentsExpected,
 				openCommentsBottomSheet = true,
-				loggedInUserEmail = getLoggedInUserEmailUseCase()
+				loggedInUserEmail = getLoggedInUserEmailUseCase(),
+				listOfCommentReplies = emptyList()
 			)
 		}
 		_comments.value = getCommentsUseCase(contentId).cachedIn(viewModelScope)

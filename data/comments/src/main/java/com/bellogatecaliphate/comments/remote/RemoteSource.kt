@@ -1,6 +1,8 @@
 package com.bellogatecaliphate.comments.remote
 
 import com.bellogatecaliphate.comments.remote.api.CommentsApi
+import com.bellogatecaliphate.comments.remote.model.AddCommentRequest
+import com.bellogatecaliphate.comments.remote.model.AddCommentResponse
 import com.bellogatecaliphate.comments.remote.model.CommentResponse
 import com.bellogatecaliphate.comments.remote.model.CommentsListResponse
 import com.bellogatecaliphate.comments.remote.model.SaveReplyToCommentResponse
@@ -43,6 +45,15 @@ internal class RemoteSource @Inject constructor(
 		//return@withContext commentsApi.deleteComment(commentId)
 		delay(3_000)
 		true
+	}
+	
+	override suspend fun addComment(
+		contentId: String,
+		parentCommentId: String?,
+		comment: AddCommentRequest
+	): AddCommentResponse = withContext(ioDispatcher) {
+		delay(1_000)
+		AddCommentResponse(true)
 	}
 }
 

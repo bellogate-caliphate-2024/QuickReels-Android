@@ -67,6 +67,9 @@ fun TimeLineScreen(
 		onCommentsBottomDialogClosed = {
 			viewModel.onCommentsBottomDialogClosed()
 		},
+		onAddComment = { contentId, parentCommentId, comment ->
+			viewModel.addComment(contentId, parentCommentId, comment)
+		},
 		onSaveReply = { originalCommentId, reply ->
 			viewModel.saveReply(originalCommentId, reply)
 		},
@@ -97,6 +100,7 @@ private fun TimeLineScreen(
 	onLikeButtonPressed: (contentId: String, isLiked: Boolean) -> Unit,
 	onCommentButtonPressed: (contentId: String, totalNumberOfCommentsExpected: Int) -> Unit,
 	onCommentsBottomDialogClosed: () -> Unit = {},
+	onAddComment: (contentId: String, parentCommentId: String?, comment: String) -> Unit = { _, _, _ -> },
 	onSaveReply: ((originalCommentId: String, reply: String) -> Unit)? = null,
 	onLoadReplies: (originalCommentId: String, pageNumber: Int) -> Unit = { _, _ -> },
 	onDeleteComment: (contentId: String, commentId: String) -> Unit = { _, _ -> },
@@ -147,8 +151,11 @@ private fun TimeLineScreen(
 				loggedInUserEmail = uiState.loggedInUserEmail,
 				totalNumberOfCommentsExpected = uiState.totalNumberOfComments,
 				listOfComments = comments?.collectAsLazyPagingItems(),
+				isUploadingComment = uiState.isUploadingComment,
+				commentUploadedSuccessfully = uiState.commentUploadedSuccessfully,
 				commentDeletedSuccessfully = uiState.commentDeletedSuccessfully,
 				listOfDeletedComments = uiState.deletedComments,
+				listOfCachedComments = uiState.listOfCachedComments,
 				isLoadingReplies = uiState.isLoadingReplies,
 				listOfReplies = uiState.listOfCommentReplies,
 				repliesPageNumber = uiState.repliesPageNumber,
@@ -157,6 +164,7 @@ private fun TimeLineScreen(
 				onSaveReply = onSaveReply,
 				onLoadReplies = onLoadReplies,
 				onDeleteComment = onDeleteComment,
+				onAddComment = onAddComment,
 				advertContainer = { BannerAd() }
 			)
 			LaunchedEffect(numberOfClicksOnDownloadButton) {

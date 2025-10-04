@@ -24,13 +24,16 @@ import kotlinx.coroutines.flow.flowOf
 
 @Composable
 internal fun CommentsList(
+	modifier: Modifier,
 	contentId: String,
 	listOfComments: LazyPagingItems<Comment>,
 	loggedInUserEmail: String? = null,
 	isLoadingMoreComments: Boolean = false,
 	hasLoadedAllComments: Boolean = false,
+	commentUploadedSuccessfully: Boolean? = false,
 	commentDeletedSuccessfully: Boolean? = null,
 	listOfDeletedComments: MutableList<String> = mutableListOf(),
+	listOfCachedComments: List<Comment> = emptyList(),
 	isLoadingReplies: Boolean = false,
 	listOfReplies: List<Comment> = emptyList(),
 	repliesPageNumber: Int? = null,
@@ -40,14 +43,34 @@ internal fun CommentsList(
 	onDeleteComment: (contentId: String, commentId: String) -> Unit = { _, _ -> }
 ) {
 	val listState = rememberLazyListState()
+	val addANewComment = commentUploadedSuccessfully == true && listOfCachedComments.isNotEmpty()
 	
 	LazyColumn(
-		Modifier
+		modifier
 			.padding(horizontal = PLACEHOLDER_16DP)
 			.fillMaxSize(),
 		horizontalAlignment = Alignment.CenterHorizontally,
 		state = listState,
 	) {
+		if (addANewComment) {
+			items(listOfCachedComments.size) {
+				val newCommentToBeAdded = listOfCachedComments.reversed()[it]
+				CommentItem(
+					comment = Comment(
+						commentId = newCommentToBeAdded.commentId,
+						userId = newCommentToBeAdded.userId,
+						userProfilePictureUrl = newCommentToBeAdded.userProfilePictureUrl,
+						text = newCommentToBeAdded.text,
+						date = newCommentToBeAdded.date,
+						numberOfReplies = 0
+					),
+					contentId = contentId,
+					visible = true,
+					loggedInUserEmail = loggedInUserEmail,
+				)
+			}
+		}
+		
 		items(listOfComments.itemCount) { index ->
 			val comment = listOfComments[index]
 			comment?.let {
@@ -92,6 +115,7 @@ private fun Footer(
 @Composable
 private fun PreviewCommentsList() {
 	CommentsList(
+		Modifier,
 		contentId = "",
 		listOfComments = flowOf(PagingData.from(previewComments)).collectAsLazyPagingItems()
 	)

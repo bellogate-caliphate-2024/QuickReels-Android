@@ -5,6 +5,7 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.bellogatecaliphate.comments.paging.CommentsPagingSource
 import com.bellogatecaliphate.comments.remote.IRemoteSource
+import com.bellogatecaliphate.comments.remote.model.AddCommentRequest
 import com.bellogatecaliphate.comments.remote.model.CommentResponse
 import com.bellogatecaliphate.comments.remote.model.CommentsListResponse
 import com.bellogatecaliphate.comments.remote.model.SaveReplyToCommentResponse
@@ -36,5 +37,14 @@ internal class CommentsRepository @Inject constructor(
 	
 	override suspend fun deleteComment(commentId: String): Boolean {
 		return remoteSource.deleteComment(commentId)
+	}
+	
+	override suspend fun addComment(
+		contentId: String,
+		parentCommentId: String?,
+		comment: AddCommentRequest
+	): Boolean {
+		val result = remoteSource.addComment(contentId, parentCommentId, comment)
+		return result?.isSuccessful ?: false
 	}
 }

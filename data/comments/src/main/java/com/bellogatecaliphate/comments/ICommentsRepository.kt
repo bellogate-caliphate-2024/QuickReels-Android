@@ -1,6 +1,7 @@
 package com.bellogatecaliphate.comments
 
 import androidx.paging.PagingData
+import com.bellogatecaliphate.comments.remote.model.AddCommentRequest
 import com.bellogatecaliphate.comments.remote.model.CommentResponse
 import com.bellogatecaliphate.comments.remote.model.CommentsListResponse
 import com.bellogatecaliphate.comments.remote.model.SaveReplyToCommentResponse
@@ -15,4 +16,11 @@ interface ICommentsRepository {
 	suspend fun saveReply(originalCommentId: String, reply: String): SaveReplyToCommentResponse?
 	
 	suspend fun deleteComment(commentId: String): Boolean
+	
+	suspend fun addComment(
+		contentId: String,
+		parentCommentId: String?,
+		comment: AddCommentRequest
+	): Boolean
+	
 }
