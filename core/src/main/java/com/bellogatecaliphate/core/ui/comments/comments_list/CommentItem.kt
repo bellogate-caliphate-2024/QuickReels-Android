@@ -43,16 +43,16 @@ import com.bellogatecaliphate.core.util.PLACEHOLDER_IMAGE_45DP
 internal fun CommentItem(
 	comment: Comment,
 	contentId: String,
-	visible: Boolean = true, // we need this visibility so that when the user scrolls down and back up the list, deleted item remain hidden.
-	loggedInUserEmail: String? = null,
-	commentDeletedSuccessfully: Boolean? = null,
-	isLoadingReplies: Boolean = false,
-	listOfReplies: List<Comment> = emptyList(),
-	repliesPageNumber: Int? = null,
-	canLoadMoreReplies: Boolean = false,
-	onSaveReply: ((originalCommentId: String, reply: String) -> Unit)? = null,
-	onLoadReplies: (originalCommentId: String, pageNumber: Int) -> Unit = { _, _ -> },
-	onDeleteComment: (contentId: String, commentId: String) -> Unit = { _, _ -> }
+	visible: Boolean, // we need this visibility so that when the user scrolls down and back up the list, deleted item remain hidden.
+	loggedInUserEmail: String?,
+	commentDeletedSuccessfully: Boolean?,
+	isLoadingReplies: Boolean,
+	listOfReplies: List<Comment>,
+	repliesPageNumber: Int?,
+	canLoadMoreReplies: Boolean,
+	onSaveReply: ((originalCommentId: String, reply: String) -> Unit)?,
+	onLoadReplies: (originalCommentId: String, pageNumber: Int) -> Unit,
+	onDeleteComment: (contentId: String, commentId: String) -> Unit
 ) {
 	val commentBelongsTologgedInUser = loggedInUserEmail == comment.userId
 	var openReplyCommentInputField by remember { mutableStateOf(false) }
@@ -153,5 +153,12 @@ private fun PreviewCommentItem(
 		comment = commentAndReplies.comment,
 		listOfReplies = commentAndReplies.replies,
 		canLoadMoreReplies = true,
+		repliesPageNumber = null,
+		isLoadingReplies = false,
+		loggedInUserEmail = null,
+		commentDeletedSuccessfully = null,
+		onDeleteComment = { _, _ -> },
+		onLoadReplies = { _, _ -> },
+		onSaveReply = { _, _ -> }
 	)
 }

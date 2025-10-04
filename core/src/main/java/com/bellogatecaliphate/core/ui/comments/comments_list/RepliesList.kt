@@ -35,7 +35,22 @@ internal fun RepliesList(
 		Modifier.padding(horizontal = PLACEHOLDER_24DP),
 		horizontalAlignment = Alignment.CenterHorizontally
 	) {
-		replies.forEach { CommentItem(comment = it, contentId = contentId) }
+		replies.forEach {
+			CommentItem(
+				comment = it,
+				contentId = contentId,
+				visible = true,
+				loggedInUserEmail = null,
+				commentDeletedSuccessfully = null,
+				isLoadingReplies = false,
+				listOfReplies = emptyList(),
+				repliesPageNumber = null,
+				canLoadMoreReplies = false,
+				onSaveReply = null,
+				onLoadReplies = { _, _ -> },
+				onDeleteComment = { _, _ -> }
+			)
+		}
 		if (canLoadMoreReplies) {
 			Spacer(modifier = Modifier.height(PLACEHOLDER_8DP))
 			if (isLoadingReplies) {

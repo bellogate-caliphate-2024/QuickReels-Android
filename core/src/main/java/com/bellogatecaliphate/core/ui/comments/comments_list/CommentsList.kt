@@ -65,8 +65,16 @@ internal fun CommentsList(
 						numberOfReplies = 0
 					),
 					contentId = contentId,
-					visible = true,
+					visible = listOfDeletedComments.contains(newCommentToBeAdded.commentId).not(),
 					loggedInUserEmail = loggedInUserEmail,
+					commentDeletedSuccessfully = commentDeletedSuccessfully,
+					isLoadingReplies = isLoadingReplies,
+					listOfReplies = listOfReplies,
+					repliesPageNumber = repliesPageNumber,
+					canLoadMoreReplies = canLoadMoreReplies,
+					onSaveReply = onSaveReply,
+					onLoadReplies = onLoadReplies,
+					onDeleteComment = onDeleteComment
 				)
 			}
 		}
