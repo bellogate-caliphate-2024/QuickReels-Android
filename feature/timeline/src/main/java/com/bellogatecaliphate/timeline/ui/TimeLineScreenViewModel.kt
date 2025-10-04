@@ -150,7 +150,9 @@ class TimeLineScreenViewModel @Inject constructor(
 				totalNumberOfComments = totalNumberOfCommentsExpected,
 				openCommentsBottomSheet = true,
 				loggedInUserEmail = getLoggedInUserEmailUseCase(),
-				listOfCommentReplies = emptyList()
+				listOfCommentReplies = emptyList(),
+				deletedComments = mutableListOf(),
+				listOfCachedComments = mutableListOf()
 			)
 		}
 		_comments.value = getCommentsUseCase(contentId).cachedIn(viewModelScope)
