@@ -111,7 +111,7 @@ internal fun CommentItem(
 				Spacer(modifier = Modifier.height(PLACEHOLDER_8DP))
 				ReplyCommentInputText(
 					visible = openReplyCommentInputField,
-					showReplyButton = isReplying.not(),
+					showButtons = isReplying.not(),
 					onReply = {
 						onSaveReply?.invoke(contentId, comment.commentId, it)
 						isReplying = true

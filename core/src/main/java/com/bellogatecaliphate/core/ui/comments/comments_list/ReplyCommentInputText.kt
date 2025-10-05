@@ -32,7 +32,7 @@ import com.bellogatecaliphate.core.util.PLACEHOLDER_8DP
 @Composable
 internal fun ReplyCommentInputText(
 	visible: Boolean = false,
-	showReplyButton: Boolean = true,
+	showButtons: Boolean = true,
 	onReply: (String) -> Unit = {},
 	onClose: () -> Unit = {}
 ) {
@@ -54,30 +54,30 @@ internal fun ReplyCommentInputText(
 		)
 		Spacer(modifier = Modifier.height(PLACEHOLDER_8DP))
 		Row {
-			SendButton(visible = showReplyButton) {
-				if (text.isBlank())
-					Toast.makeText(
-						context,
-						context.getString(R.string.please_enter_a_reply), Toast.LENGTH_SHORT
-					).show()
-				else onReply(text)
+			if (showButtons) {
+				SendButton {
+					if (text.isBlank())
+						Toast.makeText(
+							context,
+							context.getString(R.string.please_enter_a_reply), Toast.LENGTH_SHORT
+						).show()
+					else onReply(text)
+				}
+				Spacer(modifier = Modifier.width(PLACEHOLDER_16DP))
+				Text(
+					stringResource(id = R.string.close), Modifier.clickable { onClose() },
+					color = colorResource(id = R.color.purple_300),
+					style = MaterialTheme.typography.bodySmall
+				)
 			}
-			Spacer(modifier = Modifier.width(PLACEHOLDER_16DP))
-			Text(
-				stringResource(id = R.string.close), Modifier.clickable { onClose() },
-				color = colorResource(id = R.color.purple_300),
-				style = MaterialTheme.typography.bodySmall
-			)
 		}
 	}
 }
 
 @Composable
 private fun SendButton(
-	visible: Boolean = false,
 	onSendPressed: () -> Unit = {},
 ) {
-	if (visible.not()) return
 	Text(
 		stringResource(id = R.string.send), Modifier.clickable { onSendPressed() },
 		color = colorResource(id = R.color.purple_300),
