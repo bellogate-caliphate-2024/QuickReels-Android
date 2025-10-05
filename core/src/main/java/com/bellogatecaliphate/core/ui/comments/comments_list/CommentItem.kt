@@ -71,19 +71,7 @@ internal fun CommentItem(
 	Column(Modifier.fillMaxWidth()) {
 		Spacer(modifier = Modifier.height(PLACEHOLDER_8DP))
 		Row {
-			Box(contentAlignment = Alignment.Center) {
-				AsyncImage(
-					model = comment.userProfilePictureUrl,
-					contentDescription = "content description",
-					modifier = Modifier
-						.size(PLACEHOLDER_IMAGE_40DP)
-						.clip(CircleShape)
-				)
-				QuickReelsCircularProgressBar(
-					show = isDeletingComment || isReplying,
-					size = PLACEHOLDER_IMAGE_45DP
-				)
-			}
+			ImageSection(comment, isDeletingComment, isReplying)
 			Spacer(modifier = Modifier.width(PLACEHOLDER_8DP))
 			Column {
 				Text(
@@ -131,6 +119,27 @@ internal fun CommentItem(
 			isLoadingReplies,
 			canLoadMoreReplies,
 			onLoadReplies
+		)
+	}
+}
+
+@Composable
+private fun ImageSection(
+	comment: Comment,
+	isDeletingComment: Boolean,
+	isReplying: Boolean
+) {
+	Box(contentAlignment = Alignment.Center) {
+		AsyncImage(
+			model = comment.userProfilePictureUrl,
+			contentDescription = "content description",
+			modifier = Modifier
+				.size(PLACEHOLDER_IMAGE_40DP)
+				.clip(CircleShape)
+		)
+		QuickReelsCircularProgressBar(
+			show = isDeletingComment || isReplying,
+			size = PLACEHOLDER_IMAGE_45DP
 		)
 	}
 }
