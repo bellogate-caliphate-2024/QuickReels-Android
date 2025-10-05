@@ -40,11 +40,9 @@ internal class CommentsRepository @Inject constructor(
 	}
 	
 	override suspend fun addComment(
-		contentId: String,
-		parentCommentId: String?,
 		comment: AddCommentRequest
 	): Boolean {
-		val result = remoteSource.addComment(contentId, parentCommentId, comment)
+		val result = remoteSource.addComment(comment)
 		return result?.isSuccessful ?: false
 	}
 }

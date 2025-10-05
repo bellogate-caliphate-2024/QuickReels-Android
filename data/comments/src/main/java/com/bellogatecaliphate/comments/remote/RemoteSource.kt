@@ -50,8 +50,6 @@ internal class RemoteSource @Inject constructor(
 	}
 	
 	override suspend fun addComment(
-		contentId: String,
-		parentCommentId: String?,
 		comment: AddCommentRequest
 	): AddCommentResponse = withContext(ioDispatcher) {
 		delay(1_000)

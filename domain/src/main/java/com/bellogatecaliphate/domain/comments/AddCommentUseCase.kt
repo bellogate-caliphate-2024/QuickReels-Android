@@ -9,17 +9,14 @@ class AddCommentUseCase @Inject constructor(private val repository: ICommentsRep
 	
 	suspend operator fun invoke(
 		contentId: String,
-		parentCommentId: String?,
 		comment: Comment
 	): Boolean {
 		return repository.addComment(
-			contentId = contentId,
-			parentCommentId = parentCommentId,
 			comment = AddCommentRequest(
+				contentId = contentId,
 				commentId = comment.commentId,
 				userId = comment.userId,
 				text = comment.text,
-				isReply = comment.isReply,
 				parentCommentId = comment.parentCommentId
 			)
 		)

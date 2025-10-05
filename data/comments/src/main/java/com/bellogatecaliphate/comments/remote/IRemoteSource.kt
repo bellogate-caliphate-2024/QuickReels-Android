@@ -20,8 +20,6 @@ internal interface IRemoteSource {
 	suspend fun deleteComment(commentId: String): Boolean
 	
 	suspend fun addComment(
-		contentId: String,
-		parentCommentId: String?,
 		comment: AddCommentRequest
 	): AddCommentResponse?
 }

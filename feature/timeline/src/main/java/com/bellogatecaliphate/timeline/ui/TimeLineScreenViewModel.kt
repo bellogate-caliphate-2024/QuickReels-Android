@@ -129,7 +129,7 @@ class TimeLineScreenViewModel @Inject constructor(
 			parentCommentId = parentCommentId
 		)
 		
-		val result = addCommentUseCase(contentId, parentCommentId, cachedComment)
+		val result = addCommentUseCase(contentId, cachedComment)
 		_uiState.update {
 			it.copy(
 				isUploadingComment = false,
