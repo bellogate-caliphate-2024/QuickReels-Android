@@ -18,10 +18,7 @@ class AddCommentUseCase @Inject constructor(private val repository: ICommentsRep
 			comment = AddCommentRequest(
 				commentId = comment.commentId,
 				userId = comment.userId,
-				userProfilePictureUrl = comment.userProfilePictureUrl,
 				text = comment.text,
-				date = comment.date,
-				numberOfReplies = comment.numberOfReplies,
 				isReply = comment.isReply,
 				parentCommentId = comment.parentCommentId
 			)
