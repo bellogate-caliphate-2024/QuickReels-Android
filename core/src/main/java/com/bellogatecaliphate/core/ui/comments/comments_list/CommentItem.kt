@@ -66,6 +66,7 @@ internal fun CommentItem(
 	
 	if (isDeletingComment && commentDeletedSuccessfully == false) isDeletingComment = false
 	if (replySentSuccessfully != null) isReplying = false
+	if (replySentSuccessfully == true) openReplyCommentInputField = false
 	
 	CommentDeleteStatusInfo(isDeletingComment, commentDeletedSuccessfully)
 	Column(Modifier.fillMaxWidth()) {
@@ -110,7 +111,15 @@ internal fun CommentItem(
 				)
 			}
 		}
-		NumberOfReplies(comment, isLoadingReplies, totalListOfReplies.size, onLoadReplies)
+		NumberOfReplies(
+			visible = comment.hasReplies() || replySentSuccessfully == true,
+			commentId = comment.commentId,
+			isFirstReply = comment.numberOfReplies == 0 && replySentSuccessfully == true,
+			numberOfReplies = comment.numberOfReplies,
+			isLoadingReplies = isLoadingReplies,
+			numberOfRepliesLoaded = totalListOfReplies.size,
+			onLoadReplies = onLoadReplies
+		)
 		RepliesList(
 			contentId,
 			comment.commentId,
