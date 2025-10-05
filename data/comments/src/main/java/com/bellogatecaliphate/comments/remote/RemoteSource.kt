@@ -37,8 +37,10 @@ internal class RemoteSource @Inject constructor(
 	override suspend fun saveReply(
 		originalCommentId: String,
 		reply: String
-	): SaveReplyToCommentResponse? = withContext(ioDispatcher) {
-		commentsApi.saveReply(originalCommentId, reply)
+	): SaveReplyToCommentResponse = withContext(ioDispatcher) {
+		//commentsApi.saveReply(originalCommentId, reply)
+		delay(1_000)
+		SaveReplyToCommentResponse(true)
 	}
 	
 	override suspend fun deleteComment(commentId: String): Boolean = withContext(ioDispatcher) {
@@ -80,21 +82,16 @@ val commentsOne = CommentsListResponse(
 	false,
 	listOf(
 		CommentResponse(
-			"1",
-			"jeffemuveyan@gmail.com",
-			pic,
-			"FIRST Hahaha, I laughed so hard mehn! So this film was produced very early on may 2021 before the cannes film festival. I loved it so much because it talked about so many things.",
-			"2025-10-02",
-			0,
+			"1", "", pic, "1st comment", "2025-10-02", 0,
 		),
 		CommentResponse(
-			"2", "", pic, "FIRST Will u see the film?", "2025-10-02", 0,
+			"2", "", pic, "2 comment", "2025-10-02", 0,
 		),
 		CommentResponse(
-			"3", "", pic, "FIRST I loved this movie", "2025-10-02", 0,
+			"3", "", pic, "3 comment", "2025-10-02", 0,
 		),
 		CommentResponse(
-			"4", "jeffemuveyan@gmail.com", pic, "This is a bizare comment", "2025-10-02", 0,
+			"4", "", pic, "4 comment", "2025-10-02", 0,
 		)
 	)
 )
@@ -106,16 +103,16 @@ val commentsTwo = CommentsListResponse(
 	false,
 	listOf(
 		CommentResponse(
-			"5", "", pic, "SECOND comment here bro", "2025-10-02", 0,
+			"5", "", pic, "5 comment", "2025-10-02", 0,
 		),
 		CommentResponse(
-			"6", "", pic, "SECOND scary movie! Dont watch alone", "2025-10-02", 0,
+			"6", "", pic, "6 comment", "2025-10-02", 0,
 		),
 		CommentResponse(
-			"7", "", pic, "SECOND u must be joking", "2025-10-02", 0,
+			"7", "", pic, "7 comment", "2025-10-02", 0,
 		),
 		CommentResponse(
-			"8", "", pic, "SECOND I thinnk it is boring", "2025-10-02", 2,
+			"8", "", pic, "8 comment", "2025-10-02", 0,
 		)
 	)
 )
@@ -127,13 +124,13 @@ val commentsThree = CommentsListResponse(
 	false,
 	listOf(
 		CommentResponse(
-			"9", "", pic, "THIRD comment here bro", "2025-10-02", 0,
+			"9", "jeffemuveyan@gmail.com", pic, "9 comment", "2025-10-02", 0,
 		),
 		CommentResponse(
-			"10", "", pic, "THIRD scary movie! Dont watch alone", "2025-10-02", 0,
+			"10", "", pic, "10 comment", "2025-10-02", 0,
 		),
 		CommentResponse(
-			"11", "", pic, "THIRD u must be joking", "2025-10-02", 0,
+			"11", "jeffemuveyan@gmail.com", pic, "11 comment", "2025-10-02", 8,
 		)
 	)
 )
@@ -145,13 +142,13 @@ val commentsFour = CommentsListResponse(
 	false,
 	listOf(
 		CommentResponse(
-			"12", "", pic, "THIRD comment here bro", "2025-10-02", 0,
+			"12", "", pic, "12 comment", "2025-10-02", 0,
 		),
 		CommentResponse(
-			"13", "", pic, "THIRD scary movie! Dont watch alone", "2025-10-02", 0,
+			"13", "", pic, "13 comment", "2025-10-02", 0,
 		),
 		CommentResponse(
-			"14", "", pic, "THIRD u must be joking", "2025-10-02", 0,
+			"14", "", pic, "14 comment", "2025-10-02", 0,
 		)
 	)
 )
@@ -163,13 +160,13 @@ val commentsFive = CommentsListResponse(
 	false,
 	listOf(
 		CommentResponse(
-			"1255", "", pic, "555 comment here bro", "2025-10-02", 0,
+			"15", "", pic, "15 comment", "2025-10-02", 0,
 		),
 		CommentResponse(
-			"1355", "", pic, "555 scary movie! Dont watch alone", "2025-10-02", 0,
+			"16", "", pic, "16 comment", "2025-10-02", 0,
 		),
 		CommentResponse(
-			"1455", "", pic, "555 u must be joking", "2025-10-02", 0,
+			"17", "", pic, "17 comment", "2025-10-02", 0,
 		)
 	)
 )
@@ -181,13 +178,13 @@ val commentsSix = CommentsListResponse(
 	true,
 	listOf(
 		CommentResponse(
-			"1266", "", pic, "66 comment here bro", "2025-10-02", 0,
+			"18", "", pic, "18 comment", "2025-10-02", 0,
 		),
 		CommentResponse(
-			"1366", "", pic, "66 scary movie! Dont watch alone", "2025-10-02", 0,
+			"19", "", pic, "19 comment", "2025-10-02", 0,
 		),
 		CommentResponse(
-			"1466", "", pic, "66 u must be joking", "2025-10-02", 0,
+			"20", "", pic, "20 comment", "2025-10-02", 0,
 		)
 	)
 )
@@ -209,25 +206,20 @@ val repliesBatchOne = CommentsListResponse(
 	false,
 	listOf(
 		CommentResponse(
-			"1",
-			"jeffemuveyan@gmail.com",
-			pic,
-			"FIRST Hahaha, I laughed so hard mehn! So this film was produced very early on may 2021 before the cannes film festival. I loved it so much because it talked about so many things.",
-			"2025-10-02",
-			0,
-			parentCommentId = "8"
+			"r1", "jeffemuveyan@gmail.com", pic, "replies 1", "2025-10-02", 0,
+			parentCommentId = "11"
 		),
 		CommentResponse(
-			"2", "", pic, "FIRST Will u see the film?", "2025-10-02", 0,
-			parentCommentId = "8"
+			"r2", "jeffemuveyan@gmail.com", pic, "replies 2", "2025-10-02", 0,
+			parentCommentId = "11"
 		),
 		CommentResponse(
-			"3", "", pic, "FIRST I loved this movie", "2025-10-02", 0,
-			parentCommentId = "8"
+			"r3", "jeffemuveyan@gmail.com", pic, "replies 3", "2025-10-02", 0,
+			parentCommentId = "11"
 		),
 		CommentResponse(
-			"4", "jeffemuveyan@gmail.com", pic, "This is a bizare comment", "2025-10-02", 0,
-			parentCommentId = "8"
+			"r4", "jeffemuveyan@gmail.com", pic, "replies 4", "2025-10-02", 0,
+			parentCommentId = "11"
 		)
 	)
 )
@@ -239,25 +231,20 @@ val repliesBatchTwo = CommentsListResponse(
 	true,
 	listOf(
 		CommentResponse(
-			"1",
-			"jeffemuveyan@gmail.com",
-			pic,
-			"FIRST Hahaha, I laughed so hard mehn! So this film was produced very early on may 2021 before the cannes film festival. I loved it so much because it talked about so many things.",
-			"2025-10-02",
-			0,
-			parentCommentId = "8"
+			"r5", "jeffemuveyan@gmail.com", pic, "replies 5", "2025-10-02", 0,
+			parentCommentId = "11"
 		),
 		CommentResponse(
-			"2", "", pic, "second replies text", "2025-10-02", 0,
-			parentCommentId = "8"
+			"r6", "jeffemuveyan@gmail.com", pic, "replies 6", "2025-10-02", 0,
+			parentCommentId = "11"
 		),
 		CommentResponse(
-			"3", "", pic, "second replies text message here", "2025-10-02", 0,
-			parentCommentId = "8"
+			"r7", "jeffemuveyan@gmail.com", pic, "replies 7", "2025-10-02", 0,
+			parentCommentId = "11"
 		),
 		CommentResponse(
-			"4", "jeffemuveyan@gmail.com", pic, "This is the last replies", "2025-10-02", 0,
-			parentCommentId = "8"
+			"r8", "jeffemuveyan@gmail.com", pic, "replies 8", "2025-10-02", 0,
+			parentCommentId = "11"
 		)
 	)
 )
