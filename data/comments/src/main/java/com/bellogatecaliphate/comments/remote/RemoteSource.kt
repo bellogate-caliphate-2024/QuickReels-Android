@@ -5,7 +5,6 @@ import com.bellogatecaliphate.comments.remote.model.AddCommentRequest
 import com.bellogatecaliphate.comments.remote.model.AddCommentResponse
 import com.bellogatecaliphate.comments.remote.model.CommentResponse
 import com.bellogatecaliphate.comments.remote.model.CommentsListResponse
-import com.bellogatecaliphate.comments.remote.model.SaveReplyToCommentResponse
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
@@ -32,15 +31,6 @@ internal class RemoteSource @Inject constructor(
 		//commentsApi.getCommentReplies(commentId, page)
 		delay(4_000)
 		getReplies(page)
-	}
-	
-	override suspend fun saveReply(
-		originalCommentId: String,
-		reply: String
-	): SaveReplyToCommentResponse = withContext(ioDispatcher) {
-		//commentsApi.saveReply(originalCommentId, reply)
-		delay(1_000)
-		SaveReplyToCommentResponse(true)
 	}
 	
 	override suspend fun deleteComment(commentId: String): Boolean = withContext(ioDispatcher) {

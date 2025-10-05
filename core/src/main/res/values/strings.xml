@@ -27,4 +27,6 @@
     <string name="failed_to_delete_try_again">Failed to delete, try again</string>
     <string name="add_a_comment">Add a comment...</string>
     <string name="failed_to_add_comment_try_again">Failed to add comment, try again</string>
+    <string name="failed_to_send_try_again">Failed to send, try again</string>
+    <string name="done">Done</string>
 </resources>

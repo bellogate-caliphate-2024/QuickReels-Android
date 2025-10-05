@@ -46,25 +46,28 @@ internal fun CommentItem(
 	visible: Boolean, // we need this visibility so that when the user scrolls down and back up the list, deleted item remain hidden.
 	loggedInUserEmail: String?,
 	commentDeletedSuccessfully: Boolean?,
+	replySentSuccessfully: Boolean?,
 	isLoadingReplies: Boolean,
 	listOfReplies: List<Comment>,
 	repliesPageNumber: Int?,
 	canLoadMoreReplies: Boolean,
-	onSaveReply: ((originalCommentId: String, reply: String) -> Unit)?,
+	onSaveReply: ((contentId: String, parentCommentId: String, reply: String) -> Unit)?,
 	onLoadReplies: (originalCommentId: String, pageNumber: Int) -> Unit,
 	onDeleteComment: (contentId: String, commentId: String) -> Unit
 ) {
-	val commentBelongsTologgedInUser = loggedInUserEmail == comment.userId
+	if (visible.not()) return
+	val commentBelongsToLoggedInUser = loggedInUserEmail == comment.userId
 	var openReplyCommentInputField by remember { mutableStateOf(false) }
 	var isDeletingComment by remember { mutableStateOf(false) }
+	var isReplying by remember { mutableStateOf(false) }
 	val totalListOfReplies = remember {
 		mutableStateListOf<Comment>().apply { addAll(listOfReplies) }
 	}
 	
-	CommentDeleteStatusInfo(isDeletingComment, commentDeletedSuccessfully)
-	if (visible.not()) return
 	if (isDeletingComment && commentDeletedSuccessfully == false) isDeletingComment = false
+	if (replySentSuccessfully != null) isReplying = false
 	
+	CommentDeleteStatusInfo(isDeletingComment, commentDeletedSuccessfully)
 	Column(Modifier.fillMaxWidth()) {
 		Spacer(modifier = Modifier.height(PLACEHOLDER_8DP))
 		Row {
@@ -77,7 +80,7 @@ internal fun CommentItem(
 						.clip(CircleShape)
 				)
 				QuickReelsCircularProgressBar(
-					show = isDeletingComment,
+					show = isDeletingComment || isReplying,
 					size = PLACEHOLDER_IMAGE_45DP
 				)
 			}
@@ -100,18 +103,23 @@ internal fun CommentItem(
 						openReplyCommentInputField = true
 					}
 					Spacer(modifier = Modifier.width(PLACEHOLDER_16DP))
-					DeleteLabel(commentBelongsTologgedInUser && isDeletingComment.not()) {
+					DeleteLabel(commentBelongsToLoggedInUser && isDeletingComment.not()) {
 						isDeletingComment = true
 						onDeleteComment(contentId, comment.commentId)
 					}
 				}
 				Spacer(modifier = Modifier.height(PLACEHOLDER_8DP))
-				ReplyCommentInputText(openReplyCommentInputField, {
-					onSaveReply?.invoke(comment.commentId, it)
-					openReplyCommentInputField = false
-				}, {
-					openReplyCommentInputField = false
-				})
+				ReplyCommentInputText(
+					visible = openReplyCommentInputField,
+					showReplyButton = isReplying.not(),
+					onReply = {
+						onSaveReply?.invoke(contentId, comment.commentId, it)
+						isReplying = true
+					},
+					onClose = {
+						openReplyCommentInputField = false
+					}
+				)
 			}
 		}
 		NumberOfReplies(comment, isLoadingReplies, totalListOfReplies.size, onLoadReplies)
@@ -157,8 +165,9 @@ private fun PreviewCommentItem(
 		isLoadingReplies = false,
 		loggedInUserEmail = null,
 		commentDeletedSuccessfully = null,
+		replySentSuccessfully = null,
 		onDeleteComment = { _, _ -> },
 		onLoadReplies = { _, _ -> },
-		onSaveReply = { _, _ -> }
+		onSaveReply = { _, _, _ -> }
 	)
 }

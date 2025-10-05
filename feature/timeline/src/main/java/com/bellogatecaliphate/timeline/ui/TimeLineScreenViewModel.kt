@@ -14,7 +14,6 @@ import com.bellogatecaliphate.domain.comments.AddCommentUseCase
 import com.bellogatecaliphate.domain.comments.DeleteCommentUseCase
 import com.bellogatecaliphate.domain.comments.GetCommentRepliesUseCase
 import com.bellogatecaliphate.domain.comments.GetCommentsUseCase
-import com.bellogatecaliphate.domain.comments.SaveReplyToACommentUseCase
 import com.bellogatecaliphate.domain.contents.GetContentsUseCase
 import com.bellogatecaliphate.domain.contents.like.LikeContentUseCase
 import com.bellogatecaliphate.domain.user.GetLoggedInUserEmailUseCase
@@ -41,7 +40,6 @@ class TimeLineScreenViewModel @Inject constructor(
 	private val likeContentUseCase: LikeContentUseCase,
 	private val getCommentsUseCase: GetCommentsUseCase,
 	private val getCommentRepliesUseCase: GetCommentRepliesUseCase,
-	private val saveReplyToACommentUseCase: SaveReplyToACommentUseCase,
 	private val deleteCommentUseCase: DeleteCommentUseCase,
 	private val getDateUseCase: GetDateUseCase,
 	private val addCommentUseCase: AddCommentUseCase,
@@ -147,6 +145,7 @@ class TimeLineScreenViewModel @Inject constructor(
 		_uiState.update {
 			it.copy(
 				commentUploadedSuccessfully = null,
+				replySentSuccessfully = null,
 				totalNumberOfComments = totalNumberOfCommentsExpected,
 				openCommentsBottomSheet = true,
 				loggedInUserEmail = getLoggedInUserEmailUseCase(),
@@ -200,10 +199,24 @@ class TimeLineScreenViewModel @Inject constructor(
 		}
 	}
 	
-	fun saveReply(originalCommentId: String, reply: String) = viewModelScope.launch {
-		val saved = saveReplyToACommentUseCase(originalCommentId, reply)
-		// do something with saved
-	}
+	fun saveReply(contentId: String, parentCommentId: String, reply: String) =
+			viewModelScope.launch {
+				_uiState.update { it.copy(replySentSuccessfully = null) }
+				
+				val replyToComment = Comment(
+					commentId = generateIdUseCase(),
+					userId = getLoggedInUserEmailUseCase() ?: "",
+					userProfilePictureUrl = getUserInfoUseCase()?.profilePictureUrl ?: "",
+					text = reply,
+					date = getDateUseCase(showTime = false),
+					numberOfReplies = null,
+					isReply = true,
+					parentCommentId = parentCommentId
+				)
+				
+				val result = addCommentUseCase(contentId, replyToComment)
+				_uiState.update { it.copy(replySentSuccessfully = result) }
+			}
 	
 	fun saveScrollPosition(index: Int, offset: Int) {
 		_uiState.update {

@@ -32,6 +32,7 @@ import com.bellogatecaliphate.core.util.PLACEHOLDER_8DP
 @Composable
 internal fun ReplyCommentInputText(
 	visible: Boolean = false,
+	showReplyButton: Boolean = true,
 	onReply: (String) -> Unit = {},
 	onClose: () -> Unit = {}
 ) {
@@ -53,7 +54,7 @@ internal fun ReplyCommentInputText(
 		)
 		Spacer(modifier = Modifier.height(PLACEHOLDER_8DP))
 		Row {
-			SendButton {
+			SendButton(visible = showReplyButton) {
 				if (text.isBlank())
 					Toast.makeText(
 						context,
@@ -73,8 +74,10 @@ internal fun ReplyCommentInputText(
 
 @Composable
 private fun SendButton(
+	visible: Boolean = false,
 	onSendPressed: () -> Unit = {},
 ) {
+	if (visible.not()) return
 	Text(
 		stringResource(id = R.string.send), Modifier.clickable { onSendPressed() },
 		color = colorResource(id = R.color.purple_300),

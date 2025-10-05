@@ -45,6 +45,7 @@ fun CommentsBottomDialog(
 	isUploadingComment: Boolean = false,
 	commentUploadedSuccessfully: Boolean? = false,
 	commentDeletedSuccessfully: Boolean? = null,
+	replySentSuccessfully: Boolean? = null,
 	listOfDeletedComments: MutableList<String> = mutableListOf(),
 	listOfCachedComments: List<Comment> = emptyList(),
 	isLoadingReplies: Boolean = false,
@@ -52,7 +53,7 @@ fun CommentsBottomDialog(
 	repliesPageNumber: Int? = null,
 	canLoadMoreReplies: Boolean = false,
 	onCommentsBottomDialogClosed: () -> Unit = {},
-	onSaveReply: ((originalCommentId: String, reply: String) -> Unit)? = null,
+	onSaveReply: ((contentId: String, parentCommentId: String, reply: String) -> Unit)? = null,
 	onLoadReplies: (originalCommentId: String, pageNumber: Int) -> Unit = { _, _ -> },
 	onDeleteComment: (contentId: String, commentId: String) -> Unit = { _, _ -> },
 	onAddComment: (contentId: String, parentCommentId: String?, comment: String) -> Unit = { _, _, _ -> },
@@ -88,6 +89,7 @@ fun CommentsBottomDialog(
 				totalNumberOfCommentsExpected = totalNumberOfCommentsExpected,
 				commentUploadedSuccessfully = commentUploadedSuccessfully,
 				commentDeletedSuccessfully = commentDeletedSuccessfully,
+				replySentSuccessfully = replySentSuccessfully,
 				listOfDeletedComments = listOfDeletedComments,
 				listOfCachedComments = listOfCachedComments,
 				isLoadingReplies = isLoadingReplies,
@@ -109,6 +111,17 @@ fun CommentsBottomDialog(
 				context.getString(R.string.failed_to_add_comment_try_again),
 				Toast.LENGTH_SHORT
 			).show()
+		}
+	}
+	
+	LaunchedEffect(replySentSuccessfully) {
+		if (replySentSuccessfully != null) {
+			val message = if (replySentSuccessfully) {
+				context.getString((R.string.done))
+			} else {
+				context.getString(R.string.failed_to_send_try_again)
+			}
+			Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
 		}
 	}
 }

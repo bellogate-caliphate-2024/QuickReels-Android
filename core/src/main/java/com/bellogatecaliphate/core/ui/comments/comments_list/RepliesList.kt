@@ -42,6 +42,7 @@ internal fun RepliesList(
 				visible = true,
 				loggedInUserEmail = null,
 				commentDeletedSuccessfully = null,
+				replySentSuccessfully = null,
 				isLoadingReplies = false,
 				listOfReplies = emptyList(),
 				repliesPageNumber = null,

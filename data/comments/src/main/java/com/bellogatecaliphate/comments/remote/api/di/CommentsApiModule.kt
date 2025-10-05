@@ -2,7 +2,6 @@ package com.bellogatecaliphate.comments.remote.api.di
 
 import com.bellogatecaliphate.comments.remote.api.CommentsApi
 import com.bellogatecaliphate.comments.remote.model.CommentsListResponse
-import com.bellogatecaliphate.comments.remote.model.SaveReplyToCommentResponse
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -23,13 +22,6 @@ internal class CommentsApiImpl @Inject constructor(private val retrofit: Retrofi
 	
 	override suspend fun getCommentReplies(commentId: String, page: Int): CommentsListResponse? {
 		return retrofit.create(CommentsApi::class.java).getCommentReplies(commentId, page)
-	}
-	
-	override suspend fun saveReply(
-		originalCommentId: String,
-		reply: String
-	): SaveReplyToCommentResponse? {
-		return retrofit.create(CommentsApi::class.java).saveReply(originalCommentId, reply)
 	}
 	
 	override suspend fun deleteComment(commentId: String): Boolean {

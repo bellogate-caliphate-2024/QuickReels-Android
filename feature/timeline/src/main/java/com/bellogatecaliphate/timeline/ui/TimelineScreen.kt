@@ -70,8 +70,8 @@ fun TimeLineScreen(
 		onAddComment = { contentId, parentCommentId, comment ->
 			viewModel.addComment(contentId, parentCommentId, comment)
 		},
-		onSaveReply = { originalCommentId, reply ->
-			viewModel.saveReply(originalCommentId, reply)
+		onSaveReply = { contentId, parentCommentId, reply ->
+			viewModel.saveReply(contentId, parentCommentId, reply)
 		},
 		onLoadReplies = { originalCommentId, pageNumber ->
 			viewModel.getRepliesToComment(originalCommentId, pageNumber)
@@ -101,7 +101,7 @@ private fun TimeLineScreen(
 	onCommentButtonPressed: (contentId: String, totalNumberOfCommentsExpected: Int) -> Unit,
 	onCommentsBottomDialogClosed: () -> Unit = {},
 	onAddComment: (contentId: String, parentCommentId: String?, comment: String) -> Unit = { _, _, _ -> },
-	onSaveReply: ((originalCommentId: String, reply: String) -> Unit)? = null,
+	onSaveReply: ((contentId: String, parentCommentId: String, reply: String) -> Unit)? = null,
 	onLoadReplies: (originalCommentId: String, pageNumber: Int) -> Unit = { _, _ -> },
 	onDeleteComment: (contentId: String, commentId: String) -> Unit = { _, _ -> },
 	onSaveScrollPosition: (index: Int, offset: Int) -> Unit,
@@ -154,6 +154,7 @@ private fun TimeLineScreen(
 				isUploadingComment = uiState.isUploadingComment,
 				commentUploadedSuccessfully = uiState.commentUploadedSuccessfully,
 				commentDeletedSuccessfully = uiState.commentDeletedSuccessfully,
+				replySentSuccessfully = uiState.replySentSuccessfully,
 				listOfDeletedComments = uiState.deletedComments,
 				listOfCachedComments = uiState.listOfCachedComments,
 				isLoadingReplies = uiState.isLoadingReplies,
