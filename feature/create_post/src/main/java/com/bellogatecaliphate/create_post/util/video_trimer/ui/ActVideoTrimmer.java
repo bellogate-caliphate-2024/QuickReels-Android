@@ -113,7 +113,9 @@ public class ActVideoTrimmer extends LocalizationActivity {
     private CompressOption compressOption;
     private String outputPath;
     private String local;
-    private int trimType;    Runnable updateSeekbar = new Runnable() {
+    private int trimType;
+    private long fixedGap, minGap, minFromGap, maxToGap;
+    private boolean hidePlayerSeek, isAccurateCut, showFileLocationAlert;    Runnable updateSeekbar = new Runnable() {
         @Override
         public void run() {
             try {
@@ -129,8 +131,6 @@ public class ActVideoTrimmer extends LocalizationActivity {
             }
         }
     };
-    private long fixedGap, minGap, minFromGap, maxToGap;
-    private boolean hidePlayerSeek, isAccurateCut, showFileLocationAlert;
     private CustomProgressView progressView;
     private String fileName;
 
@@ -521,8 +521,8 @@ public class ActVideoTrimmer extends LocalizationActivity {
             if (compressOption != null)
                 complexCommand = getCompressionCmd();
             else if (isAccurateCut) {
-                //no changes in video quality
-                //faster trimming command and given duration will be accurate
+                //Re-encodes for accuracy, but with high quality settings
+                //Uses mpeg4 with high qscale for compatibility and quality
                 complexCommand = getAccurateCmd();
             } else {
                 //no changes in video quality
@@ -576,9 +576,9 @@ public class ActVideoTrimmer extends LocalizationActivity {
                     "-i", String.valueOf(filePath), "-s", compressOption.getWidth() + "x" +
                     compressOption.getHeight(),
                     "-r", String.valueOf(compressOption.getFrameRate()),
-                    "-vcodec", "mpeg4", "-b:v",
-                    compressOption.getBitRate(), "-b:a", "48000", "-ac", "2", "-ar",
-                    "22050", "-t",
+                    "-vcodec", "mpeg4", "-b:v", compressOption.getBitRate(),
+                    "-acodec", "aac", "-b:a", "128k", "-ac", "2", "-ar", "44100",
+                    "-t",
                     TrimmerUtils.formatCSeconds(lastMaxValue - lastMinValue), outputPath};
         }
         //Dividing high resolution video by 2(ex: taken with camera)
@@ -588,15 +588,13 @@ public class ActVideoTrimmer extends LocalizationActivity {
             return new String[]{"-ss", TrimmerUtils.formatCSeconds(lastMinValue),
                     "-i", String.valueOf(filePath),
                     "-s", w + "x" + h, "-r", "30",
-                    "-vcodec", "mpeg4", "-b:v",
-                    "1M", "-b:a", "48000", "-ac", "2", "-ar", "22050",
+                    "-vcodec", "mpeg4", "-b:v", "3M", "-acodec", "aac", "-b:a", "128k", "-ac", "2", "-ar", "44100",
                     "-t",
                     TrimmerUtils.formatCSeconds(lastMaxValue - lastMinValue), outputPath};
         } else {
             return new String[]{"-ss", TrimmerUtils.formatCSeconds(lastMinValue),
                     "-i", String.valueOf(filePath), "-s", w + "x" + h, "-r",
-                    "30", "-vcodec", "mpeg4", "-b:v",
-                    "400K", "-b:a", "48000", "-ac", "2", "-ar", "22050",
+                    "30", "-vcodec", "mpeg4", "-b:v", "1.5M", "-acodec", "aac", "-b:a", "128k", "-ac", "2", "-ar", "44100",
                     "-t",
                     TrimmerUtils.formatCSeconds(lastMaxValue - lastMinValue), outputPath};
         }
@@ -672,7 +670,8 @@ public class ActVideoTrimmer extends LocalizationActivity {
         return new String[]{"-ss", TrimmerUtils.formatCSeconds(lastMinValue)
                 , "-i", String.valueOf(filePath), "-t",
                 TrimmerUtils.formatCSeconds(lastMaxValue - lastMinValue),
-                "-async", "1", outputPath};
+                "-async", "1", "-vcodec", "mpeg4", "-qscale:v", "2",
+                "-acodec", "aac", "-b:a", "128k", outputPath};
     }
 
     private void showProcessingDialog() {
