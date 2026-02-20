@@ -55,8 +55,10 @@ dependencies {
 	implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.aar"))))
 	implementation(project(":core"))
 	implementation(project(":domain"))
-	//ffmpeg (don't forget to include com.arthenica:smart-exception-java because it is a dependency of ffmpeg)
-	implementation("io.github.maitrungduc1410:ffmpeg-kit-min:6.0.1")
+	// FFMPEG:
+	// Note: ffmpeg (don't forget to include com.arthenica:smart-exception-java because it is a dependency of ffmpeg)
+	// https://central.sonatype.com/search?q=ffmpeg+kit
+	implementation(libs.maitrungduc1410.ffmpeg.kit.min)
 	implementation(libs.smart.exception.java)
 	implementation(libs.androidx.core.ktx)
 	implementation(libs.androidx.lifecycle.runtime.ktx)
