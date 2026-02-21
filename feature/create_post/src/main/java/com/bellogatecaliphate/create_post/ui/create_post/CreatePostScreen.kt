@@ -15,6 +15,10 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -36,13 +40,6 @@ import com.bellogatecaliphate.core.util.PLACEHOLDER_TEXT_SIZE_20
 import com.bellogatecaliphate.create_post.R
 import com.bellogatecaliphate.create_post.model.UiState
 import com.bellogatecaliphate.create_post.ui.create_post.upload_status.UploadStatusScreen
-import com.bellogatecaliphate.create_post.ui.create_post.util.activityLauncher
-import com.bellogatecaliphate.create_post.util.getActivity
-import com.bellogatecaliphate.create_post.util.video_trimer.utils.TrimType
-import com.bellogatecaliphate.create_post.util.video_trimer.utils.TrimVideo
-
-private const val SIXTY_SECONDS = 60L
-private const val ONE_SECOND = 1L
 
 @Composable
 fun CreatePostScreen(
@@ -52,37 +49,44 @@ fun CreatePostScreen(
 	onPostClicked: (Post) -> Unit = {},
 	onLoginSuccessFul: (userProfilePictureUrl: String) -> Unit,
 ) {
-	val activity = LocalContext.current.getActivity()
 	val context = LocalContext.current
-	val videoTrimResultLauncher = activityLauncher(onPostReadyForPreview)
+	var trimmingVideoUri by remember { mutableStateOf<String?>(null) }
 	
-	CreatePostScreen(
-		uiState = viewModel.state.collectAsStateWithLifecycle().value,
-		openGallery = {
-			with(viewModel) {
-				openGalleryOrLogin {
-					firebaseAuthentication.performLogin(
-						context,
-						serverClientId
-					)
+	if (trimmingVideoUri != null) {
+		VideoTrimmerScreen(
+			videoUri = trimmingVideoUri !!,
+			onTrimFinished = { trimmedPath ->
+				trimmingVideoUri = null
+				onPostReadyForPreview(trimmedPath, null, false)
+			},
+			onBack = { trimmingVideoUri = null }
+		)
+	} else {
+		CreatePostScreen(
+			uiState = viewModel.state.collectAsStateWithLifecycle().value,
+			openGallery = {
+				with(viewModel) {
+					openGalleryOrLogin {
+						firebaseAuthentication.performLogin(
+							context,
+							serverClientId
+						)
+					}
 				}
-			}
-		},
-		onPostClicked = onPostClicked,
-		onVideoFileSelected = { uri ->
-			viewModel.resetGalleryState()
-			TrimVideo
-				.activity(uri)
-				?.setAccurateCut(true)
-				?.setTrimType(TrimType.MIN_MAX_DURATION)
-				?.setMinToMax(ONE_SECOND, SIXTY_SECONDS)
-				?.start(activity, videoTrimResultLauncher)
-		},
-		onStoragePermissionRationalDialogClosed = { viewModel.resetGalleryState() },
-		onCancelUploadClicked = viewModel::cancelPostUpload,
-		onCloseUploadStatus = viewModel::cancelPostUpload,
-		onLoginSuccessFul = onLoginSuccessFul
-	)
+			},
+			onPostClicked = onPostClicked,
+			onVideoFileSelected = { uri ->
+				viewModel.resetGalleryState()
+				if (uri != null) {
+					trimmingVideoUri = uri
+				}
+			},
+			onStoragePermissionRationalDialogClosed = { viewModel.resetGalleryState() },
+			onCancelUploadClicked = viewModel::cancelPostUpload,
+			onCloseUploadStatus = viewModel::cancelPostUpload,
+			onLoginSuccessFul = onLoginSuccessFul
+		)
+	}
 }
 
 @Composable
