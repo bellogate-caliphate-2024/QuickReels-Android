@@ -94,6 +94,7 @@ fun VideoTrimmerScreen(
     var isVideoEnded by remember { mutableStateOf(false) }
     var isActuallyPlaying by remember { mutableStateOf(false) }
     var isProcessing by remember { mutableStateOf(false) }
+    var currentPlaybackPosition by remember { mutableLongStateOf(0L) }
 
     val filePath = remember(videoUri) { Uri.parse(videoUri) }
 
@@ -144,15 +145,19 @@ fun VideoTrimmerScreen(
         }
     }
 
-    // Loop to keep playback within trim range
+    // Loop to keep playback within trim range and update seeker position
     LaunchedEffect(isActuallyPlaying, lastMaxValue, lastMinValue) {
         if (isActuallyPlaying && lastMaxValue > 0) {
             while (isActive) {
-                delay(200)
-                val currentPos = player.currentPosition / 1000
-                if (currentPos >= lastMaxValue) {
+                delay(100)
+                val currentPosMs = player.currentPosition
+                val currentPosSec = currentPosMs / 1000
+                currentPlaybackPosition = currentPosSec
+                
+                if (currentPosSec >= lastMaxValue) {
                     player.playWhenReady = false
                     player.seekTo(lastMinValue * 1000)
+                    currentPlaybackPosition = lastMinValue
                     break
                 }
             }
@@ -267,15 +272,18 @@ fun VideoTrimmerScreen(
                 VideoController(
                     filePath = filePath,
                     totalDuration = totalDuration,
+                    currentPosition = currentPlaybackPosition,
                     onRangeChange = { min, max ->
                         lastMinValue = min
                         lastMaxValue = max
                         if (player.currentPosition / 1000 < min || player.currentPosition / 1000 > max) {
                             player.seekTo(min * 1000)
+                            currentPlaybackPosition = min
                         }
                     },
                     onSeekChange = { seek ->
                         player.seekTo(seek * 1000)
+                        currentPlaybackPosition = seek
                     }
                 )
             }
@@ -298,9 +306,12 @@ fun VideoTrimmerScreen(
 fun VideoController(
     filePath: Uri,
     totalDuration: Long,
+    currentPosition: Long,
     onRangeChange: (Long, Long) -> Unit,
     onSeekChange: (Long) -> Unit
 ) {
+    var lastInitializedDuration by remember { mutableLongStateOf(-1L) }
+
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -338,8 +349,18 @@ fun VideoController(
                 )
 
                 if (totalDuration > 0) {
-                    rangeSeekBar.setMaxValue(totalDuration.toFloat()).apply()
+                    // Update seeker position during playback
                     seekBarController.setMaxValue(totalDuration.toFloat()).apply()
+                    seekBarController.setMinStartValue(currentPosition.toFloat()).apply()
+
+                    // Initialize range seekbar if duration has changed
+                    if (lastInitializedDuration != totalDuration) {
+                        rangeSeekBar.setMaxValue(totalDuration.toFloat())
+                                    .setMinStartValue(0f)
+                                    .setMaxStartValue(totalDuration.toFloat())
+                                    .apply()
+                        lastInitializedDuration = totalDuration
+                    }
 
                     // Load thumbnails if not already loaded
                     if (imageViews[0].drawable == null) {
