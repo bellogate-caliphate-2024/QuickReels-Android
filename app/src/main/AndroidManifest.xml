@@ -34,11 +34,6 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name="com.bellogatecaliphate.create_post.util.video_trimer.ui.ActVideoTrimmer"
-            android:exported="false"
-            android:theme="@style/VideoTrimmerTheme" />
-
         <provider
             android:name="androidx.startup.InitializationProvider"
             android:authorities="${applicationId}.androidx-startup"
