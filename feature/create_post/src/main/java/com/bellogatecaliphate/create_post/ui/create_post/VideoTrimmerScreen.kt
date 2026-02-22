@@ -6,27 +6,27 @@ import android.net.Uri
 import android.view.LayoutInflater
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
@@ -47,6 +47,7 @@ import com.bellogatecaliphate.create_post.R
 import com.bellogatecaliphate.create_post.util.getActivity
 import com.bellogatecaliphate.create_post.util.video_trimer.ui.seekbar.widgets.CrystalRangeSeekbar
 import com.bellogatecaliphate.create_post.util.video_trimer.ui.seekbar.widgets.CrystalSeekbar
+import com.bellogatecaliphate.create_post.util.video_trimer.utils.LogMessage
 import com.bellogatecaliphate.create_post.util.video_trimer.utils.TrimmerUtils
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
@@ -67,7 +68,6 @@ import kotlinx.coroutines.withContext
 import java.io.File
 import java.util.Calendar
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun VideoTrimmerScreen(
 	videoUri: String,
@@ -196,118 +196,117 @@ fun VideoTrimmerScreen(
 		}
 	}
 	
-	Scaffold(
-		topBar = {
-			TopAppBar(
-				title = { Text("Trim Video", color = Color.White) },
-				navigationIcon = {
-					IconButton(onClick = onBack) {
-						Icon(
-							Icons.AutoMirrored.Filled.ArrowBack,
-							contentDescription = "Back",
-							tint = Color.White
-						)
-					}
-				},
-				actions = {
-					IconButton(
-						enabled = ! isProcessing && resolvedPath != null,
-						onClick = {
-							activity?.let { act ->
-								isProcessing = true
-								trimVideo(
-									context = act,
-									filePath = resolvedPath !!,
-									lastMinValue = lastMinValue,
-									lastMaxValue = lastMaxValue,
-									onFinish = { path ->
-										isProcessing = false
-										onTrimFinished(path)
-									},
-									onError = {
-										isProcessing = false
-										Toast.makeText(act, "Failed to trim", Toast.LENGTH_SHORT)
-											.show()
-									}
-								)
-							}
-						}) {
-						Icon(Icons.Default.Check, contentDescription = "Done", tint = Color.White)
-					}
-				},
-				colors = TopAppBarDefaults.topAppBarColors(containerColor = Color(0xFF212121))
-			)
-		}
-	) { padding ->
-		Box(
-			modifier = Modifier
-                .fillMaxSize()
-                .padding(padding)
-                .background(Color(0xFF303030))
-		) {
-			Column(modifier = Modifier.fillMaxSize()) {
-				Box(
-					modifier = Modifier
-                        .weight(1f)
-                        .clickable(
-                            interactionSource = remember { MutableInteractionSource() },
-                            indication = null,
-                            onClick = onPlayPauseClick
-                        ),
-					contentAlignment = Alignment.Center
-				) {
-					AndroidView(
-						factory = { ctx ->
-							StyledPlayerView(ctx).apply {
-								this.player = player
-								useController = false
-								resizeMode = AspectRatioFrameLayout.RESIZE_MODE_FIT
-							}
-						},
-						update = { view ->
-							view.player = player
-						},
-						modifier = Modifier.fillMaxSize()
+	Box(
+		modifier = Modifier
+			.fillMaxSize()
+			.background(Color(0xFF303030))
+	) {
+		Column(modifier = Modifier.fillMaxSize()) {
+			// Top Bar Icons - Now inside the main Column so the video player is below it
+			Row(
+				modifier = Modifier
+					.fillMaxWidth()
+					.statusBarsPadding()
+					.padding(horizontal = 8.dp, vertical = 8.dp),
+				horizontalArrangement = Arrangement.SpaceBetween,
+				verticalAlignment = Alignment.CenterVertically
+			) {
+				IconButton(onClick = onBack) {
+					Icon(
+						Icons.AutoMirrored.Filled.ArrowBack,
+						contentDescription = "Back",
+						tint = Color.White
 					)
-					
-					if (! isActuallyPlaying) {
-						Icon(
-							painter = androidx.compose.ui.res.painterResource(id = R.drawable.ic_video_play_lib),
-							contentDescription = "Play",
-							modifier = Modifier.size(64.dp),
-							tint = Color.White
-						)
-					}
 				}
 				
-				VideoController(
-					videoPath = resolvedPath,
-					totalDuration = totalDuration,
-					currentPosition = currentPlaybackPosition,
-					onRangeChange = { min, max ->
-						lastMinValue = min
-						lastMaxValue = max
-						if (player.currentPosition / 1000 !in min .. max) {
-							player.seekTo(min * 1000)
-							currentPlaybackPosition = min
+				IconButton(
+					enabled = ! isProcessing && resolvedPath != null,
+					onClick = {
+						activity?.let { act ->
+							isProcessing = true
+							trimVideo(
+								context = act,
+								filePath = resolvedPath !!,
+								lastMinValue = lastMinValue,
+								lastMaxValue = lastMaxValue,
+								onFinish = { path ->
+									isProcessing = false
+									onTrimFinished(path)
+								},
+								onError = {
+									isProcessing = false
+									Toast.makeText(act, "Failed to trim", Toast.LENGTH_SHORT)
+										.show()
+								}
+							)
+						}
+					}
+				) {
+					Icon(Icons.Default.Check, contentDescription = "Done", tint = Color.White)
+				}
+			}
+
+			Box(
+				modifier = Modifier
+					.weight(1f)
+					.clickable(
+						interactionSource = remember { MutableInteractionSource() },
+						indication = null,
+						onClick = onPlayPauseClick
+					),
+				contentAlignment = Alignment.Center
+			) {
+				AndroidView(
+					factory = { ctx ->
+						StyledPlayerView(ctx).apply {
+							this.player = player
+							useController = false
+							resizeMode = AspectRatioFrameLayout.RESIZE_MODE_FIT
 						}
 					},
-					onSeekChange = { seek ->
-						player.seekTo(seek * 1000)
-						currentPlaybackPosition = seek
-					}
+					update = { view ->
+						view.player = player
+					},
+					modifier = Modifier.fillMaxSize()
 				)
+				
+				if (! isActuallyPlaying) {
+					Icon(
+						painter = androidx.compose.ui.res.painterResource(id = R.drawable.ic_video_play_lib),
+						contentDescription = "Play",
+						modifier = Modifier.size(64.dp),
+						tint = Color.White
+					)
+				}
 			}
 			
-			if (isProcessing) {
-				Box(
-					modifier = Modifier
-                        .fillMaxSize()
-                        .background(Color.Black.copy(alpha = 0.5f)),
-					contentAlignment = Alignment.Center
-				) {
-					CircularProgressIndicator(color = Color.White)
+			VideoController(
+				videoPath = resolvedPath,
+				totalDuration = totalDuration,
+				currentPosition = currentPlaybackPosition,
+				onRangeChange = { min, max ->
+					lastMinValue = min
+					lastMaxValue = max
+					if (player.currentPosition / 1000 !in min .. max) {
+						player.seekTo(min * 1000)
+						currentPlaybackPosition = min
+					}
+				},
+				onSeekChange = { seek ->
+					player.seekTo(seek * 1000)
+					currentPlaybackPosition = seek
 				}
+			)
+		}
+		
+		if (isProcessing) {
+			Box(
+				modifier = Modifier
+					.fillMaxSize()
+					.background(Color.Black.copy(alpha = 0.5f)),
+				contentAlignment = Alignment.Center
+			) {
+				CircularProgressIndicator(color = Color.White)
 			}
 		}
 	}
@@ -326,9 +325,9 @@ fun VideoController(
 	
 	Box(
 		modifier = Modifier
-            .fillMaxWidth()
-            .height(150.dp)
-            .padding(bottom = 20.dp)
+			.fillMaxWidth()
+			.height(150.dp)
+			.padding(bottom = 20.dp)
 	) {
 		AndroidView(
 			factory = { ctx ->
