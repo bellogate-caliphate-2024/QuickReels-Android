@@ -10,6 +10,7 @@ import androidx.navigation.navigation
 import androidx.navigation.toRoute
 import com.bellogatecaliphate.core.model.routes.create_post.CreatePostNavGraphRoute
 import com.bellogatecaliphate.create_post.ui.create_post.CreatePostScreen
+import com.bellogatecaliphate.create_post.ui.create_post.VideoTrimmerScreen
 import com.bellogatecaliphate.create_post.ui.preview_post.PreviewPostScreen
 
 fun NavGraphBuilder.createPostNavGraph(
@@ -18,17 +19,16 @@ fun NavGraphBuilder.createPostNavGraph(
 	onLoginSuccessFul: (userProfilePictureUrl: String) -> Unit
 ) {
 	navigation<CreatePostNavGraphRoute>(startDestination = CreatePostNavGraphRoute.CreatePost::class) {
-		composable<CreatePostNavGraphRoute.CreatePost> {
+		composable<CreatePostNavGraphRoute.CreatePost>(
+			enterTransition = { fadeIn(animationSpec = tween(500)) },
+			exitTransition = { fadeOut(animationSpec = tween(500)) },
+			popEnterTransition = { fadeIn(animationSpec = tween(500)) },
+			popExitTransition = { fadeOut(animationSpec = tween(500)) }
+		) {
 			CreatePostScreen(
 				serverClientId = serverClientId,
-				onPostReadyForPreview = { videoPath, videoCaption, isReadOnly ->
-					navController.navigate(
-						CreatePostNavGraphRoute.PreviewPost(
-							videoPath,
-							videoCaption,
-							isReadOnly
-						)
-					)
+				onNavigateToTrimmer = { videoUri ->
+					navController.navigate(CreatePostNavGraphRoute.VideoTrimmer(videoUri))
 				},
 				onPostClicked = { post ->
 					navController.navigate(
@@ -38,7 +38,34 @@ fun NavGraphBuilder.createPostNavGraph(
 				onLoginSuccessFul = onLoginSuccessFul
 			)
 		}
+		
+		composable<CreatePostNavGraphRoute.VideoTrimmer>(
+			enterTransition = { fadeIn(animationSpec = tween(500)) },
+			exitTransition = { fadeOut(animationSpec = tween(500)) },
+			popEnterTransition = { fadeIn(animationSpec = tween(500)) },
+			popExitTransition = { fadeOut(animationSpec = tween(500)) }
+		) { backStackEntry ->
+			val trimmerRoute = backStackEntry.toRoute<CreatePostNavGraphRoute.VideoTrimmer>()
+			VideoTrimmerScreen(
+				videoUri = trimmerRoute.videoUri,
+				onTrimFinished = { trimmedPath ->
+					navController.navigate(
+						CreatePostNavGraphRoute.PreviewPost(
+							videoPath = trimmedPath,
+							videoCaption = null,
+							isReadOnly = false
+						)
+					) {
+						popUpTo(CreatePostNavGraphRoute.VideoTrimmer::class) { inclusive = true }
+					}
+				},
+				onBack = { navController.popBackStack() }
+			)
+		}
+		
 		composable<CreatePostNavGraphRoute.PreviewPost>(
+			enterTransition = { fadeIn(animationSpec = tween(500)) },
+			exitTransition = { fadeOut(animationSpec = tween(500)) },
 			popEnterTransition = {
 				fadeIn(animationSpec = tween(500))
 			},

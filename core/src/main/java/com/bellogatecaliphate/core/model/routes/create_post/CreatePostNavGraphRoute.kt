@@ -15,6 +15,9 @@ data object CreatePostNavGraphRoute : Route() {
 	data object CreatePost
 	
 	@Serializable
+	data class VideoTrimmer(val videoUri: String)
+
+	@Serializable
 	data class PreviewPost(
 		val videoPath: String,
 		val videoCaption: String?,

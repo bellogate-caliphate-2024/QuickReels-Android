@@ -15,10 +15,6 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -45,48 +41,33 @@ import com.bellogatecaliphate.create_post.ui.create_post.upload_status.UploadSta
 fun CreatePostScreen(
 	serverClientId: String,
 	viewModel: CreatePostScreenViewModel = hiltViewModel(),
-	onPostReadyForPreview: (videoPath: String, videoCaption: String?, isReadOnly: Boolean) -> Unit = { _, _, _ -> },
+	onNavigateToTrimmer: (videoUri: String) -> Unit = {},
 	onPostClicked: (Post) -> Unit = {},
 	onLoginSuccessFul: (userProfilePictureUrl: String) -> Unit,
 ) {
 	val context = LocalContext.current
-	var trimmingVideoUri by remember { mutableStateOf<String?>(null) }
 	
-	if (trimmingVideoUri != null) {
-		VideoTrimmerScreen(
-			videoUri = trimmingVideoUri !!,
-			onTrimFinished = { trimmedPath ->
-				trimmingVideoUri = null
-				onPostReadyForPreview(trimmedPath, null, false)
-			},
-			onBack = { trimmingVideoUri = null }
-		)
-	} else {
-		CreatePostScreen(
-			uiState = viewModel.state.collectAsStateWithLifecycle().value,
-			openGallery = {
-				with(viewModel) {
-					openGalleryOrLogin {
-						firebaseAuthentication.performLogin(
-							context,
-							serverClientId
-						)
-					}
+	CreatePostScreen(
+		uiState = viewModel.state.collectAsStateWithLifecycle().value,
+		openGallery = {
+			with(viewModel) {
+				openGalleryOrLogin {
+					firebaseAuthentication.performLogin(context, serverClientId)
 				}
-			},
-			onPostClicked = onPostClicked,
-			onVideoFileSelected = { uri ->
-				viewModel.resetGalleryState()
-				if (uri != null) {
-					trimmingVideoUri = uri
-				}
-			},
-			onStoragePermissionRationalDialogClosed = { viewModel.resetGalleryState() },
-			onCancelUploadClicked = viewModel::cancelPostUpload,
-			onCloseUploadStatus = viewModel::cancelPostUpload,
-			onLoginSuccessFul = onLoginSuccessFul
-		)
-	}
+			}
+		},
+		onPostClicked = onPostClicked,
+		onVideoFileSelected = { uri ->
+			viewModel.resetGalleryState()
+			if (uri != null) {
+				onNavigateToTrimmer(uri)
+			}
+		},
+		onStoragePermissionRationalDialogClosed = { viewModel.resetGalleryState() },
+		onCancelUploadClicked = viewModel::cancelPostUpload,
+		onCloseUploadStatus = viewModel::cancelPostUpload,
+		onLoginSuccessFul = onLoginSuccessFul
+	)
 }
 
 @Composable
