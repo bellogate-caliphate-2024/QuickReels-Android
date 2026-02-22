@@ -281,7 +281,7 @@ fun VideoTrimmerScreen(
                 }
 
                 VideoController(
-                    filePath = resolvedPath?.let { Uri.parse(it) } ?: Uri.EMPTY,
+                    videoPath = resolvedPath,
                     totalDuration = totalDuration,
                     currentPosition = currentPlaybackPosition,
                     onRangeChange = { min, max ->
@@ -315,13 +315,14 @@ fun VideoTrimmerScreen(
 
 @Composable
 fun VideoController(
-    filePath: Uri,
+    videoPath: String?,
     totalDuration: Long,
     currentPosition: Long,
     onRangeChange: (Long, Long) -> Unit,
     onSeekChange: (Long) -> Unit
 ) {
     var lastInitializedDuration by remember { mutableLongStateOf(-1L) }
+    var lastLoadedThumbnailsPath by remember { mutableStateOf<String?>(null) }
 
     Box(
         modifier = Modifier
@@ -373,20 +374,20 @@ fun VideoController(
                         lastInitializedDuration = totalDuration
                     }
 
-                    // Load thumbnails if not already loaded
-                    if (imageViews[0].drawable == null && filePath != Uri.EMPTY) {
-                        val diff = totalDuration / 8
-                        var sec = 1L
-                        for (img in imageViews) {
-                            val interval = (diff * sec) * 1000000
+                    // Load thumbnails if not already loaded for this path
+                    if (videoPath != null && lastLoadedThumbnailsPath != videoPath) {
+                        val diff = totalDuration.toFloat() / 8
+                        val file = File(videoPath)
+                        for (i in 0 until 8) {
+                            val interval = ((i + 1) * diff * 1000000).toLong()
                             val options = RequestOptions().frame(interval)
                             Glide.with(view.context)
-                                .load(filePath)
+                                .load(file)
                                 .apply(options)
                                 .transition(DrawableTransitionOptions.withCrossFade(300))
-                                .into(img)
-                            if (sec < totalDuration) sec++
+                                .into(imageViews[i])
                         }
+                        lastLoadedThumbnailsPath = videoPath
                     }
                 }
             },
