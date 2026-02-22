@@ -61,6 +61,7 @@ import com.google.android.exoplayer2.Player
 import com.google.android.exoplayer2.audio.AudioAttributes
 import com.google.android.exoplayer2.ui.AspectRatioFrameLayout
 import com.google.android.exoplayer2.ui.StyledPlayerView
+import com.gowtham.library.utils.FileUtilKt
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
@@ -95,8 +96,7 @@ fun VideoTrimmerScreen(
     var isActuallyPlaying by remember { mutableStateOf(false) }
     var isProcessing by remember { mutableStateOf(false) }
     var currentPlaybackPosition by remember { mutableLongStateOf(0L) }
-
-    val filePath = remember(videoUri) { Uri.parse(videoUri) }
+    var resolvedPath by remember { mutableStateOf<String?>(null) }
 
     // Use rememberUpdatedState to ensure the latest values are used in callbacks
     val currentLastMinValue by rememberUpdatedState(lastMinValue)
@@ -122,25 +122,36 @@ fun VideoTrimmerScreen(
     }
 
     LaunchedEffect(videoUri) {
-        val mediaItem = MediaItem.fromUri(filePath)
-        player.setMediaItem(mediaItem)
-        player.prepare()
-        player.playWhenReady = true
-
         activity?.let { act ->
-            val duration = withContext(Dispatchers.IO) {
-                try {
-                    TrimmerUtils.getDuration(act, filePath)
-                } catch (e: Exception) {
-                    LogMessage.e("Error getting duration: ${e.message}")
-                    0L
-                }
+            val path = withContext(Dispatchers.IO) {
+                FileUtilKt.getValidatedFileUri(act, Uri.parse(videoUri))
             }
-            if (duration > 0) {
-                totalDuration = duration
-                lastMaxValue = duration
+            resolvedPath = path
+            
+            if (path != null) {
+                val resolvedUri = Uri.parse(path)
+                val mediaItem = MediaItem.fromUri(resolvedUri)
+                player.setMediaItem(mediaItem)
+                player.prepare()
+                player.playWhenReady = true
+
+                val duration = withContext(Dispatchers.IO) {
+                    try {
+                        TrimmerUtils.getDuration(act, resolvedUri)
+                    } catch (e: Exception) {
+                        LogMessage.e("Error getting duration: ${e.message}")
+                        0L
+                    }
+                }
+                if (duration > 0) {
+                    totalDuration = duration
+                    lastMaxValue = duration
+                } else {
+                    LogMessage.e("Video duration is 0 or invalid for $path")
+                }
             } else {
-                LogMessage.e("Video duration is 0 or invalid for $videoUri")
+                LogMessage.e("Could not resolve path for $videoUri")
+                Toast.makeText(act, "Error loading video", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -201,13 +212,13 @@ fun VideoTrimmerScreen(
                 },
                 actions = {
                     IconButton(
-                        enabled = !isProcessing,
+                        enabled = !isProcessing && resolvedPath != null,
                         onClick = {
                         activity?.let { act ->
                             isProcessing = true
                             trimVideo(
                                 context = act,
-                                filePath = filePath,
+                                filePath = resolvedPath!!,
                                 lastMinValue = lastMinValue,
                                 lastMaxValue = lastMaxValue,
                                 onFinish = { path ->
@@ -270,7 +281,7 @@ fun VideoTrimmerScreen(
                 }
 
                 VideoController(
-                    filePath = filePath,
+                    filePath = resolvedPath?.let { Uri.parse(it) } ?: Uri.EMPTY,
                     totalDuration = totalDuration,
                     currentPosition = currentPlaybackPosition,
                     onRangeChange = { min, max ->
@@ -363,7 +374,7 @@ fun VideoController(
                     }
 
                     // Load thumbnails if not already loaded
-                    if (imageViews[0].drawable == null) {
+                    if (imageViews[0].drawable == null && filePath != Uri.EMPTY) {
                         val diff = totalDuration / 8
                         var sec = 1L
                         for (img in imageViews) {
@@ -386,22 +397,27 @@ fun VideoController(
 
 private fun trimVideo(
     context: Activity,
-    filePath: Uri,
+    filePath: String,
     lastMinValue: Long,
     lastMaxValue: Long,
     onFinish: (String) -> Unit,
     onError: () -> Unit
 ) {
-    val outputPath = getFileName(context, filePath)
+    val outputPath = getFileName(context, Uri.parse(filePath))
     val command = arrayOf(
         "-ss", TrimmerUtils.formatCSeconds(lastMinValue),
-        "-i", filePath.toString(),
+        "-i", filePath,
         "-t", TrimmerUtils.formatCSeconds(lastMaxValue - lastMinValue),
         "-async", "1", "-strict", "-2", "-c", "copy", outputPath
     )
 
+    LogMessage.v("FFmpeg command: ${command.joinToString(" ")}")
+
     FFmpegKit.executeWithArgumentsAsync(command) { session ->
         val result = session.returnCode.value
+        LogMessage.v("FFmpeg result: $result")
+        LogMessage.v("FFmpeg output: ${session.output}")
+        
         context.runOnUiThread {
             if (result == 0) {
                 onFinish(outputPath)
@@ -409,13 +425,18 @@ private fun trimVideo(
                 // Retry with accurate command if copy fails
                 val accurateCommand = arrayOf(
                     "-ss", TrimmerUtils.formatCSeconds(lastMinValue),
-                    "-i", filePath.toString(),
+                    "-i", filePath,
                     "-t", TrimmerUtils.formatCSeconds(lastMaxValue - lastMinValue),
                     "-async", "1", "-vcodec", "mpeg4", "-qscale:v", "2",
                     "-acodec", "aac", "-b:a", "128k", outputPath
                 )
+                LogMessage.v("FFmpeg accurate command: ${accurateCommand.joinToString(" ")}")
+                
                 FFmpegKit.executeWithArgumentsAsync(accurateCommand) { secondSession ->
                     val secondResult = secondSession.returnCode.value
+                    LogMessage.v("FFmpeg accurate result: $secondResult")
+                    LogMessage.v("FFmpeg accurate output: ${secondSession.output}")
+
                     context.runOnUiThread {
                         if (secondResult == 0) {
                             onFinish(outputPath)
