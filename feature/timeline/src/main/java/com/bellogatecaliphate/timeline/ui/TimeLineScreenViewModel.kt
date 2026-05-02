@@ -60,8 +60,11 @@ class TimeLineScreenViewModel @Inject constructor(
 	
 	init {
 		viewModelScope.launch {
-			async { loadAds() }
-			async { getContents() }
+			val taskLoadAds = async { loadAds() }
+			val taskGetContents = async { getContents() }
+			
+			taskLoadAds.await()
+			taskGetContents.await()
 		}
 	}
 	
